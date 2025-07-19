@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugContent: {fileID: 3522883039602338174}
   debugContainer: {fileID: 5604770124285304967}
-  debugKey: 102
+  keyMap: {fileID: 0}
   disableLogs: 0
 --- !u!1 &5604770124285304967
 GameObject:
