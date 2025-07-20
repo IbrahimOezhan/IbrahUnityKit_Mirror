@@ -10,8 +10,9 @@ namespace IbrahKit
     {
         public const string KEY = "States";
 
-        [FoldoutGroup("States"), SerializeField, ReadOnly] private int currentState = 0;
-        [FoldoutGroup("States"), SerializeField] private List<string> states = new();
+        [SerializeField, ReadOnly] private int currentState = 0;
+
+        [SerializeField] private List<string> statesList = new();
 
         public event Action<string> OnStateChange;
 
@@ -28,40 +29,36 @@ namespace IbrahKit
 
         private void OnValidate()
         {
-            String_Utilities.CreateDropdown(states, KEY);
+            String_Utilities.CreateDropdown(statesList, KEY);
         }
 
         public void SetCurrentState(string newState)
         {
-            SetCurrentState(states.IndexOf(states.Find(x => x == newState)));
+            SetCurrentState(statesList.IndexOf(statesList.Find(x => x == newState)));
         }
 
         public void SetCurrentState(int index)
         {
             currentState = index;
+
             StateUpdate();
         }
 
         public string GetCurrentState()
         {
-            return states[currentState];
+            return statesList[currentState];
         }
 
         public void StateUpdate()
         {
-            OnStateChange?.Invoke(states[currentState]);
-        }
-
-        public string GetCurrentStateName()
-        {
-            return states[currentState];
+            OnStateChange?.Invoke(statesList[currentState]);
         }
 
         public bool CompareState(string state)
         {
-            if (currentState >= states.Count) return false;
+            if (currentState >= statesList.Count) return false;
 
-            return states[currentState].Equals(state);
+            return statesList[currentState].Equals(state);
         }
     }
 }

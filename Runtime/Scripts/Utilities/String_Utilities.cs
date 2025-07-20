@@ -77,6 +77,8 @@ namespace IbrahKit
 
         public static void CreateDropdown(List<string> input, string fileName)
         {
+            input = new(input);
+
             if (input == null)
             {
                 Debug.LogWarning("Passed input list is null");

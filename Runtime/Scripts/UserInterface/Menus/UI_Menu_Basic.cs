@@ -9,14 +9,14 @@ namespace IbrahKit
 {
     public class UI_Menu_Basic : MonoBehaviour
     {
-        [TabGroup("Runtime Data"), ShowInInspector, ReadOnly]
+        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected InputType lastInputType;
 
-        [TabGroup("Runtime Data"), ShowInInspector, ReadOnly]
+        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected UI_Menu_Basic previousMenu;
 
-        [TabGroup("Runtime Data"), ShowInInspector, ReadOnly]
-        protected List<UI_Base> menuUI;
+        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
+        protected List<UI_Base> menuUI = new();
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
         protected CanvasGroup enabledGroup;
