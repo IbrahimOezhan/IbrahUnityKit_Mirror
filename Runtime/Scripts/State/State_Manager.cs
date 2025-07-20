@@ -46,19 +46,21 @@ namespace IbrahKit
 
         public string GetCurrentState()
         {
+            if (statesList.Count == 0) return "";
+
             return statesList[currentState];
         }
 
         public void StateUpdate()
         {
-            OnStateChange?.Invoke(statesList[currentState]);
+            OnStateChange?.Invoke(GetCurrentState());
         }
 
         public bool CompareState(string state)
         {
             if (currentState >= statesList.Count) return false;
 
-            return statesList[currentState].Equals(state);
+            return GetCurrentState().Equals(state);
         }
     }
 }
