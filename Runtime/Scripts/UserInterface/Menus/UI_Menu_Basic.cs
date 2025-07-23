@@ -229,14 +229,11 @@ namespace IbrahKit
             else Show("paused");
         }
 
-        protected void Hide(string hide)
+        public void Hide(string hide)
         {
             if (hiddenBy.Add(hide))
             {
-                if (hiddenBy.Count == 0)
-                {
-                    hiddenGroup.alpha = 0;
-                }
+                hiddenGroup.alpha = 0;
             }
         }
 
@@ -246,7 +243,7 @@ namespace IbrahKit
             {
                 if(hiddenBy.Count == 0)
                 {
-                    hiddenGroup.alpha = 0;
+                    hiddenGroup.alpha = 1;
                 }
             }
         }
