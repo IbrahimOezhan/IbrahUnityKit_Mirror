@@ -16,17 +16,19 @@ namespace IbrahKit
         private bool hidden;
 
         [SerializeField] private UI_Fitter_Config_SO defaultConfig;
+
         [SerializeField] private UI_Menu_Config_SO defaultMenuConfig;
+
         [SerializeField] private UI_Styling_Config_SO defaultUIStyle;
-        [SerializeField] private KeyMap keyMap;
 
         [SerializeField, Dropdown(UILAYOUTKEY)] private List<string> activeLayouts;
 
         [SerializeField] private List<UI_Menu_Basic> activeMenus = new();
 
-        public Action<bool> OnHide;
         public Action OnHover;
+
         public Action OnClick;
+
         public Action<UI_Menu_Basic, StateMode> OnCustomTR;
 
         public static UI_Manager Instance;
@@ -51,64 +53,14 @@ namespace IbrahKit
             }
         }
 
-        private void Update()
-        {
-            if (Keyboard.current[keyMap.screenshot].wasPressedThisFrame)
-            {
-                Screenshot();
-            }
-            if (Keyboard.current[keyMap.screenshotNoUI].wasPressedThisFrame)
-            {
-                ScreenshotNoUI();
-            }
-            if (Keyboard.current[keyMap.hideUI].wasPressedThisFrame)
-            {
-                Hide();
-            }
-        }
-
         private void OnDisable()
         {
             if (Instance != this) return;
         }
 
-        private void Hide()
-        {
-            hidden = !hidden;
-            UpdateHide();
-        }
-
-        public void UpdateHide()
-        {
-            OnHide?.Invoke(hidden);
-        }
-
         public bool ShowLayout(List<string> layouts)
         {
             return activeLayouts.Intersect(layouts).Count() > 0;
-        }
-
-        public void Screenshot()
-        {
-            Basic_Utilities.Screenshot();
-        }
-
-        public void ScreenshotNoUI()
-        {
-            ScreenshotNoResult();
-        }
-
-        private async void ScreenshotNoResult()
-        {
-            Hide();
-
-            await Task.Yield();
-
-            Basic_Utilities.Screenshot();
-
-            await Task.Yield();
-
-            Hide();
         }
 
         public void OnUIHover()
@@ -129,7 +81,9 @@ namespace IbrahKit
         public IEnumerator TransitionRoutine(UI_Menu_Basic menuIn, UI_Menu_Basic menuOut, FadeMode fadeMode, float _fadeTime)
         {
             yield return StartCoroutine(FadeRoutine(menuIn, StateMode.Disable, fadeMode, _fadeTime));
+
             yield return StartCoroutine(FadeRoutine(menuOut, StateMode.Enable, fadeMode, _fadeTime));
+
             menuOut.SetPreviousMenu(menuIn);
         }
 
@@ -149,19 +103,27 @@ namespace IbrahKit
                     switch (fadeMode)
                     {
                         case FadeMode.None:
+
                             menu.SetAlpha(1);
+
                             menu.SetInteractable(true);
+
                             break;
                         case FadeMode.Time:
+
                             while (menu.GetAlpha() < 1)
                             {
                                 menu.SetAlpha(menu.GetAlpha() + Time.deltaTime / _fadeTime);
                                 yield return null;
                             }
+
                             menu.SetInteractable(true);
+
                             break;
                         case FadeMode.Custom:
+
                             OnCustomTR?.Invoke(menu, stateMode);
+
                             break;
                     }
 
@@ -173,21 +135,31 @@ namespace IbrahKit
                     switch (fadeMode)
                     {
                         case FadeMode.None:
+
                             menu.SetAlpha(0);
+
                             menu.SetInteractable(false);
+
                             menu.SetActive(false);
+
                             break;
                         case FadeMode.Time:
+
                             menu.SetInteractable(false);
+
                             while (menu.GetAlpha() > 0)
                             {
                                 menu.SetAlpha(menu.GetAlpha() - Time.deltaTime / _fadeTime);
                                 yield return null;
                             }
+
                             menu.SetActive(false);
+
                             break;
                         case FadeMode.Custom:
+
                             OnCustomTR?.Invoke(menu, stateMode);
+
                             break;
                     }
 

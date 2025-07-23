@@ -6,22 +6,30 @@ namespace IbrahKit
 {
     public class Menu_Pause_Instance : MonoBehaviour
     {
-        private UI_Input input;
         private string stateBeforePause;
 
+        private UI_Input input;
+
         [SerializeField, Dropdown(State_Manager.KEY)] private string pausedState;
+
         [SerializeField] private List<AllowPause> allowPause = new();
+
         [SerializeField] private UI_Menu_Basic Menu;
 
         public static bool paused;
+
         public static event Action<bool> OnPause;
+
         public static Menu_Pause_Instance Instance;
 
         private void Awake()
         {
             Instance = this;
+
             input = new();
+
             input.Enable();
+
             input.Map.Pause.performed += Pause;
         }
 
@@ -30,6 +38,7 @@ namespace IbrahKit
             if (input != null)
             {
                 input.Map.Pause.performed -= Pause;
+
                 input.Disable();
             }
         }
@@ -52,18 +61,24 @@ namespace IbrahKit
                 if (_paused)
                 {
                     Menu.Enable(null);
+
                     stateBeforePause = currentState;
+
                     State_Manager.Instance.SetCurrentState(pausedState);
+
                     paused = _paused;
                 }
                 else if (!_paused && Menu.IsEnabled())
                 {
                     Menu.Disable();
+
                     State_Manager.Instance.SetCurrentState(stateBeforePause);
+
                     paused = _paused;
                 }
 
                 Time.timeScale = paused ? 0 : 1;
+
                 OnPause.Invoke(paused);
             }
         }
@@ -72,7 +87,8 @@ namespace IbrahKit
         private class AllowPause
         {
             [SerializeField] private bool allow;
-            [Dropdown(State_Manager.KEY)][SerializeField] private string state;
+
+            [Dropdown(State_Manager.KEY),SerializeField] private string state;
 
             public bool Allow()
             {

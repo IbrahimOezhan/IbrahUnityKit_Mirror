@@ -9,6 +9,8 @@ namespace IbrahKit
 {
     public class UI_Menu_Basic : MonoBehaviour
     {
+        private HashSet<string> hiddenBy = new();
+             
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected InputType lastInputType;
 
@@ -56,10 +58,10 @@ namespace IbrahKit
         {
             if (hideOnPause) Menu_Pause_Instance.OnPause += OnPause;
 
-            if (UI_Manager.Instance != null)
+            if (Game_Utilities.Instance != null)
             {
-                UI_Manager.Instance.OnHide += Hide;
-                UI_Manager.Instance.UpdateHide();
+                Game_Utilities.Instance.OnHide += GU_Hide;
+                Game_Utilities.Instance.UpdateHide();
             }
         }
 
@@ -70,9 +72,9 @@ namespace IbrahKit
                 Menu_Pause_Instance.OnPause -= OnPause;
             }
 
-            if (UI_Manager.Instance)
+            if (Game_Utilities.Instance != null)
             {
-                UI_Manager.Instance.OnHide -= Hide;
+                Game_Utilities.Instance.OnHide -= GU_Hide;
             }
         }
 
@@ -91,24 +93,9 @@ namespace IbrahKit
             MenuUpdate();
         }
 
-        public bool IsEnabled()
-        {
-            return enabledGroup.alpha == 1;
-        }
-
-        public bool IsDisabled()
-        {
-            return enabledGroup.alpha == 0;
-        }
-
         public void SetAlpha(float alpha)
         {
             enabledGroup.alpha = alpha;
-        }
-
-        public float GetAlpha()
-        {
-            return enabledGroup.alpha;
         }
 
         public void SetInteractable(bool val)
@@ -230,22 +217,59 @@ namespace IbrahKit
             MenuTransition(previousMenu);
         }
 
-        private void OnPause(bool state)
+        private void GU_Hide(bool state)
         {
-            Hide(state);
+            if(state) Hide("Debug");
+            else Show("Debug");
         }
 
-        protected void Hide(bool hide)
+        private void OnPause(bool state)
         {
-            if (preventHideByButton) return;
-            if (hide) hiddenGroup.alpha = 0;
-            else hiddenGroup.alpha = 1;
+            if (state) Hide("paused");
+            else Show("paused");
+        }
+
+        protected void Hide(string hide)
+        {
+            if (hiddenBy.Add(hide))
+            {
+                if (hiddenBy.Count == 0)
+                {
+                    hiddenGroup.alpha = 0;
+                }
+            }
+        }
+
+        public void Show(string show)
+        {
+            if(hiddenBy.Remove(show))
+            {
+                if(hiddenBy.Count == 0)
+                {
+                    hiddenGroup.alpha = 0;
+                }
+            }
         }
 
         public void SetParams(CanvasGroup enabled, CanvasGroup hidden)
         {
             enabledGroup = enabled;
             hiddenGroup = hidden;
+        }
+
+        public float GetAlpha()
+        {
+            return enabledGroup.alpha;
+        }
+
+        public bool IsEnabled()
+        {
+            return enabledGroup.alpha == 1;
+        }
+
+        public bool IsDisabled()
+        {
+            return enabledGroup.alpha == 0;
         }
     }
 }
