@@ -22,7 +22,7 @@ namespace IbrahKit
         [ListDrawerSettings(OnTitleBarGUI = nameof(DrawRefreshButton)), ReadOnly, SerializeField]
         private List<GameObject> spawnedManagers = new();
 
-        [LabelText("Add"),Dropdown(KEY), SerializeField]
+        [LabelText("Add"), Dropdown(KEY), SerializeField]
         private string ManagerToAdd;
 
         private void Awake()

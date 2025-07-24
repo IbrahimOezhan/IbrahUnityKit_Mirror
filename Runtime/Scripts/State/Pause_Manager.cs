@@ -24,7 +24,7 @@ namespace IbrahKit
 
         private void Awake()
         {
-            if(Instance != null && Instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
             }
@@ -101,7 +101,7 @@ namespace IbrahKit
         {
             [SerializeField] private bool allow;
 
-            [Dropdown(State_Manager.KEY),SerializeField] private string state;
+            [Dropdown(State_Manager.KEY), SerializeField] private string state;
 
             public bool Allow()
             {

@@ -59,7 +59,7 @@ public class Game_Utilities : MonoBehaviour
 
         await Task.Yield();
 
-       Hide();
+        Hide();
     }
 
     public void Hide()

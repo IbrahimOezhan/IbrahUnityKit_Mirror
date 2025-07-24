@@ -83,7 +83,9 @@ namespace IbrahKit
         public bool ValidateSaves()
         {
             string[] files = GetFiles(saveFileRegex);
+
             string[] fileContents = new string[files.Length];
+
             outdatedFiles = new string[files.Length];
 
             for (int i = 0; i < files.Length; i++)
@@ -93,6 +95,7 @@ namespace IbrahKit
                 if (String_Utilities.IsEmpty(fileContents[i]))
                 {
                     Debug.Log("File contents are empty for " + files[i]);
+
                     continue;
                 }
 
@@ -120,11 +123,11 @@ namespace IbrahKit
                 {
                     Savable derived = GetDerivedSavable(fileContents[i], s);
 
-                    Debug.Log("Deserialization successfull");
+                    Debug.Log("Deserialization successfull", Color.green);
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log("Deserialization failed with type: " + fullName + " " + ex.Message);
+                    Debug.LogWarning("Deserialization failed with type: " + fullName + " " + ex.Message);
 
                     outdatedFiles[i] = files[i];
 

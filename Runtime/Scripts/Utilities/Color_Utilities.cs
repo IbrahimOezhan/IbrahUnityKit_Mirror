@@ -13,6 +13,19 @@ namespace IbrahKit
             return false;
         }
 
+        public static string ColorString(string msg, Color c)
+        {
+            return $"<color={ColorToHex(c)}>{msg}</color>";
+        }
+
+        public static string ColorToHex(Color color, bool includeAlpha = false)
+        {
+            Color32 c = color; // Auto-converts to Color32 with 0–255 range
+            return includeAlpha
+                ? $"#{c.r:X2}{c.g:X2}{c.b:X2}{c.a:X2}"
+                : $"#{c.r:X2}{c.g:X2}{c.b:X2}";
+        }
+
         public static Color ColorBlend(List<Color> colors)
         {
             if (colors == null)

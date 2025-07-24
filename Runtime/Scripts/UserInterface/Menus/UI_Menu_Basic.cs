@@ -11,7 +11,7 @@ namespace IbrahKit
     {
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         private HashSet<string> hiddenBy = new();
-             
+
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected InputType lastInputType;
 
@@ -64,7 +64,7 @@ namespace IbrahKit
 
         protected virtual void OnEnable()
         {
-            if (!preventHideOnPause)
+            if (!preventHideOnPause && Pause_Manager.Instance != null)
             {
                 Pause_Manager.Instance.OnPause += OnPause;
                 Pause_Manager.Instance.UpdatePause();
@@ -79,7 +79,7 @@ namespace IbrahKit
 
         protected virtual void OnDisable()
         {
-            if (!preventHideOnPause)
+            if (!preventHideOnPause && Pause_Manager.Instance != null)
             {
                 Pause_Manager.Instance.OnPause -= OnPause;
             }
@@ -227,7 +227,7 @@ namespace IbrahKit
 
         private void GU_Hide(bool state)
         {
-            if(state) Hide("Debug");
+            if (state) Hide("Debug");
             else Show("Debug");
         }
 
@@ -247,9 +247,9 @@ namespace IbrahKit
 
         public void Show(string show)
         {
-            if(hiddenBy.Remove(show))
+            if (hiddenBy.Remove(show))
             {
-                if(hiddenBy.Count == 0)
+                if (hiddenBy.Count == 0)
                 {
                     hiddenGroup.alpha = 1;
                 }

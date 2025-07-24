@@ -243,7 +243,7 @@ namespace IbrahKit
 
             initialized = true;
 
-            Debug.LogWarning("Ínitialized successfully");
+            Debug.Log("Initialized successfully", Color.green);
 
             return true;
         }

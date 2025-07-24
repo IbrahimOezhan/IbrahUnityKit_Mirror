@@ -66,6 +66,7 @@ namespace IbrahKit
             if (UI_Navigation_Manager.Instance != null)
             {
                 UI_Navigation_Manager.Instance.AddSelectable(this);
+
                 UI_Navigation_Manager.Instance.UpdateSelectables();
             }
 
@@ -77,6 +78,7 @@ namespace IbrahKit
             selectedState = SelectedState.None;
 
             Visualize();
+
             DeSelect();
 
             if (UI_Navigation_Manager.Instance != null)
@@ -262,28 +264,6 @@ namespace IbrahKit
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            Hover();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            Exit();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            Press();
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            selectedState = SelectedState.None;
-
-            Visualize();
-        }
-
         public void Press()
         {
             selectedState = SelectedState.Pressed;
@@ -293,6 +273,7 @@ namespace IbrahKit
             if (interactable)
             {
                 OnClickEvent.Invoke();
+
                 UI_Manager.Instance.OnUIClick();
             }
             else
@@ -322,6 +303,26 @@ namespace IbrahKit
             interactable = value;
 
             Visualize();
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Hover();
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Exit();
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Press();
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            Exit();
         }
 
         public bool GetInteractable()
