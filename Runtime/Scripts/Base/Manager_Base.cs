@@ -5,7 +5,7 @@ namespace IbrahKit
 {
     public class Manager_Base : MonoBehaviour
     {
-        [Dropdown("TemplateManagers")]
+        [Dropdown(Toolkit_Manager.KEY)]
         public List<string> dependencies = new();
     }
 }

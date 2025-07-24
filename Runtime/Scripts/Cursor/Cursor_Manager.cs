@@ -11,23 +11,31 @@ namespace IbrahKit
     public class Cursor_Manager : MonoBehaviour
     {
         private string currentState;
+
         private bool found;
+
         private bool isVisible;
 
         private CursorState cursorState;
+
         private CursorState preCursorState;
+
         private InputType inputType;
 
         private CursorInput input;
+
         private Camera mainCamera;
 
         [SerializeField] private bool enableCustomCursor;
 
         [ShowIf("enableCustomCursor"), SerializeField] private Sprite noneCursor;
+
         [ShowIf("enableCustomCursor"), SerializeField] private Sprite hoveringCursor;
+
         [ShowIf("enableCustomCursor"), SerializeField] private Sprite downCursor;
 
         [SerializeField] private Image customCursor;
+
         [SerializeField] private RectTransform canvas;
 
         [SerializeField] private List<CursorVisibilty> cursorVisibility;

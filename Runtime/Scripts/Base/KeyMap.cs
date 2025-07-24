@@ -13,7 +13,6 @@ namespace IbrahKit
         public Key screenshot;
         public Key screenshotNoUI;
 
-
         public override string ToString()
         {
             return string.Format(format, debugMenu.ToString(), hideUI.ToString(), screenshot.ToString(), screenshotNoUI.ToString());

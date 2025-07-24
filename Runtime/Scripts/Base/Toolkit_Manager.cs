@@ -11,16 +11,18 @@ namespace IbrahKit
     [ExecuteInEditMode]
     public class Toolkit_Manager : MonoBehaviour
     {
+        public const string KEY = "TemplateManagers";
+
         [ReadOnly, SerializeField]
         private List<GameObject> managers = new();
 
         [ReadOnly, SerializeField]
         private List<string> names = new();
 
-        [ListDrawerSettings(OnTitleBarGUI = "DrawRefreshButton"), ReadOnly, SerializeField]
+        [ListDrawerSettings(OnTitleBarGUI = nameof(DrawRefreshButton)), ReadOnly, SerializeField]
         private List<GameObject> spawnedManagers = new();
 
-        [HorizontalGroup("Add"), HideLabel, Dropdown("TemplateManagers"), SerializeField]
+        [LabelText("Add"),Dropdown(KEY), SerializeField]
         private string ManagerToAdd;
 
         private void Awake()
@@ -33,25 +35,23 @@ namespace IbrahKit
 
         private void OnValidate()
         {
-            if (gameObject.scene.IsValid())
+            if (gameObject.scene.IsValid() && ManagerToAdd != "None")
             {
-                if (ManagerToAdd != "None")
+                GameObject ob = managers.Find(x => x.name == ManagerToAdd);
+
+                if (ob != null)
                 {
-                    GameObject ob = managers.Find(x => x.name == ManagerToAdd);
-                    if (ob != null)
+                    if (spawnedManagers.Find(x => x.name == ManagerToAdd) != null)
                     {
-                        if (spawnedManagers.Find(x => x.name == ManagerToAdd) != null)
-                        {
-                            Debug.LogWarning("Object of the same type already exists");
-                        }
-                        else
-                        {
+                        Debug.LogWarning("Object of the same type already exists");
+                    }
+                    else
+                    {
 #if UNITY_EDITOR
-                            GameObject sOb = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ob, transform);
-                            spawnedManagers.Add(sOb);
-                            sOb.name = ManagerToAdd;
+                        GameObject sOb = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ob, transform);
+                        spawnedManagers.Add(sOb);
+                        sOb.name = ManagerToAdd;
 #endif
-                        }
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace IbrahKit
             }
             else names.Add("None");
 
-            String_Utilities.CreateDropdown(names, "TemplateManagers");
+            String_Utilities.CreateDropdown(names, KEY);
         }
 
         private void DrawRefreshButton()
