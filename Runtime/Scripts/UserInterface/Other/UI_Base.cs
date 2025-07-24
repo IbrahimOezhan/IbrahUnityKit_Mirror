@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Base : MonoBehaviour
+    public class UI_Base : MonoBehaviour, IMenuUpdate
     {
         [SerializeField] private UI_Menu_Basic parentMenu;
 
@@ -30,7 +30,12 @@ namespace IbrahKit
         {
         }
 
-        public void SetParentMenu(UI_Menu_Basic menu)
+        public UI_Menu_Basic GetParentMenu()
+        {
+            return parentMenu;
+        }
+
+        public void MenuUpdate(UI_Menu_Basic menu)
         {
             if (menu == null)
             {
@@ -39,11 +44,6 @@ namespace IbrahKit
             }
 
             parentMenu = menu;
-        }
-
-        public UI_Menu_Basic GetParentMenu()
-        {
-            return parentMenu;
         }
     }
 }

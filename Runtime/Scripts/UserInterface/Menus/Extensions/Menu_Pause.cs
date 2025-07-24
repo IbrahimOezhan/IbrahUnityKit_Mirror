@@ -7,7 +7,7 @@ namespace IbrahKit
     {
         public void MainMenu()
         {
-            Menu_Pause_Instance.Instance.Pause();
+            Pause_Manager.Instance.Pause();
             SceneManager.LoadScene(0);
         }
 

@@ -9,6 +9,7 @@ namespace IbrahKit
 {
     public class UI_Menu_Basic : MonoBehaviour
     {
+        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         private HashSet<string> hiddenBy = new();
              
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
@@ -18,7 +19,8 @@ namespace IbrahKit
         protected UI_Menu_Basic previousMenu;
 
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
-        protected List<UI_Base> menuUI = new();
+        protected List<IMenuUpdate> menuUI = new();
+
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
         protected CanvasGroup enabledGroup;
@@ -27,19 +29,18 @@ namespace IbrahKit
         protected CanvasGroup hiddenGroup;
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Whether menu should hide automatically on pause")]
-        protected bool hideOnPause;
-
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Prevents menu from hiding when a button is pressed")]
-        protected bool preventHideByButton;
+        protected bool preventHideOnPause;
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Disable menu on start")]
         protected bool disableOnStart;
+
 
         [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Menu to switch to when back action is triggered")]
         protected UI_Menu_Basic overrideBackMenu;
 
         [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Available transitions from this menu")]
         private List<UI_Menu_Transition> transitions;
+
 
         public static Action<UI_Menu_Transition, UI_Menu_Basic> OnMenuTransition;
 
@@ -50,13 +51,24 @@ namespace IbrahKit
 
         protected virtual void Start()
         {
-            if (IsEnabled()) UI_Manager.Instance.AddMenu(this);
-            if (disableOnStart) Disable();
+            if (IsEnabled())
+            {
+                UI_Manager.Instance.AddMenu(this);
+            }
+
+            if (disableOnStart)
+            {
+                Disable();
+            }
         }
 
         protected virtual void OnEnable()
         {
-            if (hideOnPause) Menu_Pause_Instance.OnPause += OnPause;
+            if (!preventHideOnPause)
+            {
+                Pause_Manager.Instance.OnPause += OnPause;
+                Pause_Manager.Instance.UpdatePause();
+            }
 
             if (Game_Utilities.Instance != null)
             {
@@ -67,9 +79,9 @@ namespace IbrahKit
 
         protected virtual void OnDisable()
         {
-            if (hideOnPause)
+            if (!preventHideOnPause)
             {
-                Menu_Pause_Instance.OnPause -= OnPause;
+                Pause_Manager.Instance.OnPause -= OnPause;
             }
 
             if (Game_Utilities.Instance != null)
@@ -93,6 +105,21 @@ namespace IbrahKit
             MenuUpdate();
         }
 
+        protected void InitMenuContent()
+        {
+            menuUI = Transform_Utilities.GetComponentsInChildren<IMenuUpdate>(transform);
+
+            MenuUpdate();
+        }
+
+        protected void MenuUpdate()
+        {
+            foreach (IMenuUpdate child in menuUI)
+            {
+                child.MenuUpdate(this);
+            }
+        }
+
         public void SetAlpha(float alpha)
         {
             enabledGroup.alpha = alpha;
@@ -103,40 +130,17 @@ namespace IbrahKit
             enabledGroup.interactable = val;
         }
 
-        public void SetActive(bool val)
-        {
-            gameObject.SetActive(val);
-
-            if (val)
-            {
-                OnMenuEnabled();
-            }
-            else OnMenuDisable();
-        }
-
-        protected void InitMenuContent()
-        {
-            menuUI = Transform_Utilities.GetComponentsInChildren<UI_Base>(transform);
-
-            foreach (UI_Base child in menuUI)
-            {
-                child.SetParentMenu(this);
-            }
-
-            MenuUpdate();
-        }
-
         public void SetPreviousMenu(UI_Menu_Basic menu)
         {
             previousMenu = menu;
         }
 
-        protected void MenuUpdate()
+        public void SetActive(bool val)
         {
-            foreach (UI_Base _ui in menuUI)
-            {
-                if (_ui != null && _ui.TryGetComponent<IMenuUpdate>(out var _element)) _element.MenuUpdate();
-            }
+            gameObject.SetActive(val);
+
+            if (val) OnMenuEnabled();
+            else OnMenuDisable();
         }
 
         [BoxGroup("Buttons", order: -3), Button]
@@ -197,7 +201,11 @@ namespace IbrahKit
 
         public void MenuTransition(UI_Menu_Basic _menu, UI_Menu_Basic _overrideBackMenu = null)
         {
-            if (_overrideBackMenu != null) _menu.overrideBackMenu = _overrideBackMenu;
+            if (_overrideBackMenu != null)
+            {
+                _menu.overrideBackMenu = _overrideBackMenu;
+            }
+
             UI_Manager.Instance.Transition(this, _menu, FadeMode.None, 0);
         }
 
@@ -251,6 +259,7 @@ namespace IbrahKit
         public void SetParams(CanvasGroup enabled, CanvasGroup hidden)
         {
             enabledGroup = enabled;
+
             hiddenGroup = hidden;
         }
 
