@@ -97,13 +97,21 @@ namespace IbrahKit
                 return;
             }
 
+            int removed = 0;
+
             for (int i = input.Count - 1; i >= 0; i--)
             {
                 if (IsEmpty(input[i]))
                 {
                     Debug.LogWarning("List contains empty keys. Removing");
                     input.RemoveAt(i);
+                    removed++;
                 }
+            }
+
+            if(removed > 0)
+            {
+                Debug.LogWarning("Removed " + removed + " elements");
             }
 
             List<string> distinct = input.Distinct().ToList();

@@ -1,11 +1,11 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace IbrahKit
 {
-    public class UI_Text_Setter_Legacy : UI_Text_Setter
+    public class UI_Text_Setter_TMP : UI_Text_Setter
     {
-        [SerializeField] private Text text;
+        [SerializeField] private TextMeshProUGUI text;
 
         protected override void Init()
         {

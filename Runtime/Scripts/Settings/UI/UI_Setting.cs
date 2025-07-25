@@ -23,7 +23,7 @@ namespace IbrahKit
 
         [TabGroup("Setting")]
         [ShowIf(nameof(interfaceType), SettingsInterfaceType.KEY)]
-        [Dropdown("Settings_Manager.KEY")]
+        [Dropdown("Settings_Manager.DROP")]
         [SerializeField, LabelText("Setting Key")]
         private string settingKey;
 
@@ -46,15 +46,15 @@ namespace IbrahKit
 
         [TabGroup("UI")]
         [SerializeField, LabelText("Title")]
-        protected UI_Text_Setter_Legacy title;
+        protected UI_Text_Setter title;
 
         [TabGroup("UI")]
         [SerializeField, LabelText("Description")]
-        protected UI_Text_Setter_Legacy description;
+        protected UI_Text_Setter description;
 
         [TabGroup("UI")]
         [SerializeField, LabelText("Value")]
-        protected UI_Text_Setter_Legacy value;
+        protected UI_Text_Setter value;
 
         [TabGroup("Runtime")]
         [SerializeField, ReadOnly, LabelText("Initialized")]
@@ -81,7 +81,7 @@ namespace IbrahKit
 
         private void OnDestroy()
         {
-            if (Localization_Manager.Exists(out Localization_Manager lm, true))
+            if (Local_Manager.Exists(out Local_Manager lm, true))
             {
                 lm.OnLanguageChanged -= UpdateUI;
             }
@@ -201,12 +201,12 @@ namespace IbrahKit
 
             if (!subscribed)
             {
-                Localization_Manager.Instance.OnLanguageChanged += UpdateUI;
+                Local_Manager.Instance.OnLanguageChanged += UpdateUI;
                 subscribed = true;
             }
             else
             {
-                Debug.LogWarning($"Already subscribed to {nameof(Localization_Manager)}");
+                Debug.LogWarning($"Already subscribed to {nameof(Local_Manager)}");
             }
 
             Setting_Local_Json settingLocal = setting.GetLocal();

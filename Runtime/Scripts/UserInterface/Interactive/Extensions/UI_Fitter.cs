@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Application = UnityEngine.Application;
 
@@ -9,11 +10,11 @@ namespace IbrahKit
 
         [SerializeField] protected UI_Fitter_Config_SO customConfig;
 
-        [SerializeField] protected bool scaleWidth = true;
-        [SerializeField] protected int maxWidth;
-        [SerializeField] protected bool scaleHeight = true;
-        [SerializeField] protected int maxHeight;
-        [SerializeField] protected int heightOffset;
+        [SerializeField, HorizontalGroup("Width")] protected bool scaleWidth = true;
+        [SerializeField, HorizontalGroup("Width"), ShowIf(nameof(scaleWidth))] protected int maxWidth;
+        [SerializeField, HorizontalGroup("Height")] protected bool scaleHeight = true;
+        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int maxHeight;
+        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int heightOffset;
 
         protected override void Init()
         {

@@ -19,8 +19,7 @@ namespace IbrahKit
 
         public override void Execute()
         {
-            if (!init) Init();
-            if (!init) return;
+            if (!IsInitialized()) return;
 
             TextMeshProUGUI _text = GetText();
 

@@ -32,8 +32,11 @@ namespace IbrahKit
                 if (types[i].Name == extension)
                 {
                     UI_Extension extensionToAdd = gameObject.AddComponent(types[i]) as UI_Extension;
+
                     extensions.Add(extensionToAdd);
+
                     SortList();
+
                     break;
                 }
             }
@@ -52,11 +55,13 @@ namespace IbrahKit
         }
 
         [Button]
-        public void UpdateExtensionList()
+        private void UpdateExtensionList()
         {
             UI_Extension[] _extension = GetComponents<UI_Extension>();
 
             extensions = new(_extension.ToList());
+
+            extensions.ForEach(x => x.ResetInit());
 
             SortList();
         }

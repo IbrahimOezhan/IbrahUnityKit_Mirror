@@ -7,7 +7,7 @@ namespace IbrahKit
     public class Unlockable : ScriptableObject
     {
         [TabGroup("Localization")]
-        [Dropdown(Localization_Manager.KEY)]
+        [Dropdown(Local_Manager.DROP)]
         [SerializeField] protected string key;
 
         [SerializeField] private Unlockable[] unlockOnUnlock;

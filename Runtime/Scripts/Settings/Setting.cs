@@ -16,7 +16,7 @@ namespace IbrahKit
     {
         private bool init;
 
-        [BoxGroup("Base"), SerializeField, Dropdown(Localization_Manager.KEY)] private string settingsKey;
+        [BoxGroup("Base"), SerializeField, Dropdown(Local_Manager.DROP)] private string settingsKey;
 
         [BoxGroup("Value"), SerializeField] private float defaultValue;
         [BoxGroup("Value"), SerializeField] private float value;
@@ -25,7 +25,7 @@ namespace IbrahKit
         [BoxGroup("ValueRange"), SerializeField] private Vector2 valueRange;
 
         [BoxGroup("Display"), SerializeField] private DisplayMode displayMode;
-        [BoxGroup("Display"), Dropdown(Localization_Manager.KEY), SerializeField, ShowIf(nameof(displayMode), DisplayMode.KEY)] private string[] keys;
+        [BoxGroup("Display"), Dropdown(Local_Manager.DROP), SerializeField, ShowIf(nameof(displayMode), DisplayMode.KEY)] private string[] keys;
 
         [BoxGroup("Other Properties"), SerializeField] private SettingsType type;
         [BoxGroup("Other Properties"), SerializeField, ShowIf(nameof(type), SettingsType.RANGE)] private float steps;
@@ -93,9 +93,12 @@ namespace IbrahKit
 
         public Setting_Local_Json GetLocal()
         {
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.IncludeFields = true;
-            Setting_Local_Json json = JsonSerializer.Deserialize<Setting_Local_Json>(Localization_Manager.Instance.GetLocalizedString(settingsKey), options);
+            JsonSerializerOptions options = new()
+            {
+                IncludeFields = true
+            };
+
+            Setting_Local_Json json = JsonSerializer.Deserialize<Setting_Local_Json>(Local_Manager.Instance.GetString(settingsKey), options);
 
             return json;
         }
@@ -119,7 +122,7 @@ namespace IbrahKit
                 case DisplayMode.INT:
                     return value.ToString("0");
                 case DisplayMode.KEY:
-                    return Localization_Manager.Instance.GetLocalizedString(keys[(int)(value / steps)], "");
+                    return Local_Manager.Instance.GetString(keys[(int)(value / steps)]);
             }
 
             return "ERROR";

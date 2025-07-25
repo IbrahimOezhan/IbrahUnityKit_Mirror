@@ -20,8 +20,7 @@ namespace IbrahKit
 
         public override void Execute()
         {
-            if (!init) Init();
-            if (!init) return;
+            if (!IsInitialized()) return;
 
             Text _text = GetText();
             UI_Styling_Config _style = GetResolvedStyle(_text.fontSize, text.color);

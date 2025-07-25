@@ -13,13 +13,13 @@ public class UI_Fitter_Legacy : UI_Fitter
         {
             return;
         }
+
         base.Init();
     }
 
     public override void Execute()
     {
-        if (!init) Init();
-        if (!init) return;
+        if (!IsInitialized()) return;
 
         (Text text, RectTransform rect, UI_Fitter_Config config) = (GetText(), GetRect(), GetConfig());
 

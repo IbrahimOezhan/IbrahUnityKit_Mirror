@@ -17,9 +17,17 @@ namespace IbrahKit
 
         public GameObject Spawn(RectTransform parent, UI_Menu_Extended menu)
         {
-            if (skip) return null;
+            if (skip)
+            {
+                Debug.Log("Skipped");
+                return null;
+            }
 
-            if (layoutSpecific && !UI_Manager.Instance.ShowLayout(showOnLayouts)) return null;
+            if (layoutSpecific && !UI_Manager.Instance.ShowLayout(showOnLayouts))
+            {
+                Debug.Log("Skipped due to layout specific");
+                return null;
+            }
 
             menuItem.Spawn(parent, menu);
 

@@ -20,14 +20,34 @@ namespace IbrahKit
 
         }
 
+        protected bool IsInitialized()
+        {
+            if (!init)
+            {
+                Init();
+            }
+            else
+            {
+                return true;
+            }
+
+            if (!init)
+            {
+                Debug.LogWarning("Could not initialize");
+
+                return false;
+            }
+
+            Debug.Log("Init success", Color.green);
+
+            return true;
+        }
+
         protected virtual void Init()
         {
-            if (uiInteractive == null)
+            if (uiInteractive == null && !TryGetComponent(out uiInteractive))
             {
-                if (!TryGetComponent(out uiInteractive))
-                {
-                    return;
-                }
+                return;
             }
 
             init = true;
@@ -40,8 +60,7 @@ namespace IbrahKit
 
         public void UpdateUI()
         {
-            if (!init) Init();
-            if (!init) return;
+            if (!IsInitialized()) return;
 
             uiInteractive.UpdateUI();
         }
@@ -49,6 +68,11 @@ namespace IbrahKit
         public virtual int GetOrder()
         {
             return 0;
+        }
+
+        public void ResetInit()
+        {
+            init = false;
         }
     }
 }

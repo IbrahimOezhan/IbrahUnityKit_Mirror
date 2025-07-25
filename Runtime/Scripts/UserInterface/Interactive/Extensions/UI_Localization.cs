@@ -17,13 +17,13 @@ namespace IbrahKit
         protected override void Awake()
         {
             base.Awake();
-            if (Localization_Manager.Instance != null) Localization_Manager.Instance.OnLanguageChanged += UpdateUI;
+            if (Local_Manager.Instance != null) Local_Manager.Instance.OnLanguageChanged += UpdateUI;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (Localization_Manager.Instance != null) Localization_Manager.Instance.OnLanguageChanged -= UpdateUI;
+            if (Local_Manager.Instance != null) Local_Manager.Instance.OnLanguageChanged -= UpdateUI;
         }
 
         public void SetFallback(string _fallback)
