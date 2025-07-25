@@ -7,151 +7,169 @@ namespace IbrahKit
 {
     public class UI_Navigation_Manager : MonoBehaviour
     {
-        public static UI_Navigation_Manager Instance;
+        //public static UI_Navigation_Manager Instance;
 
-        private InputTypeNavigation currentType;
-        private UI_Input input;
+        //private InputTypeNavigation currentType;
 
-        [SerializeField] private List<UI_Selectable> activeSelectables = new();
-        [SerializeField] private List<InputType> supportedUINavigationMethods = new();
+        //private UI_Input input;
 
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
+        //[SerializeField] private List<UI_Selectable> activeSelectables = new();
 
-                Input_Manager.Instance.OnInputChanged += OnInputChanged;
-                Input_Manager.Instance.InputUpdate();
+        //[SerializeField] private List<InputType> supportedUINavigationMethods = new();
 
-                input = new();
-                input.Enable();
+        //private void Awake()
+        //{
+        //    if (Instance != null && Instance != this)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //    else
+        //    {
+        //        Instance = this;
 
-                input.Navigation.Keyboard.performed += OnKeyboardInput;
-                input.Navigation.Gamepad.performed += OnGamepadInput;
-                input.Navigation.ConfirmKeyboard.performed += ComfirmKeyboard;
-                input.Navigation.ConfirmKeyboard.canceled += LetGoKeyboard;
-            }
-        }
+        //        Input_Manager.Instance.OnInputChanged += OnInputChanged;
 
-        private void OnDestroy()
-        {
-            if (input != null)
-            {
-                input.Navigation.Keyboard.performed -= OnKeyboardInput;
-                input.Navigation.Gamepad.performed -= OnGamepadInput;
-                input.Navigation.ConfirmKeyboard.performed -= ComfirmKeyboard;
-                input.Navigation.ConfirmKeyboard.canceled -= LetGoKeyboard;
-                input.Disable();
-                input.Dispose();
-            }
+        //        Input_Manager.Instance.InputUpdate();
 
-            if (Input_Manager.Instance != null) Input_Manager.Instance.OnInputChanged -= OnInputChanged;
-        }
+        //        input = new();
 
-        public void AddSelectable(UI_Selectable selectable)
-        {
-            activeSelectables.Add(selectable);
-        }
+        //        input.Enable();
 
-        public void RemoveSelectable(UI_Selectable selectable)
-        {
-            activeSelectables.Remove(selectable);
-        }
+        //        input.Navigation.Keyboard.performed += OnKeyboardInput;
 
-        [Button]
-        public void UpdateSelectables()
-        {
-            activeSelectables.RemoveAll(x => x == null);
+        //        input.Navigation.Gamepad.performed += OnGamepadInput;
 
-            foreach (UI_Selectable selectable in activeSelectables)
-            {
-                selectable.SetupNavigation(activeSelectables);
-            }
-        }
+        //        input.Navigation.ConfirmKeyboard.performed += ComfirmKeyboard;
 
-        private void OnKeyboardInput(InputAction.CallbackContext context)
-        {
-            Vector2 moveDir = context.ReadValue<Vector2>();
-            Navigate(moveDir);
-        }
+        //        input.Navigation.ConfirmKeyboard.canceled += LetGoKeyboard;
+        //    }
+        //}
 
-        private void ComfirmKeyboard(InputAction.CallbackContext context)
-        {
-            UI_Selectable.currentlySelected?.Press();
-        }
+        //private void OnDestroy()
+        //{
+        //    if (input != null)
+        //    {
+        //        input.Navigation.Keyboard.performed -= OnKeyboardInput;
 
-        private void LetGoKeyboard(InputAction.CallbackContext context)
-        {
-            UI_Selectable.currentlySelected?.Hover();
-        }
+        //        input.Navigation.Gamepad.performed -= OnGamepadInput;
 
-        private void OnGamepadInput(InputAction.CallbackContext context)
-        {
-            Vector2 moveDir = context.ReadValue<Vector2>();
-            Navigate(moveDir);
-        }
+        //        input.Navigation.ConfirmKeyboard.performed -= ComfirmKeyboard;
 
-        public void Navigate(Vector2 dir)
-        {
-            UI_Selectable.currentlySelected?.Navigation(dir);
-        }
+        //        input.Navigation.ConfirmKeyboard.canceled -= LetGoKeyboard;
 
-        private void OnInputChanged(InputType type)
-        {
-            if (!IsSupported(type))
-            {
-                return;
-            }
+        //        input.Disable();
 
-            InputTypeNavigation newType = GetInputType(type);
+        //        input.Dispose();
+        //    }
 
-            if (currentType != newType)
-            {
-                switch (newType)
-                {
-                    case InputTypeNavigation.BUTTONS:
-                        if (activeSelectables.Count > 0 && activeSelectables[0] != null) activeSelectables[0].Select();
-                        break;
-                    case InputTypeNavigation.POINT:
-                        UI_Selectable.currentlySelected?.DeSelect();
-                        break;
-                }
-            }
+        //    if (Input_Manager.Instance != null) Input_Manager.Instance.OnInputChanged -= OnInputChanged;
+        //}
 
-            currentType = newType;
-        }
+        //public void AddSelectable(UI_Selectable selectable)
+        //{
+        //    activeSelectables.Add(selectable);
+        //}
 
-        public bool IsSupported(InputType type)
-        {
-            return supportedUINavigationMethods.Contains(type);
-        }
+        //public void RemoveSelectable(UI_Selectable selectable)
+        //{
+        //    activeSelectables.Remove(selectable);
+        //}
 
-        private InputTypeNavigation GetInputType(InputType type)
-        {
-            switch (type)
-            {
-                case InputType.GAMEPAD:
-                    return InputTypeNavigation.BUTTONS;
-                case InputType.KEYBOARD:
-                    return InputTypeNavigation.BUTTONS;
-                case InputType.MOUSE:
-                    return InputTypeNavigation.POINT;
-                case InputType.TOUCHSCREEN:
-                    return InputTypeNavigation.POINT;
-            }
+        //[Button]
+        //public void UpdateSelectables()
+        //{
+        //    activeSelectables.RemoveAll(x => x == null);
 
-            return InputTypeNavigation.POINT;
-        }
+        //    foreach (UI_Selectable selectable in activeSelectables)
+        //    {
+        //        selectable.SetupNavigation(activeSelectables);
+        //    }
+        //}
 
-        private enum InputTypeNavigation
-        {
-            POINT,
-            BUTTONS,
-        }
+        //private void OnKeyboardInput(InputAction.CallbackContext context)
+        //{
+        //    Vector2 moveDir = context.ReadValue<Vector2>();
+
+        //    Navigate(moveDir);
+        //}
+
+        //private void ComfirmKeyboard(InputAction.CallbackContext context)
+        //{
+        //    UI_Selectable.currentlySelected?.Press();
+        //}
+
+        //private void LetGoKeyboard(InputAction.CallbackContext context)
+        //{
+        //    UI_Selectable.currentlySelected?.Hover();
+        //}
+
+        //private void OnGamepadInput(InputAction.CallbackContext context)
+        //{
+        //    Vector2 moveDir = context.ReadValue<Vector2>();
+
+        //    Navigate(moveDir);
+        //}
+
+        //public void Navigate(Vector2 dir)
+        //{
+        //    UI_Selectable.currentlySelected?.Navigation(dir);
+        //}
+
+        //private void OnInputChanged(InputType type)
+        //{
+        //    if (!IsSupported(type))
+        //    {
+        //        return;
+        //    }
+
+        //    InputTypeNavigation newType = GetInputType(type);
+
+        //    if (currentType != newType)
+        //    {
+        //        switch (newType)
+        //        {
+        //            case InputTypeNavigation.BUTTONS:
+
+        //                if (activeSelectables.Count > 0 && activeSelectables[0] != null) activeSelectables[0].Select();
+
+        //                break;
+        //            case InputTypeNavigation.POINT:
+
+        //                UI_Selectable.currentlySelected?.DeSelect();
+
+        //                break;
+        //        }
+        //    }
+
+        //    currentType = newType;
+        //}
+
+        //public bool IsSupported(InputType type)
+        //{
+        //    return supportedUINavigationMethods.Contains(type);
+        //}
+
+        //private InputTypeNavigation GetInputType(InputType type)
+        //{
+        //    switch (type)
+        //    {
+        //        case InputType.GAMEPAD:
+        //            return InputTypeNavigation.BUTTONS;
+        //        case InputType.KEYBOARD:
+        //            return InputTypeNavigation.BUTTONS;
+        //        case InputType.MOUSE:
+        //            return InputTypeNavigation.POINT;
+        //        case InputType.TOUCHSCREEN:
+        //            return InputTypeNavigation.POINT;
+        //    }
+
+        //    return InputTypeNavigation.POINT;
+        //}
+
+        //private enum InputTypeNavigation
+        //{
+        //    POINT,
+        //    BUTTONS,
+        //}
     }
 }

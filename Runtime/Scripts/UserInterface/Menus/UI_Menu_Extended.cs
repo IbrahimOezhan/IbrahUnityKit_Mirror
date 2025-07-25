@@ -115,7 +115,7 @@ namespace IbrahKit
 
             yield return null;
 
-            UI_Navigation_Manager.Instance.UpdateSelectables();
+            //UI_Navigation_Manager.Instance.UpdateSelectables();
         }
 
         private void SpawnListItems(List<Setting> _settings)
