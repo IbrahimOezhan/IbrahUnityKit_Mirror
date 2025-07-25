@@ -70,13 +70,13 @@ public class Local_Manager : SerializedMonoBehaviour
 
         Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
 
-        if(!saveData.SetAttempt()) SetLanguage(GetSystemLanguage(Application.systemLanguage));
+        if (!saveData.SetAttempt()) SetLanguage(GetSystemLanguage(Application.systemLanguage));
         else SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
     }
 
     private void OnDestroy()
     {
-        if(Instance == this)
+        if (Instance == this)
         {
             current.IsValid(out SystemLanguage sys);
             saveData.SetLanguage(sys);
@@ -92,9 +92,9 @@ public class Local_Manager : SerializedMonoBehaviour
 
         List<string> lines = localizationAssets.text.Split("\n").ToList();
 
-        lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(";","")));
+        lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(";", "")));
 
-        if(lines.Count == 0)
+        if (lines.Count == 0)
         {
             Debug.LogWarning("No elements after trimming");
             return;
@@ -113,9 +113,9 @@ public class Local_Manager : SerializedMonoBehaviour
 
         string firstLine = lines[0];
 
-        string[] firstRow = GetRow(firstLine,';');
+        string[] firstRow = GetRow(firstLine, ';');
 
-        if(firstRow.Length == 1)
+        if (firstRow.Length == 1)
         {
             Debug.LogWarning("Not enough columns. At least one key column and one value column required");
             return;
@@ -128,9 +128,9 @@ public class Local_Manager : SerializedMonoBehaviour
 
         for (int i = 1; i < firstRow.Length; i++)
         {
-            LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(firstRow[i],options);
+            LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(firstRow[i], options);
 
-            if(!ll.IsValid(out _))
+            if (!ll.IsValid(out _))
             {
                 Debug.LogWarning($"System language in column {i} cannot be parsed");
                 return;
@@ -141,7 +141,7 @@ public class Local_Manager : SerializedMonoBehaviour
 
         for (int i = 1; i < lines.Count; i++)
         {
-            List<string> row = GetRow(lines[i],';').ToList();
+            List<string> row = GetRow(lines[i], ';').ToList();
             string key = row[0];
             row.RemoveAt(0);
             keyValuePairs.TryAdd(key, row.ToArray());
@@ -174,9 +174,9 @@ public class Local_Manager : SerializedMonoBehaviour
 
         int index = 0;
 
-        while(curr != null)
+        while (curr != null)
         {
-            if(curr.Value == lang)
+            if (curr.Value == lang)
             {
                 currentIndex = index;
                 break;
@@ -192,9 +192,9 @@ public class Local_Manager : SerializedMonoBehaviour
     {
         LinkedListNode<LocalLanguage> curr = languages.First;
 
-        while(curr != null)
+        while (curr != null)
         {
-            if(curr.Value.IsValid(out SystemLanguage sys) && sys == systemLanguage)
+            if (curr.Value.IsValid(out SystemLanguage sys) && sys == systemLanguage)
             {
                 return curr.Value;
             }
@@ -209,16 +209,16 @@ public class Local_Manager : SerializedMonoBehaviour
         LinkedListNode<LocalLanguage> first = languages.Find(current);
         LinkedListNode<LocalLanguage> curr = first;
 
-        while(curr.Value.GetSkip())
+        while (curr.Value.GetSkip())
         {
             curr = curr.Next;
 
-            if(curr == null)
+            if (curr == null)
             {
                 curr = languages.First;
             }
 
-            if(curr == first)
+            if (curr == first)
             {
                 Debug.LogWarning("No usable language found");
                 return current;
@@ -237,7 +237,7 @@ public class Local_Manager : SerializedMonoBehaviour
     {
         string s = GetString(key, parameters);
 
-        if(s == $"Error {key}") s = fallback;
+        if (s == $"Error {key}") s = fallback;
 
         return s;
     }
@@ -246,7 +246,7 @@ public class Local_Manager : SerializedMonoBehaviour
     {
         string result = "";
 
-        if(!GetString(key, current, out result))
+        if (!GetString(key, current, out result))
         {
             Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
@@ -276,20 +276,20 @@ public class Local_Manager : SerializedMonoBehaviour
     {
         result = "";
 
-       if( keyValuePairs.TryGetValue(key, out var value))
-       {
+        if (keyValuePairs.TryGetValue(key, out var value))
+        {
             result = value[currentIndex];
-       }
+        }
 
         return !String_Utilities.IsEmpty(result);
     }
 
-    private int SeperatorAmount(string text, char  separator)
+    private int SeperatorAmount(string text, char separator)
     {
         int amount = 0;
         foreach (var item in text)
         {
-            if(item == separator)
+            if (item == separator)
                 amount++;
         }
         return amount;
@@ -340,7 +340,7 @@ public class Local_Manager : SerializedMonoBehaviour
     [System.Serializable]
     public class LocalLanguage
     {
-        [JsonInclude,SerializeField]
+        [JsonInclude, SerializeField]
         private string sysLang;
 
         [JsonInclude, SerializeField]

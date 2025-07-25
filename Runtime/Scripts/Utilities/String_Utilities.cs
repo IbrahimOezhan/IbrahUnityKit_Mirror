@@ -109,7 +109,7 @@ namespace IbrahKit
                 }
             }
 
-            if(removed > 0)
+            if (removed > 0)
             {
                 Debug.LogWarning("Removed " + removed + " elements");
             }

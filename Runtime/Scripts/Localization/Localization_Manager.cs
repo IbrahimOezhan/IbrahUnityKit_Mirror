@@ -1,12 +1,4 @@
-using Sirenix.OdinInspector;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.PlayerSettings.Switch;
 
 namespace IbrahKit
 {

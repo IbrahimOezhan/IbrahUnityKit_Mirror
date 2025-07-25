@@ -1,4 +1,3 @@
-using Mono.CSharp;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -174,7 +173,7 @@ namespace IbrahKit
                     }
                     else
                     {
-                       return right;
+                        return right;
                     }
                 }
                 else

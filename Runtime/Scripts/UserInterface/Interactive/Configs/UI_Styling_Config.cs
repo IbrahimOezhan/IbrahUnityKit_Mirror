@@ -51,7 +51,7 @@ namespace IbrahKit
 
             [SerializeField] private TMP_FontAsset fontAsset;
 
-            [Dropdown(Local_Manager.SYS),SerializeField] private string language;
+            [Dropdown(Local_Manager.SYS), SerializeField] private string language;
 
             public Font GetFont()
             {
