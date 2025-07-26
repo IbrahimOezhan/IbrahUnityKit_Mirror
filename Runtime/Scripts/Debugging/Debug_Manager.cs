@@ -8,12 +8,12 @@ namespace IbrahKit
 {
     public class Debug_Manager : MonoBehaviour
     {
-        private List<Debug_Item> items = new();
         private List<IDebug> debugs = new();
 
-        [SerializeField] private Text debugContent;
+        [SerializeField] private UI_Text_Setter debugContent;
 
         [SerializeField] private GameObject debugContainer;
+
         [SerializeField] private KeyMap keyMap;
 
         public bool disableLogs;
@@ -52,16 +52,11 @@ namespace IbrahKit
         {
             if (debugContainer.activeInHierarchy)
             {
-                foreach (var debug in debugs)
-                {
-                    debug.Run();
-                }
-
                 StringBuilder sb = new();
 
-                foreach (var item in items)
+                foreach (var debug in debugs)
                 {
-                    sb.Append(item.content);
+                    sb.Append(debug.Run());
                     sb.AppendLine();
                 }
 
@@ -69,25 +64,23 @@ namespace IbrahKit
 
                 if (String_Utilities.IsEmpty(s))
                 {
-                    debugContent.text = "No Information";
+                    debugContent.SetText("No Information");
                 }
-                else debugContent.text = s;
+                else debugContent.SetText(s);
             }
         }
 
-        public void Add(Debug_Item item, IDebug debug)
+        public void Add(IDebug debug)
         {
-            items.Add(item);
             debugs.Add(debug);
-            items.Sort((a, b) =>
+            debugs.Sort((a, b) =>
             {
-                return a.order.CompareTo(b.order);
+                return a.Order().CompareTo(b.Order());
             });
         }
 
-        public void Remove(Debug_Item item, IDebug debug)
+        public void Remove(IDebug debug)
         {
-            items.Remove(item);
             debugs.Remove(debug);
         }
     }

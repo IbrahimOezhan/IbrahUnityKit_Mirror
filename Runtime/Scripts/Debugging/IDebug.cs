@@ -2,6 +2,8 @@ namespace IbrahKit
 {
     public interface IDebug
     {
-        public void Run();
+        public string Run();
+
+        public int Order();
     }
 }

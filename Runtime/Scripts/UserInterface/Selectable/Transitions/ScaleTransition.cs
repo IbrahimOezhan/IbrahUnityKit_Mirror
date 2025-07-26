@@ -15,9 +15,8 @@ namespace IbrahKit
         {
             if (rect == null) rect = go.GetComponent<RectTransform>();
 
-            Vector3 scale = new();
+            Vector3 scale = new(none, none, 1);
 
-            scale = new(none, none);
             rect.localScale = scale;
         }
 
@@ -25,9 +24,8 @@ namespace IbrahKit
         {
             if (rect == null) rect = go.GetComponent<RectTransform>();
 
-            Vector3 scale = new();
+            Vector3 scale = new(hovering, hovering, 1);
 
-            scale = new(hovering, hovering);
             rect.localScale = scale;
         }
 
@@ -35,9 +33,8 @@ namespace IbrahKit
         {
             if (rect == null) rect = go.GetComponent<RectTransform>();
 
-            Vector3 scale = new();
+            Vector3 scale = new(pressed, pressed, 1);
 
-            scale = new(pressed, pressed);
             rect.localScale = scale;
         }
     }

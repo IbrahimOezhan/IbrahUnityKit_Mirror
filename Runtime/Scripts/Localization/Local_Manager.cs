@@ -70,6 +70,8 @@ namespace IbrahKit
 
             Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
 
+            InitManager();
+
             if (!saveData.SetAttempt()) SetLanguage(GetSystemLanguage(Application.systemLanguage));
             else SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
         }

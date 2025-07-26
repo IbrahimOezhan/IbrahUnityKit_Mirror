@@ -17,9 +17,9 @@ public class Save
 
     private string[] filePaths = new string[0];
 
-    private bool[] encrypted;
+    private bool[] encrypted = new bool[0];
 
-    private State[] fileState;
+    private State[] fileState = new State[0];
 
     private HashSet<Savable> inUse = new();
 
@@ -48,6 +48,7 @@ public class Save
         for (int i = 0; i < savables.Count; i++)
         {
             Return(names[i], savables[i], encrypt);
+
             loadable.Add(names[i], savables[i]);
         }
     }
@@ -56,7 +57,18 @@ public class Save
     {
         Init(folderPath, key);
 
-        filePaths = Directory.GetFiles(folderPath);
+        try
+        {
+            filePaths = Directory.GetFiles(folderPath);
+        }
+        catch(Exception ex)
+        {
+            Debug.LogWarning(ex.Message);
+
+            state = State.Corrupted;
+
+            return;
+        }
 
         string[] fileContents = new string[filePaths.Length];
 
@@ -70,7 +82,17 @@ public class Save
 
         for (int i = 0; i < fileContents.Length; i++)
         {
-            fileContents[i] = File.ReadAllText(filePaths[i]);
+            try
+            {
+                fileContents[i] = File.ReadAllText(filePaths[i]);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"{filePaths[i]} - {ex.Message}");
+
+                fileContents[i] = string.Empty;
+                fileState[i] = State.Corrupted;
+            }
         }
 
         for (int i = 0; i < validDecrypt.Length; i++)
@@ -85,7 +107,7 @@ public class Save
 
         for (int i = 0; i < outdatedValidation.Length; i++)
         {
-            outdatedValidation[i] = new(fileContents[i], fileState[i] == State.Corrupted);
+            outdatedValidation[i] = new(filePaths[i],fileContents[i], fileState[i] == State.Corrupted);
 
             fileState[i] = outdatedValidation[i].GetFileState();
 
@@ -154,17 +176,35 @@ public class Save
         }
     }
 
-    public void Return(string name, Savable value, bool encrypt)
+    public void Return(string name, Savable value, bool encrypt, bool stillInUse = false)
     {
-        string json = JsonSerializer.Serialize(value, Options);
+        try
+        {
+            string json = JsonSerializer.Serialize(value, Options);
 
-        string fileContent = encrypt ? String_Utilities.DecryptEncrypt(json, key) : json;
+            string fileContent = encrypt ? String_Utilities.DecryptEncrypt(json, key) : json;
 
-        using StreamWriter streamWriter = new(Path.Combine(folderPath, name));
+            using StreamWriter streamWriter = new(Path.Combine(folderPath, name));
 
-        streamWriter.Write(fileContent);
+            streamWriter.Write(fileContent);
 
-        inUse.Remove(value);
+            if(!stillInUse) inUse.Remove(value);
+        }
+        catch(Exception ex)
+        {
+            Debug.LogWarning($"{name} - {ex.Message}");
+        }
+    }
+
+    public void FlushAll(bool encrypt, bool keep = true)
+    {
+        foreach (var item in loadable)
+        {
+            if (inUse.Contains(item.Value))
+            {
+                Return(item.Key, item.Value, encrypt, keep);
+            }
+        }
     }
 
     private static readonly JsonSerializerOptions Options = new()
@@ -184,7 +224,7 @@ public class Save
 
         private Savable result;
 
-        public ValidateTask(string fileContent, bool instantFail)
+        public ValidateTask(string filePath,string fileContent, bool instantFail)
         {
             // File couldnt be parsed and therefor the type cannot be read and file is useless
             if (instantFail)
@@ -213,9 +253,19 @@ public class Save
                     return;
                 }
 
-                result = (Savable)Activator.CreateInstance(t);
+                try
+                {
+                    result = (Savable)Activator.CreateInstance(t);
+                    fileState = State.Outdated;
+                }
+                catch(Exception ex)
+                {
+                    Debug.LogWarning($"[{filePath}] {ex.Message}");
 
-                fileState = State.Outdated;
+                    result = null;
+
+                    fileState = State.Corrupted;
+                }
             }
             catch
             {
