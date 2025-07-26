@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace IbrahKit
@@ -12,108 +11,97 @@ namespace IbrahKit
     [DefaultExecutionOrder(Execution_Order.save)]
     public partial class Save_Manager : Manager_Base
     {
-        private const string encryptionKey = "a3c9e7r3gf3d5e7";
+        private const string GENERIC_KEY = "Generic";
+
+        private const string KEY = "a3c9e7r3gf3d5e7";
+
+        [SerializeField] private bool encrypt;
+
+        private static Save currentSave;
+
+        private static GenericSaveData generic;
 
         public static Save_Manager Instance;
-        public static SaveFolder currentFolder;
 
         private void Awake()
         {
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else
+            if (Instance != null && Instance != this)
             {
-                Instance = this;
-
-                string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
-                string currentSavePath = Path.Combine(saveFolderPath, "Current");
-
-                try
-                {
-                    SaveFolder currentSaveFolder = new(currentSavePath, encryptionKey);
-
-                    string regex = "([0-9]+\\.)+[0-9]*";
-                    List<string> allDirectories = Directory.GetDirectories(saveFolderPath).Where(x => Regex.IsMatch(x, regex)).ToList();
-
-                    // Enters statement if save folder is not compatible anymore
-                    if (currentSaveFolder.ValidateSaves())
-                    {
-                        Debug.LogWarning("Current save folder failed validation");
-
-                        int versionCompare = String_Utilities.CompareVersions(currentSaveFolder.GetVersion(), Application.version);
-
-                        // Current is newer version than the save files version
-                        if (versionCompare > 0)
-                        {
-                            Debug.LogWarning("Current version is newer than the save file version. Creating backup of old save.");
-
-                            //Backup data to new folder named the old version
-                            string oldVersionPath = Path.Combine(saveFolderPath, currentSaveFolder.GetVersion());
-                            Directory.CreateDirectory(oldVersionPath);
-                            SaveFolder.CopyAll(currentSaveFolder, oldVersionPath);
-                            currentSaveFolder.DeleteOutdated();
-                            currentFolder = currentSaveFolder;
-                        }
-                        // Current is older meaning an older version of the game was launched after a newer one was already launched
-                        else if (versionCompare < 0)
-                        {
-                            Debug.LogWarning("Current version is older than the save file version. Trying to fall back on old version.");
-
-                            //Sort list by version number
-                            allDirectories.Sort((a, b) =>
-                            {
-                                return String_Utilities.CompareVersions(Path.GetDirectoryName(a), Path.GetDirectoryName(b));
-                            });
-
-                            // Check if old version is compatible
-                            foreach (string directory in allDirectories)
-                            {
-                                SaveFolder oldFolder = new(directory, encryptionKey);
-
-                                if (!oldFolder.ValidateSaves())
-                                {
-                                    Debug.LogWarning("Old save folder with version " + oldFolder.GetVersion() + " succeded validation");
-
-                                    currentFolder = oldFolder;
-                                    break;
-                                }
-                            }
-
-                            if (currentFolder == null)
-                            {
-                                Debug.LogWarning("No old save found with supported files. Creating new");
-
-                                string oldVersionPath = Path.Combine(saveFolderPath, Application.version);
-                                SaveFolder newFolder = new(oldVersionPath, encryptionKey, true);
-                                currentFolder = newFolder;
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning("Version is identitcal but still corrupted. Creating new");
-                            currentSaveFolder = new(currentSavePath, encryptionKey, true);
-                            currentFolder = currentSaveFolder;
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log("Save file successfully loaded");
-
-                        currentFolder = currentSaveFolder;
-                    }
-                }
-                catch
-                {
-                    currentFolder = new(currentSavePath, encryptionKey, true);
-                }
+                Destroy(gameObject);
+                return;
             }
+
+            string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
+
+            if (currentSave == null) currentSave = GetCurrentFolder(saveFolderPath, KEY);
+
+            if (generic == null) generic = (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
+
+            Instance = this;
         }
 
         private void OnDestroy()
         {
             if (Instance == this)
             {
-                currentFolder.SaveGenericData();
+                currentSave.Return(GENERIC_KEY, generic, encrypt);
             }
+        }
+
+        public Savable Load(string name, Savable defaultValue)
+        {
+            return currentSave.Load(name, defaultValue);
+        }
+
+        public void Return(string name, Savable value)
+        {
+            currentSave.Return(name, value, encrypt);
+        }
+
+        public GenericSaveData GetGeneric()
+        {
+            return generic;
+        }
+
+        private Save GetCurrentFolder(string saveFolderPath, string key)
+        {
+            string thisVersionPath = Path.Combine(saveFolderPath, Application.version);
+
+            Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
+
+            if (bestSave.GetState() == Save.State.Valid) return bestSave;
+
+            return new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
+        }
+
+        private Save GetBestFolder(string thisVersionFolder, string saveFolderPath, string key)
+        {
+            List<string> folders = Directory.GetDirectories(saveFolderPath).ToList();
+
+            folders.RemoveAll(x => !String_Utilities.TryParseVersion(Path.GetFileName(x)));
+
+            if (folders.Count == 0)
+            {
+                return new(new(), new(), Path.Combine(saveFolderPath, Application.version), key, encrypt);
+            }
+
+            List<Save> saves = new();
+
+            for (int i = 0; i < folders.Count; i++)
+            {
+                Save save = new(folders[i], key);
+
+                saves.Add(save);
+
+                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save.State.Valid)
+                {
+                    return save;
+                }
+            }
+
+            saves = saves.OrderByDescending(x => x.GetValidFileCount()).ThenBy(x => x.GetState()).ToList();
+
+            return saves[0];
         }
     }
 }

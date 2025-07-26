@@ -28,7 +28,7 @@ namespace IbrahKit
 
                 DontDestroyOnLoad(gameObject);
 
-                saveData = (SaveData)Save_Manager.currentFolder.LoadObject(saveDataName, new SaveData());
+                saveData = (SaveData)Save_Manager.Instance.Load(saveDataName, new SaveData());
             }
         }
 
@@ -36,7 +36,7 @@ namespace IbrahKit
         {
             if (Instance == this)
             {
-                Save_Manager.currentFolder.SaveObject(saveDataName, saveData);
+                Save_Manager.Instance.Return(saveDataName, saveData);
             }
         }
 

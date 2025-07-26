@@ -39,7 +39,7 @@ namespace IbrahKit
         {
             if (Instance == this)
             {
-                data = (SaveData)Save_Manager.currentFolder.LoadObject(KEY, new SaveData());
+                data = (SaveData)Save_Manager.Instance.Load(KEY, new SaveData());
 
                 for (int i = 0; i < settings.Count; i++)
                 {
@@ -60,7 +60,7 @@ namespace IbrahKit
                     data.SetValue(key, settings[i].GetValue().ToString());
                 }
 
-                Save_Manager.currentFolder.SaveObject(KEY, data);
+                Save_Manager.Instance.Return(KEY, data);
             }
         }
 

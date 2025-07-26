@@ -1,4 +1,3 @@
-using IbrahKit;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
@@ -7,7 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
-using Debug = IbrahKit.Debug;
 
 namespace IbrahKit
 {
@@ -68,7 +66,7 @@ namespace IbrahKit
 
             DontDestroyOnLoad(gameObject);
 
-            saveData = (SaveData)Save_Manager.currentFolder.LoadObject(SAVE, new SaveData());
+            saveData = (SaveData)Save_Manager.Instance.Load(SAVE, new SaveData());
 
             Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
 
@@ -82,7 +80,7 @@ namespace IbrahKit
             {
                 current.IsValid(out SystemLanguage sys);
                 saveData.SetLanguage(sys);
-                Save_Manager.currentFolder.SaveObject(SAVE, saveData);
+                Save_Manager.Instance.Return(SAVE, saveData);
             }
         }
 

@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace IbrahKit
+{
+    [Serializable]
+    public class GenericSaveData : Savable
+    {
+        [JsonInclude] private Dictionary<string, string> values = new();
+
+        public void Set<T>(string key, T value)
+        {
+            values[key] = value.ToString(); // could be culture-aware if needed
+        }
+
+        public bool TryGet<T>(string key, out T result)
+        {
+            result = default;
+
+            if (!values.TryGetValue(key, out var tmpResult))
+                return false;
+
+            try
+            {
+                result = (T)Convert.ChangeType(tmpResult, typeof(T));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+}

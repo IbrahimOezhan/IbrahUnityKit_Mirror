@@ -38,7 +38,7 @@ namespace IbrahKit
                 return false;
             }
 
-            Debug.Log("Init success", Color.green);
+            Debug.Log("GetCurrentFolder success", Color.green);
 
             return true;
         }

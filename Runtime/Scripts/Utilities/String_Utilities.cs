@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -205,6 +206,13 @@ namespace IbrahKit
             }
 
             return 0;
+        }
+
+        public static bool TryParseVersion(string text)
+        {
+            string regex = "[0-9]+(?:\\.[0-9]+)*";
+
+            return Regex.IsMatch(text, regex);
         }
 
         public static string DecryptEncrypt(string _data, string key)
