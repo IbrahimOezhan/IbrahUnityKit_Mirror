@@ -21,11 +21,17 @@ namespace IbrahKit
         [TabGroup("Transition Settings"), SerializeReference]
         private List<SelectableTransition> transitionsNotInteractable = new();
 
+        [TabGroup("Runtime Data"), ReadOnly, SerializeReference]
+        private SelectableGroup selectableGroup;
+
         [TabGroup("Events"), SerializeField]
         public UnityEvent OnClickEvent;
 
         [TabGroup("Events"), SerializeField]
         public UnityEvent OnClickNotInteractableEvent;
+
+        [TabGroup("Events"), SerializeField]
+        public UnityEvent OnDeSelect;
 
         [SerializeField] private bool interactable = true;
 
@@ -37,6 +43,10 @@ namespace IbrahKit
         {
             base.OnEnable();
 
+            selectableGroup = Transform_Utilities.GetParent<SelectableGroup>(transform);
+
+            if(selectableGroup != null ) selectableGroup.Add(this);
+
             Visualize();
         }
 
@@ -44,23 +54,9 @@ namespace IbrahKit
         {
             SetState(SelectedState.None);
 
+            if (selectableGroup != null) selectableGroup.Remove(this);
+
             DeSelect();
-        }
-
-        public virtual void Select()
-        {
-            SetState(SelectedState.Hovering);
-
-            if (currentlySelected != null) currentlySelected.DeSelect();
-
-            currentlySelected = this;
-        }
-
-        public virtual void DeSelect()
-        {
-            SetState(SelectedState.None);
-
-            if (currentlySelected == this) currentlySelected = null;
         }
 
         public void Visualize()
@@ -86,9 +82,20 @@ namespace IbrahKit
             }
         }
 
-        public void Press()
+        public virtual void DeSelect()
+        {
+            SetState(SelectedState.None);
+
+            if (currentlySelected == this) currentlySelected = null;
+        }
+
+        public void Select()
         {
             SetState(SelectedState.Pressed);
+
+            currentlySelected = this;
+
+            if (selectableGroup != null) selectableGroup.OnSelect(this);
 
             if (interactable)
             {
@@ -112,11 +119,6 @@ namespace IbrahKit
             }
         }
 
-        public void Exit()
-        {
-            SetState(SelectedState.None);
-        }
-
         public void SetInteractable(bool value)
         {
             interactable = value;
@@ -126,6 +128,11 @@ namespace IbrahKit
 
         protected void SetState(SelectedState state)
         {
+            if (selectedState == SelectedState.Pressed && state != SelectedState.Pressed)
+            {
+                OnDeSelect.Invoke();
+            }
+
             selectedState = state;
 
             Visualize();
@@ -138,22 +145,30 @@ namespace IbrahKit
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+
             Hover();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Exit();
+            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+
+            DeSelect();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Press();
+            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+
+            Select();
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Exit();
+            if (selectableGroup != null) return;
+
+            DeSelect();
         }
     }
 }

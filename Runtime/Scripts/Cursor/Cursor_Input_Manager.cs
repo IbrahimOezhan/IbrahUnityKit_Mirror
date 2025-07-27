@@ -1,10 +1,18 @@
+using IbrahKit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class Cursor_Input_Manager : MonoBehaviour
 {
     private CursorInput input;
 
     private Vector2 mousePos;
+
+    public Action OnLMB;
 
     public static Cursor_Input_Manager Instance;
 
@@ -19,6 +27,8 @@ public class Cursor_Input_Manager : MonoBehaviour
         input = new();
 
         input.Enable();
+
+        input.Map.LMB.performed += LMB;
 
         Instance = this;
 
@@ -39,6 +49,8 @@ public class Cursor_Input_Manager : MonoBehaviour
     {
         if (input != null)
         {
+            input.Map.LMB.performed -= LMB;
+
             input.Disable();
             input.Dispose();
         }
@@ -47,5 +59,24 @@ public class Cursor_Input_Manager : MonoBehaviour
     public Vector2 GetMousePos()
     {
         return mousePos;
+    }
+
+    public void LMB(InputAction.CallbackContext context)
+    {
+        OnLMB?.Invoke();
+    }
+
+    public bool CursorOverUI(EventSystem system)
+    {
+        PointerEventData pointerData = new(system)
+        {
+            position = mousePos
+        };
+
+        List<RaycastResult> results = new();
+
+        system.RaycastAll(pointerData, results);
+
+        return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
     }
 }

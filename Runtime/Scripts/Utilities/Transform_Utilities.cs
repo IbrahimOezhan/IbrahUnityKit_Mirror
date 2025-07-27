@@ -46,7 +46,8 @@ namespace IbrahKit
                 {
                     return element;
                 }
-                else return GetParent<T>(transform.parent);
+
+                return GetParent<T>(transform.parent);
             }
 
             return default;
