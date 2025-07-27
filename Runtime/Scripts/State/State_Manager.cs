@@ -10,7 +10,7 @@ namespace IbrahKit
     {
         public const string KEY = "States";
 
-        [SerializeField, ReadOnly] private int currentState = 0;
+        [SerializeField, ReadOnly] private string currentState;
 
         [SerializeField] private List<string> statesList = new();
 
@@ -42,21 +42,21 @@ namespace IbrahKit
 
         public void SetCurrentState(string newState)
         {
-            SetCurrentState(statesList.IndexOf(statesList.Find(x => x == newState)));
-        }
+            if(statesList.Contains(newState))
+            {
+                currentState = newState;
 
-        public void SetCurrentState(int index)
-        {
-            currentState = index;
-
-            StateUpdate();
+                StateUpdate();
+            }
+            else
+            {
+                Debug.LogWarning($"State {newState} does not exist");
+            }
         }
 
         public string GetCurrentState()
         {
-            if (statesList.Count == 0) return "";
-
-            return statesList[currentState];
+            return currentState;
         }
 
         public void StateUpdate()
@@ -66,14 +66,12 @@ namespace IbrahKit
 
         public bool CompareState(string state)
         {
-            if (currentState >= statesList.Count) return false;
-
-            return GetCurrentState().Equals(state);
+            return currentState.Equals(state);
         }
 
         public string Run()
         {
-            return "Current State: " + statesList[currentState];
+            return "Current State: " + currentState;
         }
 
         public int Order()

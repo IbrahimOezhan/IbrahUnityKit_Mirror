@@ -1,6 +1,7 @@
 using IbrahKit;
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = IbrahKit.Debug;
 
 public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 {
@@ -40,10 +41,18 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
             case InputType.KEYBOARD:
             case InputType.MOUSE:
 
-                isVisible = IsVisible(State_Manager.Instance.GetCurrentState());
+
+                string state = State_Manager.Instance.GetCurrentState();
+
+                Debug.Log(state);
+
+                isVisible = IsVisible(state);
+
+                Debug.Log(isVisible);
 
                 break;
-            case InputType.GAMEPAD:
+
+            default:
 
                 isVisible = false;
 
@@ -60,9 +69,11 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
     {
         for (int i = 0; i < cursorVisibility.Count; i++)
         {
-            if (cursorVisibility[i].Match(state))
+            if (cursorVisibility[i].Match(state, out bool res))
             {
-                return cursorVisibility[i].State();
+                Debug.Log("Matched " + state);
+                Debug.Log(state + res);
+                return res;
             }
         }
 
@@ -92,17 +103,16 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
     [System.Serializable]
     private class CursorVisibilty
     {
-        [Dropdown("States"),SerializeField] private string state;
+        [Dropdown(State_Manager.KEY),SerializeField] private string state;
         [SerializeField] private bool visible;
 
-        public bool Match(string state)
+        public bool Match(string state, out bool result)
         {
-            return state.Equals(state);
-        }
+            Debug.Log(state);
 
-        public bool State()
-        {
-            return visible;
+            result = visible;
+
+            return this.state.Equals(state);
         }
     }
 }
