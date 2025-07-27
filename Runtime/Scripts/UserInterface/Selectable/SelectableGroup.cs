@@ -1,10 +1,13 @@
 using IbrahKit;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SelectableGroup : MonoBehaviour
 {
     private HashSet<UI_Selectable> selectables = new();
+
+    [SerializeField] private bool deselectOnClickAnywhere;
 
     private void OnEnable()
     {
@@ -18,6 +21,8 @@ public class SelectableGroup : MonoBehaviour
 
     public void OnLMB()
     {
+        if (!deselectOnClickAnywhere) return;
+        if (Cursor_Input_Manager.Instance.CursorOverUI(EventSystem.current)) return;
         foreach (var item in selectables)
         {
             item.DeSelect();
