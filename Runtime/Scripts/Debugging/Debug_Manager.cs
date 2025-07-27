@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -54,9 +55,17 @@ namespace IbrahKit
             {
                 StringBuilder sb = new();
 
-                foreach (var debug in debugs)
+                foreach (IDebug debug in debugs)
                 {
-                    sb.Append(debug.Run());
+                    try
+                    {
+                        sb.Append(debug.Run());
+                    }
+                    catch(Exception ex)
+                    {
+                        sb.Append(debug.gameObject.name + " caused an exception: " + ex.Message);
+                    }
+
                     sb.AppendLine();
                 }
 

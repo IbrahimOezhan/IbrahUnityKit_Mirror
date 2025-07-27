@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,29 +14,33 @@ namespace IbrahKit
             if (property.serializedObject.targetObjects.Length > 1)
             {
                 EditorGUI.LabelField(position, label.text, "Multi-editing is not supported");
+
                 return;
             }
 
             DropdownAttribute dropdownAttribute = (DropdownAttribute)attribute;
-            string filePath = dropdownAttribute.filePath;
 
-            if (!File.Exists(filePath))
+            bool exists = Dropdown_Utilities.GetDropdown(dropdownAttribute.fileName, out IEnumerable<string> dropdown);
+
+            if (!exists)
             {
                 EditorGUI.LabelField(position, label.text, "File doesn't exist");
                 return;
             }
 
-            List<string> dropdownInput = String_Utilities.GetDropdown(filePath);
+            List<string> list =dropdown.ToList();
 
-            if (dropdownInput == null || dropdownInput.Count == 0)
+            if (list == null || list.Count() == 0)
             {
                 EditorGUI.LabelField(position, label.text, "No options");
                 return;
             }
 
-            int selectedIndex = Mathf.Max(0, dropdownInput.IndexOf(property.stringValue));
-            selectedIndex = EditorGUI.Popup(position, label.text, selectedIndex, dropdownInput.ToArray());
-            property.stringValue = dropdownInput[selectedIndex];
+            int selectedIndex = Mathf.Max(0, list.IndexOf(property.stringValue));
+
+            selectedIndex = EditorGUI.Popup(position, label.text, selectedIndex, list.ToArray());
+
+            property.stringValue = list[selectedIndex];
         }
     }
 }

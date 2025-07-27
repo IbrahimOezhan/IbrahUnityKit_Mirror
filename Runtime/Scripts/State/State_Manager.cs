@@ -6,7 +6,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.state)]
-    public class State_Manager : Manager_Base
+    public class State_Manager : Manager_Base, IDebug
     {
         public const string KEY = "States";
 
@@ -20,16 +20,24 @@ namespace IbrahKit
 
         private void Awake()
         {
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else
+            if (Instance != null && Instance != this)
             {
-                Instance = this;
+                Destroy(gameObject);
+                return;
             }
+
+            Instance = this;
+        }
+
+        private void Start()
+        {
+
+            Debug_Manager.Instance.Add(this);
         }
 
         private void OnValidate()
         {
-            String_Utilities.CreateDropdown(statesList, KEY);
+            Dropdown_Utilities.CreateDropdown(statesList, KEY);
         }
 
         public void SetCurrentState(string newState)
@@ -61,6 +69,16 @@ namespace IbrahKit
             if (currentState >= statesList.Count) return false;
 
             return GetCurrentState().Equals(state);
+        }
+
+        public string Run()
+        {
+            return "Current State: " + statesList[currentState];
+        }
+
+        public int Order()
+        {
+            return 0;
         }
     }
 }

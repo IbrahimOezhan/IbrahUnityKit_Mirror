@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -6,11 +7,11 @@ namespace IbrahKit
     [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
     public class DropdownAttribute : PropertyAttribute
     {
-        public string filePath;
+        public string fileName;
 
         public DropdownAttribute(string fileName)
         {
-            this.filePath = "Assets/Resources/DropdownFiles/" + fileName + ".txt";
+            this.fileName = fileName;
         }
     }
 }

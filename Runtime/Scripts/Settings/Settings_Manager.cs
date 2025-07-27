@@ -67,7 +67,7 @@ namespace IbrahKit
         [Button(Name = "Validate")]
         private void OnValidate()
         {
-            String_Utilities.CreateDropdown(settings.Select(x => x.GetKey()).ToList(), KEY);
+            Dropdown_Utilities.CreateDropdown(settings.Select(x => x.GetKey()).ToList(), KEY);
         }
 
         private IEnumerable GetAllTypesDropdownFormat() { return Type_Utilities.GetAllTypesDropdownFormat(typeof(Setting)); }

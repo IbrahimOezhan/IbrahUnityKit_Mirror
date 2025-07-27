@@ -2,7 +2,7 @@ using IbrahKit;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cursor_Visibilty_Manager : MonoBehaviour
+public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 {
     private bool isVisible;
 
@@ -26,6 +26,11 @@ public class Cursor_Visibilty_Manager : MonoBehaviour
 
         Input_Manager.Instance.OnInputChanged += OnInputTypeChanged;
         Input_Manager.Instance.InputUpdate();
+    }
+
+    private void Start()
+    {
+        Debug_Manager.Instance.Add(this);
     }
 
     private void Update()
@@ -55,9 +60,9 @@ public class Cursor_Visibilty_Manager : MonoBehaviour
     {
         for (int i = 0; i < cursorVisibility.Count; i++)
         {
-            if (cursorVisibility[i].state == state)
+            if (cursorVisibility[i].Match(state))
             {
-                return cursorVisibility[i].visible;
+                return cursorVisibility[i].State();
             }
         }
 
@@ -74,10 +79,30 @@ public class Cursor_Visibilty_Manager : MonoBehaviour
         inputType = type;
     }
 
+    public string Run()
+    {
+        return "Cursor Visibilty: " + IsVisible();
+    }
+
+    public int Order()
+    {
+        return 0;
+    }
+
     [System.Serializable]
     private class CursorVisibilty
     {
-        [Dropdown("States")] public string state;
-        [Dropdown("States")] public bool visible;
+        [Dropdown("States"),SerializeField] private string state;
+        [SerializeField] private bool visible;
+
+        public bool Match(string state)
+        {
+            return state.Equals(state);
+        }
+
+        public bool State()
+        {
+            return visible;
+        }
     }
 }

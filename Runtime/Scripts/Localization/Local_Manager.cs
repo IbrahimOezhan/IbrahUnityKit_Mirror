@@ -151,11 +151,11 @@ namespace IbrahKit
 
             Debug.Log(keyValuePairs.Keys.ToList().Count);
 
-            String_Utilities.CreateDropdown(keyValuePairs.Keys.ToList(), DROP);
+            Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.ToList(), DROP);
 
-            String_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
+            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
 
-            String_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
+            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
         }
 
         public void UpdateLanguage()

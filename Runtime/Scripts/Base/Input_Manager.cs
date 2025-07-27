@@ -3,12 +3,15 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
 
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.input)]
-    public class Input_Manager : Manager_Base
+    public class Input_Manager : Manager_Base, IDebug
     {
+        private ButtonControl lastPressed;
+
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
@@ -27,52 +30,46 @@ namespace IbrahKit
             }
         }
 
+        private void Start()
+        {
+            Debug_Manager.Instance.Add(this);
+        }
+
         private void Update()
         {
-            InputType type = currentInputType;
+            InputType lastInputType = currentInputType;
 
             for (int i = 0; i < InputSystem.devices.Count; i++)
             {
                 foreach (InputControl control in InputSystem.devices[i].allControls)
                 {
-                    switch (control)
+                    if(control is ButtonControl button && button.wasPressedThisFrame)
                     {
-                        case KeyControl key:
-                            if (key.wasPressedThisFrame)
-                            {
+                        switch (control.device)
+                        {
+                            case Mouse:
+                                currentInputType = InputType.MOUSE;
+                                lastPressed = button;
+                                break;
+                            case Gamepad:
+                                currentInputType = InputType.GAMEPAD;
+                                lastPressed = button;
+                                break;
+                            case Keyboard:
                                 currentInputType = InputType.KEYBOARD;
-                            }
-                            break;
-                        case ButtonControl button:
-                            if (button.wasPressedThisFrame)
-                            {
-                                if (IsMouseButton(button))
-                                {
-                                    currentInputType = InputType.MOUSE;
-                                }
-                                else currentInputType = InputType.GAMEPAD;
-                            }
-                            break;
-                        case TouchControl touch:
-                            if (touch.press.wasPressedThisFrame)
-                            {
+                                lastPressed = button;
+                                break;
+                            case Touchscreen:
                                 currentInputType = InputType.TOUCHSCREEN;
-                            }
-                            break;
+                                lastPressed = button;
+                                break;
+                        }
+                        break;
                     }
                 }
             }
 
-            if (currentInputType != type) InputUpdate();
-        }
-
-        private bool IsMouseButton(ButtonControl button)
-        {
-            Mouse mouse = Mouse.current;
-            return mouse != null &&
-                   (button == mouse.leftButton ||
-                    button == mouse.rightButton ||
-                    button == mouse.middleButton);
+            if (currentInputType != lastInputType) InputUpdate();
         }
 
         public InputType GetInputType()
@@ -83,6 +80,16 @@ namespace IbrahKit
         public void InputUpdate()
         {
             OnInputChanged?.Invoke(currentInputType);
+        }
+
+        public string Run()
+        {
+            return "Current Input Type: " + currentInputType + " Last Pressed: " + lastPressed.displayName;
+        }
+
+        public int Order()
+        {
+            return 0;
         }
     }
 }
