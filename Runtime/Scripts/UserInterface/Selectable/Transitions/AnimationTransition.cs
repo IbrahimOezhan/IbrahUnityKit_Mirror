@@ -13,16 +13,28 @@ namespace IbrahKit
 
         protected override void OnHovering(GameObject go)
         {
+            if(animator == null)
+            {
+                animator = go.GetComponent<Animator>();
+            }
             animator.Play(hovering);
         }
 
         protected override void OnNone(GameObject go)
         {
+            if (animator == null)
+            {
+                animator = go.GetComponent<Animator>();
+            }
             animator.Play(none);
         }
 
         protected override void OnPressed(GameObject go)
         {
+            if (animator == null)
+            {
+                animator = go.GetComponent<Animator>();
+            }
             animator.Play(pressed);
         }
     }

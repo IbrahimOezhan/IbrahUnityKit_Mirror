@@ -28,11 +28,11 @@ namespace IbrahKit
 
         private SaveData saveData;
 
-        [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
-
         [SerializeField] private TextAsset localizationAssets;
 
-        [SerializeField, OdinSerialize] private LinkedList<LocalLanguage> languages;
+        [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
+
+        [SerializeField, OdinSerialize] private LinkedList<LocalLanguage> languages = new();
 
         [HideInInspector] public Action OnLanguageChanged;
 
@@ -70,7 +70,7 @@ namespace IbrahKit
 
             Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
 
-            InitManager();
+            Init();
 
             if (!saveData.SetAttempt()) SetLanguage(GetSystemLanguage(Application.systemLanguage));
             else SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
@@ -87,14 +87,17 @@ namespace IbrahKit
         }
 
         [Button]
-        private void InitManager()
+        private void Init()
         {
+            char seperator = ';';
+
             languages = new();
+
             keyValuePairs = new();
 
             List<string> lines = localizationAssets.text.Split("\n").ToList();
 
-            lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(";", "")));
+            lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), "")));
 
             if (lines.Count == 0)
             {
@@ -102,54 +105,63 @@ namespace IbrahKit
                 return;
             }
 
-            int lastAmount = SeperatorAmount(lines[0], ';');
-
-            for (int i = 0; i < lines.Count; i++)
-            {
-                if (!ValidFormatting(lines[i], lastAmount, ';'))
-                {
-                    Debug.LogWarning("Uneven amount of columns " + i);
-                    return;
-                }
-            }
-
-            string firstLine = lines[0];
-
-            string[] firstRow = GetRow(firstLine, ';');
-
-            if (firstRow.Length == 1)
-            {
-                Debug.LogWarning("Not enough columns. At least one key column and one value column required");
-                return;
-            }
+            string[] rowOne = GetRow(lines[0], seperator);
 
             JsonSerializerOptions options = new()
             {
                 IncludeFields = true
             };
 
-            for (int i = 1; i < firstRow.Length; i++)
+            for (int i = 1; i < rowOne.Length; i++)
             {
-                LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(firstRow[i], options);
-
-                if (!ll.IsValid(out _))
+                if(!Parse_Utilties.IsValidJson(rowOne[i]))
                 {
-                    Debug.LogWarning($"System language in column {i} cannot be parsed");
+                    Debug.LogWarning($"Invalid json in row 0 column {i}");
                     return;
                 }
 
-                languages.AddLast(ll);
+                try
+                {
+                    LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(rowOne[i], options);
+
+                    if (!ll.IsValid(out _))
+                    {
+                        Debug.LogWarning($"System language in column {i} cannot be parsed");
+                        return;
+                    }
+
+                    languages.AddLast(ll);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogException(e);  
+                    return;
+                }
             }
 
             for (int i = 1; i < lines.Count; i++)
             {
-                List<string> row = GetRow(lines[i], ';').ToList();
+                List<string> row = GetRow(lines[i], seperator).ToList();
+
+                int requiredCount = languages.Count + 1;
+
+                while (row.Count < requiredCount)
+                {
+                    row.Add(string.Empty);
+                }
+
+                while(row.Count > requiredCount)
+                {
+                    Debug.LogWarning($"Removed {row[row.Count - 1]} from the back");
+                    row.RemoveAt(row.Count - 1);
+                }
+
                 string key = row[0];
+
                 row.RemoveAt(0);
+
                 keyValuePairs.TryAdd(key, row.ToArray());
             }
-
-            Debug.Log(keyValuePairs.Keys.ToList().Count);
 
             Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.ToList(), DROP);
 
