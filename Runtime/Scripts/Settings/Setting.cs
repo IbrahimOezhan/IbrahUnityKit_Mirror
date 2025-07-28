@@ -19,16 +19,21 @@ namespace IbrahKit
         [BoxGroup("Base"), SerializeField, Dropdown(Local_Manager.DROP)] private string settingsKey;
 
         [BoxGroup("Value"), SerializeField] private float defaultValue;
+
         [BoxGroup("Value"), SerializeField] private float value;
+
         [BoxGroup("Value"), SerializeField] private bool loop;
 
         [BoxGroup("ValueRange"), SerializeField] private Vector2 valueRange;
 
         [BoxGroup("Display"), SerializeField] private DisplayMode displayMode;
+
         [BoxGroup("Display"), Dropdown(Local_Manager.DROP), SerializeField, ShowIf(nameof(displayMode), DisplayMode.KEY)] private string[] keys;
 
         [BoxGroup("Other Properties"), SerializeField] private SettingsType type;
+
         [BoxGroup("Other Properties"), SerializeField, ShowIf(nameof(type), SettingsType.RANGE)] private float steps;
+
         [BoxGroup("Other Properties"), SerializeField] private UnityEvent OnValueChange;
 
         public virtual void Init(string initialValue)
@@ -81,7 +86,7 @@ namespace IbrahKit
             OnValueChange.Invoke();
         }
 
-        public void SetValueRange(Vector2 newRange)
+        public virtual void SetValueRange(Vector2 newRange)
         {
             valueRange = newRange;
         }
@@ -103,7 +108,7 @@ namespace IbrahKit
             return json;
         }
 
-        public virtual Vector2 GetValueRange()
+        public Vector2 GetValueRange()
         {
             return valueRange;
         }

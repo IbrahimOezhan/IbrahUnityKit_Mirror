@@ -388,6 +388,4 @@ namespace IbrahKit
             }
         }
     }
-
 }
-
