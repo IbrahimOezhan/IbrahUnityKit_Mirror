@@ -19,7 +19,7 @@ namespace IbrahKit
             if (sub != null)
             {
                 sub.OnClickEvent.RemoveAllListeners();
-                sub.OnClickEvent.AddListener(() => ChangeValue(-setting.GetStep()));
+                sub.OnClickEvent.AddListener(() => AddValue(-setting.GetStep()));
             }
             else
             {
@@ -29,7 +29,7 @@ namespace IbrahKit
             if (add != null)
             {
                 add.OnClickEvent.RemoveAllListeners();
-                add.OnClickEvent.AddListener(() => ChangeValue(setting.GetStep()));
+                add.OnClickEvent.AddListener(() => AddValue(setting.GetStep()));
             }
             else
             {

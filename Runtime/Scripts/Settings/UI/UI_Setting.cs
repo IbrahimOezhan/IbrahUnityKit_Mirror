@@ -23,7 +23,7 @@ namespace IbrahKit
 
         [TabGroup("Setting")]
         [ShowIf(nameof(interfaceType), SettingsInterfaceType.KEY)]
-        [Dropdown("Settings_Manager.DROP")]
+        [Dropdown(Settings_Manager.KEY)]
         [SerializeField, LabelText("Setting Key")]
         private string settingKey;
 
@@ -128,7 +128,16 @@ namespace IbrahKit
             UpdateUI();
         }
 
-        public virtual void ChangeValue(float _value)
+        public void SetValue(float value)
+        {
+            setting.SetValue(value);
+
+            setting.ApplyChanges();
+
+            UpdateUI();
+        }
+
+        public virtual void AddValue(float _value)
         {
             setting.SetValue(setting.GetValue() + _value);
 
@@ -140,6 +149,7 @@ namespace IbrahKit
         public virtual void UpdateUI()
         {
             if (!initialized) Initialize();
+
             if (!initialized)
             {
                 Debug.LogWarning("Initialization failed");
@@ -181,13 +191,20 @@ namespace IbrahKit
             switch (interfaceType)
             {
                 case SettingsInterfaceType.LOCALREFERENCE:
+
                     setting = localReference.GetSetting();
+
                     break;
+
                 case SettingsInterfaceType.KEY:
+
                     Settings_Manager.Instance.GetSetting(settingKey, out setting);
+
                     break;
                 case SettingsInterfaceType.LOCAL:
+
                     setting = localSetting;
+
                     break;
             }
 

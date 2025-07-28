@@ -10,10 +10,10 @@ namespace IbrahKit
 
         private void Start()
         {
-            slider.onValueChanged.AddListener(ChangeValue);
+            slider.onValueChanged.AddListener(AddValue);
         }
 
-        public override void ChangeValue(float _value)
+        public override void AddValue(float _value)
         {
             if (setting == null) return;
             setting.SetValue(slider.value);

@@ -50,16 +50,6 @@ namespace IbrahKit
             init = true;
         }
 
-        public void IncrementValue()
-        {
-            SetValue(GetValue() + 1);
-        }
-
-        public void DecrementValue()
-        {
-            SetValue(GetValue() - 1);
-        }
-
         public void AddValue(float value)
         {
             SetValue(GetValue() + value);
@@ -67,17 +57,13 @@ namespace IbrahKit
 
         public virtual void SetValue(float value)
         {
-            this.value = value;
-
             if (loop)
             {
-                if (this.value < GetValueRange().x) this.value = GetValueRange().y;
-                if (this.value > GetValueRange().y) this.value = GetValueRange().x;
+                this.value = Number_Utilities.LoopNumber(value,GetValueRange().x, GetValueRange().y);
             }
             else
             {
-                if (this.value < GetValueRange().x) this.value = GetValueRange().x;
-                if (this.value > GetValueRange().y) this.value = GetValueRange().y;
+                this.value = Mathf.Clamp(value,GetValueRange().x,GetValueRange().y);
             }
         }
 

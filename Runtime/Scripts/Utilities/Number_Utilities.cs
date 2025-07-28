@@ -55,6 +55,11 @@ namespace IbrahKit
 
         public static int LoopNumber(int number, int min, int max)
         {
+            return (int) LoopNumber(number, min, max);
+        }
+
+        public static float LoopNumber(float number, float min, float max)
+        {
             if (number < min)
             {
                 return max;
