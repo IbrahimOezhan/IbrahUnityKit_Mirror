@@ -318,17 +318,6 @@ namespace IbrahKit
             }
         }
 
-        private int SeperatorAmount(string text, char separator)
-        {
-            int amount = 0;
-            foreach (var item in text)
-            {
-                if (item == separator)
-                    amount++;
-            }
-            return amount;
-        }
-
         public int CurrentIndex()
         {
             return currentIndex;
