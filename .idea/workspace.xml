@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5826ceec-ff8d-4420-8b16-708fdd6104e7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Runtime/Scripts/Localization/Other.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Runtime/Scripts/Localization/Other/LocalizationTemplate.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Runtime/Scripts/Localization/Other/LocalizationTemplate.csv.meta" beforeDir="false" />
-    </list>
+    <list default="true" id="5826ceec-ff8d-4420-8b16-708fdd6104e7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,6 +57,7 @@
       <updated>1753737451429</updated>
       <workItem from="1753737453391" duration="16000" />
       <workItem from="1753737490465" duration="34000" />
+      <workItem from="1753783170459" duration="12000" />
     </task>
     <servers />
   </component>
