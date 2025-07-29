@@ -28,6 +28,8 @@ namespace IbrahKit
 
         private SaveData saveData;
 
+        private List<Local_Processor> processors = new();
+ 
         [SerializeField] private TextAsset localizationAssets;
 
         [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
@@ -68,12 +70,20 @@ namespace IbrahKit
 
             saveData = (SaveData)Save_Manager.Instance.Load(SAVE, new SaveData());
 
-            Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
-
             Init();
 
-            if (!saveData.SetAttempt()) SetLanguage(GetSystemLanguage(Application.systemLanguage));
-            else SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
+            if (!saveData.SetAttempt())
+            {
+                SetLanguage(GetSystemLanguage(Application.systemLanguage));
+            }
+            else
+            {
+                SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
+            }
+
+            AddProcessor(new Local_BreakProcessor());
+
+            Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
         }
 
         private void OnDestroy()
@@ -84,6 +94,16 @@ namespace IbrahKit
                 saveData.SetLanguage(sys);
                 Save_Manager.Instance.Return(SAVE, saveData);
             }
+        }
+
+        public void AddProcessor(Local_Processor processor)
+        {
+            processors.Add(processor);
+        }
+
+        public void RemoveProcessor(Local_Processor processor)
+        {
+            processors.Remove(processor);
         }
 
         [Button]
@@ -242,6 +262,11 @@ namespace IbrahKit
             return curr.Value;
         }
 
+        public LocalLanguage GetCurrent()
+        {
+            return current;
+        }
+
         private string[] GetRow(string line, char seperator)
         {
             return line.Split(seperator);
@@ -270,32 +295,27 @@ namespace IbrahKit
                 }
             }
 
+            for (int i = 0; i < processors.Count; i++)
+            {
+                result = processors[i].Process(result);
+            }
+
             return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result);
         }
 
         private string FormatString(string text, params string[] parameters)
         {
+            if(parameters == null || parameters.Length == 0) return text;
+
             try
             {
                 return String.Format(text, parameters);
             }
-            catch
+            catch(Exception e)
             {
-                Debug.LogWarning("Localized text expects params but there are not enough or none at all");
+                Debug.LogException(e);
                 return text;
             }
-        }
-
-        private bool GetString(string key, LocalLanguage language, out string result)
-        {
-            result = "";
-
-            if (keyValuePairs.TryGetValue(key, out var value))
-            {
-                result = value[currentIndex];
-            }
-
-            return !String_Utilities.IsEmpty(result);
         }
 
         private int SeperatorAmount(string text, char separator)
@@ -309,21 +329,22 @@ namespace IbrahKit
             return amount;
         }
 
-        public LocalLanguage GetCurrent()
-        {
-            return current;
-        }
-
         public int CurrentIndex()
         {
             return currentIndex;
         }
 
-        private bool ValidFormatting(string text, int baseAmount, char seperator)
+        private bool GetString(string key, LocalLanguage language, out string result)
         {
-            return (SeperatorAmount(text, seperator) == baseAmount);
-        }
+            result = "";
 
+            if (keyValuePairs.TryGetValue(key, out var value))
+            {
+                result = value[currentIndex];
+            }
+
+            return !String_Utilities.IsEmpty(result);
+        }
 
         [System.Serializable]
         private class SaveData : Savable
