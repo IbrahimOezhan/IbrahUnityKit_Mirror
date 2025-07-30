@@ -82,6 +82,7 @@ namespace IbrahKit
 
             if (folders.Count == 0)
             {
+                Debug.Log("Returned new save folder");
                 return new(new(), new(), Path.Combine(saveFolderPath, Application.version), key, encrypt);
             }
 
@@ -95,11 +96,14 @@ namespace IbrahKit
 
                 if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save.State.Valid)
                 {
+                    Debug.Log("Returned save folder with same version");
                     return save;
                 }
             }
 
             saves = saves.OrderByDescending(x => x.GetValidFileCount()).ThenBy(x => x.GetState()).ToList();
+
+            Debug.Log("Returned best save folder");
 
             return saves[0];
         }

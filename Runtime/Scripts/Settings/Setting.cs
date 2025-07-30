@@ -44,13 +44,15 @@ namespace IbrahKit
             {
                 SetValue(GetDefault());
             }
-
-            ApplyChanges();
+            else
+            {
+                ApplyChanges();
+            }
 
             init = true;
         }
 
-        public void AddValue(float value)
+        public virtual void AddValue(float value)
         {
             SetValue(GetValue() + value);
         }
@@ -65,6 +67,8 @@ namespace IbrahKit
             {
                 this.value = Mathf.Clamp(value,GetValueRange().x,GetValueRange().y);
             }
+
+            ApplyChanges();
         }
 
         public virtual void ApplyChanges()
@@ -89,9 +93,21 @@ namespace IbrahKit
                 IncludeFields = true
             };
 
-            Setting_Local_Json json = JsonSerializer.Deserialize<Setting_Local_Json>(Local_Manager.Instance.GetString(settingsKey), options);
+            string json = Local_Manager.Instance.GetString(settingsKey);
 
-            return json;
+            try
+            {
+                Setting_Local_Json local = JsonSerializer.Deserialize<Setting_Local_Json>(json, options);
+
+                return local;
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Debug.Log(json);
+
+                return new();
+            }
         }
 
         public Vector2 GetValueRange()

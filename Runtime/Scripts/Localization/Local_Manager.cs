@@ -34,7 +34,7 @@ namespace IbrahKit
 
         [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [SerializeField, OdinSerialize] private LinkedList<LocalLanguage> languages = new();
+        [SerializeField, OdinSerialize] private List<LocalLanguage> languages = new();
 
         [HideInInspector] public Action OnLanguageChanged;
 
@@ -91,7 +91,9 @@ namespace IbrahKit
             if (Instance == this)
             {
                 current.IsValid(out SystemLanguage sys);
+
                 saveData.SetLanguage(sys);
+
                 Save_Manager.Instance.Return(SAVE, saveData);
             }
         }
@@ -150,7 +152,7 @@ namespace IbrahKit
                         return;
                     }
 
-                    languages.AddLast(ll);
+                    languages.Add(ll);
                 }
                 catch(Exception e)
                 {
@@ -195,71 +197,46 @@ namespace IbrahKit
             OnLanguageChanged?.Invoke();
         }
 
-        public void SetNext()
+        public void Set(int index)
         {
-            SetLanguage(GetNext());
+            if(index < 0 || index >= languages.Count)
+            {
+                Debug.LogWarning($"Index with value {index} out of range for range 0-{languages.Count - 1}");
+                return;
+            }
+
+            SetLanguage(languages[index]);
+        }
+
+        public void SetNext(int dir)
+        {
+            SetLanguage(GetNext(dir));
         }
 
         public void SetLanguage(LocalLanguage lang)
         {
             current = lang;
 
-            LinkedListNode<LocalLanguage> curr = languages.First;
-
-            int index = 0;
-
-            while (curr != null)
-            {
-                if (curr.Value == lang)
-                {
-                    currentIndex = index;
-                    break;
-                }
-                curr = curr.Next;
-                index++;
-            }
+            currentIndex = languages.IndexOf(lang);
 
             UpdateLanguage();
         }
 
         private LocalLanguage GetSystemLanguage(SystemLanguage systemLanguage)
         {
-            LinkedListNode<LocalLanguage> curr = languages.First;
+            LocalLanguage found = languages.Find(x => x.GetSystemLanguage() == systemLanguage);
 
-            while (curr != null)
+            if (found == null)
             {
-                if (curr.Value.IsValid(out SystemLanguage sys) && sys == systemLanguage)
-                {
-                    return curr.Value;
-                }
-                curr = curr.Next;
+                return current;
             }
-
-            return languages.First.Value;
+            else return found;
         }
 
-        private LocalLanguage GetNext()
+        private LocalLanguage GetNext(int dir)
         {
-            LinkedListNode<LocalLanguage> first = languages.Find(current);
-            LinkedListNode<LocalLanguage> curr = first;
-
-            while (curr.Value.GetSkip())
-            {
-                curr = curr.Next;
-
-                if (curr == null)
-                {
-                    curr = languages.First;
-                }
-
-                if (curr == first)
-                {
-                    Debug.LogWarning("No usable language found");
-                    return current;
-                }
-            }
-
-            return curr.Value;
+            int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, languages.Count - 1);
+            return languages[newIndex];
         }
 
         public LocalLanguage GetCurrent()
@@ -289,9 +266,9 @@ namespace IbrahKit
             {
                 Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
-                if (!GetString(key, languages.First.Value, out result))
+                if (!GetString(key, languages[0], out result))
                 {
-                    Debug.LogWarning($"Localzation for key {key} does not exist in default language {languages.First.Value}");
+                    Debug.LogWarning($"Localzation for key {key} does not exist in default language {languages[0]}");
                 }
             }
 
@@ -318,9 +295,9 @@ namespace IbrahKit
             }
         }
 
-        public int CurrentIndex()
+        public int IndexOf(LocalLanguage language)
         {
-            return currentIndex;
+            return languages.IndexOf(language);
         }
 
         private bool GetString(string key, LocalLanguage language, out string result)
@@ -329,10 +306,17 @@ namespace IbrahKit
 
             if (keyValuePairs.TryGetValue(key, out var value))
             {
-                result = value[currentIndex];
+                result = value[IndexOf(language)];
             }
 
-            return !String_Utilities.IsEmpty(result);
+            bool empty = String_Utilities.IsEmpty(result);
+
+            if(empty)
+            {
+                Debug.Log($"String with key{key} and language index {currentIndex} and language {language} empty");
+            }
+
+            return !empty;
         }
 
         [System.Serializable]
@@ -375,6 +359,11 @@ namespace IbrahKit
             public bool IsValid(out SystemLanguage result)
             {
                 return Enum.TryParse(sysLang, out result);
+            }
+
+            public SystemLanguage GetSystemLanguage()
+            {
+                return Enum.Parse<SystemLanguage>(sysLang);
             }
 
             public string GetSys()

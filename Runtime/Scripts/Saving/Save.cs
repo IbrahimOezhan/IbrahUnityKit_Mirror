@@ -180,7 +180,9 @@ public class Save
     {
         try
         {
-            string json = JsonSerializer.Serialize(value, Options);
+            Type t = Save_Utilities.GetSavableType(value);
+
+            string json = JsonSerializer.Serialize(value, t, Options);
 
             string fileContent = encrypt ? String_Utilities.DecryptEncrypt(json, key) : json;
 

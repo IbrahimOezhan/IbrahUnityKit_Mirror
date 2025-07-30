@@ -16,9 +16,7 @@ namespace IbrahKit
         {
             base.ApplyChanges();
 
-            Local_Manager.Instance.SetNext();
-
-            SetValue(Local_Manager.Instance.CurrentIndex());
+            Local_Manager.Instance.Set((int)GetValue());
         }
     }
 }

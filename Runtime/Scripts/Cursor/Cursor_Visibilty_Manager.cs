@@ -41,14 +41,9 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
             case InputType.KEYBOARD:
             case InputType.MOUSE:
 
-
                 string state = State_Manager.Instance.GetCurrentState();
 
-                Debug.Log(state);
-
                 isVisible = IsVisible(state);
-
-                Debug.Log(isVisible);
 
                 break;
 
@@ -71,8 +66,6 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
         {
             if (cursorVisibility[i].Match(state, out bool res))
             {
-                Debug.Log("Matched " + state);
-                Debug.Log(state + res);
                 return res;
             }
         }
@@ -108,8 +101,6 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 
         public bool Match(string state, out bool result)
         {
-            Debug.Log(state);
-
             result = visible;
 
             return this.state.Equals(state);

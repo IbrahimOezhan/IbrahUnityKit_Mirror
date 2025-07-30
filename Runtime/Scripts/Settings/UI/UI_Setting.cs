@@ -70,6 +70,8 @@ namespace IbrahKit
 
         protected virtual void OnEnable()
         {
+            Initialize();
+
             if (!initialized)
             {
                 Debug.LogWarning("Initialization failed");
@@ -132,16 +134,12 @@ namespace IbrahKit
         {
             setting.SetValue(value);
 
-            setting.ApplyChanges();
-
             UpdateUI();
         }
 
         public virtual void AddValue(float _value)
         {
-            setting.SetValue(setting.GetValue() + _value);
-
-            setting.ApplyChanges();
+            setting.AddValue(_value);
 
             UpdateUI();
         }
