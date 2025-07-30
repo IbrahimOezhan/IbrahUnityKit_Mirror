@@ -54,13 +54,13 @@ namespace IbrahKit
 
         public static Color GetColorWithAlpha(Color c, float alpha)
         {
-            if(alpha < 0 || alpha > 1)
+            if (alpha < 0 || alpha > 1)
             {
                 Debug.LogError($"Alpha with value {alpha} out of bounds for min 0 and max 1");
                 return c;
             }
 
-            return new(c.r,c.g, c.b, alpha);
+            return new(c.r, c.g, c.b, alpha);
         }
 
         public static float ColorLuminance(Color color)

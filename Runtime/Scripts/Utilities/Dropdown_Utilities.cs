@@ -85,7 +85,7 @@ namespace IbrahKit
 
         private static string GetPath(string fileName)
         {
-            return Path.Combine(directory,fileName + fileEnding);
+            return Path.Combine(directory, fileName + fileEnding);
         }
     }
 }

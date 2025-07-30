@@ -61,7 +61,7 @@ public class Save
         {
             filePaths = Directory.GetFiles(folderPath);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.LogWarning(ex.Message);
 
@@ -107,7 +107,7 @@ public class Save
 
         for (int i = 0; i < outdatedValidation.Length; i++)
         {
-            outdatedValidation[i] = new(filePaths[i],fileContents[i], fileState[i] == State.Corrupted);
+            outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == State.Corrupted);
 
             fileState[i] = outdatedValidation[i].GetFileState();
 
@@ -190,9 +190,9 @@ public class Save
 
             streamWriter.Write(fileContent);
 
-            if(!stillInUse) inUse.Remove(value);
+            if (!stillInUse) inUse.Remove(value);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Debug.LogWarning($"{name} - {ex.Message}");
         }
@@ -226,7 +226,7 @@ public class Save
 
         private Savable result;
 
-        public ValidateTask(string filePath,string fileContent, bool instantFail)
+        public ValidateTask(string filePath, string fileContent, bool instantFail)
         {
             // File couldnt be parsed and therefor the type cannot be read and file is useless
             if (instantFail)
@@ -260,7 +260,7 @@ public class Save
                     result = (Savable)Activator.CreateInstance(t);
                     fileState = State.Outdated;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Debug.LogWarning($"[{filePath}] {ex.Message}");
 

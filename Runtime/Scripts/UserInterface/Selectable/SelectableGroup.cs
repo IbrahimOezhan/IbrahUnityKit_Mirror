@@ -43,7 +43,7 @@ public class SelectableGroup : MonoBehaviour
     {
         foreach (var item in selectables)
         {
-            if(item != selected)
+            if (item != selected)
             {
                 item.DeSelect();
             }

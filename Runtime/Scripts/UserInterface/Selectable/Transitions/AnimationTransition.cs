@@ -13,7 +13,7 @@ namespace IbrahKit
 
         protected override void OnHovering(GameObject go)
         {
-            if(animator == null)
+            if (animator == null)
             {
                 animator = go.GetComponent<Animator>();
             }

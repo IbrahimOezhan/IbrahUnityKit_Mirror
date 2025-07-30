@@ -1,7 +1,6 @@
 using IbrahKit;
 using System.Collections.Generic;
 using UnityEngine;
-using Debug = IbrahKit.Debug;
 
 public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 {
@@ -43,7 +42,7 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 
                 string state = string.Empty;
 
-                if(State_Manager.Instance != null)
+                if (State_Manager.Instance != null)
                 {
                     state = State_Manager.Instance.GetCurrentState();
                 }
@@ -101,7 +100,7 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
     [System.Serializable]
     private class CursorVisibilty
     {
-        [Dropdown(State_Manager.KEY),SerializeField] private string state;
+        [Dropdown(State_Manager.KEY), SerializeField] private string state;
         [SerializeField] private bool visible;
 
         public bool Match(string state, out bool result)

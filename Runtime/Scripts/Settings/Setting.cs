@@ -61,11 +61,11 @@ namespace IbrahKit
         {
             if (loop)
             {
-                this.value = Number_Utilities.LoopNumber(value,GetValueRange().x, GetValueRange().y);
+                this.value = Number_Utilities.LoopNumber(value, GetValueRange().x, GetValueRange().y);
             }
             else
             {
-                this.value = Mathf.Clamp(value,GetValueRange().x,GetValueRange().y);
+                this.value = Mathf.Clamp(value, GetValueRange().x, GetValueRange().y);
             }
 
             ApplyChanges();

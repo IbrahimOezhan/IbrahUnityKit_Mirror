@@ -45,7 +45,7 @@ namespace IbrahKit
 
             selectableGroup = Transform_Utilities.GetParent<SelectableGroup>(transform);
 
-            if(selectableGroup != null ) selectableGroup.Add(this);
+            if (selectableGroup != null) selectableGroup.Add(this);
 
             Visualize();
         }

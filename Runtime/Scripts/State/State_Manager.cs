@@ -42,7 +42,7 @@ namespace IbrahKit
 
         public void SetCurrentState(string newState)
         {
-            if(statesList.Contains(newState))
+            if (statesList.Contains(newState))
             {
                 currentState = newState;
 

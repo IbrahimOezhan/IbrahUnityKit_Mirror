@@ -3,7 +3,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
-using UnityEngine.InputSystem.LowLevel;
 
 namespace IbrahKit
 {
@@ -43,7 +42,7 @@ namespace IbrahKit
             {
                 foreach (InputControl control in InputSystem.devices[i].allControls)
                 {
-                    if(control is ButtonControl button && button.wasPressedThisFrame)
+                    if (control is ButtonControl button && button.wasPressedThisFrame)
                     {
                         switch (control.device)
                         {

@@ -55,7 +55,7 @@ namespace IbrahKit
 
         public static int LoopNumber(int number, int min, int max)
         {
-            return (int) LoopNumber((float)number, (float)min, (float)max);
+            return (int)LoopNumber((float)number, (float)min, (float)max);
         }
 
         public static float LoopNumber(float number, float min, float max)

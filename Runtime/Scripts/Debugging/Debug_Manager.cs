@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace IbrahKit
 {
@@ -61,7 +60,7 @@ namespace IbrahKit
                     {
                         sb.Append(debug.Run());
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         sb.Append(debug.gameObject.name + " caused an exception: " + ex.Message);
                     }

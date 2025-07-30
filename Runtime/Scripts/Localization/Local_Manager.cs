@@ -29,7 +29,7 @@ namespace IbrahKit
         private SaveData saveData;
 
         private List<Local_Processor> processors = new();
- 
+
         [SerializeField] private TextAsset localizationAssets;
 
         [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
@@ -136,7 +136,7 @@ namespace IbrahKit
 
             for (int i = 1; i < rowOne.Length; i++)
             {
-                if(!Parse_Utilties.IsValidJson(rowOne[i]))
+                if (!Parse_Utilties.IsValidJson(rowOne[i]))
                 {
                     Debug.LogWarning($"Invalid json in row 0 column {i}");
                     return;
@@ -154,9 +154,9 @@ namespace IbrahKit
 
                     languages.Add(ll);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.LogException(e);  
+                    Debug.LogException(e);
                     return;
                 }
             }
@@ -172,7 +172,7 @@ namespace IbrahKit
                     row.Add(string.Empty);
                 }
 
-                while(row.Count > requiredCount)
+                while (row.Count > requiredCount)
                 {
                     Debug.LogWarning($"Removed {row[row.Count - 1]} from the back");
                     row.RemoveAt(row.Count - 1);
@@ -199,7 +199,7 @@ namespace IbrahKit
 
         public void Set(int index)
         {
-            if(index < 0 || index >= languages.Count)
+            if (index < 0 || index >= languages.Count)
             {
                 Debug.LogWarning($"Index with value {index} out of range for range 0-{languages.Count - 1}");
                 return;
@@ -277,18 +277,18 @@ namespace IbrahKit
                 result = processors[i].Process(result);
             }
 
-            return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result,parameters);
+            return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result, parameters);
         }
 
         private string FormatString(string text, params string[] parameters)
         {
-            if(parameters == null || parameters.Length == 0) return text;
+            if (parameters == null || parameters.Length == 0) return text;
 
             try
             {
                 return String.Format(text, parameters);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.LogException(e);
                 return text;
@@ -315,7 +315,7 @@ namespace IbrahKit
 
             bool empty = String_Utilities.IsEmpty(result);
 
-            if(empty)
+            if (empty)
             {
                 Debug.Log($"String with key{key} and language index {currentIndex} and language {language} empty");
             }
