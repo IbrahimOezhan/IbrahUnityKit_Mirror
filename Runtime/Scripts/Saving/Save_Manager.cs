@@ -33,6 +33,11 @@ namespace IbrahKit
 
             string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
 
+            if(!Directory.Exists(saveFolderPath))
+            {
+                Directory.CreateDirectory(saveFolderPath);
+            }
+
             if (currentSave == null) currentSave = GetCurrentFolder(saveFolderPath, KEY);
 
             if (generic == null) generic = (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
