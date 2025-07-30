@@ -277,7 +277,7 @@ namespace IbrahKit
                 result = processors[i].Process(result);
             }
 
-            return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result);
+            return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result,parameters);
         }
 
         private string FormatString(string text, params string[] parameters)
@@ -299,7 +299,6 @@ namespace IbrahKit
         {
             return languages.IndexOf(language);
         }
-
 
         public int LanguageCount()
         {
