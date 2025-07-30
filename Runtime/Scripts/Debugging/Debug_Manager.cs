@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace IbrahKit
 {
-    public class Debug_Manager : MonoBehaviour
+    public class Debug_Manager : Manager_Base
     {
         private List<IDebug> debugs = new();
 

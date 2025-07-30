@@ -38,7 +38,7 @@ namespace IbrahKit
                 return false;
             }
 
-            Debug.Log("GetCurrentFolder success", Color.green);
+            Debug.Log("UI Extension Init Success", Color.green);
 
             return true;
         }

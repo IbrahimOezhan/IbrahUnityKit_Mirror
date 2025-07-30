@@ -70,13 +70,7 @@ namespace IbrahKit
 
         protected virtual void OnEnable()
         {
-            Initialize();
-
-            if (!initialized)
-            {
-                Debug.LogWarning("Initialization failed");
-                return;
-            }
+            if (!CheckInit()) return;
 
             UpdateUI();
         }
@@ -119,40 +113,32 @@ namespace IbrahKit
 
         public virtual void Setup()
         {
-            Initialize();
-
-            if (!initialized)
-            {
-                Debug.LogWarning("Initialization failed");
-                return;
-            }
-
-            UpdateUI();
-        }
-
-        public void SetValue(float value)
-        {
-            setting.SetValue(value);
+            if (!TryInit()) return;
 
             UpdateUI();
         }
 
         public virtual void AddValue(float _value)
         {
+            if (!TryInit()) return;
+
             setting.AddValue(_value);
+
+            UpdateUI();
+        }
+
+        public void SetValue(float value)
+        {
+            if (!TryInit()) return;
+
+            setting.SetValue(value);
 
             UpdateUI();
         }
 
         public virtual void UpdateUI()
         {
-            if (!initialized) Initialize();
-
-            if (!initialized)
-            {
-                Debug.LogWarning("Initialization failed");
-                return;
-            }
+            if (!TryInit()) return;
 
             value.SetText(setting.GetDisplayValue());
         }
@@ -176,7 +162,7 @@ namespace IbrahKit
         {
             if (initialized)
             {
-                Debug.LogWarning("Already initialized");
+                Debug.LogWarning("UI Setting Already Initialized");
                 return true;
             }
 
@@ -258,9 +244,26 @@ namespace IbrahKit
 
             initialized = true;
 
-            Debug.Log("Initialized successfully", Color.green);
+            Debug.Log("UI Setting Initialized successfully", Color.green);
 
             return true;
+        }
+
+        private bool TryInit()
+        {
+            if (!initialized) Initialize();
+
+            return CheckInit();
+        }
+
+        private bool CheckInit()
+        {
+            if (!initialized)
+            {
+                Debug.LogWarning("Initialization of UI Setting Failed");
+            }
+
+            return initialized;
         }
     }
 }

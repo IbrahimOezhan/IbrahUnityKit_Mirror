@@ -5,6 +5,8 @@ namespace IbrahKit
         public override void Init(string initialValue)
         {
             base.Init(initialValue);
+
+            SetValueRange(new(0, Local_Manager.Instance.LanguageCount() - 1));
         }
 
         public override string GetDisplayValue()

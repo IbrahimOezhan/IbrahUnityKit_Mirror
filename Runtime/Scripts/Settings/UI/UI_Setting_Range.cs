@@ -5,8 +5,8 @@ namespace IbrahKit
 {
     public class UI_Setting_Range : UI_Setting
     {
-        [BoxGroup("UI"), SerializeField] private UI_Selectable sub;
-        [BoxGroup("UI"), SerializeField] private UI_Selectable add;
+        [TabGroup("UI"), SerializeField] private UI_Selectable sub;
+        [TabGroup("UI"), SerializeField] private UI_Selectable add;
 
         public override bool Initialize()
         {
@@ -44,6 +44,7 @@ namespace IbrahKit
             base.UpdateUI();
 
             if (!initialized) Initialize();
+
             if (!initialized)
             {
                 Debug.LogWarning("Initialization failed");

@@ -41,7 +41,12 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
             case InputType.KEYBOARD:
             case InputType.MOUSE:
 
-                string state = State_Manager.Instance.GetCurrentState();
+                string state = string.Empty;
+
+                if(State_Manager.Instance != null)
+                {
+                    state = State_Manager.Instance.GetCurrentState();
+                }
 
                 isVisible = IsVisible(state);
 

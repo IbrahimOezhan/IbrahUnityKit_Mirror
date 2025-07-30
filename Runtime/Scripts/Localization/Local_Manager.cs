@@ -300,6 +300,11 @@ namespace IbrahKit
             return languages.IndexOf(language);
         }
 
+
+        public int LanguageCount()
+        {
+            return languages.Count;
+        }
         private bool GetString(string key, LocalLanguage language, out string result)
         {
             result = "";
