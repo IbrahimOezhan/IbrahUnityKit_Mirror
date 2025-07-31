@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using UnityEngine;
 
 namespace IbrahKit
@@ -97,6 +98,83 @@ namespace IbrahKit
             Rect rect = new(0, 0, tex.width, tex.height);
             return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
         }
-    }
 
+        public static Sprite Center(Sprite sprite)
+        {
+            Texture2D tex = sprite.texture;
+
+            Color[] colors = tex.GetPixels();
+
+            int minX = int.MaxValue;
+            int maxX = int.MinValue;
+            int minY = int.MaxValue;
+            int maxY = int.MinValue;
+
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    Color c = colors[GetIndex(x, y, tex.width)];
+
+                    if (c.a != 0)
+                    {
+                        if (x < minX)
+                        {
+                            minX = x;
+                        }
+                        if (x > maxX)
+                        {
+                            maxX = x;
+                        }
+                        if (y < minY)
+                        {
+                            minY = y;
+                        }
+                        if (y > maxY)
+                        {
+                            maxY = y;
+                        }
+                    }
+                }
+            }
+
+            int xOffset = ((tex.width / 2) - ((maxX - minX) / 2)) - minX;
+            int yOffset = ((tex.height / 2) - ((maxY - minY) / 2)) - minY;
+
+            Color transparent = new(0, 0, 0, 0);
+
+            Color[] newColors = new Color[colors.Length];
+
+            newColors.ForEach(a => a = transparent);
+
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    int newIndexX = x + xOffset;
+                    int newIndexY = y + yOffset;
+
+                    if (newIndexX > 0 && newIndexX < tex.width && newIndexY > 0 && newIndexY < tex.height)
+                    {
+                        newColors[GetIndex(newIndexX, newIndexY, tex.width)] = colors[GetIndex(x, y, tex.width)];
+                    }
+                }
+            }
+
+            Texture2D newTex = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+
+            newTex.SetPixels(newColors);
+
+            newTex.Apply();
+
+            Sprite newSprite = Sprite.Create(newTex, new(0, 0, newTex.width, newTex.height), new Vector2(0.5f, 0.5f), sprite.pixelsPerUnit);
+
+            return newSprite;
+        }
+
+        private static int GetIndex(int x, int y, int width)
+        {
+            return x + (y * width);
+        }
+    }
 }
