@@ -9,11 +9,15 @@ namespace IbrahKit
 {
     public class Achievement_Manager : MonoBehaviour
     {
+        private const string prefix = "achievement_";
+
         [SerializeField] private List<Achievement> achievements = new();
+
         [SerializeField, Dropdown(Local_Manager.DROP)] private string secretString;
+
         [SerializeField] private Sprite secretSprite;
 
-        public Action<string> OnAchievementUnlocked;
+        public static Action<string,bool> OnAchievementUnlocked;
 
         public static Achievement_Manager Instance;
 
@@ -28,14 +32,23 @@ namespace IbrahKit
             Instance = this;
         }
 
-
         public void Unlock(string key)
         {
-            Achievement found = achievements.Find(x => x.GetKey() == key);
-            if(found != null && !found.IsUnlocked())
+            string localKey = (prefix + key.ToLower());
+
+            Achievement found = achievements.Find(x => x.GetKey() == localKey);
+
+            if(found != null)
             {
-                OnAchievementUnlocked?.Invoke(key);
+                bool unlocked = found.IsUnlocked();
+
+                OnAchievementUnlocked?.Invoke(key, unlocked);
+
                 found.Unlock();
+            }
+            else
+            {
+                Debug.LogWarning($"Achievement with key {localKey} not found");
             }
         }
 

@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660068a982fc92b4fa551ecd05b5e9c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugContent: {fileID: 3522883039602338174}
+  debugContent: {fileID: 1092577240346162529}
   debugContainer: {fileID: 5604770124285304967}
-  keyMap: {fileID: 0}
+  keyMap: {fileID: 11400000, guid: cec2c56085fb5e04d80e5863b92a1601, type: 2}
   disableLogs: 0
 --- !u!1 &5604770124285304967
 GameObject:
@@ -305,6 +305,8 @@ GameObject:
   - component: {fileID: 5815826425915509102}
   - component: {fileID: 7995780527834774194}
   - component: {fileID: 3522883039602338174}
+  - component: {fileID: 1590884868772146639}
+  - component: {fileID: 1092577240346162529}
   m_Layer: 6
   m_Name: Text (Legacy)
   m_TagString: Untagged
@@ -373,3 +375,31 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &1590884868772146639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360310483806176161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ed55bedb48efc47834f1062692d680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentMenu: {fileID: 0}
+  extension: None
+  extensions: []
+--- !u!114 &1092577240346162529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7360310483806176161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8ebf7414f05a64ca1d2a7a69b22ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 0}
