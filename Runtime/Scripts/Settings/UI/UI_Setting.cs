@@ -68,6 +68,8 @@ namespace IbrahKit
         [SerializeField, ReadOnly, LabelText("Setting")]
         protected Setting setting;
 
+        Setting_Local_Json settingLocal;
+
         protected virtual void OnEnable()
         {
             if (!CheckInit()) return;
@@ -140,6 +142,38 @@ namespace IbrahKit
         {
             if (!TryInit()) return;
 
+            settingLocal = setting.GetLocal();
+
+            if (settingLocal == null)
+            {
+                Debug.LogWarning($"{nameof(settingLocal)} is null");
+                return;
+            }
+
+            bool titleEmpty = String_Utilities.IsEmpty(settingLocal.title);
+
+            bool titleNull = title == null;
+
+            if (titleEmpty)
+            {
+                Debug.LogWarning("Title is empty");
+            }
+
+            if (titleNull)
+            {
+                Debug.LogWarning("Title is null");
+            }
+
+            if (!titleEmpty && !titleNull)
+            {
+                title.SetText(settingLocal.title);
+            }
+
+            if (description != null && !String_Utilities.IsEmpty(settingLocal.description))
+            {
+                description.SetText(settingLocal.description);
+            }
+
             value.SetText(setting.GetDisplayValue());
         }
 
@@ -210,38 +244,6 @@ namespace IbrahKit
                 Debug.LogWarning($"Already subscribed to {nameof(Local_Manager)}");
             }
 
-            Setting_Local_Json settingLocal = setting.GetLocal();
-
-            if (settingLocal == null)
-            {
-                Debug.LogWarning($"{nameof(settingLocal)} is null");
-                return false;
-            }
-
-            bool titleEmpty = String_Utilities.IsEmpty(settingLocal.title);
-
-            bool titleNull = title == null;
-
-            if (titleEmpty)
-            {
-                Debug.LogWarning("Title is empty");
-            }
-
-            if (titleNull)
-            {
-                Debug.LogWarning("Title is null");
-            }
-
-            if (!titleEmpty && !titleNull)
-            {
-                title.SetText(settingLocal.title);
-            }
-
-            if (description != null && !String_Utilities.IsEmpty(settingLocal.description))
-            {
-                description.SetText(settingLocal.description);
-            }
-
             initialized = true;
 
             Debug.Log("UI Setting Initialized successfully", Color.green);
@@ -249,7 +251,7 @@ namespace IbrahKit
             return true;
         }
 
-        private bool TryInit()
+        protected bool TryInit()
         {
             if (!initialized) Initialize();
 

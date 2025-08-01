@@ -68,7 +68,7 @@ public static class Save_Utilities
             UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
         };
 
-        Type instanceType = Type.GetType(type.fullName);
+        Type instanceType = GetSavableType(type);
 
         return (Savable)JsonSerializer.Deserialize(json, instanceType, genericOptions);
     }

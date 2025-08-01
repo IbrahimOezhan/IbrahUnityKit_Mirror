@@ -41,15 +41,9 @@ namespace IbrahKit
 
         public override void UpdateUI()
         {
+            if (!TryInit()) return;
+
             base.UpdateUI();
-
-            if (!initialized) Initialize();
-
-            if (!initialized)
-            {
-                Debug.LogWarning("Initialization failed");
-                return;
-            }
 
             if (sub != null)
             {
