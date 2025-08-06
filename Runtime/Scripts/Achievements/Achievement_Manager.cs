@@ -32,6 +32,11 @@ namespace IbrahKit
             Instance = this;
         }
 
+        public void Unlock(Achievement achievement)
+        {
+            Unlock(achievement.GetKey());
+        }
+
         public void Unlock(string key)
         {
             string localKey = (prefix + key.ToLower());
