@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [CreateAssetMenu(fileName = "NewAchievement", menuName ="IbrahKit/Achievement")]
+    [CreateAssetMenu(fileName = "NewAchievement", menuName = "IbrahKit/Achievement")]
     public class Achievement : Unlockable
     {
         [SerializeField, PreviewField] private Sprite sprite;
@@ -12,7 +12,7 @@ namespace IbrahKit
 
         public (Sprite, string, string) GetData(string secretData, Sprite secretSprite)
         {
-            Achievement_JsonData data = GetJson(secret? secretData : key);
+            Achievement_JsonData data = GetJson(secret ? secretData : key);
 
             Sprite s = secret ? secretSprite : sprite;
 

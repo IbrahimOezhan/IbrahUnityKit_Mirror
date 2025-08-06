@@ -1,9 +1,7 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace IbrahKit
 {
@@ -17,13 +15,13 @@ namespace IbrahKit
 
         [SerializeField] private Sprite secretSprite;
 
-        public static Action<string,bool> OnAchievementUnlocked;
+        public static Action<string, bool> OnAchievementUnlocked;
 
         public static Achievement_Manager Instance;
 
         private void Awake()
         {
-            if(Instance != null && Instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
@@ -39,11 +37,13 @@ namespace IbrahKit
 
         public void Unlock(string key)
         {
+            key = key.Replace(prefix, "");
+
             string localKey = (prefix + key.ToLower());
 
             Achievement found = achievements.Find(x => x.GetKey() == localKey);
 
-            if(found != null)
+            if (found != null)
             {
                 bool unlocked = found.IsUnlocked();
 

@@ -33,7 +33,7 @@ namespace IbrahKit
 
             string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
 
-            if(!Directory.Exists(saveFolderPath))
+            if (!Directory.Exists(saveFolderPath))
             {
                 Directory.CreateDirectory(saveFolderPath);
             }

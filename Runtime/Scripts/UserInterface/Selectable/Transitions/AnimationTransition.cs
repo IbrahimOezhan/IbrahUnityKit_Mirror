@@ -31,7 +31,7 @@ namespace IbrahKit
 
         private void Play(string animState, GameObject go)
         {
-            if(!go.activeInHierarchy)
+            if (!go.activeInHierarchy)
             {
                 return;
             }

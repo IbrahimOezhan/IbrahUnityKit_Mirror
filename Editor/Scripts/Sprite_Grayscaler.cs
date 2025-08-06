@@ -24,23 +24,16 @@ public class Sprite_Grayscaler
 
             TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(path);
 
-            bool needsReimport = false;
+            importer.textureType = TextureImporterType.Default;
 
-            if (!importer.isReadable || importer.textureCompression != TextureImporterCompression.Uncompressed)
-            {
-                importer.textureType = TextureImporterType.Default;
-                importer.alphaSource = TextureImporterAlphaSource.FromInput;
-                importer.isReadable = true;
-                importer.textureCompression = TextureImporterCompression.Uncompressed;
-                needsReimport = true;
-            }
+            importer.alphaSource = TextureImporterAlphaSource.FromInput;
 
-            if (needsReimport)
-            {
-                importer.SaveAndReimport();
-            }
+            importer.isReadable = true;
 
-            // ✅ Get the fresh texture from disk
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+
+            importer.SaveAndReimport();
+
             Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
 
             Debug.Log($"Format: {tex.format}, IsReadable: {tex.isReadable}, Name: {tex.name}");
@@ -69,6 +62,10 @@ public class Sprite_Grayscaler
             File.WriteAllBytes(newPath, bytes);
 
             Debug.Log("Test");
+
+            importer.textureType = TextureImporterType.Sprite;
+
+            importer.SaveAndReimport();
         }
 
         AssetDatabase.Refresh();
