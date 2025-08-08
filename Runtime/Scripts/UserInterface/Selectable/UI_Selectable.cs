@@ -33,6 +33,8 @@ namespace IbrahKit
         [TabGroup("Events"), SerializeField]
         public UnityEvent OnDeSelect;
 
+        [SerializeField] private UI_Audio_SO overrideAudio;
+
         [SerializeField] private bool interactable = true;
 
         public Action OnClickAction;
@@ -101,7 +103,7 @@ namespace IbrahKit
             {
                 OnClickEvent.Invoke();
 
-                UI_Manager.Instance.OnUIClick();
+                UI_Audio_Manager.Instance.OnClick(overrideAudio);
             }
             else
             {
@@ -115,7 +117,7 @@ namespace IbrahKit
 
             if (interactable)
             {
-                UI_Manager.Instance.OnUIHover();
+                UI_Audio_Manager.Instance.OnHover(overrideAudio);
             }
         }
 

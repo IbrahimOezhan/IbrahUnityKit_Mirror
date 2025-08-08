@@ -34,7 +34,7 @@ namespace IbrahKit
 
         [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [SerializeField, OdinSerialize] private List<LocalLanguage> languages = new();
+        [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
 
         [HideInInspector] public Action OnLanguageChanged;
 

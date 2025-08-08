@@ -11,8 +11,6 @@ namespace IbrahKit
     {
         public const string UILAYOUTKEY = "UILayouts";
 
-        private bool hidden;
-
         [SerializeField] private UI_Fitter_Config_SO defaultConfig;
 
         [SerializeField] private UI_Menu_Config_SO defaultMenuConfig;
@@ -22,10 +20,6 @@ namespace IbrahKit
         [SerializeField, Dropdown(UILAYOUTKEY)] private List<string> activeLayouts;
 
         [SerializeField] private List<UI_Menu_Basic> activeMenus = new();
-
-        public Action OnHover;
-
-        public Action OnClick;
 
         public Action<UI_Menu_Basic, StateMode> OnCustomTR;
 
@@ -59,16 +53,6 @@ namespace IbrahKit
         public bool ShowLayout(List<string> layouts)
         {
             return activeLayouts.Intersect(layouts).Count() > 0;
-        }
-
-        public void OnUIHover()
-        {
-            OnHover?.Invoke();
-        }
-
-        public void OnUIClick()
-        {
-            OnClick?.Invoke();
         }
 
         public void Transition(UI_Menu_Basic menuIn, UI_Menu_Basic menuOut, FadeMode fadeMode, float _fadeTime)
