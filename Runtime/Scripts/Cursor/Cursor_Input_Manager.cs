@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Cursor_Input_Manager : Manager_DDOL<Cursor_Input_Manager>
+    public class Cursor_Input_Manager : Manager_DDOL<Cursor_Input_Manager>, IDebug
     {
         private CursorInput input;
 
@@ -70,6 +70,16 @@ namespace IbrahKit
             system.RaycastAll(pointerData, results);
 
             return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
+        }
+
+        public string Run()
+        {
+            return "Is Over UI: " + CursorOverUI(EventSystem.current);
+        }
+
+        public int Order()
+        {
+            return 0;
         }
     }
 }
