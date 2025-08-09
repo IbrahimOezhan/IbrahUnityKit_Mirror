@@ -48,7 +48,7 @@ namespace IbrahKit
                 return customConfig.GetConfig();
             }
 
-            UI_Fitter_Config resolvedConfig = customConfig.GetConfig();
+            UI_Fitter_Config resolvedConfig = customConfig? customConfig.GetConfig() : null;
 
             if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
             {
