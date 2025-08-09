@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace IbrahKit
@@ -54,22 +53,6 @@ namespace IbrahKit
             }
 
             return result;
-        }
-    }
-
-    public class Achievement_JsonData
-    {
-        [JsonInclude] private string title;
-        [JsonInclude] private string description;
-
-        public string Title()
-        {
-            return title;
-        }
-
-        public string Description()
-        {
-            return description;
         }
     }
 }
