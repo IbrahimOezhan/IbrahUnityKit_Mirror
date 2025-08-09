@@ -9,7 +9,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.settings)]
-    public class Settings_Manager : Manager_Base
+    public class Settings_Manager : Manager_Base<Settings_Manager>
     {
         public const string KEY = "Settings";
         private const string NONE = "None";
@@ -20,20 +20,6 @@ namespace IbrahKit
         private string addSetting = NONE;
 
         [SerializeReference] private List<Setting> settings = new();
-
-        public static Settings_Manager Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void Start()
         {

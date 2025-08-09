@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
-public class Cursor_Sprite_Manager : MonoBehaviour
+public class Cursor_Sprite_Manager : Manager_Base<Cursor_Sprite_Manager>
 {
     private CursorState state;
 
@@ -20,7 +20,6 @@ public class Cursor_Sprite_Manager : MonoBehaviour
     [SerializeField] private CursorStyle style;
 
     [SerializeField] private Image cursorImage;
-
 
     private void Update()
     {

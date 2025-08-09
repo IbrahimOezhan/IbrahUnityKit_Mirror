@@ -14,40 +14,14 @@ namespace IbrahKit
                 TMP_Settings.defaultFontAsset, defaultSize, defaultColor
             );
 
-            UI_Styling_Config resolvedStyle = null;
+            UI_Styling_Config resolvedStyle = customStyle.GetStyle();
 
-            if (!Application.isPlaying)
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager config))
             {
-                UI_Manager manager = FindFirstObjectByType<UI_Manager>();
+                resolvedStyle = config.GetStyleConfig(customStyle).GetStyle();
+            }
 
-                if (customStyle != null)
-                {
-                    resolvedStyle = customStyle.GetStyle();
-                }
-                else if (manager != null && manager.GetDefaultStyle() != null)
-                {
-                    resolvedStyle = manager.GetDefaultStyle().GetStyle();
-                }
-                else
-                {
-                    resolvedStyle = defaultStyle;
-                }
-            }
-            else
-            {
-                if (customStyle != null)
-                {
-                    resolvedStyle = customStyle.GetStyle();
-                }
-                else if (UI_Manager.Instance != null && UI_Manager.Instance.GetDefaultStyle() != null)
-                {
-                    resolvedStyle = UI_Manager.Instance.GetDefaultStyle().GetStyle();
-                }
-                else
-                {
-                    resolvedStyle = defaultStyle;
-                }
-            }
+            resolvedStyle = resolvedStyle == null ? defaultStyle : resolvedStyle;
 
             return resolvedStyle;
         }

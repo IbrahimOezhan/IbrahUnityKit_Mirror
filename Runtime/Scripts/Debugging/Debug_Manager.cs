@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Debug_Manager : Manager_Base
+    public class Debug_Manager : Manager_Base<Debug_Manager>
     {
         private List<IDebug> debugs = new();
 
@@ -18,22 +18,8 @@ namespace IbrahKit
 
         public bool disableLogs;
 
-        public static Debug_Manager Instance;
-
         public static bool bufferLogs;
         public static bool s_disableLogs;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void Update()
         {

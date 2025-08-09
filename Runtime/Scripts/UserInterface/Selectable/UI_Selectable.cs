@@ -103,7 +103,7 @@ namespace IbrahKit
             {
                 OnClickEvent.Invoke();
 
-                UI_Audio_Manager.Instance.OnClick(overrideAudio);
+                ((UI_Menu_Extended)GetParentMenu()).OnClick();
             }
             else
             {
@@ -117,7 +117,7 @@ namespace IbrahKit
 
             if (interactable)
             {
-                UI_Audio_Manager.Instance.OnHover(overrideAudio);
+                ((UI_Menu_Extended)GetParentMenu()).OnHover();
             }
         }
 

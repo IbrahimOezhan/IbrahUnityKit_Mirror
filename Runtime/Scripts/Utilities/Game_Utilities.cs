@@ -1,4 +1,3 @@
-using IbrahKit;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,24 +5,13 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Game_Utilities : MonoBehaviour
+    public class Game_Utilities : Manager_Base<Game_Utilities>
     {
         private bool hidden;
 
         [SerializeField] private KeyMap keyMap;
 
         public Action<bool> OnHide;
-
-        public static Game_Utilities Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void Update()
         {

@@ -9,7 +9,7 @@ namespace IbrahKit
     /// A script that manages loading data on game start and saving it when you close the game
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.save)]
-    public partial class Save_Manager : Manager_Base
+    public partial class Save_Manager : Manager_Base<Save_Manager>
     {
         private const string GENERIC_KEY = "Generic";
 
@@ -21,15 +21,9 @@ namespace IbrahKit
 
         private static GenericSaveData generic;
 
-        public static Save_Manager Instance;
-
-        private void Awake()
+        protected override void OnAwake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            base.OnAwake();
 
             string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
 
@@ -42,7 +36,6 @@ namespace IbrahKit
 
             if (generic == null) generic = (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
 
-            Instance = this;
         }
 
         private void OnDestroy()

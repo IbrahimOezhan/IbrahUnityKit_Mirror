@@ -7,29 +7,19 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.unlock)]
-    public class Unlockables_Manager : MonoBehaviour
+    public class Unlockables_Manager : Manager_Base<Unlockables_Manager>
     {
         private const string saveDataName = "Unlockables";
 
         [SerializeField] private SaveData saveData = new();
+
         [SerializeField] private List<Unlockable> unlockables = new();
 
-        public static Unlockables_Manager Instance;
-
-        private void Awake()
+        protected override void OnAwake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
+            base.OnAwake();
 
-                DontDestroyOnLoad(gameObject);
-
-                saveData = (SaveData)Save_Manager.Instance.Load(saveDataName, new SaveData());
-            }
+            saveData = (SaveData)Save_Manager.Instance.Load(saveDataName, new SaveData());
         }
 
         private void OnDestroy()

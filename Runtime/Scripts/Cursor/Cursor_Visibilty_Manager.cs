@@ -2,7 +2,7 @@ using IbrahKit;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
+public class Cursor_Visibilty_Manager : Manager_Base<Cursor_Visibilty_Manager>, IDebug
 {
     private bool isVisible;
 
@@ -10,19 +10,9 @@ public class Cursor_Visibilty_Manager : MonoBehaviour, IDebug
 
     [SerializeField] private List<CursorVisibilty> cursorVisibility;
 
-    public static Cursor_Visibilty_Manager Instance;
-
-    private void Awake()
+    protected override void OnAwake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-
-        DontDestroyOnLoad(gameObject);
+        base.OnAwake();
 
         Input_Manager.Instance.OnInputChanged += OnInputTypeChanged;
         Input_Manager.Instance.InputUpdate();

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 namespace IbrahKit
 {
-    public class Pause_Manager : MonoBehaviour
+    public class Pause_Manager : Manager_Base<Pause_Manager>
     {
         private bool paused;
 
@@ -20,26 +20,15 @@ namespace IbrahKit
 
         public Action<bool> OnPause;
 
-        public static Pause_Manager Instance;
-
-        private void Awake()
+        protected override void OnAwake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
+            base.OnAwake();
 
-                input = new();
+            input = new();
 
-                input.Enable();
+            input.Enable();
 
-                input.Map.Pause.performed += Pause;
-
-                DontDestroyOnLoad(gameObject);
-            }
+            input.Map.Pause.performed += Pause;
         }
 
         private void OnDestroy()

@@ -11,9 +11,13 @@ namespace IbrahKit
         [SerializeField] protected UI_Fitter_Config_SO customConfig;
 
         [SerializeField, HorizontalGroup("Width")] protected bool scaleWidth = true;
+
         [SerializeField, HorizontalGroup("Width"), ShowIf(nameof(scaleWidth))] protected int maxWidth;
+
         [SerializeField, HorizontalGroup("Height")] protected bool scaleHeight = true;
+
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int maxHeight;
+
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int heightOffset;
 
         protected override void Init()
@@ -44,19 +48,16 @@ namespace IbrahKit
                 return customConfig.GetConfig();
             }
 
-            UI_Fitter_Config defaultConfig = null;
+            UI_Fitter_Config resolvedConfig = customConfig.GetConfig();
 
-            if (!Application.isPlaying)
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
             {
-                UI_Manager manager = FindFirstObjectByType<UI_Manager>();
-                if (manager != null) defaultConfig = manager.GetDefaultUIConfig()?.GetConfig();
-            }
-            else
-            {
-                if (UI_Manager.Instance != null) defaultConfig = UI_Manager.Instance.GetDefaultUIConfig()?.GetConfig();
+                resolvedConfig = result.GetFitterConfig(customConfig).GetConfig();
             }
 
-            return defaultConfig ?? new UI_Fitter_Config(0);
+            resolvedConfig = resolvedConfig == null ? new UI_Fitter_Config(0) : resolvedConfig;
+
+            return resolvedConfig;
         }
 
         protected RectTransform GetRect()

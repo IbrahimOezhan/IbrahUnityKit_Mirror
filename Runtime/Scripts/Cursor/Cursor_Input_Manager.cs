@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Cursor_Input_Manager : MonoBehaviour
+public class Cursor_Input_Manager : Manager_Base<Cursor_Input_Manager>
 {
     private CursorInput input;
 
@@ -14,15 +14,9 @@ public class Cursor_Input_Manager : MonoBehaviour
 
     public Action OnLMB;
 
-    public static Cursor_Input_Manager Instance;
-
-    private void Awake()
+    protected override void OnAwake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        base.OnAwake();
 
         input = new();
 
@@ -30,9 +24,6 @@ public class Cursor_Input_Manager : MonoBehaviour
 
         input.Map.LMB.performed += LMB;
 
-        Instance = this;
-
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()

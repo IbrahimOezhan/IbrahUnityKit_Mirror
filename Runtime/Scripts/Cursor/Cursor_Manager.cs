@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class Cursor_Manager : MonoBehaviour
+    public class Cursor_Manager : Manager_Base<Cursor_Manager>
     {
         private void Update()
         {

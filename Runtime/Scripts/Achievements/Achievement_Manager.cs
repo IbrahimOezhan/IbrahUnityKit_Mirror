@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class Achievement_Manager : MonoBehaviour
+    public class Achievement_Manager : Manager_Base<Achievement_Manager>
     {
         private const string prefix = "achievement_";
 
@@ -16,19 +16,6 @@ namespace IbrahKit
         [SerializeField] private Sprite secretSprite;
 
         public static Action<string, bool> OnAchievementUnlocked;
-
-        public static Achievement_Manager Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
 
         public void Unlock(Achievement achievement)
         {

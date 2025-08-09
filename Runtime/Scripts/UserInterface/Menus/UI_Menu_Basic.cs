@@ -13,20 +13,10 @@ namespace IbrahKit
         private HashSet<string> hiddenBy = new();
 
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
-        protected InputType lastInputType;
-
-        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected UI_Menu_Basic previousMenu;
 
         [TabGroup("Runtime Data"), SerializeField, ReadOnly]
         protected List<IMenuUpdate> menuUI = new();
-
-
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
-        protected CanvasGroup enabledGroup;
-
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup used when menu is hidden")]
-        protected CanvasGroup hiddenGroup;
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Whether menu should hide automatically on pause")]
         protected bool preventHideOnPause;
@@ -34,13 +24,17 @@ namespace IbrahKit
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Disable menu on start")]
         protected bool disableOnStart;
 
+        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
+        protected CanvasGroup enabledGroup;
+
+        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup used when menu is hidden")]
+        protected CanvasGroup hiddenGroup;
 
         [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Menu to switch to when back action is triggered")]
         protected UI_Menu_Basic overrideBackMenu;
 
         [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Available transitions from this menu")]
         private List<UI_Menu_Transition> transitions;
-
 
         public static Action<UI_Menu_Transition, UI_Menu_Basic> OnMenuTransition;
 
@@ -53,7 +47,7 @@ namespace IbrahKit
         {
             if (IsEnabled())
             {
-                UI_Manager.Instance.AddMenu(this);
+                UI_Menu_Manager.Instance.AddMenu(this);
             }
 
             if (disableOnStart)
@@ -157,10 +151,10 @@ namespace IbrahKit
 
         public void Enable(UI_Menu_Basic _enabledFrom, FadeMode fadeMode = FadeMode.None, float _fadeTime = 0)
         {
-            if (UI_Manager.Instance != null)
+            if (UI_Menu_Manager.Instance != null)
             {
                 SetPreviousMenu(_enabledFrom);
-                UI_Manager.Instance.Fade(this, StateMode.Enable, fadeMode, _fadeTime);
+                UI_Menu_Manager.Instance.Fade(this, StateMode.Enable, fadeMode, _fadeTime);
             }
             else
             {
@@ -172,9 +166,9 @@ namespace IbrahKit
 
         public void Disable(FadeMode fadeMode = FadeMode.None, float _fadeTime = 0)
         {
-            if (UI_Manager.Instance != null)
+            if (UI_Menu_Manager.Instance != null)
             {
-                UI_Manager.Instance.Fade(this, StateMode.Disable, fadeMode, _fadeTime);
+                UI_Menu_Manager.Instance.Fade(this, StateMode.Disable, fadeMode, _fadeTime);
             }
             else
             {
@@ -206,7 +200,7 @@ namespace IbrahKit
                 _menu.overrideBackMenu = _overrideBackMenu;
             }
 
-            UI_Manager.Instance.Transition(this, _menu, FadeMode.None, 0);
+            UI_Menu_Manager.Instance.Transition(this, _menu, FadeMode.None, 0);
         }
 
         public void MenuTransition(int _index)
@@ -215,7 +209,7 @@ namespace IbrahKit
 
             (UI_Menu_Basic menu, FadeMode mode, float time) = transition.GetData();
 
-            UI_Manager.Instance.Transition(this, menu, mode, time);
+            UI_Menu_Manager.Instance.Transition(this, menu, mode, time);
 
             OnMenuTransition?.Invoke(transition, this);
         }

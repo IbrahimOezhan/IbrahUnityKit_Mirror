@@ -7,27 +7,13 @@ using UnityEngine.InputSystem.Controls;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.input)]
-    public class Input_Manager : Manager_Base, IDebug
+    public class Input_Manager : Manager_Base<Input_Manager>, IDebug
     {
         private ButtonControl lastPressed;
 
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
-
-        public static Input_Manager Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void Start()
         {

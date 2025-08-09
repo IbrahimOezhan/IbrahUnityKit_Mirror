@@ -26,9 +26,11 @@ namespace IbrahKit
         [SerializeField]
         private Transform list;
 
-        [TabGroup("Menu Items"), Tooltip("Custom menu configuration, optional.")]
-        [SerializeField]
+        [TabGroup("Menu Items"), Tooltip("Custom menu configuration, optional."), SerializeField]
         private UI_Menu_Config_SO customConfig;
+
+        [TabGroup("Menu Items"), Tooltip("Custom menu configuration, optional."), SerializeField]
+        private UI_Audio_SO overrideAudio;
 
         [ShowIf("@list != null")]
         [TabGroup("Menu Items"), Tooltip("List of predefined menu items.")]
@@ -145,7 +147,17 @@ namespace IbrahKit
 
         public UI_Menu_Config_SO GetMenuConfig()
         {
-            return customConfig != null ? customConfig : UI_Manager.Instance.GetDefaultMenuConfig();
+            return UI_Config_Manager.Instance.GetMenuConfig(customConfig);
+        }
+
+        public void OnClick()
+        {
+            UI_Config_Manager.Instance.GetAudioConfig(overrideAudio);
+        }
+
+        public void OnHover()
+        {
+            UI_Config_Manager.Instance.GetAudioConfig(overrideAudio).OnHover();
         }
 
         public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject _goInstance)

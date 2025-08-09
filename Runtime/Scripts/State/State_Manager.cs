@@ -6,7 +6,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.state)]
-    public class State_Manager : Manager_Base, IDebug
+    public class State_Manager : Manager_Base<State_Manager>, IDebug
     {
         public const string KEY = "States";
 
@@ -16,22 +16,8 @@ namespace IbrahKit
 
         public event Action<string> OnStateChange;
 
-        public static State_Manager Instance;
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
-
         private void Start()
         {
-
             Debug_Manager.Instance.Add(this);
         }
 

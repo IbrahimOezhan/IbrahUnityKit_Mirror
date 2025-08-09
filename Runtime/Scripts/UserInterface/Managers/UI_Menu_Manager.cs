@@ -7,43 +7,15 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
-    public class UI_Manager : Manager_Base
+    public class UI_Menu_Manager : Manager_Base<UI_Menu_Manager>
     {
         public const string UILAYOUTKEY = "UILayouts";
-
-        [SerializeField] private UI_Fitter_Config_SO defaultConfig;
-
-        [SerializeField] private UI_Menu_Config_SO defaultMenuConfig;
-
-        [SerializeField] private UI_Styling_Config_SO defaultUIStyle;
 
         [SerializeField, Dropdown(UILAYOUTKEY)] private List<string> activeLayouts;
 
         [SerializeField] private List<UI_Menu_Basic> activeMenus = new();
 
         public Action<UI_Menu_Basic, StateMode> OnCustomTR;
-
-        public static UI_Manager Instance;
-
-        public static bool Exists(out UI_Manager manager, bool throwWarningIfDoesnt = true)
-        {
-            manager = Instance;
-
-            bool exists = Instance != null && Instance.gameObject != null;
-
-            if (!exists && throwWarningIfDoesnt) Debug.LogWarning($"{nameof(UI_Manager)} doesnt exist");
-
-            return exists;
-        }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this) Destroy(gameObject);
-            else
-            {
-                Instance = this;
-            }
-        }
 
         private void OnDisable()
         {
@@ -159,21 +131,6 @@ namespace IbrahKit
         public void RemoveMenu(UI_Menu_Basic menu)
         {
             activeMenus.Remove(menu);
-        }
-
-        public UI_Styling_Config_SO GetDefaultStyle()
-        {
-            return defaultUIStyle;
-        }
-
-        public UI_Menu_Config_SO GetDefaultMenuConfig()
-        {
-            return defaultMenuConfig;
-        }
-
-        public UI_Fitter_Config_SO GetDefaultUIConfig()
-        {
-            return defaultConfig;
         }
     }
 
