@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 4269557522224544233}
   - component: {fileID: 8528916323070585363}
   m_Layer: 0
-  m_Name: DebugManager
+  m_Name: Debug_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

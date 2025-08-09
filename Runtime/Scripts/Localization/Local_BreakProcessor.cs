@@ -1,7 +1,10 @@
-public class Local_BreakProcessor : Local_Processor
+namespace IbrahKit
 {
-    public override string Process(string input)
+    public class Local_BreakProcessor : Local_Processor
     {
-        return input.Replace("[Break]", "\n");
+        public override string Process(string input)
+        {
+            return input.Replace("[Break]", "\n");
+        }
     }
 }

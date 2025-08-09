@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 namespace IbrahKit
 {
     public class Pause_Manager : Manager_Base<Pause_Manager>

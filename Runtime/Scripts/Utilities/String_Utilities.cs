@@ -44,20 +44,8 @@ namespace IbrahKit
 
         public static string GenerateZalgoText(char _inputChar, int _intensity)
         {
-            StringBuilder _zalgoText = new();
-
-            _zalgoText.Append(_inputChar);
-            for (int i = 0; i < _intensity; i++)
-            {
-                int _numChars = Random.Range(1, 4);
-                for (int j = 0; j < _numChars; j++)
-                {
-                    _zalgoText.Append(zalgoChars[Random.Range(0, zalgoChars.Length)]);
-                }
-            }
-            return _zalgoText.ToString();
+            return GenerateZalgoText(_inputChar.ToString(), _intensity);
         }
-
 
         public static string StringListToString(List<string> list, char delimiter)
         {

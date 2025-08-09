@@ -1,25 +1,28 @@
-public class OverrideFloat
+namespace IbrahKit
 {
-    private float baseValue;
-    private float? overrideValue = null;
-
-    public OverrideFloat(float baseValue)
+    public class OverrideFloat
     {
-        this.baseValue = baseValue;
-    }
+        private float baseValue;
+        private float? overrideValue = null;
 
-    public void SetOverride(float overrideBaseSpeed)
-    {
-        this.overrideValue = overrideBaseSpeed;
-    }
+        public OverrideFloat(float baseValue)
+        {
+            this.baseValue = baseValue;
+        }
 
-    public void ClearOverride()
-    {
-        this.overrideValue = null;
-    }
+        public void SetOverride(float overrideBaseSpeed)
+        {
+            this.overrideValue = overrideBaseSpeed;
+        }
 
-    public float GetValue()
-    {
-        return overrideValue != null ? overrideValue.Value : baseValue;
+        public void ClearOverride()
+        {
+            this.overrideValue = null;
+        }
+
+        public float GetValue()
+        {
+            return overrideValue != null ? overrideValue.Value : baseValue;
+        }
     }
 }

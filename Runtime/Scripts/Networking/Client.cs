@@ -5,67 +5,70 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-public class Client : MonoBehaviour
+namespace IbrahKit
 {
+    public class Client : MonoBehaviour
+    {
 #if !UNITY_WEBGL
 
-    private UdpClient udpClient;
-    private IPEndPoint serverEndPoint;
-    private Thread listenThread;
+        private UdpClient udpClient;
+        private IPEndPoint serverEndPoint;
+        private Thread listenThread;
 
-    public Action<string> OnMessageRecieved;
+        public Action<string> OnMessageRecieved;
 
-    public static Client Instance;
+        public static Client Instance;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) Destroy(gameObject);
-        else
+        private void Awake()
         {
-            Instance = this;
-
-            try
+            if (Instance != null && Instance != this) Destroy(gameObject);
+            else
             {
-                udpClient = new UdpClient(8888);
-                serverEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                Instance = this;
 
-                listenThread = new Thread(new ThreadStart(ListenForMessages));
-                listenThread.IsBackground = true;
-                listenThread.Start();
+                try
+                {
+                    udpClient = new UdpClient(8888);
+                    serverEndPoint = new IPEndPoint(IPAddress.Any, 0);
+
+                    listenThread = new Thread(new ThreadStart(ListenForMessages));
+                    listenThread.IsBackground = true;
+                    listenThread.Start();
+                }
+                catch
+                {
+
+                }
             }
-            catch
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
             {
-
+                if (listenThread != null) listenThread.Abort();
+                if (udpClient != null) udpClient.Close();
             }
         }
-    }
 
-    private void OnDestroy()
-    {
-        if (Instance == this)
+        private void ListenForMessages()
         {
-            if (listenThread != null) listenThread.Abort();
-            if (udpClient != null) udpClient.Close();
+            while (true)
+            {
+                byte[] data = udpClient.Receive(ref serverEndPoint);
+                string message = Encoding.UTF8.GetString(data);
+                Debug.Log("Received message from server: " + message);
+                OnMessageRecieved?.Invoke(message);
+            }
         }
-    }
 
-    private void ListenForMessages()
-    {
-        while (true)
+        public void SendResponse(string message)
         {
-            byte[] data = udpClient.Receive(ref serverEndPoint);
-            string message = Encoding.UTF8.GetString(data);
-            Debug.Log("Received message from server: " + message);
-            OnMessageRecieved?.Invoke(message);
+            UdpClient responseClient = new UdpClient();
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            responseClient.Send(data, data.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), 8889));
+            responseClient.Close();
         }
-    }
-
-    public void SendResponse(string message)
-    {
-        UdpClient responseClient = new UdpClient();
-        byte[] data = Encoding.UTF8.GetBytes(message);
-        responseClient.Send(data, data.Length, new IPEndPoint(IPAddress.Parse("255.255.255.255"), 8889));
-        responseClient.Close();
-    }
 #endif
+    }
 }

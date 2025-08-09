@@ -1,75 +1,77 @@
-using IbrahKit;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Debug = IbrahKit.Debug;
 
-public static class Save_Utilities
+namespace IbrahKit
 {
-    public static (bool, bool) Decrypt(string fileContent, string key, out string result)
+    public static class Save_Utilities
     {
-        bool tryParse = Parse_Utilties.IsValidJson(fileContent);
-
-        bool decrypted = !tryParse;
-
-        if (!tryParse)
+        public static (bool, bool) Decrypt(string fileContent, string key, out string result)
         {
-            fileContent = String_Utilities.DecryptEncrypt(fileContent, key);
+            bool tryParse = Parse_Utilties.IsValidJson(fileContent);
 
-            Debug.Log("File probably encrypted. Attemping decryption");
-
-            tryParse = Parse_Utilties.IsValidJson(fileContent);
+            bool decrypted = !tryParse;
 
             if (!tryParse)
             {
-                Debug.LogError("File still not in json format after decryption. Probably damaged");
+                fileContent = String_Utilities.DecryptEncrypt(fileContent, key);
+
+                Debug.Log("File probably encrypted. Attemping decryption");
+
+                tryParse = Parse_Utilties.IsValidJson(fileContent);
+
+                if (!tryParse)
+                {
+                    Debug.LogError("File still not in json format after decryption. Probably damaged");
+                }
             }
+
+            result = fileContent;
+
+            return (tryParse, tryParse);
         }
 
-        result = fileContent;
-
-        return (tryParse, tryParse);
-    }
-
-    public static Savable GetSavable(string json)
-    {
-        JsonSerializerOptions genericOptions = new()
+        public static Savable GetSavable(string json)
         {
-            IncludeFields = true,
-            WriteIndented = true,
-        };
+            JsonSerializerOptions genericOptions = new()
+            {
+                IncludeFields = true,
+                WriteIndented = true,
+            };
 
-        return JsonSerializer.Deserialize<Savable>(json, genericOptions);
-    }
-
-    public static Type GetSavableType(Savable type)
-    {
-        return Type.GetType(type.fullName);
-    }
-
-    public static Savable GetDerivedSavable(string json, Savable type)
-    {
-        if (String_Utilities.IsEmpty(json))
-        {
-            Debug.LogWarning("Passed json is null or empty");
-            return null;
+            return JsonSerializer.Deserialize<Savable>(json, genericOptions);
         }
 
-        if (type == null)
+        public static Type GetSavableType(Savable type)
         {
-            Debug.LogWarning("Passed type is null");
-            return null;
+            return Type.GetType(type.fullName);
         }
 
-        JsonSerializerOptions genericOptions = new()
+        public static Savable GetDerivedSavable(string json, Savable type)
         {
-            IncludeFields = true,
-            WriteIndented = true,
-            UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
-        };
+            if (String_Utilities.IsEmpty(json))
+            {
+                Debug.LogWarning("Passed json is null or empty");
+                return null;
+            }
 
-        Type instanceType = GetSavableType(type);
+            if (type == null)
+            {
+                Debug.LogWarning("Passed type is null");
+                return null;
+            }
 
-        return (Savable)JsonSerializer.Deserialize(json, instanceType, genericOptions);
+            JsonSerializerOptions genericOptions = new()
+            {
+                IncludeFields = true,
+                WriteIndented = true,
+                UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
+            };
+
+            Type instanceType = GetSavableType(type);
+
+            return (Savable)JsonSerializer.Deserialize(json, instanceType, genericOptions);
+        }
     }
+
 }

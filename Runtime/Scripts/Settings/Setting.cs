@@ -4,8 +4,6 @@ using System.Text.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
-
-
 namespace IbrahKit
 {
     /// <summary>

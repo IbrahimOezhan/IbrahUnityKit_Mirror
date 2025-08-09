@@ -1,4 +1,3 @@
-using IbrahKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,68 +5,71 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class Cursor_Input_Manager : Manager_Base<Cursor_Input_Manager>
+namespace IbrahKit
 {
-    private CursorInput input;
-
-    private Vector2 mousePos;
-
-    public Action OnLMB;
-
-    protected override void OnAwake()
+    public class Cursor_Input_Manager : Manager_Base<Cursor_Input_Manager>
     {
-        base.OnAwake();
+        private CursorInput input;
 
-        input = new();
+        private Vector2 mousePos;
 
-        input.Enable();
+        public Action OnLMB;
 
-        input.Map.LMB.performed += LMB;
-
-    }
-
-    private void Update()
-    {
-        if (input == null)
+        protected override void OnAwake()
         {
-            return;
+            base.OnAwake();
+
+            input = new();
+
+            input.Enable();
+
+            input.Map.LMB.performed += LMB;
+
         }
 
-        mousePos = input.Map.MousePos.ReadValue<Vector2>();
-    }
-
-    private void OnDestroy()
-    {
-        if (input != null)
+        private void Update()
         {
-            input.Map.LMB.performed -= LMB;
+            if (input == null)
+            {
+                return;
+            }
 
-            input.Disable();
-            input.Dispose();
+            mousePos = input.Map.MousePos.ReadValue<Vector2>();
         }
-    }
 
-    public Vector2 GetMousePos()
-    {
-        return mousePos;
-    }
-
-    public void LMB(InputAction.CallbackContext context)
-    {
-        OnLMB?.Invoke();
-    }
-
-    public bool CursorOverUI(EventSystem system)
-    {
-        PointerEventData pointerData = new(system)
+        private void OnDestroy()
         {
-            position = mousePos
-        };
+            if (input != null)
+            {
+                input.Map.LMB.performed -= LMB;
 
-        List<RaycastResult> results = new();
+                input.Disable();
+                input.Dispose();
+            }
+        }
 
-        system.RaycastAll(pointerData, results);
+        public Vector2 GetMousePos()
+        {
+            return mousePos;
+        }
 
-        return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
+        public void LMB(InputAction.CallbackContext context)
+        {
+            OnLMB?.Invoke();
+        }
+
+        public bool CursorOverUI(EventSystem system)
+        {
+            PointerEventData pointerData = new(system)
+            {
+                position = mousePos
+            };
+
+            List<RaycastResult> results = new();
+
+            system.RaycastAll(pointerData, results);
+
+            return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
+        }
     }
 }

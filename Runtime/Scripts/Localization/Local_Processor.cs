@@ -1,4 +1,7 @@
-public abstract class Local_Processor
+namespace IbrahKit
 {
-    public abstract string Process(string input);
+    public abstract class Local_Processor
+    {
+        public abstract string Process(string input);
+    }
 }
