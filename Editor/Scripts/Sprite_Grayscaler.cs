@@ -2,7 +2,6 @@
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 using Debug = IbrahKit.Debug;
 
 public class Sprite_Grayscaler
