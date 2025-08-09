@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [Serializable]
-    public class ScaleTransition : SelectableTransition
+    public class ScaleTransition : UI_Selectable_Transition
     {
         [SerializeField] private RectTransform rect;
         [SerializeField] private float none;

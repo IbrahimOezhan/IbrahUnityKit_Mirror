@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit
 {
-    public class SelectableGroup : MonoBehaviour
+    public class UI_Selectable_Group : MonoBehaviour
     {
         private HashSet<UI_Selectable> selectables = new();
 

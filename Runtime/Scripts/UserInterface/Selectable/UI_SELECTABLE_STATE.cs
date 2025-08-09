@@ -1,6 +1,6 @@
 namespace IbrahKit
 {
-    public enum SelectedState
+    public enum UI_SELECTABLE_STATE
     {
         None,
         Hovering,

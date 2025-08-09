@@ -7,12 +7,8 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
-    public class UI_Menu_Manager : Manager_Base<UI_Menu_Manager>
+    public class UI_Menu_Manager : Manager_DDOL<UI_Menu_Manager>
     {
-        public const string UILAYOUTKEY = "UILayouts";
-
-        [SerializeField, Dropdown(UILAYOUTKEY)] private List<string> activeLayouts;
-
         [SerializeField] private List<UI_Menu_Basic> activeMenus = new();
 
         public Action<UI_Menu_Basic, StateMode> OnCustomTR;
@@ -20,11 +16,6 @@ namespace IbrahKit
         private void OnDisable()
         {
             if (Instance != this) return;
-        }
-
-        public bool ShowLayout(List<string> layouts)
-        {
-            return activeLayouts.Intersect(layouts).Count() > 0;
         }
 
         public void Transition(UI_Menu_Basic menuIn, UI_Menu_Basic menuOut, FadeMode fadeMode, float _fadeTime)

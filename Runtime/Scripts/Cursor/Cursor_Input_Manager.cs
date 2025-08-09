@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Cursor_Input_Manager : Manager_Base<Cursor_Input_Manager>
+    public class Cursor_Input_Manager : Manager_DDOL<Cursor_Input_Manager>
     {
         private CursorInput input;
 

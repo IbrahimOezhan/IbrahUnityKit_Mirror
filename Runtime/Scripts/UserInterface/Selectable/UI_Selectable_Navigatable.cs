@@ -46,7 +46,7 @@ namespace IbrahKit
 
         protected override void OnDisable()
         {
-            SetState(SelectedState.None);
+            SetState(UI_SELECTABLE_STATE.None);
 
             DeSelect();
 

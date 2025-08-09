@@ -1,8 +1,11 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Config_Manager : Manager_Base<UI_Config_Manager>
+    public class UI_Config_Manager : Manager_DDOL<UI_Config_Manager>
     {
         [SerializeField] private UI_Audio_SO defaultAudio;
 
@@ -11,6 +14,8 @@ namespace IbrahKit
         [SerializeField] private UI_Menu_Config_SO defaultMenuConfig;
 
         [SerializeField] private UI_Styling_Config_SO defaultStylingConfig;
+
+        [SerializeField] private UI_Layout_Config_SO layoutConfig;
 
         public UI_Audio_SO GetAudioConfig(UI_Audio_SO overrideValue)
         {
@@ -79,5 +84,12 @@ namespace IbrahKit
 
             return null;
         }
+
+        public bool ShowLayout(List<string> layouts)
+        {
+            return GetActiveLayouts().Intersect(layouts).Count() > 0;
+        }
+
+        private List<string> GetActiveLayouts() => layoutConfig.GetActiveLayouts();
     }
 }

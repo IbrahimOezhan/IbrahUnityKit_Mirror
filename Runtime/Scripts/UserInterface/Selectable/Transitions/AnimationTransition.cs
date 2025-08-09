@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [Serializable]
-    public class AnimationTransition : SelectableTransition
+    public class AnimationTransition : UI_Selectable_Transition
     {
         [SerializeField] private Animator animator;
 

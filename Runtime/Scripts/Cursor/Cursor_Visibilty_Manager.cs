@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class Cursor_Visibilty_Manager : Manager_Base<Cursor_Visibilty_Manager>, IDebug
+    public class Cursor_Visibilty_Manager : Manager_DDOL<Cursor_Visibilty_Manager>, IDebug
     {
         private bool isVisible;
 

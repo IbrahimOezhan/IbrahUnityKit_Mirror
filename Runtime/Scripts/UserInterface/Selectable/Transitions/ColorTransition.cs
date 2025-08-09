@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace IbrahKit
 {
     [Serializable]
-    public class ColorTransition : SelectableTransition
+    public class ColorTransition : UI_Selectable_Transition
     {
         [SerializeField] private Graphic graphic;
         [SerializeField] private Color none;

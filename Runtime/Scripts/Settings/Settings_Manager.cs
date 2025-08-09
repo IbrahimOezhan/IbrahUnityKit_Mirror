@@ -9,7 +9,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.settings)]
-    public class Settings_Manager : Manager_Base<Settings_Manager>
+    public class Settings_Manager : Manager_DDOL<Settings_Manager>
     {
         public const string KEY = "Settings";
         private const string NONE = "None";

@@ -10,19 +10,19 @@ namespace IbrahKit
     public class UI_Selectable : UI_Base, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
         [TabGroup("Transition Settings"), SerializeField]
-        private SelectedState selectedState;
+        private UI_SELECTABLE_STATE selectedState;
 
         [TabGroup("Transition Settings"), SerializeReference]
-        private List<SelectableTransition> transitions = new();
+        private List<UI_Selectable_Transition> transitions = new();
 
         [TabGroup("Transition Settings"), SerializeReference]
-        private List<SelectableTransition> transitionsInteractable = new();
+        private List<UI_Selectable_Transition> transitionsInteractable = new();
 
         [TabGroup("Transition Settings"), SerializeReference]
-        private List<SelectableTransition> transitionsNotInteractable = new();
+        private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
         [TabGroup("Runtime Data"), ReadOnly, SerializeReference]
-        private SelectableGroup selectableGroup;
+        private UI_Selectable_Group selectableGroup;
 
         [TabGroup("Events"), SerializeField]
         public UnityEvent OnClickEvent;
@@ -45,7 +45,7 @@ namespace IbrahKit
         {
             base.OnEnable();
 
-            selectableGroup = Transform_Utilities.GetParent<SelectableGroup>(transform);
+            selectableGroup = Transform_Utilities.GetParent<UI_Selectable_Group>(transform);
 
             if (selectableGroup != null) selectableGroup.Add(this);
 
@@ -54,7 +54,7 @@ namespace IbrahKit
 
         protected override void OnDisable()
         {
-            SetState(SelectedState.None);
+            SetState(UI_SELECTABLE_STATE.None);
 
             if (selectableGroup != null) selectableGroup.Remove(this);
 
@@ -86,14 +86,14 @@ namespace IbrahKit
 
         public virtual void DeSelect()
         {
-            SetState(SelectedState.None);
+            SetState(UI_SELECTABLE_STATE.None);
 
             if (currentlySelected == this) currentlySelected = null;
         }
 
         public void Select()
         {
-            SetState(SelectedState.Pressed);
+            SetState(UI_SELECTABLE_STATE.Pressed);
 
             currentlySelected = this;
 
@@ -113,7 +113,7 @@ namespace IbrahKit
 
         public void Hover()
         {
-            SetState(SelectedState.Hovering);
+            SetState(UI_SELECTABLE_STATE.Hovering);
 
             if (interactable)
             {
@@ -128,9 +128,9 @@ namespace IbrahKit
             Visualize();
         }
 
-        protected void SetState(SelectedState state)
+        protected void SetState(UI_SELECTABLE_STATE state)
         {
-            if (selectedState == SelectedState.Pressed && state != SelectedState.Pressed)
+            if (selectedState == UI_SELECTABLE_STATE.Pressed && state != UI_SELECTABLE_STATE.Pressed)
             {
                 OnDeSelect.Invoke();
             }
@@ -147,21 +147,21 @@ namespace IbrahKit
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
 
             Hover();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
 
             DeSelect();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (selectableGroup != null && selectedState == SelectedState.Pressed) return;
+            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
 
             Select();
         }

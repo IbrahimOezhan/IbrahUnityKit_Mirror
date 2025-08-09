@@ -9,7 +9,7 @@ namespace IbrahKit
     /// A script that manages loading data on game start and saving it when you close the game
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.save)]
-    public partial class Save_Manager : Manager_Base<Save_Manager>
+    public partial class Save_Manager : Manager_DDOL<Save_Manager>
     {
         private const string GENERIC_KEY = "Generic";
 

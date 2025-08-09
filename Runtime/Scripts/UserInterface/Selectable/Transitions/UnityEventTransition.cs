@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class UnityEventTransition : SelectableTransition
+    public class UnityEventTransition : UI_Selectable_Transition
     {
         [SerializeField] private UnityEvent OnNoneEvent;
         [SerializeField] private UnityEvent OnHoveringEvent;

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace IbrahKit
 {
-    public class Cursor_Sprite_Manager : Manager_Base<Cursor_Sprite_Manager>
+    public class Cursor_Sprite_Manager : Manager_DDOL<Cursor_Sprite_Manager>
     {
         private CursorState state;
 

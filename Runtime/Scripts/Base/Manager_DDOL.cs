@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public abstract class Manager_Base<T> : MonoBehaviour where T : Manager_Base<T>
+    public abstract class Manager_DDOL<T> : MonoBehaviour where T : Manager_DDOL<T>
     {
         public static T Instance;
 

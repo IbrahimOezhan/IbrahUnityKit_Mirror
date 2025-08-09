@@ -30,11 +30,6 @@ namespace IbrahKit
         {
         }
 
-        public UI_Menu_Basic GetParentMenu()
-        {
-            return parentMenu;
-        }
-
         public void MenuUpdate(UI_Menu_Basic menu)
         {
             if (menu == null)
@@ -44,6 +39,11 @@ namespace IbrahKit
             }
 
             parentMenu = menu;
+        }
+
+        public UI_Menu_Basic GetParentMenu()
+        {
+            return parentMenu;
         }
     }
 }

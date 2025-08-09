@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class Achievement_Manager : Manager_Base<Achievement_Manager>
+    public class Achievement_Manager : Manager_DDOL<Achievement_Manager>
     {
         private const string prefix = "achievement_";
 

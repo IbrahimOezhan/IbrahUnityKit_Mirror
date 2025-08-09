@@ -3,15 +3,15 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class SelectableTransition
+    public class UI_Selectable_Transition
     {
-        public void Apply(SelectedState state, GameObject go)
+        public void Apply(UI_SELECTABLE_STATE state, GameObject go)
         {
             switch (state)
             {
-                case SelectedState.None: OnNone(go); break;
-                case SelectedState.Hovering: OnHovering(go); break;
-                case SelectedState.Pressed: OnPressed(go); break;
+                case UI_SELECTABLE_STATE.None: OnNone(go); break;
+                case UI_SELECTABLE_STATE.Hovering: OnHovering(go); break;
+                case UI_SELECTABLE_STATE.Pressed: OnPressed(go); break;
             }
         }
 

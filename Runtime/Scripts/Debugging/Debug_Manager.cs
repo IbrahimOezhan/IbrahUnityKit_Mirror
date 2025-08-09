@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Debug_Manager : Manager_Base<Debug_Manager>
+    public class Debug_Manager : Manager_DDOL<Debug_Manager>
     {
         private List<IDebug> debugs = new();
 

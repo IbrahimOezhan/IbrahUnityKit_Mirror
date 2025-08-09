@@ -13,7 +13,7 @@ namespace IbrahKit
 
         [SerializeField] private bool layoutSpecific;
 
-        [ShowIf(nameof(layoutSpecific)), SerializeField, Dropdown(UI_Menu_Manager.UILAYOUTKEY)] private List<string> showOnLayouts;
+        [ShowIf(nameof(layoutSpecific)), SerializeField] private List<string> showOnLayouts;
 
         public GameObject Spawn(RectTransform parent, UI_Menu_Extended menu)
         {
@@ -23,7 +23,7 @@ namespace IbrahKit
                 return null;
             }
 
-            if (layoutSpecific && !UI_Menu_Manager.Instance.ShowLayout(showOnLayouts))
+            if (layoutSpecific && !UI_Config_Manager.Instance.ShowLayout(showOnLayouts))
             {
                 Debug.Log("Skipped due to layout specific");
                 return null;
