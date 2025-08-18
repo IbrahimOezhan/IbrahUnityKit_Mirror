@@ -84,7 +84,7 @@ namespace IbrahKit
             }
         }
 
-        public void MenuUpdate()
+        public new void MenuUpdate()
         {
             UpdateUI();
         }

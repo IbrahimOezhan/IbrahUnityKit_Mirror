@@ -12,18 +12,26 @@ namespace IbrahKit
 
         private void OnEnable()
         {
-            Cursor_Input_Manager.Instance.OnLMB += OnLMB;
+            if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
+            {
+                result.OnLMB += OnLMB;
+            }
         }
 
         private void OnDisable()
         {
-            Cursor_Input_Manager.Instance.OnLMB -= OnLMB;
+            if(Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
+            {
+                result.OnLMB -= OnLMB;
+            }
         }
 
         public void OnLMB()
         {
             if (!deselectOnClickAnywhere) return;
-            if (Cursor_Input_Manager.Instance.CursorOverUI(EventSystem.current)) return;
+
+            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result) || result.CursorOverUI(EventSystem.current)) return;
+
             foreach (var item in selectables)
             {
                 item.DeSelect();

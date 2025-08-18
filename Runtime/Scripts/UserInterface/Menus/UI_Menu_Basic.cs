@@ -9,13 +9,13 @@ namespace IbrahKit
 {
     public class UI_Menu_Basic : MonoBehaviour
     {
-        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
+        [TabGroup("Runtime"), SerializeField, ReadOnly]
         private HashSet<string> hiddenBy = new();
 
-        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
+        [TabGroup("Runtime"), SerializeField, ReadOnly]
         protected UI_Menu_Basic previousMenu;
 
-        [TabGroup("Runtime Data"), SerializeField, ReadOnly]
+        [TabGroup("Runtime"), SerializeField, ReadOnly]
         protected List<IMenuUpdate> menuUI = new();
 
         [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Whether menu should hide automatically on pause")]
@@ -40,7 +40,7 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
-            InitMenuContent();
+            MenuUpdate();
         }
 
         protected virtual void Start()
@@ -99,9 +99,16 @@ namespace IbrahKit
             MenuUpdate();
         }
 
-        protected void InitMenuContent()
+        public void AddUI(IMenuUpdate menuUpdate)
         {
-            menuUI = Transform_Utilities.GetComponentsInChildren<IMenuUpdate>(transform);
+            menuUI.Add(menuUpdate);
+
+            MenuUpdate();
+        }
+
+        public void RemoveUI(IMenuUpdate menuUpdate)
+        {
+            menuUI.Remove(menuUpdate);
 
             MenuUpdate();
         }
@@ -110,7 +117,7 @@ namespace IbrahKit
         {
             foreach (IMenuUpdate child in menuUI)
             {
-                child.MenuUpdate(this);
+                child.MenuUpdate();
             }
         }
 

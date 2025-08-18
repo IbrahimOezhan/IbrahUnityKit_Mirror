@@ -8,6 +8,8 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
+            parentMenu = Transform_Utilities.GetParent<UI_Menu_Basic>(transform);
+            parentMenu.AddUI(this);
         }
 
         protected virtual void Start()
@@ -28,17 +30,12 @@ namespace IbrahKit
 
         protected virtual void OnDestroy()
         {
+            parentMenu.RemoveUI(this);
         }
 
-        public void MenuUpdate(UI_Menu_Basic menu)
+        public void MenuUpdate()
         {
-            if (menu == null)
-            {
-                Debug.LogWarning("Passed menu is null");
-                return;
-            }
 
-            parentMenu = menu;
         }
 
         public UI_Menu_Basic GetParentMenu()

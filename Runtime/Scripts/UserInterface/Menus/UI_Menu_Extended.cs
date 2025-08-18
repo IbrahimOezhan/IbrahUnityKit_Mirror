@@ -13,6 +13,10 @@ namespace IbrahKit
     {
         private const string SENDMESSAGE = "OnMenuLoaded";
 
+        [TabGroup("Menu Settings"), Tooltip("If true, reload menu items every time the menu is opened.")]
+        [SerializeField]
+        private bool reloadOnOpen;
+
         [TabGroup("Title"), Tooltip("Localization component for the menu title.")]
         [SerializeField]
         private UI_Localization title;
@@ -41,18 +45,13 @@ namespace IbrahKit
         [SerializeField]
         private Custom_Menu_Item[] customMenuItems;
 
-        [TabGroup("Settings"), Tooltip("If true, reload menu items every time the menu is opened.")]
-        [SerializeField]
-        private bool reloadOnOpen;
-
-        // Internal spawned items tracking
-        [TabGroup("Spawned Items"), ShowInInspector, ReadOnly]
+        [TabGroup("Runtime"), ShowInInspector, ReadOnly]
         protected List<GameObject> spawnedMenuItems = new();
 
-        [TabGroup("Spawned Items"), ShowInInspector, ReadOnly]
+        [TabGroup("Runtime"), ShowInInspector, ReadOnly]
         protected List<GameObject> spawnedListMenuItems = new();
 
-        [TabGroup("Spawned Items"), ShowInInspector, ReadOnly]
+        [TabGroup("Runtime"), ShowInInspector, ReadOnly]
         protected List<GameObject> spawnedCustomMenuItems = new();
 
         private void OnDrawGizmos()
@@ -82,6 +81,7 @@ namespace IbrahKit
         public void ReloadMenu()
         {
             ClearMenuItems();
+
             LoadMenuItems();
         }
 
@@ -91,8 +91,11 @@ namespace IbrahKit
             {
                 Destroy(item);
             }
+
             spawnedMenuItems.Clear();
+
             spawnedListMenuItems.Clear();
+
             spawnedCustomMenuItems.Clear();
         }
 
@@ -108,8 +111,6 @@ namespace IbrahKit
             SpawnListItems(_settings);
 
             SpawnCustomMenuItems(_settings);
-
-            InitMenuContent();
 
             MenuUpdate();
 
@@ -147,17 +148,28 @@ namespace IbrahKit
 
         public UI_Menu_Config_SO GetMenuConfig()
         {
-            return UI_Config_Manager.Instance.GetMenuConfig(customConfig);
+            if(UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                return result.GetMenuConfig(customConfig);
+            }
+
+            return customConfig;
         }
 
         public void OnClick()
         {
-            UI_Config_Manager.Instance.GetAudioConfig(overrideAudio);
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                result.GetAudioConfig(overrideAudio).OnClick();
+            }
         }
 
         public void OnHover()
         {
-            UI_Config_Manager.Instance.GetAudioConfig(overrideAudio).OnHover();
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                result.GetAudioConfig(overrideAudio).OnHover();
+            }
         }
 
         public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject _goInstance)
