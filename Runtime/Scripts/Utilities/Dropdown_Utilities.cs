@@ -46,13 +46,13 @@ namespace IbrahKit
 
             if (input.Count != distinct.Count)
             {
-                Debug.LogError("Duplicate keys found in input");
+                Debug.LogWarning("Duplicate keys found in input");
 
                 List<string> duplicates = input.Except(distinct).ToList();
 
                 for (int i = 0; i < duplicates.Count; i++)
                 {
-                    Debug.LogError("Duplicate: " + duplicates[i]);
+                    Debug.LogWarning("Duplicate: " + duplicates[i]);
                 }
 
                 return;

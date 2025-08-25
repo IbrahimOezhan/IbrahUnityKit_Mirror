@@ -40,18 +40,25 @@ namespace IbrahKit
 
         public static Local_Manager Instance;
 
-        public static bool Exists(out Local_Manager manager, bool throwWarning = true)
+        public static bool TryGet(out Local_Manager result, bool throwWarnings = true)
         {
-            manager = Instance;
+            result = Instance;
 
-            bool exists = Instance != null && Instance.gameObject != null;
-
-            if (throwWarning && !exists)
+            if (result != null)
             {
-                Debug.LogWarning($"{nameof(Local_Manager)} does not exist");
+                return true;
             }
 
-            return exists;
+            Debug.LogWarning($"Instance of type {nameof(Local_Manager)} not assigned");
+
+            result = FindAnyObjectByType<Local_Manager>();
+
+            if (result == null)
+            {
+                Debug.LogWarning($"FindAnyObjectByType couldn't find object of type {nameof(Local_Manager)}");
+            }
+
+            return result != null;
         }
 
         private void Awake()

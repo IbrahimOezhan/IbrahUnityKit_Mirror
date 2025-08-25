@@ -21,21 +21,20 @@ namespace IbrahKit
         {
             if (!IsInitialized()) return;
 
-            (TextMeshProUGUI text, Local_Manager manager) = GetText();
+            (bool exists, TextMeshProUGUI text, Local_Manager manager) = GetText();
+
+            if (!exists) return;
 
             text.text = manager.GetString(key, fallbackText, parameters.ToArray());
         }
 
-        private (TextMeshProUGUI, Local_Manager) GetText()
+        private (bool,TextMeshProUGUI, Local_Manager) GetText()
         {
-            if (Application.isPlaying)
-            {
-                return (text, Local_Manager.Instance);
-            }
-            else
-            {
-                return (text != null ? text : GetComponent<TextMeshProUGUI>(), FindFirstObjectByType<Local_Manager>());
-            }
+            TextMeshProUGUI text = Application.isPlaying ? this.text : GetComponent<TextMeshProUGUI>();
+
+            Local_Manager.TryGet(out Local_Manager result);
+
+            return (result != null && text != null, text, result);
         }
     }
 }

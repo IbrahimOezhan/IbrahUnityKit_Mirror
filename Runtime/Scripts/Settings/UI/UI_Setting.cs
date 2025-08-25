@@ -79,7 +79,7 @@ namespace IbrahKit
 
         private void OnDestroy()
         {
-            if (Local_Manager.Exists(out Local_Manager lm, true))
+            if (Local_Manager.TryGet(out Local_Manager lm, true))
             {
                 lm.OnLanguageChanged -= UpdateUI;
             }
