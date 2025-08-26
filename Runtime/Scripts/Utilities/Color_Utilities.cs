@@ -26,7 +26,7 @@ namespace IbrahKit
                 : $"#{c.r:X2}{c.g:X2}{c.b:X2}";
         }
 
-        public static Color ColorBlend(List<Color> colors)
+        public static Color ColorBlend(params Color[] colors)
         {
             if (colors == null)
             {
@@ -34,17 +34,17 @@ namespace IbrahKit
                 return Color.white;
             }
 
-            if (colors.Count == 0)
+            if (colors.Length == 0)
             {
                 Debug.LogWarning("Color list is empty");
                 return Color.white;
             }
 
-            if (colors.Count == 1) return colors[0];
+            if (colors.Length == 1) return colors[0];
 
             Color newCol = colors[0];
 
-            for (int i = 1; i < colors.Count; i++)
+            for (int i = 1; i < colors.Length; i++)
             {
                 newCol = Color.Lerp(newCol, colors[i], .5f);
             }

@@ -5,6 +5,47 @@ namespace IbrahKit
 {
     public static class Image_Utitlities
     {
+        public static Texture2D Lerp(Texture2D _from, Texture2D _to, float t)
+        {
+            Texture2D from = new Texture2D(_from.width, _from.height, _from.format, _from.mipmapCount > 1);
+
+            // Copy the entire texture
+            Graphics.CopyTexture(_from, from);
+
+            Texture2D to = new Texture2D(_to.width, _to.height, _to.format, _to.mipmapCount > 1);
+
+            // Copy the entire texture
+            Graphics.CopyTexture(_to, to);
+
+            if (from.width != to.width || from.height != to.height)
+            {
+                Debug.LogWarning("Textures must have the same size");
+                return from;
+            }
+
+            Texture2D tex = new(from.width, from.height, from.format, from.mipmapCount > 1);
+
+            Color[] pixelsNew = new Color[from.GetPixels().Length];
+
+            Color[] pixelsFrom = from.GetPixels();
+
+            Color[] pixelsTo = to.GetPixels();
+
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    int index = GetIndex(x, y, from.width);
+
+                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(from.GetPixel(x, y),t), Color_Utilities.GetColorWithAlpha(to.GetPixel(x, y),1-t));
+                }
+            }
+
+            tex.Apply();
+
+            return tex;
+        }
+
         public static byte[] ImageToByteArray(Sprite sprite)
         {
             if (sprite == null)
@@ -63,7 +104,9 @@ namespace IbrahKit
             }
 
             Texture2D texture = new(size.x, size.y, TextureFormat.RGBA32, false);
+
             texture.LoadRawTextureData(bytes);
+
             texture.Apply();
 
             return texture;
@@ -74,6 +117,7 @@ namespace IbrahKit
             if (_sprite == null)
             {
                 Debug.LogWarning("Sprite is empty");
+
                 return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
 
@@ -93,9 +137,11 @@ namespace IbrahKit
             Texture2D tex = new Texture2D(texture2D.width, texture2D.height, texture2D.format, false);
 
             tex.SetPixels(pixels);
+
             tex.Apply();
 
             Rect rect = new(0, 0, tex.width, tex.height);
+
             return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
         }
 
@@ -106,8 +152,11 @@ namespace IbrahKit
             Color[] colors = tex.GetPixels();
 
             int minX = int.MaxValue;
+
             int maxX = int.MinValue;
+
             int minY = int.MaxValue;
+
             int maxY = int.MinValue;
 
             for (int y = 0; y < tex.height; y++)
@@ -139,6 +188,7 @@ namespace IbrahKit
             }
 
             int xOffset = ((tex.width / 2) - ((maxX - minX) / 2)) - minX;
+
             int yOffset = ((tex.height / 2) - ((maxY - minY) / 2)) - minY;
 
             Color transparent = new(0, 0, 0, 0);
@@ -152,6 +202,7 @@ namespace IbrahKit
                 for (int x = 0; x < tex.width; x++)
                 {
                     int newIndexX = x + xOffset;
+
                     int newIndexY = y + yOffset;
 
                     if (newIndexX > 0 && newIndexX < tex.width && newIndexY > 0 && newIndexY < tex.height)

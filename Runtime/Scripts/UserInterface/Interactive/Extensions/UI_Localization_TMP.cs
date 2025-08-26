@@ -25,7 +25,7 @@ namespace IbrahKit
 
             if (!exists) return;
 
-            text.text = manager.GetString(key, fallbackText, parameters.ToArray());
+            text.text = GetContent(manager);
         }
 
         private (bool,TextMeshProUGUI, Local_Manager) GetText()

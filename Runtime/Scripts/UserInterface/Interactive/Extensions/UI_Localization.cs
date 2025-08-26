@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
@@ -28,12 +29,16 @@ namespace IbrahKit
 
         public void SetFallback(string _fallback)
         {
+            if (fallbackText == _fallback) return;
+
             fallbackText = _fallback;
             UpdateUI();
         }
 
         public void SetKey(string _key)
         {
+            if (key == _key) return;
+
             key = _key;
             UpdateUI();
         }
@@ -49,6 +54,11 @@ namespace IbrahKit
             key = _key;
             parameters = _params;
             UpdateUI();
+        }
+
+        protected string GetContent(Local_Manager manager)
+        {
+            return manager.GetString(key, fallbackText, parameters.ToArray());
         }
     }
 }

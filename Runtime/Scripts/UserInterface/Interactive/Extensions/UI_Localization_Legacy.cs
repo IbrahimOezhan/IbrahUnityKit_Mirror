@@ -28,7 +28,7 @@ namespace IbrahKit
                 return;
             }
 
-            text.text = manager.GetString(key, fallbackText, parameters.ToArray());
+            text.text = GetContent(manager);
         }
 
         private (Text, Local_Manager) GetText()
