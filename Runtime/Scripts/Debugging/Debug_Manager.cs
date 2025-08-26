@@ -12,7 +12,7 @@ namespace IbrahKit
 
         [SerializeField] private UI_Text_Setter debugContent;
 
-        [SerializeField] private GameObject debugContainer;
+        [SerializeField] private UI_Menu_Basic debugContainer;
 
         [SerializeField] private KeyMap keyMap;
 
@@ -25,18 +25,14 @@ namespace IbrahKit
         {
             if (Keyboard.current[keyMap.debugMenu].wasPressedThisFrame)
             {
-                if (debugContainer.activeInHierarchy)
-                {
-                    debugContainer.SetActive(false);
-                }
-                else debugContainer.SetActive(true);
+                debugContainer.Toggle();
             }
             s_disableLogs = disableLogs;
         }
 
         private void FixedUpdate()
         {
-            if (debugContainer.activeInHierarchy)
+            if (debugContainer.IsEnabled())
             {
                 StringBuilder sb = new();
 

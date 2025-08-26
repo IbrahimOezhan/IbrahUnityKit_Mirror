@@ -144,6 +144,18 @@ namespace IbrahKit
             else OnMenuDisable();
         }
 
+        public void Toggle()
+        {
+            if(IsEnabled())
+            {
+                Disable();
+            }
+            else
+            {
+                Enable();
+            }
+        }
+
         [BoxGroup("Buttons", order: -3), Button]
         public void Enable()
         {
