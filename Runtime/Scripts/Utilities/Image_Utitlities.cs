@@ -5,41 +5,33 @@ namespace IbrahKit
 {
     public static class Image_Utitlities
     {
-        public static Texture2D Lerp(Texture2D _from, Texture2D _to, float t)
+        public static Texture2D Lerp(Texture2D from, Texture2D to, float t)
         {
-            Texture2D from = new Texture2D(_from.width, _from.height, _from.format, _from.mipmapCount > 1);
-
-            // Copy the entire texture
-            Graphics.CopyTexture(_from, from);
-
-            Texture2D to = new Texture2D(_to.width, _to.height, _to.format, _to.mipmapCount > 1);
-
-            // Copy the entire texture
-            Graphics.CopyTexture(_to, to);
-
             if (from.width != to.width || from.height != to.height)
             {
                 Debug.LogWarning("Textures must have the same size");
                 return from;
             }
 
-            Texture2D tex = new(from.width, from.height, from.format, from.mipmapCount > 1);
-
-            Color[] pixelsNew = new Color[from.GetPixels().Length];
+            Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);
 
             Color[] pixelsFrom = from.GetPixels();
 
             Color[] pixelsTo = to.GetPixels();
 
+            Color[] pixelsNew = new Color[pixelsFrom.Length];
+
             for (int y = 0; y < tex.height; y++)
             {
                 for (int x = 0; x < tex.width; x++)
                 {
-                    int index = GetIndex(x, y, from.width);
+                    int index = GetPixelIndex(x, y, from.width);
 
-                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(from.GetPixel(x, y),t), Color_Utilities.GetColorWithAlpha(to.GetPixel(x, y),1-t));
+                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(pixelsFrom[index],t), Color_Utilities.GetColorWithAlpha(pixelsTo[index],1-t));
                 }
             }
+
+            tex.SetPixels(pixelsNew);
 
             tex.Apply();
 
@@ -163,7 +155,7 @@ namespace IbrahKit
             {
                 for (int x = 0; x < tex.width; x++)
                 {
-                    Color c = colors[GetIndex(x, y, tex.width)];
+                    Color c = colors[GetPixelIndex(x, y, tex.width)];
 
                     if (c.a != 0)
                     {
@@ -207,7 +199,7 @@ namespace IbrahKit
 
                     if (newIndexX > 0 && newIndexX < tex.width && newIndexY > 0 && newIndexY < tex.height)
                     {
-                        newColors[GetIndex(newIndexX, newIndexY, tex.width)] = colors[GetIndex(x, y, tex.width)];
+                        newColors[GetPixelIndex(newIndexX, newIndexY, tex.width)] = colors[GetPixelIndex(x, y, tex.width)];
                     }
                 }
             }
@@ -223,7 +215,7 @@ namespace IbrahKit
             return newSprite;
         }
 
-        private static int GetIndex(int x, int y, int width)
+        public static int GetPixelIndex(int x, int y, int width)
         {
             return x + (y * width);
         }
