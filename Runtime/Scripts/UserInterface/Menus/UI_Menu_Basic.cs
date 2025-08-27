@@ -146,7 +146,7 @@ namespace IbrahKit
 
         public void Toggle()
         {
-            if(IsEnabled())
+            if (IsEnabled())
             {
                 Disable();
             }

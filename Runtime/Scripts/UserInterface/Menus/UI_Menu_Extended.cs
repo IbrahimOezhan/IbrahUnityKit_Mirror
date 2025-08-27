@@ -148,7 +148,7 @@ namespace IbrahKit
 
         public UI_Menu_Config_SO GetMenuConfig()
         {
-            if(UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
             {
                 return result.GetMenuConfig(customConfig);
             }

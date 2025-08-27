@@ -27,7 +27,7 @@ namespace IbrahKit
                 {
                     int index = GetPixelIndex(x, y, from.width);
 
-                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(pixelsFrom[index],t), Color_Utilities.GetColorWithAlpha(pixelsTo[index],1-t));
+                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(pixelsFrom[index], t), Color_Utilities.GetColorWithAlpha(pixelsTo[index], 1 - t));
                 }
             }
 

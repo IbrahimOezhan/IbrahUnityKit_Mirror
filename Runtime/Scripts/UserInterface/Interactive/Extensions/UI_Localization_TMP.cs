@@ -28,7 +28,7 @@ namespace IbrahKit
             text.text = GetContent(manager);
         }
 
-        private (bool,TextMeshProUGUI, Local_Manager) GetText()
+        private (bool, TextMeshProUGUI, Local_Manager) GetText()
         {
             TextMeshProUGUI text = Application.isPlaying ? this.text : GetComponent<TextMeshProUGUI>();
 

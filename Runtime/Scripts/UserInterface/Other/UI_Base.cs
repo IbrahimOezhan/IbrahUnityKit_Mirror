@@ -10,7 +10,7 @@ namespace IbrahKit
         {
             parentMenu = Transform_Utilities.GetParent<UI_Menu_Basic>(transform);
 
-            if(parentMenu == null)
+            if (parentMenu == null)
             {
                 Debug.LogError("UI Menu missing");
                 return;

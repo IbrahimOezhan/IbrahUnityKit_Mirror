@@ -20,7 +20,7 @@ namespace IbrahKit
 
         private void OnDisable()
         {
-            if(Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
+            if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
             {
                 result.OnLMB -= OnLMB;
             }
