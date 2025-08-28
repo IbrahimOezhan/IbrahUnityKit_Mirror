@@ -36,7 +36,11 @@ namespace IbrahKit
             }
 
             Instance = (T)this;
+
+            if (transform.parent != null) transform.parent = null;
+
             DontDestroyOnLoad(gameObject);
+
             OnAwake();
         }
 

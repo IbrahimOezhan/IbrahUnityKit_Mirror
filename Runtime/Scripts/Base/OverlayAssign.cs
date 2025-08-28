@@ -37,6 +37,8 @@ namespace IbrahKit
 
         private void Assign()
         {
+            overlayCam.GetUniversalAdditionalCameraData().renderType = CameraRenderType.Overlay;
+
             Camera cam = Camera.main;
 
             if (cam == null)
@@ -57,6 +59,8 @@ namespace IbrahKit
                 overlayCam.rect = cam.rect;
                 overlayCam.clearFlags = CameraClearFlags.Depth;
                 overlayCam.targetTexture = null;
+
+                overlayCam.GetUniversalAdditionalCameraData().renderType = CameraRenderType.Overlay;
 
                 list.Add(overlayCam);
 
