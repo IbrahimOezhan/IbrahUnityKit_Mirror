@@ -33,7 +33,7 @@ namespace IbrahKit
 
             if (!init)
             {
-                Debug.LogWarning("Could not initialize");
+                Debug.LogWarning($"Could not initialize {this.GetType()} ({transform.GetTransformPath()})");
 
                 return false;
             }

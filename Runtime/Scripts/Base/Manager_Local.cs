@@ -4,7 +4,7 @@ namespace IbrahKit
 {
     public class Manager_Local<T> : MonoBehaviour where T : Manager_Local<T>
     {
-        public static T Instance;
+        private static T Instance;
 
         public static bool TryGet(out T result, bool throwWarnings = true)
         {
@@ -25,6 +25,11 @@ namespace IbrahKit
             }
 
             return result != null;
+        }
+
+        public static T GetInstance()
+        {
+            return Instance;
         }
 
         private void Awake()

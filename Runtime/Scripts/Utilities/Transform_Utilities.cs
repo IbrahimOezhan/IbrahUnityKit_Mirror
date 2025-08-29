@@ -1,10 +1,34 @@
+using Mono.CSharp;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace IbrahKit
 {
     public static class Transform_Utilities
     {
+        public static void LogTransformPath(this Transform transform)
+        {
+            Debug.Log(transform.GetTransformPath());
+        }
+
+        public static string GetTransformPath(this Transform transform)
+        {
+            StringBuilder result = new(transform.name);
+
+            Transform parent = transform.parent;
+
+            while(parent != null)
+            {
+                result.Insert(0,parent.name + "/");
+
+                parent = parent.parent;
+            }
+
+            return result.ToString();
+        }
+
         public static List<T> GetComponentsInChildren<T>(Transform transform, bool includeThis = false)
         {
             if (transform == null)
