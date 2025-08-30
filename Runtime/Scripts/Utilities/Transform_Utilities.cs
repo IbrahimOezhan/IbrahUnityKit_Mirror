@@ -1,5 +1,3 @@
-using Mono.CSharp;
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -19,9 +17,9 @@ namespace IbrahKit
 
             Transform parent = transform.parent;
 
-            while(parent != null)
+            while (parent != null)
             {
-                result.Insert(0,parent.name + "/");
+                result.Insert(0, parent.name + "/");
 
                 parent = parent.parent;
             }
