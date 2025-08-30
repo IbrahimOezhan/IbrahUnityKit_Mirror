@@ -12,7 +12,7 @@ namespace IbrahKit
         protected string fallbackText;
 
         [SerializeField]
-        protected List<string> parameters = new();
+        protected string[] parameters;
 
         protected override void Awake()
         {
@@ -42,13 +42,13 @@ namespace IbrahKit
             UpdateUI();
         }
 
-        public void SetParam(List<string> _params)
+        public void SetParam(params string[] _params)
         {
             parameters = _params;
             UpdateUI();
         }
 
-        public void SetKeyParam(string _key, List<string> _params)
+        public void SetKeyParam(string _key, params string[] _params)
         {
             key = _key;
             parameters = _params;
@@ -57,7 +57,7 @@ namespace IbrahKit
 
         protected string GetContent(Local_Manager manager)
         {
-            return manager.GetString(key, fallbackText, parameters.ToArray());
+            return manager.GetString(key, fallbackText, parameters);
         }
     }
 }

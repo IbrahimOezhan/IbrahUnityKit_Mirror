@@ -17,7 +17,7 @@ namespace IbrahKit
             base.Awake();
         }
 
-        public void ShowError(string _key, bool _allowContinue, UI_Menu_Basic _nextMenu, List<string> _string)
+        public void ShowError(string _key, bool _allowContinue, UI_Menu_Basic _nextMenu, params string[] _string)
         {
             errorText.SetKeyParam(_key, _string);
             continueButton.gameObject.SetActive(_allowContinue);

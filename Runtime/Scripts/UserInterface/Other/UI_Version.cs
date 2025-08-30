@@ -14,7 +14,7 @@ namespace IbrahKit
                 return;
             }
 
-            localization.SetParam(new() { Application.version });
+            localization.SetParam(Application.version);
         }
     }
 }

@@ -87,7 +87,7 @@ namespace IbrahKit
             }
             else
             {
-                pageText.SetParam(new() { (currentPageIndex + 1 + "/" + (maxPageIndex + 1)).ToString() });
+                pageText.SetParam((currentPageIndex + 1 + "/" + (maxPageIndex + 1)).ToString() );
             }
 
             if (left == null)

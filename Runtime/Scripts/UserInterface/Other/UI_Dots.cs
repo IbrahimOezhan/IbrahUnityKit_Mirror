@@ -13,7 +13,7 @@ namespace IbrahKit
 
         private void Awake()
         {
-            dotsText.SetParam(new() { dots });
+            dotsText.SetParam(dots);
         }
 
         private void OnEnable()
@@ -30,7 +30,7 @@ namespace IbrahKit
                 while (true)
                 {
                     dots = dots == "..." ? "" : dots + ".";
-                    dotsText.SetParam(new() { dots });
+                    dotsText.SetParam(dots);
                     yield return new WaitForSeconds(delay);
                 }
             }
