@@ -55,8 +55,9 @@ namespace IbrahKit
         {
             if (alpha < 0 || alpha > 1)
             {
-                Debug.LogError($"Alpha with value {alpha} out of bounds for min 0 and max 1");
-                return c;
+                Debug.LogWarning($"Alpha with value {alpha} out of bounds for min 0 and max 1");
+
+                alpha = Mathf.Clamp01(alpha);
             }
 
             return new(c.r, c.g, c.b, alpha);
