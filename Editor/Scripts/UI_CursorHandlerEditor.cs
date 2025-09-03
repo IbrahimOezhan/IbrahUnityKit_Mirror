@@ -3,7 +3,6 @@ using UnityEditor.UI;
 
 namespace IbrahKit
 {
-
     [CustomEditor(typeof(UI_CursorHandler))]
     public class UI_CursorHandlerEditor : GraphicEditor
     {
