@@ -6,13 +6,13 @@ using Debug = IbrahKit.Debug;
 
 public class Sprite_Grayscaler
 {
-    [MenuItem("Assets/IbrahKit/Grayscale Sprite",priority =0)]
+    [MenuItem("Assets/IbrahKit/Grayscale Sprite", priority = 0)]
     public static void Grayscale()
     {
         string[] filePaths = Selection.assetGUIDs;
         Object[] objects = Selection.objects;
 
-        if(filePaths.Length == 0)
+        if (filePaths.Length == 0)
         {
             return;
         }
@@ -55,7 +55,7 @@ public class Sprite_Grayscaler
 
             while (File.Exists(newPath))
             {
-                newPath = Path.Combine(dirName, fileNameNoExtension + "_grayscale_" + Random.Range(0,9999) + ".png");
+                newPath = Path.Combine(dirName, fileNameNoExtension + "_grayscale_" + Random.Range(0, 9999) + ".png");
             }
 
             File.WriteAllBytes(newPath, bytes);

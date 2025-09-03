@@ -12,7 +12,7 @@ namespace IbrahKit
     {
         private const string SENDMESSAGE = "OnMenuLoaded";
 
-        [TabGroup("Menu Settings",order: -1), Tooltip("If true, reload menu items every time the menu is opened.")]
+        [TabGroup("Menu Settings", order: -1), Tooltip("If true, reload menu items every time the menu is opened.")]
         [SerializeField]
         private bool reloadOnOpen;
 
@@ -26,7 +26,7 @@ namespace IbrahKit
         [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
         private UI_Audio_SO overrideAudio;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."),SerializeField, ShowIf("@list != null")]
+        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeField, ShowIf("@list != null")]
         private List<Menu_Item> listMenuItems = new();
 
         [TabGroup("Runtime", order: -1), ShowInInspector, ReadOnly]

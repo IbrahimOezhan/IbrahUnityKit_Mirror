@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -28,7 +27,7 @@ namespace IbrahKit
                 return;
             }
 
-            List<string> list =dropdown.ToList();
+            List<string> list = dropdown.ToList();
 
             if (list == null || list.Count() == 0)
             {
