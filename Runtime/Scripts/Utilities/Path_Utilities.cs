@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace IbrahKit
@@ -10,7 +11,7 @@ namespace IbrahKit
         private const string myGames = "My Games";
 
 #if UNITY_EDITOR
-        [UnityEditor.MenuItem("Template/OpenPath")]
+        [MenuItem("IbrahKit/OpenPath")]
 #endif
         public static void OpenPath()
         {
