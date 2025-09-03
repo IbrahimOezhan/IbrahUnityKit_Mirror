@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -9,38 +10,65 @@ namespace IbrahKit
 {
     public class UI_Menu_Basic : MonoBehaviour
     {
-        [TabGroup("Runtime"), SerializeField, ReadOnly]
+        private const string SENDMESSAGE = "OnMenuLoaded";
+
+        [TabGroup("Menu Settings",order: -1), Tooltip("If true, reload menu items every time the menu is opened.")]
+        [SerializeField]
+        private bool reloadOnOpen;
+
+        [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items.")]
+        [SerializeField]
+        private Transform list;
+
+        [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
+        private UI_Menu_Config_SO customConfig;
+
+        [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
+        private UI_Audio_SO overrideAudio;
+
+        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."),SerializeField, ShowIf("@list != null")]
+        private List<Menu_Item> listMenuItems = new();
+
+        [TabGroup("Runtime", order: -1), ShowInInspector, ReadOnly]
+        protected List<GameObject> spawnedMenuItems = new();
+
+        [TabGroup("Runtime", order: -1), ShowInInspector, ReadOnly]
+        protected List<GameObject> spawnedListMenuItems = new();
+
+        [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
         private HashSet<string> hiddenBy = new();
 
-        [TabGroup("Runtime"), SerializeField, ReadOnly]
+        [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
         protected UI_Menu_Basic previousMenu;
 
-        [TabGroup("Runtime"), SerializeField, ReadOnly]
+        [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
         protected List<IMenuUpdate> menuUI = new();
 
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Whether menu should hide automatically on pause")]
+        [TabGroup("Menu Settings", order: -1), SerializeField, Tooltip("Whether menu should hide automatically on pause")]
         protected bool preventHideOnPause;
 
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("Disable menu on start")]
+        [TabGroup("Menu Settings", order: -1), SerializeField, Tooltip("Disable menu on start")]
         protected bool disableOnStart;
 
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
+        [TabGroup("Menu Settings", order: -1), SerializeField, Tooltip("CanvasGroup controlling menu visibility and interactivity")]
         protected CanvasGroup enabledGroup;
 
-        [TabGroup("Menu Settings", order: 0), SerializeField, Tooltip("CanvasGroup used when menu is hidden")]
+        [TabGroup("Menu Settings", order: -1), SerializeField, Tooltip("CanvasGroup used when menu is hidden")]
         protected CanvasGroup hiddenGroup;
 
-        [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Menu to switch to when back action is triggered")]
+        [TabGroup("Transitions", order: -1), SerializeField, Tooltip("Menu to switch to when back action is triggered")]
         protected UI_Menu_Basic overrideBackMenu;
 
-        [TabGroup("Transitions", order: 1), SerializeField, Tooltip("Available transitions from this menu")]
+        [TabGroup("Transitions", order: -1), SerializeField, Tooltip("Available transitions from this menu")]
         private List<UI_Menu_Transition> transitions;
 
-        public static Action<UI_Menu_Transition, UI_Menu_Basic> OnMenuTransition;
+        public Action<bool> OnStateChanged;
 
         protected virtual void Awake()
         {
             MenuUpdate();
+
+            if (!reloadOnOpen) LoadMenuItems();
         }
 
         protected virtual void Start()
@@ -69,6 +97,8 @@ namespace IbrahKit
                 Game_Utilities.Instance.OnHide += GU_Hide;
                 Game_Utilities.Instance.UpdateHide();
             }
+
+            if (reloadOnOpen) ReloadMenu();
         }
 
         protected virtual void OnDisable()
@@ -140,8 +170,7 @@ namespace IbrahKit
         {
             gameObject.SetActive(val);
 
-            if (val) OnMenuEnabled();
-            else OnMenuDisable();
+            OnStateChanged?.Invoke(val);
         }
 
         public void Toggle()
@@ -197,16 +226,6 @@ namespace IbrahKit
             }
         }
 
-        protected virtual void OnMenuEnabled()
-        {
-
-        }
-
-        protected virtual void OnMenuDisable()
-        {
-
-        }
-
         public void MenuTransition(UI_Menu_Basic _menu)
         {
             MenuTransition(_menu, null);
@@ -224,13 +243,7 @@ namespace IbrahKit
 
         public void MenuTransition(int _index)
         {
-            UI_Menu_Transition transition = transitions[_index];
-
-            (UI_Menu_Basic menu, FadeMode mode, float time) = transition.GetData();
-
-            UI_Menu_Manager.Instance.Transition(this, menu, mode, time);
-
-            OnMenuTransition?.Invoke(transition, this);
+            UI_Menu_Manager.Instance.Transition(this, transitions[_index]);
         }
 
         public void MenuTransitionToPrevious()
@@ -269,16 +282,105 @@ namespace IbrahKit
             }
         }
 
-        public void SetParams(CanvasGroup enabled, CanvasGroup hidden)
+        public void ReloadMenu()
         {
-            enabledGroup = enabled;
+            ClearMenuItems();
 
-            hiddenGroup = hidden;
+            LoadMenuItems();
+        }
+
+        private void ClearMenuItems()
+        {
+            foreach (var item in spawnedMenuItems)
+            {
+                Destroy(item);
+            }
+
+            spawnedMenuItems.Clear();
+
+            spawnedListMenuItems.Clear();
+        }
+
+        private void LoadMenuItems()
+        {
+            StartCoroutine(LoadMenuItemsRoutine());
+        }
+
+        private IEnumerator LoadMenuItemsRoutine()
+        {
+            List<Setting> _settings = new();
+
+            SpawnListItems(_settings);
+
+            MenuUpdate();
+
+            SendMessage(SENDMESSAGE, null, SendMessageOptions.DontRequireReceiver);
+
+            yield return null;
+
+            //UI_Navigation_Manager.Instance.UpdateSelectables();
+        }
+
+        private void SpawnListItems(List<Setting> _settings)
+        {
+            foreach (Menu_Item menuItem in listMenuItems)
+            {
+                if (SpawnMenuItem(menuItem, list as RectTransform, out GameObject _instance))
+                {
+                    spawnedListMenuItems.Add(_instance);
+                    spawnedMenuItems.Add(_instance);
+                }
+            }
+        }
+
+        public void OnClick()
+        {
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                result.GetAudioConfig(overrideAudio).OnClick();
+            }
+        }
+
+        public void OnHover()
+        {
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                result.GetAudioConfig(overrideAudio).OnHover();
+            }
+        }
+
+        public virtual void Back()
+        {
+            if (overrideBackMenu != null)
+            {
+                MenuTransition(overrideBackMenu);
+                overrideBackMenu = null;
+            }
+            else MenuTransitionToPrevious();
+        }
+
+        public UI_Menu_Config_SO GetMenuConfig()
+        {
+            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            {
+                return result.GetMenuConfig(customConfig);
+            }
+
+            return customConfig;
         }
 
         public float GetAlpha()
         {
             return enabledGroup.alpha;
+        }
+
+        public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject _goInstance)
+        {
+            _goInstance = null;
+
+            _goInstance = menuItem.Spawn(parent, this);
+
+            return _goInstance != null;
         }
 
         public bool IsEnabled()

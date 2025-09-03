@@ -11,7 +11,7 @@ namespace IbrahKit
         [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu_Basic menuReference;
         [ShowIf(nameof(changeType), Menu_Change_Type.TRANSITION), SerializeField] private int transitionReference = -1;
 
-        public override void Spawn(RectTransform parent, UI_Menu_Extended menu)
+        public override void Spawn(RectTransform parent, UI_Menu_Basic menu)
         {
             base.Spawn(parent, menu);
 

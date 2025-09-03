@@ -12,9 +12,18 @@ namespace IbrahKit
 
         public Action<UI_Menu_Basic, StateMode> OnCustomTR;
 
+        public Action<UI_Menu_Basic, UI_Menu_Basic> OnMenuTransition;
+
         private void OnDisable()
         {
             if (Instance != this) return;
+        }
+
+        public void Transition(UI_Menu_Basic menuIn, UI_Menu_Transition transition)
+        {
+            (UI_Menu_Basic menuOut, FadeMode fadeMode, float fadeTime) = transition.GetData();
+
+            StartCoroutine(TransitionRoutine(menuIn, menuOut, fadeMode, fadeTime));
         }
 
         public void Transition(UI_Menu_Basic menuIn, UI_Menu_Basic menuOut, FadeMode fadeMode, float _fadeTime)
@@ -24,6 +33,8 @@ namespace IbrahKit
 
         public IEnumerator TransitionRoutine(UI_Menu_Basic menuIn, UI_Menu_Basic menuOut, FadeMode fadeMode, float _fadeTime)
         {
+            OnMenuTransition?.Invoke(menuIn, menuOut);
+
             yield return StartCoroutine(FadeRoutine(menuIn, StateMode.Disable, fadeMode, _fadeTime));
 
             yield return StartCoroutine(FadeRoutine(menuOut, StateMode.Enable, fadeMode, _fadeTime));
@@ -135,13 +146,5 @@ namespace IbrahKit
     {
         Enable,
         Disable,
-    }
-
-    public enum InputType
-    {
-        KEYBOARD,
-        MOUSE,
-        GAMEPAD,
-        TOUCHSCREEN,
     }
 }

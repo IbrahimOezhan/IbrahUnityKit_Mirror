@@ -15,7 +15,7 @@ namespace IbrahKit
 
         [ShowIf(nameof(layoutSpecific)), SerializeField] private List<string> showOnLayouts;
 
-        public GameObject Spawn(RectTransform parent, UI_Menu_Extended menu)
+        public GameObject Spawn(RectTransform parent, UI_Menu_Basic menu)
         {
             if (skip)
             {
