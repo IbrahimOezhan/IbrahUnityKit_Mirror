@@ -8,10 +8,9 @@ namespace IbrahKit
     {
         [SerializeField] private Menu_Change_Type changeType;
 
-        [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu_Basic menuReference;
-        [ShowIf(nameof(changeType), Menu_Change_Type.TRANSITION), SerializeField] private int transitionReference = -1;
+        [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu menuReference;
 
-        public override void Spawn(RectTransform parent, UI_Menu_Basic menu)
+        public override void Spawn(RectTransform parent, UI_Menu menu)
         {
             base.Spawn(parent, menu);
 
@@ -20,13 +19,7 @@ namespace IbrahKit
                 case Menu_Change_Type.REFERENCE:
                     spawnedButton.Initialize(value).AddListener(() =>
                     {
-                        menu.MenuTransition(menuReference);
-                    });
-                    break;
-                case Menu_Change_Type.TRANSITION:
-                    spawnedButton.Initialize(value).AddListener(() =>
-                    {
-                        menu.MenuTransition(transitionReference);
+                        menu.GetStateController().Transition<Menu_Transition_Instant>(menuReference);
                     });
                     break;
             }
@@ -35,7 +28,6 @@ namespace IbrahKit
         public enum Menu_Change_Type
         {
             REFERENCE,
-            TRANSITION,
         }
     }
 }

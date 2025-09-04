@@ -17,7 +17,7 @@ namespace IbrahKit
 
         [SerializeField] private List<AllowPause> allowPause = new();
 
-        [SerializeField] private UI_Menu_Basic Menu;
+        [SerializeField] private UI_Menu menu;
 
         public Action<bool> OnPause;
 
@@ -59,7 +59,7 @@ namespace IbrahKit
 
             if (_paused)
             {
-                Menu.Enable(null);
+                menu.GetStateController().Enable();
 
                 stateBeforePause = currentState;
 
@@ -67,9 +67,9 @@ namespace IbrahKit
 
                 paused = _paused;
             }
-            else if (!_paused && Menu.IsEnabled())
+            else if (!_paused && menu.GetStateController().GetCompactState() == Menu_State_Controller.StateCompact.ENABLED)
             {
-                Menu.Disable();
+                menu.GetStateController().Disable();
 
                 State_Manager.Instance.SetCurrentState(stateBeforePause);
 

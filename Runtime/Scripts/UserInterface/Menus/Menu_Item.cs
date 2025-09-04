@@ -7,15 +7,15 @@ namespace IbrahKit
     [System.Serializable]
     public partial class Menu_Item
     {
-        [SerializeReference] private Menu_Item_Base menuItem;
-
         [SerializeField] private bool skip;
 
         [SerializeField] private bool layoutSpecific;
 
         [ShowIf(nameof(layoutSpecific)), SerializeField] private List<string> showOnLayouts;
 
-        public GameObject Spawn(RectTransform parent, UI_Menu_Basic menu)
+        [SerializeReference] private Menu_Item_Base menuItem;
+
+        public GameObject Spawn(RectTransform parent, UI_Menu menu)
         {
             if (skip)
             {

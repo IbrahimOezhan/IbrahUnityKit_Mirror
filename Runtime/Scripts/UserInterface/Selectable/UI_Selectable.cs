@@ -103,7 +103,7 @@ namespace IbrahKit
             {
                 OnClickEvent.Invoke();
 
-                ((UI_Menu_Extended)GetParentMenu()).OnClick();
+                GetParentMenu().OnClick();
             }
             else
             {
@@ -117,7 +117,7 @@ namespace IbrahKit
 
             if (interactable)
             {
-                ((UI_Menu_Extended)GetParentMenu()).OnHover();
+                GetParentMenu().OnHover();
             }
         }
 

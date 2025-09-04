@@ -74,7 +74,7 @@ namespace IbrahKit
             addSetting = NONE;
         }
 
-        public void OpenSettings(UI_Menu_Basic _origin)
+        public void OpenSettings(UI_Menu _origin)
         {
             if (_origin == null)
             {
@@ -82,7 +82,7 @@ namespace IbrahKit
                 return;
             }
 
-            _origin.MenuTransition(Menu_Settings.Instance, _origin);
+            _origin.GetStateController().Transition<Menu_Transition_Instant>(Menu_Settings.Instance);
         }
 
         public bool GetSetting(string _key, out Setting setting)

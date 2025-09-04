@@ -15,9 +15,9 @@ namespace IbrahKit
         [ShowIf(nameof(settingType), SettingsInterfaceType.KEY), Dropdown(Settings_Manager.KEY), SerializeField]
         private string settingsKey;
 
-        public override void Spawn(RectTransform parent, UI_Menu_Basic menu)
+        public override void Spawn(RectTransform parent, UI_Menu menu)
         {
-            UI_Menu_Config_SO config = menu.GetMenuConfig();
+            UI_Menu_Config_SO config = menu.GetContentController().GetMenuConfig();
 
             if (!Settings_Manager.Instance.GetSetting(settingsKey, out Setting _foundSetting))
             {

@@ -4,9 +4,9 @@ namespace IbrahKit
 {
     public class Menu_Settings : MonoBehaviour
     {
-        [SerializeField] private UI_Menu_Basic menu;
+        [SerializeField] private UI_Menu menu;
 
-        public static UI_Menu_Basic Instance;
+        public static UI_Menu Instance;
 
         private void Awake()
         {

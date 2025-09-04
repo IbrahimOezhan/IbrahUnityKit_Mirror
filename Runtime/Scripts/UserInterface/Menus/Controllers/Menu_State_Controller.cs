@@ -1,0 +1,124 @@
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace IbrahKit
+{
+    [System.Serializable]
+    public class Menu_State_Controller : IMenuState
+    {
+        private State state;
+
+        private UI_Menu menu;
+
+        [SerializeField, ReadOnly] private UI_Menu previous;
+
+        public void Init(UI_Menu menu)
+        {
+            this.menu = menu;
+        }
+
+        public void Enable()
+        {
+            Enable<Menu_Transition_Instant>();
+        }
+
+        public void Enable<T>(params object[] args) where T : Menu_Transition
+        {
+            Debug.Log("Enable");
+
+            Menu_Transition tr = GenericToTransition<T>(null, menu, args);
+
+            UI_Menu_Manager.Instance.Transition(tr);
+        }
+
+        public void Disable()
+        {
+            Disable<Menu_Transition_Instant>();
+        }
+
+        public void Disable<T>(params object[] args) where T : Menu_Transition
+        {
+            Menu_Transition tr = GenericToTransition<T>(menu, null, args);
+
+            UI_Menu_Manager.Instance.Transition(tr);
+        }
+
+        public void Toggle()
+        {
+            Toggle<Menu_Transition_Instant>();
+        }
+
+        public void Toggle<T>(params object[] args) where T : Menu_Transition
+        {
+            bool en = GetCompactState() == StateCompact.ENABLED;
+
+            Menu_Transition tr = GenericToTransition<T>(en ? menu : null, en ? null : menu, args);
+
+            UI_Menu_Manager.Instance.Transition(tr);
+        }
+
+        public void Transition<T>(UI_Menu menuOut, UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
+        {
+            Menu_Transition tr = GenericToTransition<T>(menu, menuOut, args);
+
+            UI_Menu_Manager.Instance.Transition(tr, backOverride);
+        }
+
+        public void Transition(Menu_Transition tr, UI_Menu backOverride = null)
+        {
+            UI_Menu_Manager.Instance.Transition(tr, backOverride);
+        }
+
+        public void TransitionToPrevious<T>(UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
+        {
+            Menu_Transition tr = GenericToTransition<T>(menu, previous, args);
+
+            UI_Menu_Manager.Instance.Transition(tr, backOverride);
+        }
+
+        public void SetPreviousMenu(UI_Menu menu)
+        {
+            previous = menu;
+        }
+
+        public void SetState(State state)
+        {
+            this.state = state;
+        }
+
+        public State GetState()
+        {
+            return state;
+        }
+
+        public StateCompact GetCompactState()
+        {
+            return state == State.ENABLED || state == State.ENABLING ? StateCompact.ENABLED : StateCompact.DISABLED;
+        }
+
+        private Menu_Transition GenericToTransition<T>(UI_Menu menuIn, UI_Menu menuOut, params object[] args)
+        {
+            List<object> argsOr = new() { menuIn, menuOut };
+
+            argsOr.AddRange(args);
+
+            return (Menu_Transition)Activator.CreateInstance(typeof(T), argsOr.ToArray());
+        }
+
+        public enum State
+        {
+            ENABLED = 0,
+            ENABLING = 1,
+            DISABLED = 2,
+            DISABLING = 3,
+        }
+
+        public enum StateCompact
+        {
+            ENABLED,
+            DISABLED,
+        }
+    }
+}

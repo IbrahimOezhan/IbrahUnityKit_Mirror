@@ -4,11 +4,11 @@ namespace IbrahKit
 {
     public class UI_Base : MonoBehaviour, IMenuUpdate
     {
-        [SerializeField] private UI_Menu_Basic parentMenu;
+        [SerializeField] private UI_Menu parentMenu;
 
         protected virtual void Awake()
         {
-            parentMenu = Transform_Utilities.GetParent<UI_Menu_Basic>(transform);
+            parentMenu = Transform_Utilities.GetParent<UI_Menu>(transform);
 
             if (parentMenu == null)
             {
@@ -16,7 +16,7 @@ namespace IbrahKit
                 return;
             }
 
-            parentMenu.AddUI(this);
+            parentMenu.GetContentController().AddUI(this);
         }
 
         protected virtual void Start()
@@ -37,7 +37,7 @@ namespace IbrahKit
 
         protected virtual void OnDestroy()
         {
-            parentMenu.RemoveUI(this);
+            parentMenu.GetContentController().RemoveUI(this);
         }
 
         public void MenuUpdate()
@@ -45,7 +45,7 @@ namespace IbrahKit
 
         }
 
-        public UI_Menu_Basic GetParentMenu()
+        public UI_Menu GetParentMenu()
         {
             return parentMenu;
         }

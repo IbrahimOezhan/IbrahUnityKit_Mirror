@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace IbrahKit
 {
-    public class Menu_Pause : UI_Menu_Extended
+    public class Menu_Pause : UI_Menu
     {
         public void MainMenu()
         {
