@@ -16,6 +16,20 @@ namespace IbrahKit
             this.menuOut = menuOut;
         }
 
+        public void TransitionBackup()
+        {
+            bool inExists = menuIn != null;
+            bool outExists = menuOut != null;
+
+            if(outExists) menuOut.GetVisbilityController().SetActive(true);
+            if (outExists) menuOut.GetVisbilityController().SetAlpha(1);
+            if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
+
+            if (inExists) menuIn.GetVisbilityController().SetActive(false);
+            if (inExists) menuIn.GetVisbilityController().SetAlpha(1);
+            if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
+        }
+
         public abstract IEnumerator Transition(UI_Menu backOverride);
     }
 }

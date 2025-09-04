@@ -27,7 +27,7 @@ namespace IbrahKit
         {
             Menu_Transition tr = GenericToTransition<T>(null, menu, args);
 
-            UI_Menu_Manager.Instance.Transition(tr);
+            Transition(tr);
         }
 
         public void Disable()
@@ -39,7 +39,7 @@ namespace IbrahKit
         {
             Menu_Transition tr = GenericToTransition<T>(menu, null, args);
 
-            UI_Menu_Manager.Instance.Transition(tr);
+            Transition(tr);
         }
 
         public void Toggle()
@@ -53,26 +53,33 @@ namespace IbrahKit
 
             Menu_Transition tr = GenericToTransition<T>(en ? menu : null, en ? null : menu, args);
 
-            UI_Menu_Manager.Instance.Transition(tr);
+            Transition(tr);
         }
 
         public void Transition<T>(UI_Menu menuOut, UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
             Menu_Transition tr = GenericToTransition<T>(menu, menuOut, args);
 
-            UI_Menu_Manager.Instance.Transition(tr, backOverride);
-        }
-
-        public void Transition(Menu_Transition tr, UI_Menu backOverride = null)
-        {
-            UI_Menu_Manager.Instance.Transition(tr, backOverride);
+            Transition(tr, backOverride);
         }
 
         public void TransitionToPrevious<T>(UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
             Menu_Transition tr = GenericToTransition<T>(menu, previous, args);
 
-            UI_Menu_Manager.Instance.Transition(tr, backOverride);
+            Transition(tr, backOverride);
+        }
+
+        private void Transition(Menu_Transition tr, UI_Menu backOverride = null)
+        {
+            if(UI_Menu_Manager.TryGet(out UI_Menu_Manager result,false))
+            {
+                result.Transition(tr, backOverride);
+            }
+            else
+            {
+                tr.TransitionBackup();
+            }
         }
 
         public void SetPreviousMenu(UI_Menu menu)

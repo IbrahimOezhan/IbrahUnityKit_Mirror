@@ -18,8 +18,6 @@ namespace IbrahKit
 
         public void Transition<T>(UI_Menu menuOut, UI_Menu backOverride = null, params object[] args) where T : Menu_Transition;
 
-        public void Transition(Menu_Transition tr, UI_Menu backOverride = null);
-
         public void TransitionToPrevious<T>(UI_Menu backOverride = null, params object[] args) where T : Menu_Transition;
 
         public void SetPreviousMenu(UI_Menu menu);

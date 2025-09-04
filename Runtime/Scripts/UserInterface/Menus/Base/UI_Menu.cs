@@ -53,10 +53,22 @@ namespace IbrahKit
             content.MenuUpdate();
         }
 
+        [Button]
+        private void Enable()
+        {
+            GetStateController().Enable();
+        }
+
+        [Button]
+        private void Disable()
+        {
+            GetStateController().Disable();
+        }
+
         private void Init()
         {
             if (initialized) return;
-            initialized = true;
+            if(Application.isPlaying) initialized = true;
 
             visiblity.Init(this);
             content.Init(this);
