@@ -72,7 +72,7 @@ namespace IbrahKit
 
         private void Transition(Menu_Transition tr, UI_Menu backOverride = null)
         {
-            if(UI_Menu_Manager.TryGet(out UI_Menu_Manager result,false))
+            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
                 result.Transition(tr, backOverride);
             }

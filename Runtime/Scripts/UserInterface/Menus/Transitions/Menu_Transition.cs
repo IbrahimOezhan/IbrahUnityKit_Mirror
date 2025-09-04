@@ -21,7 +21,7 @@ namespace IbrahKit
             bool inExists = menuIn != null;
             bool outExists = menuOut != null;
 
-            if(outExists) menuOut.GetVisbilityController().SetActive(true);
+            if (outExists) menuOut.GetVisbilityController().SetActive(true);
             if (outExists) menuOut.GetVisbilityController().SetAlpha(1);
             if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
 

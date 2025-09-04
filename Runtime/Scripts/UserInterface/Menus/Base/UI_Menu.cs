@@ -68,7 +68,7 @@ namespace IbrahKit
         private void Init()
         {
             if (initialized) return;
-            if(Application.isPlaying) initialized = true;
+            if (Application.isPlaying) initialized = true;
 
             visiblity.Init(this);
             content.Init(this);

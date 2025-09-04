@@ -15,7 +15,7 @@ namespace IbrahKit
                 return true;
             }
 
-            if(throwWarnings) Debug.LogWarning($"Instance of type {typeof(T)} not assigned");
+            if (throwWarnings) Debug.LogWarning($"Instance of type {typeof(T)} not assigned");
 
             result = FindAnyObjectByType<T>();
 
