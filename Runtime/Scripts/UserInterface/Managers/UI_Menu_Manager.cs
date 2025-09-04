@@ -15,6 +15,8 @@ namespace IbrahKit
 
         public void Transition(Menu_Transition transition, UI_Menu _overrideBackMenu = null)
         {
+            Debug.Log("Enable2");
+
             StartCoroutine(transition.Transition(_overrideBackMenu));
         }
     }

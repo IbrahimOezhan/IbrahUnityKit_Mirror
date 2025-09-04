@@ -15,13 +15,13 @@ namespace IbrahKit
 
             if (input == null)
             {
-                Debug.LogWarning("Passed input list is null");
+                Debug.LogError("Passed input list is null");
                 return;
             }
 
             if (input.Count == 0)
             {
-                Debug.LogWarning("Passed input list is empty. Possible error");
+                Debug.LogWarning("Passed input list is empty");
                 return;
             }
 
@@ -60,12 +60,11 @@ namespace IbrahKit
 
             if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
 
-            using (StreamWriter sw = new(GetPath(fileName)))
+            using StreamWriter sw = new(GetPath(fileName));
+
+            for (int i = 0; i < input.Count; i++)
             {
-                for (int i = 0; i < input.Count; i++)
-                {
-                    sw.WriteLine(input[i]);
-                }
+                sw.WriteLine(input[i]);
             }
         }
 
@@ -76,10 +75,12 @@ namespace IbrahKit
             if (File.Exists(path))
             {
                 result = File.ReadAllLines(path).ToList();
+
                 return true;
             }
 
             result = new List<string>();
+
             return false;
         }
 

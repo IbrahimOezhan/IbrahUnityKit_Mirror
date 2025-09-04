@@ -6,6 +6,8 @@ namespace IbrahKit
 {
     public class UI_Menu : MonoBehaviour
     {
+        private bool initialized = false;
+
         [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
         private UI_Audio_SO overrideAudio;
 
@@ -17,9 +19,7 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
-            visiblity.Init(this);
-            content.Init(this);
-            state.Init(this);
+            Init();
 
             content.Awake();
             visiblity.Awake();
@@ -53,18 +53,31 @@ namespace IbrahKit
             content.MenuUpdate();
         }
 
+        private void Init()
+        {
+            if (initialized) return;
+            initialized = true;
+
+            visiblity.Init(this);
+            content.Init(this);
+            state.Init(this);
+        }
+
         public IMenuVisibility GetVisbilityController()
         {
+            Init();
             return visiblity;
         }
 
         public IMenuState GetStateController()
         {
+            Init();
             return state;
         }
 
         public IMenuContent GetContentController()
         {
+            Init();
             return content;
         }
 

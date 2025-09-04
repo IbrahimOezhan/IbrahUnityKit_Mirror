@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Button : Menu_Item_Base
+    public class Menu_Item_Button_Base : Menu_Item_Base
     {
         protected UI_Menu_Button spawnedButton;
         protected string value;

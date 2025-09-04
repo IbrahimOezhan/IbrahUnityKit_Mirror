@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class Menu_Item_UEvent : Menu_Item_Button
+    public class Menu_Item_UEvent : Menu_Item_Button_Base
     {
         [SerializeField] private UnityEvent unityEvent;
 

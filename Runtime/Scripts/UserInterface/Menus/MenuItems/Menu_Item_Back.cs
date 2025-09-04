@@ -3,7 +3,7 @@
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Back : Menu_Item_Button
+    public class Menu_Item_Back : Menu_Item_Button_Base
     {
         public override void Spawn(RectTransform parent, UI_Menu menu)
         {

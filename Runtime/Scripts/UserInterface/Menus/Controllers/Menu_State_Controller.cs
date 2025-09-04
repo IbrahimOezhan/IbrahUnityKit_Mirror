@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -26,8 +25,6 @@ namespace IbrahKit
 
         public void Enable<T>(params object[] args) where T : Menu_Transition
         {
-            Debug.Log("Enable");
-
             Menu_Transition tr = GenericToTransition<T>(null, menu, args);
 
             UI_Menu_Manager.Instance.Transition(tr);
@@ -100,11 +97,17 @@ namespace IbrahKit
 
         private Menu_Transition GenericToTransition<T>(UI_Menu menuIn, UI_Menu menuOut, params object[] args)
         {
-            List<object> argsOr = new() { menuIn, menuOut };
+            object[] array = new object[args.Length + 2];
 
-            argsOr.AddRange(args);
+            array[0] = menuIn;
+            array[1] = menuOut;
 
-            return (Menu_Transition)Activator.CreateInstance(typeof(T), argsOr.ToArray());
+            for (int i = 2; i < array.Length; i++)
+            {
+                array[i] = args[i - 2];
+            }
+
+            return (Menu_Transition)Activator.CreateInstance(typeof(T), array);
         }
 
         public enum State
