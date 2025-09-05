@@ -8,11 +8,6 @@ namespace IbrahKit
     {
         [SerializeField] private List<UI_Menu> activeMenus = new();
 
-        private void OnDisable()
-        {
-            if (Instance != this) return;
-        }
-
         public void Transition(Menu_Transition transition, UI_Menu _overrideBackMenu = null)
         {
             Debug.Log("Enable2");
