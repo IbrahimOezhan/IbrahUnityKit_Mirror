@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [System.Serializable]
-    public class Menu_Transition_Cross : Menu_Transition_Time
+    public class Menu_Transition_Sequence : Menu_Transition_Time
     {
-        public Menu_Transition_Cross(UI_Menu menuIn, UI_Menu menuOut, float time = 1) : base(menuIn, menuOut, time)
+        public Menu_Transition_Sequence(UI_Menu menuIn, UI_Menu menuOut, float time = 1) : base(menuIn, menuOut, time)
         {
         }
 
@@ -15,7 +14,7 @@ namespace IbrahKit
             bool inExists = menuIn != null;
             bool outExists = menuOut != null;
 
-            float t = 0;
+
 
             if (outExists) menuOut.GetVisbilityController().SetActive(true);
 
@@ -23,21 +22,34 @@ namespace IbrahKit
 
             if (outExists) menuOut.GetStateController().SetState(Menu_State_Controller.State.ENABLING);
 
+            if (outExists) menuOut.GetVisbilityController().SetAlpha(0);
+
             if (inExists) menuIn.GetStateController().SetState(Menu_State_Controller.State.DISABLING);
 
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
 
             if (inExists) menuIn.GetVisbilityController().SetAlpha(1);
-            if (outExists) menuOut.GetVisbilityController().SetAlpha(0);
 
-            while (t < 1)
+            float t = 0;
+
+            while (t < 1 && inExists)
             {
                 t += (Time.deltaTime / time);
 
                 yield return null;
 
-                if (inExists) menuIn.GetVisbilityController().SetAlpha(1 - t);
-                if (outExists) menuOut.GetVisbilityController().SetAlpha(t);
+                menuIn.GetVisbilityController().SetAlpha(1 - t);
+            }
+
+            t = 0;
+
+            while (t < 1 && outExists)
+            {
+                t += (Time.deltaTime / time);
+
+                yield return null;
+
+                menuOut.GetVisbilityController().SetAlpha(t);
             }
 
             if (inExists) menuIn.GetStateController().SetState(Menu_State_Controller.State.DISABLED);
