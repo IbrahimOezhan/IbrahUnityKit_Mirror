@@ -62,16 +62,16 @@ public class ScrollView_Content : MonoBehaviour
         return Mathf.Clamp01(vh / ch);
     }
 
-public float Pos01()
-{
-    float vh = viewport.rect.height;
+    public float Pos01()
+    {
+        float vh = viewport.rect.height;
 
-    float ch = content.rect.height;
+        float ch = content.rect.height;
 
-    float range = Mathf.Max(0.0001f, ch - vh);
+        float range = Mathf.Max(0.0001f, ch - vh);
 
-    // 0 = top, 1 = bottom
-    return Mathf.Clamp01(content.anchoredPosition.y / range);
-}
+        // 0 = top, 1 = bottom
+        return Mathf.Clamp01(content.anchoredPosition.y / range);
+    }
 
 }

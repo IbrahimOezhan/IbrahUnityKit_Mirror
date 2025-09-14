@@ -19,7 +19,7 @@ public class ScrollView_Controller_Viewport : MonoBehaviour
 
     private void Update()
     {
-        if(holding)
+        if (holding)
         {
             Vector2 newPos = GetMousePos(scrollView.GetCanvas());
 
@@ -44,6 +44,6 @@ public class ScrollView_Controller_Viewport : MonoBehaviour
 
     private Vector2 GetMousePos(Canvas canvas)
     {
-       return Cursor_Input_Manager.Instance.GetCanvasMousePos(scrollView.GetCanvas());
+        return Cursor_Input_Manager.Instance.GetCanvasMousePos(scrollView.GetCanvas());
     }
 }

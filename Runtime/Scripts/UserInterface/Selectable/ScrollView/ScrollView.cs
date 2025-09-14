@@ -12,12 +12,12 @@ public class ScrollView : MonoBehaviour
 
     public RectTransform GetCanvasRect()
     {
-return canvasRect; 
+        return canvasRect;
     }
 
     public Canvas GetCanvas()
     {
-        return canvas; 
+        return canvas;
     }
 
     public ScrollView_Content GetContent()

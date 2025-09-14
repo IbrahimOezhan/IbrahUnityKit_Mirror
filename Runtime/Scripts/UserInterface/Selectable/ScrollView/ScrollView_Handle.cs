@@ -1,6 +1,4 @@
-﻿using IbrahKit;
-using UnityEngine;
-using Debug = IbrahKit.Debug;
+﻿using UnityEngine;
 
 public class ScrollView_Handle : MonoBehaviour
 {
