@@ -23,7 +23,7 @@ namespace IbrahKit
             }
             else
             {
-                left.OnClickEvent.AddListener(GoLeft);
+                left.GetOnClick().AddListener(GoLeft);
             }
 
             if (right == null)
@@ -32,7 +32,7 @@ namespace IbrahKit
             }
             else
             {
-                right.OnClickEvent.AddListener(GoRight);
+                right.GetOnClick().AddListener(GoRight);
             }
 
             UpdateUI();

@@ -53,6 +53,22 @@ namespace IbrahKit
             return mousePos;
         }
 
+        public Vector2 GetCanvasMousePos(Canvas canvas)
+        {
+            Vector2 screenPos = Mouse.current.position.ReadValue();
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+
+            Vector2 localPoint;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect,
+                screenPos,
+                canvas.worldCamera, // null if Screen Space - Overlay
+                out localPoint
+            );
+
+            return localPoint;
+        }
+
         public void LMB(InputAction.CallbackContext context)
         {
             OnLMB?.Invoke();

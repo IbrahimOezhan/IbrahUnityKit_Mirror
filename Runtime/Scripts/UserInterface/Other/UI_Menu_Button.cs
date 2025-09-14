@@ -31,7 +31,7 @@ namespace IbrahKit
                 return new();
             }
 
-            return selec.OnClickEvent;
+            return selec.GetOnClick();
         }
     }
 }

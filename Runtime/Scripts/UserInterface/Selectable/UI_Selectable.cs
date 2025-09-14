@@ -25,19 +25,17 @@ namespace IbrahKit
         private UI_Selectable_Group selectableGroup;
 
         [TabGroup("Events"), SerializeField]
-        public UnityEvent OnClickEvent;
+        private UnityEvent OnClickEvent;
 
         [TabGroup("Events"), SerializeField]
-        public UnityEvent OnClickNotInteractableEvent;
+        private UnityEvent OnClickNotInteractableEvent;
 
         [TabGroup("Events"), SerializeField]
-        public UnityEvent OnDeSelect;
+        private UnityEvent OnDeSelect;
 
         [SerializeField] private UI_Audio_SO overrideAudio;
 
         [SerializeField] private bool interactable = true;
-
-        public Action OnClickAction;
 
         public static UI_Selectable currentlySelected;
 
@@ -171,6 +169,21 @@ namespace IbrahKit
             if (selectableGroup != null) return;
 
             DeSelect();
+        }
+
+        public UnityEvent GetOnClick()
+        {
+            return OnClickEvent;
+        }
+
+        public UnityEvent GetOnClickRefused()
+        {
+            return OnClickNotInteractableEvent;
+        }
+
+        public UnityEvent GetOnDeSelect()
+        {
+            return OnDeSelect; 
         }
     }
 }
