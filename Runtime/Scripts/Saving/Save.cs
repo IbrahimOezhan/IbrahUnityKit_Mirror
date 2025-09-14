@@ -185,7 +185,7 @@ namespace IbrahKit
 
                 string json = JsonSerializer.Serialize(value, t, Options);
 
-                string fileContent = encrypt ? String_Utilities.DecryptEncrypt(json, key) : json;
+                string fileContent = encrypt ? String_Utilities.Encrypt(json, key) : json;
 
                 using StreamWriter streamWriter = new(Path.Combine(folderPath, name));
 

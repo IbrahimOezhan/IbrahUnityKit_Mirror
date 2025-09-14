@@ -8,7 +8,7 @@ namespace IbrahKit
         [Button]
         public void SortChildren()
         {
-            Transform_Utilities.SortGameObjects(transform);
+            transform.SortChildren();
         }
     }
 }

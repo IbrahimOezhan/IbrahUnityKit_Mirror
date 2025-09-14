@@ -119,7 +119,7 @@ namespace IbrahKit
         [Button]
         public void SortManangers()
         {
-            Transform_Utilities.SortGameObjects(spawnedManagers);
+            Transform_Utilities.SortObjects(spawnedManagers);
         }
 
         private IEnumerator DelayedUpdate()

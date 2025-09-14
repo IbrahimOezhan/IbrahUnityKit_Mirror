@@ -10,7 +10,8 @@ namespace IbrahKit
         {
             for (int i = 0; i < list.Count; i++)
             {
-                int randomIndex = UnityEngine.Random.Range(i, list.Count);
+                int randomIndex = Random.Range(i, list.Count);
+
                 (list[randomIndex], list[i]) = (list[i], list[randomIndex]);
             }
             return list;
@@ -27,16 +28,17 @@ namespace IbrahKit
 
             for (int i = 0; i < result.Length; i++)
             {
-                int randomIndex = UnityEngine.Random.Range(i, result.Length);
+                int randomIndex = Random.Range(i, result.Length);
                 (result[randomIndex], result[i]) = (result[i], result[randomIndex]);
             }
 
             return result;
         }
 
-        public static T GetClampedArrayElement<T>(T[] array, int index)
+        public static T GetClampedElement<T>(T[] array, int index)
         {
             if (array.Length == 0) return default;
+
             return array[Mathf.Clamp(index, 0, array.Length - 1)];
         }
 

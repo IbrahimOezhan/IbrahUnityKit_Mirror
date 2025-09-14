@@ -29,9 +29,11 @@ namespace IbrahKit
             foreach (char _c in _inputText)
             {
                 _zalgoText.Append(_c);
+
                 for (int i = 0; i < _intensity; i++)
                 {
                     int _numChars = Random.Range(1, 4);
+
                     for (int j = 0; j < _numChars; j++)
                     {
                         _zalgoText.Append(zalgoChars[Random.Range(0, zalgoChars.Length)]);
@@ -50,16 +52,19 @@ namespace IbrahKit
         public static string StringListToString(List<string> list, char delimiter)
         {
             StringBuilder sb = new();
+
             for (int i = 0; i < list.Count; ++i)
             {
                 sb.Append(list[i] + (i == list.Count - 1 ? "" : delimiter));
             }
+
             return sb.ToString();
         }
 
         public static string StringListToString(List<string> list)
         {
             string finalString = list.Aggregate(string.Empty, (current, next) => current + (current == string.Empty ? "" : ", ") + next);
+
             return finalString;
         }
 
@@ -77,6 +82,7 @@ namespace IbrahKit
             for (int i = 0; i < lines.Length; i++)
             {
                 if (IsEmpty(lines[i])) continue;
+
                 if (IsEmpty(lines[i].Replace(delimiter.ToString(), ""))) continue;
 
                 string[] columns = lines[i].Split(delimiter);
@@ -97,6 +103,7 @@ namespace IbrahKit
         public static int CompareVersions(string v1, string v2)
         {
             string[] aSplit = v1.Split('.');
+
             string[] bSplit = v2.Split('.');
 
             int longestLength = Mathf.Max(aSplit.Length, bSplit.Length);
@@ -104,9 +111,11 @@ namespace IbrahKit
             for (int i = 0; i < longestLength; i++)
             {
                 if (i >= aSplit.Length) return -1;
+
                 if (i >= bSplit.Length) return 1;
 
                 int numA = int.Parse(aSplit[i]);
+
                 int numB = int.Parse(bSplit[i]);
 
                 int dif = numA - numB;
@@ -124,10 +133,12 @@ namespace IbrahKit
             return Regex.IsMatch(text, regex);
         }
 
-        public static string DecryptEncrypt(string _data, string key)
+        public static string Encrypt(string _data, string key)
         {
             string _result = "";
+
             for (int i = 0; i < _data.Length; i++) _result += (char)(_data[i] ^ key[i % key.Length]);
+
             return _result;
         }
     }

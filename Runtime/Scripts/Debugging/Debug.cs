@@ -16,7 +16,7 @@ namespace IbrahKit
 
             string formattedMsg = $"[Log] {message} (Caller: {caller})";
 
-            formattedMsg = Color_Utilities.ColorString(formattedMsg, c);
+            formattedMsg = c.UseOnString(formattedMsg);
 
             if (context != null) UnityEngine.Debug.Log(formattedMsg, context);
             else UnityEngine.Debug.Log(formattedMsg);

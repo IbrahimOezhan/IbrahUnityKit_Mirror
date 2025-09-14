@@ -7,37 +7,17 @@ namespace IbrahKit
 {
     public static class Image_Utitlities
     {
-        public static Texture2D Lerp(Texture2D from, Texture2D to, float t)
+        public static void Screenshot()
         {
-            if (from.width != to.width || from.height != to.height)
-            {
-                Debug.LogWarning("Textures must have the same size");
-                return from;
-            }
+            string fileName = "Screenshot-" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".png";
+            string screenshotsPath = Path.Combine(Path_Utilities.GetGamePath(), "Screenshots");
+            if (!Directory.Exists(screenshotsPath)) Directory.CreateDirectory(screenshotsPath);
+            ScreenCapture.CaptureScreenshot(Path.Combine(screenshotsPath, fileName));
+        }
 
-            Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);
-
-            Color[] pixelsFrom = from.GetPixels();
-
-            Color[] pixelsTo = to.GetPixels();
-
-            Color[] pixelsNew = new Color[pixelsFrom.Length];
-
-            for (int y = 0; y < tex.height; y++)
-            {
-                for (int x = 0; x < tex.width; x++)
-                {
-                    int index = GetPixelIndex(x, y, from.width);
-
-                    pixelsNew[index] = Color_Utilities.ColorBlend(Color_Utilities.GetColorWithAlpha(pixelsFrom[index], t), Color_Utilities.GetColorWithAlpha(pixelsTo[index], 1 - t));
-                }
-            }
-
-            tex.SetPixels(pixelsNew);
-
-            tex.Apply();
-
-            return tex;
+        public static int GetPixelIndex(int x, int y, int width)
+        {
+            return x + (y * width);
         }
 
         public static byte[] ImageToByteArray(Sprite sprite)
@@ -83,29 +63,6 @@ namespace IbrahKit
             return sprite;
         }
 
-        public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size)
-        {
-            if (bytes == null)
-            {
-                Debug.LogWarning("Bytes array is null");
-                return new(0, 0);
-            }
-
-            if (bytes.Length == 0)
-            {
-                Debug.LogWarning("Bytes array is empty");
-                return new(0, 0);
-            }
-
-            Texture2D texture = new(size.x, size.y, TextureFormat.RGBA32, false);
-
-            texture.LoadRawTextureData(bytes);
-
-            texture.Apply();
-
-            return texture;
-        }
-
         public static Sprite GrayscaleSprite(Sprite _sprite)
         {
             if (_sprite == null)
@@ -121,7 +78,7 @@ namespace IbrahKit
 
             for (int i = 0; i < pixels.Length; i++)
             {
-                float lumincance = Color_Utilities.ColorLuminance(pixels[i]);
+                float lumincance = pixels[i].Luminance();
 
                 float range = Mathf.Lerp(0, 1, lumincance);
 
@@ -217,17 +174,60 @@ namespace IbrahKit
             return newSprite;
         }
 
-        public static int GetPixelIndex(int x, int y, int width)
+        public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size)
         {
-            return x + (y * width);
+            if (bytes == null)
+            {
+                Debug.LogWarning("Bytes array is null");
+                return new(0, 0);
+            }
+
+            if (bytes.Length == 0)
+            {
+                Debug.LogWarning("Bytes array is empty");
+                return new(0, 0);
+            }
+
+            Texture2D texture = new(size.x, size.y, TextureFormat.RGBA32, false);
+
+            texture.LoadRawTextureData(bytes);
+
+            texture.Apply();
+
+            return texture;
         }
 
-        public static void Screenshot()
+        public static Texture2D Lerp(Texture2D from, Texture2D to, float t)
         {
-            string fileName = "Screenshot-" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".png";
-            string screenshotsPath = Path.Combine(Path_Utilities.GetGamePath(), "Screenshots");
-            if (!Directory.Exists(screenshotsPath)) Directory.CreateDirectory(screenshotsPath);
-            ScreenCapture.CaptureScreenshot(Path.Combine(screenshotsPath, fileName));
+            if (from.width != to.width || from.height != to.height)
+            {
+                Debug.LogWarning("Textures must have the same size");
+                return from;
+            }
+
+            Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);
+
+            Color[] pixelsFrom = from.GetPixels();
+
+            Color[] pixelsTo = to.GetPixels();
+
+            Color[] pixelsNew = new Color[pixelsFrom.Length];
+
+            for (int y = 0; y < tex.height; y++)
+            {
+                for (int x = 0; x < tex.width; x++)
+                {
+                    int index = GetPixelIndex(x, y, from.width);
+
+                    pixelsNew[index] = Color_Utilities.ColorBlend(pixelsFrom[index].WithAlpha(t), pixelsTo[index].WithAlpha(1 - t));
+                }
+            }
+
+            tex.SetPixels(pixelsNew);
+
+            tex.Apply();
+
+            return tex;
         }
     }
 }

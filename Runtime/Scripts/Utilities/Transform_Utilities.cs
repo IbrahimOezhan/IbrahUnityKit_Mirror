@@ -6,11 +6,6 @@ namespace IbrahKit
 {
     public static class Transform_Utilities
     {
-        public static void LogTransformPath(this Transform transform)
-        {
-            Debug.Log(transform.GetTransformPath());
-        }
-
         public static string GetTransformPath(this Transform transform)
         {
             StringBuilder result = new(transform.name);
@@ -27,7 +22,7 @@ namespace IbrahKit
             return result.ToString();
         }
 
-        public static List<T> GetComponentsInChildren<T>(Transform transform, bool includeThis = false)
+        public static List<T> BetterGetComponentsInChildren<T>(this Transform transform, bool includeThis = false)
         {
             if (transform == null)
             {
@@ -53,48 +48,40 @@ namespace IbrahKit
 
                 if (child.childCount > 0)
                 {
-                    elements.AddRange(GetComponentsInChildren<T>(child));
+                    elements.AddRange(child.BetterGetComponentsInChildren<T>());
                 }
             }
 
             return elements;
         }
 
-        public static T GetParent<T>(Transform transform)
+        public static T BetterGetComponentInParent<T>(this Transform transform)
         {
-            if (transform.parent != null)
+            if (transform.parent == null)
             {
-                if (transform.parent.TryGetComponent<T>(out var element))
-                {
-                    return element;
-                }
-
-                return GetParent<T>(transform.parent);
+                return default;
             }
 
-            return default;
+            if (transform.parent.TryGetComponent<T>(out var element))
+            {
+                return element;
+            }
+
+            return transform.parent.BetterGetComponentInParent<T>();
         }
 
         public static Quaternion GetRotation(Transform _transformToRotate, Transform _rotateTarget, float _offset)
         {
             var _heading = _rotateTarget.position - _transformToRotate.position;
+
             var _heading2d = new Vector2(_heading.x, _heading.z).normalized;
+
             var _angle = Mathf.Atan2(_heading2d.y, _heading2d.x) * -Mathf.Rad2Deg + _offset;
+
             return Quaternion.AngleAxis(_angle, Vector3.up);
         }
 
-        public static void SetRectStretchMode(RectTransform rect)
-        {
-            // Set to Stretch mode
-            rect.anchorMin = new Vector2(0, 0); // Bottom-left
-            rect.anchorMax = new Vector2(1, 1); // Top-right
-
-            // Set offset values to zero
-            rect.offsetMin = Vector2.zero; // Left, Bottom
-            rect.offsetMax = Vector2.zero; // Right, Top
-        }
-
-        public static void SortGameObjects(Transform parent)
+        public static void SortChildren(this Transform parent)
         {
             List<GameObject> children = new();
 
@@ -103,10 +90,10 @@ namespace IbrahKit
                 children.Add(child.gameObject);
             }
 
-            SortGameObjects(children);
+            SortObjects(children);
         }
 
-        public static void SortGameObjects(List<GameObject> children)
+        public static void SortObjects(List<GameObject> children)
         {
             if (children == null)
             {

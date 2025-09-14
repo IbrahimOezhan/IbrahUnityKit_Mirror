@@ -75,5 +75,11 @@ namespace IbrahKit
         {
             return value >= min && value <= max;
         }
+
+        public static float Normalize(float value, float min, float max)
+        {
+            return (value - min) / (max - min);
+        }
+
     }
 }

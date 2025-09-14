@@ -71,7 +71,7 @@ namespace IbrahKit
         {
             SortList();
 
-            List<UI_Interactive> children = Transform_Utilities.GetComponentsInChildren<UI_Interactive>(transform);
+            List<UI_Interactive> children = transform.BetterGetComponentsInChildren<UI_Interactive>();
 
             foreach (UI_Interactive child in children)
             {

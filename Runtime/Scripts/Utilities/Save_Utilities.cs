@@ -14,7 +14,7 @@ namespace IbrahKit
 
             if (!tryParse)
             {
-                fileContent = String_Utilities.DecryptEncrypt(fileContent, key);
+                fileContent = String_Utilities.Encrypt(fileContent, key);
 
                 Debug.Log("File probably encrypted. Attemping decryption");
 

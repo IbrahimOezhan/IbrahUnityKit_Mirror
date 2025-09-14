@@ -30,12 +30,14 @@ namespace IbrahKit
         public static string ParseSecondsToMMSS(int _seconds)
         {
             short _minutes = 0;
+
             while (_seconds >= 60)
             {
                 _minutes++;
                 _seconds -= 60;
             }
-            return _minutes.ToString("00") + ":" + _seconds.ToString("00");
+
+            return $"{_minutes.ToString("00")}:{_seconds.ToString("00")}";
         }
 
         public static bool IsValidJson(string json)

@@ -1,0 +1,70 @@
+using IbrahKit;
+using UnityEngine;
+using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
+using static PlasticPipe.Server.MonitorStats;
+
+public class ScrollView_Controller_Handle : MonoBehaviour
+{
+    private bool holding;
+
+    private Vector2 lastMousePos;
+
+    [SerializeField] private ScrollView scrollView;
+
+    [SerializeField] private UI_Selectable selectable;
+
+    private void Awake()
+    {
+        selectable.GetOnClick().AddListener(OnClick);
+        selectable.GetOnDeSelect().AddListener(OnClickStop);
+    }
+
+    private void Update()
+    {
+        if (holding)
+        {
+            Vector3[] corners = scrollView.GetTrack().GetCanvasCorners(scrollView.GetCanvas());
+
+            float top = corners[1].y;
+
+            float bottom = corners[0].y;
+
+            Vector2 mp = GetMousePos(scrollView.GetCanvas());
+
+            // normalize mouse Y within track: 0=top, 1=bottom
+            float n = 1f - Mathf.InverseLerp(bottom, top, mp.y);
+
+            scrollView.GetContent().Move(n);
+
+        }
+    }
+
+    private void OnClick()
+    {
+        lastMousePos = GetMousePos(scrollView.GetCanvas());
+
+        Vector3[] corners = scrollView.GetTrack().GetCanvasCorners(scrollView.GetCanvas());
+
+        float top = corners[1].y;
+
+        float btm = corners[0].y;
+
+        float msy = lastMousePos.y;
+
+        float n = Number_Utilities.Normalize(msy, btm, top);
+
+        scrollView.GetContent().Move(n);
+
+        holding = true;
+    }
+
+    private void OnClickStop()
+    {
+        holding = false;
+    }
+
+    private Vector2 GetMousePos(Canvas canvas)
+    {
+        return Cursor_Input_Manager.Instance.GetCanvasMousePos(canvas);
+    }
+}

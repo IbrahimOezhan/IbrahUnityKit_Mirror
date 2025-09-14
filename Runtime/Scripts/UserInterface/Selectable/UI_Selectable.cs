@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -43,7 +42,7 @@ namespace IbrahKit
         {
             base.OnEnable();
 
-            selectableGroup = Transform_Utilities.GetParent<UI_Selectable_Group>(transform);
+            selectableGroup = transform.BetterGetComponentInParent<UI_Selectable_Group>();
 
             if (selectableGroup != null) selectableGroup.Add(this);
 
@@ -183,7 +182,7 @@ namespace IbrahKit
 
         public UnityEvent GetOnDeSelect()
         {
-            return OnDeSelect; 
+            return OnDeSelect;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
-            parentMenu = Transform_Utilities.GetParent<UI_Menu>(transform);
+            parentMenu = transform.BetterGetComponentInParent<UI_Menu>();
 
             if (parentMenu == null)
             {
