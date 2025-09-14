@@ -1,4 +1,6 @@
 using Sirenix.Utilities;
+using System;
+using System.IO;
 using UnityEngine;
 
 namespace IbrahKit
@@ -218,6 +220,14 @@ namespace IbrahKit
         public static int GetPixelIndex(int x, int y, int width)
         {
             return x + (y * width);
+        }
+
+        public static void Screenshot()
+        {
+            string fileName = "Screenshot-" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".png";
+            string screenshotsPath = Path.Combine(Path_Utilities.GetGamePath(), "Screenshots");
+            if (!Directory.Exists(screenshotsPath)) Directory.CreateDirectory(screenshotsPath);
+            ScreenCapture.CaptureScreenshot(Path.Combine(screenshotsPath, fileName));
         }
     }
 }

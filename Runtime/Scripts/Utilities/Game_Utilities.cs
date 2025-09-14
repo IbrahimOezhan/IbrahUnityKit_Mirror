@@ -31,7 +31,7 @@ namespace IbrahKit
 
         public void Screenshot()
         {
-            Basic_Utilities.Screenshot();
+            Image_Utitlities.Screenshot();
         }
 
         public void ScreenshotNoUI()
@@ -45,7 +45,7 @@ namespace IbrahKit
 
             await Task.Yield();
 
-            Basic_Utilities.Screenshot();
+            Image_Utitlities.Screenshot();
 
             await Task.Yield();
 
