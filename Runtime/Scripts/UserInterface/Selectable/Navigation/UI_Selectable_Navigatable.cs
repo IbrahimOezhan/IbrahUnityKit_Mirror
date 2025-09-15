@@ -1,191 +1,86 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
 namespace IbrahKit
 {
     public class UI_Selectable_Navigatable : UI_Selectable
     {
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private UI_Selectable up;
+        private UI_Input input;
 
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private UI_Selectable down;
+        public static List<UI_Selectable> activeSelectables;
 
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private UI_Selectable left;
+        protected override void Awake()
+        {
+            base.Awake();
 
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private UI_Selectable right;
+            input = new();
+            input.Enable();
+            input.Navigation.Move.performed += Navigate;
+        }
 
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private RectTransform rect;
+        protected override void OnEnable()
+        {
+            base.OnEnable();
 
-        //[TabGroup("Navigation Settings"), SerializeField]
-        //private float alignmentTolerance = 0.1f;
+            activeSelectables.Add(this);
 
-        //protected override void Awake()
-        //{
-        //    if (rect == null) rect = GetComponent<RectTransform>();
-        //}
+            if(input != null) input.Enable();
+        }
 
-        //protected override void OnEnable()
-        //{
-        //    base.OnEnable();
+        protected override void OnDisable()
+        {
+            base.OnDisable();
 
+            activeSelectables.Remove(this);
 
-        //    //if (UI_Navigation_Manager.Instance != null)
-        //    //{
-        //    //    UI_Navigation_Manager.Instance.AddSelectable(this);
+            if (input != null) input.Disable();
+        }
 
-        //    //    UI_Navigation_Manager.Instance.UpdateSelectables();
-        //    //}
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
 
-        //    Visualize();
-        //}
+            input.Navigation.Move.performed -= Navigate;
+            input.Disable();
+            input.Dispose();
+        }
 
-        //protected override void OnDisable()
-        //{
-        //    SetState(UI_SELECTABLE_STATE.NONE);
+        public void Navigate(InputAction.CallbackContext context)
+        {
+            Navigate(this, context.ReadValue<Vector2>());
+        }
 
-        //    DeSelect();
+        public static UI_Selectable Navigate(UI_Selectable current, Vector2 inputVector)
+        {
+            List<UI_Selectable> candidates = UI_Selectable_Navigatable.activeSelectables.Where(
+                x => x != current && x.GetStateController().GetInteractable()).ToList();
 
-        //    //if (UI_Navigation_Manager.Instance != null)
-        //    //{
-        //    //    UI_Navigation_Manager.Instance.RemoveSelectable(this);
+            float highestScore = float.MinValue;
 
-        //    //    UI_Navigation_Manager.Instance.UpdateSelectables();
-        //    //}
-        //}
+            UI_Selectable highestScoreSelectable = null;
 
-        //public void SetupNavigation(List<UI_Selectable> list)
-        //{
-        //    float minLeftDist = Mathf.Infinity;
-        //    float minRightDist = Mathf.Infinity;
-        //    float minUpDist = Mathf.Infinity;
-        //    float minDownDist = Mathf.Infinity;
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                Vector2 toCanditate = candidates[i].transform.position - current.transform.position;
 
-        //    float minDiagLeftDist = Mathf.Infinity;
-        //    float minDiagRightDist = Mathf.Infinity;
-        //    float minDiagUpDist = Mathf.Infinity;
-        //    float minDiagDownDist = Mathf.Infinity;
+                float alignment = Vector2.Dot(toCanditate.normalized,inputVector.normalized);
 
-        //    Vector2 currentPos = transform.position;
+                if (alignment <= 0f) continue;
 
-        //    foreach (var point in list)
-        //    {
-        //        if (point.transform == transform) continue;
+                float score = alignment / (toCanditate.magnitude + Mathf.Epsilon); 
 
-        //        Vector2 direction = (Vector2)point.transform.position - currentPos;
-        //        float dist = Vector2.Distance(currentPos, point.transform.position);
+                if(score > highestScore)
+                {
+                    highestScore = score;
 
-        //        // === Left Navigation ===
-        //        if (direction.x < 0)
-        //        {
-        //            float distX = Mathf.Abs(direction.x);
+                    highestScoreSelectable = candidates[i];
+                }
+            }
 
-        //            if (Mathf.Abs(direction.y) <= alignmentTolerance)
-        //            {
-        //                if (distX < minLeftDist)
-        //                {
-        //                    minLeftDist = distX;
-        //                    left = point;
-        //                }
-        //            }
-        //            else if (Mathf.Abs(direction.y) < Mathf.Abs(direction.x) && dist < minDiagLeftDist)
-        //            {
-        //                minDiagLeftDist = dist;
-        //                left = left == null ? point : left;
-        //            }
-        //        }
+            return highestScoreSelectable;
+        }
 
-        //        // === Right Navigation ===
-        //        if (direction.x > 0)
-        //        {
-        //            float distX = Mathf.Abs(direction.x);
-
-        //            if (Mathf.Abs(direction.y) <= alignmentTolerance)
-        //            {
-        //                if (distX < minRightDist)
-        //                {
-        //                    minRightDist = distX;
-        //                    right = point;
-        //                }
-        //            }
-        //            else if (Mathf.Abs(direction.y) < Mathf.Abs(direction.x) && dist < minDiagRightDist)
-        //            {
-        //                minDiagRightDist = dist;
-        //                right = right == null ? point : right;
-        //            }
-        //        }
-
-        //        // === Up Navigation ===
-        //        if (direction.y > 0)
-        //        {
-        //            float distY = Mathf.Abs(direction.y);
-
-        //            if (Mathf.Abs(direction.x) <= alignmentTolerance)
-        //            {
-        //                if (distY < minUpDist)
-        //                {
-        //                    minUpDist = distY;
-        //                    up = point;
-        //                }
-        //            }
-        //            else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y) && dist < minDiagUpDist)
-        //            {
-        //                minDiagUpDist = dist;
-        //                up = up == null ? point : up;
-        //            }
-        //        }
-
-        //        // === Down Navigation ===
-        //        if (direction.y < 0)
-        //        {
-        //            float distY = Mathf.Abs(direction.y);
-
-        //            if (Mathf.Abs(direction.x) <= alignmentTolerance)
-        //            {
-        //                if (distY < minDownDist)
-        //                {
-        //                    minDownDist = distY;
-        //                    down = point;
-        //                }
-        //            }
-        //            else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y) && dist < minDiagDownDist)
-        //            {
-        //                minDiagDownDist = dist;
-        //                down = down == null ? point : down;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public UI_Selectable Navigation(Vector2 direction)
-        //{
-        //    if (direction != Vector2.zero)
-        //    {
-        //        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        //        {
-        //            if (direction.x < 0)
-        //            {
-        //                return left;
-        //            }
-        //            else
-        //            {
-        //                return right;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (direction.y < 0)
-        //            {
-        //                return down;
-        //            }
-        //            else
-        //            {
-        //                return up;
-        //            }
-        //        }
-        //    }
-
-        //    return null;
-        //}
     }
 }
