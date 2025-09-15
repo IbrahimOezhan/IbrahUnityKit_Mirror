@@ -31,7 +31,7 @@ namespace IbrahKit
                 return new();
             }
 
-            return selec.GetOnClick();
+            return selec.GetStateController().GetOnPressSuccess();
         }
     }
 }

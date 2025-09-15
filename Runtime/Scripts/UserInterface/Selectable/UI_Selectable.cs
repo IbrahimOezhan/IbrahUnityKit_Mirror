@@ -1,3 +1,4 @@
+using Mono.CSharp;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,10 @@ namespace IbrahKit
 {
     public class UI_Selectable : UI_Base, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
-        [TabGroup("Transition Settings"), SerializeField]
-        private UI_SELECTABLE_STATE selectedState;
+        private UI_Selectable_CursorInput cursorInput = new();
+
+        [SerializeField] 
+        private UI_Selectable_StateController stateController;
 
         [TabGroup("Transition Settings"), SerializeReference]
         private List<UI_Selectable_Transition> transitions = new();
@@ -20,169 +23,81 @@ namespace IbrahKit
         [TabGroup("Transition Settings"), SerializeReference]
         private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
-        [TabGroup("Runtime Data"), ReadOnly, SerializeReference]
+        [TabGroup("Runtime Data"), ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
 
-        [TabGroup("Events"), SerializeField]
-        private UnityEvent OnClickEvent;
+        [SerializeField]
+        private UI_Audio_SO overrideAudio;
 
-        [TabGroup("Events"), SerializeField]
-        private UnityEvent OnClickNotInteractableEvent;
+        protected override void Awake()
+        {
+            base.Awake();
 
-        [TabGroup("Events"), SerializeField]
-        private UnityEvent OnDeSelect;
+            stateController.GetOnStateChangedEvent().AddListener(Visualize);
 
-        [SerializeField] private UI_Audio_SO overrideAudio;
+            transform.BetterTryGetComponentInParent(out selectableGroup);
 
-        [SerializeField] private bool interactable = true;
+            cursorInput.Init(stateController, selectableGroup);
 
-        public static UI_Selectable currentlySelected;
+            stateController.Init(this,selectableGroup);
+        }
 
         protected override void OnEnable()
         {
             base.OnEnable();
 
-            selectableGroup = transform.BetterGetComponentInParent<UI_Selectable_Group>();
-
             if (selectableGroup != null) selectableGroup.Add(this);
 
-            Visualize();
+            Visualize(stateController.GetState());
         }
 
         protected override void OnDisable()
         {
-            SetState(UI_SELECTABLE_STATE.None);
+            stateController.SetState(UI_SELECTABLE_STATE.NONE);
 
             if (selectableGroup != null) selectableGroup.Remove(this);
 
-            DeSelect();
+            stateController.PressedStop();
         }
 
-        public void Visualize()
+        public void Visualize(UI_SELECTABLE_STATE state)
         {
             for (int i = 0; i < transitions.Count; i++)
             {
-                transitions[i].Apply(selectedState, gameObject);
+                transitions[i].Apply(state, gameObject);
             }
 
-            if (interactable)
+            if (stateController.GetInteractable())
             {
                 for (int i = 0; i < transitionsInteractable.Count; i++)
                 {
-                    transitionsInteractable[i].Apply(selectedState, gameObject);
+                    transitionsInteractable[i].Apply(state, gameObject);
                 }
             }
             else
             {
                 for (int i = 0; i < transitionsNotInteractable.Count; i++)
                 {
-                    transitionsNotInteractable[i].Apply(selectedState, gameObject);
+                    transitionsNotInteractable[i].Apply(state, gameObject);
                 }
-            }
-        }
-
-        public virtual void DeSelect()
-        {
-            SetState(UI_SELECTABLE_STATE.None);
-
-            if (currentlySelected == this) currentlySelected = null;
-        }
-
-        public void Select()
-        {
-            SetState(UI_SELECTABLE_STATE.Pressed);
-
-            currentlySelected = this;
-
-            if (selectableGroup != null) selectableGroup.OnSelect(this);
-
-            if (interactable)
-            {
-                OnClickEvent.Invoke();
-
-                GetParentMenu().OnClick();
-            }
-            else
-            {
-                OnClickNotInteractableEvent.Invoke();
-            }
-        }
-
-        public void Hover()
-        {
-            SetState(UI_SELECTABLE_STATE.Hovering);
-
-            if (interactable)
-            {
-                GetParentMenu().OnHover();
             }
         }
 
         public void SetInteractable(bool value)
         {
-            interactable = value;
+            stateController.SetInteractable(value);
 
-            Visualize();
+            Visualize(stateController.GetState());
         }
 
-        protected void SetState(UI_SELECTABLE_STATE state)
-        {
-            if (selectedState == UI_SELECTABLE_STATE.Pressed && state != UI_SELECTABLE_STATE.Pressed)
-            {
-                OnDeSelect.Invoke();
-            }
+        public UI_Selectable_StateController GetStateController() => stateController;
 
-            selectedState = state;
+        public void OnPointerEnter(PointerEventData eventData) => cursorInput.OnPointerEnter(eventData);
 
-            Visualize();
-        }
+        public void OnPointerExit(PointerEventData eventData) => cursorInput.OnPointerExit(eventData);
 
-        public bool GetInteractable()
-        {
-            return interactable;
-        }
+        public void OnPointerDown(PointerEventData eventData) => cursorInput.OnPointerDown(eventData);
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
-
-            Hover();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
-
-            DeSelect();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (selectableGroup != null && selectedState == UI_SELECTABLE_STATE.Pressed) return;
-
-            Select();
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (selectableGroup != null) return;
-
-            DeSelect();
-        }
-
-        public UnityEvent GetOnClick()
-        {
-            return OnClickEvent;
-        }
-
-        public UnityEvent GetOnClickRefused()
-        {
-            return OnClickNotInteractableEvent;
-        }
-
-        public UnityEvent GetOnDeSelect()
-        {
-            return OnDeSelect;
-        }
+        public void OnPointerUp(PointerEventData eventData) => cursorInput.OnPointerUp(eventData);
     }
 }

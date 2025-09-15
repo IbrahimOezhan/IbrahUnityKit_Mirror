@@ -55,6 +55,13 @@ namespace IbrahKit
             return elements;
         }
 
+        public static bool BetterTryGetComponentInParent<T>(this Transform transform, out T result)
+        {
+            result = transform.BetterGetComponentInParent<T>();
+
+            return result != null;
+        }
+
         public static T BetterGetComponentInParent<T>(this Transform transform)
         {
             if (transform.parent == null)

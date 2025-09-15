@@ -18,8 +18,8 @@ namespace IbrahKit
 
             if (sub != null)
             {
-                sub.GetOnClick().RemoveAllListeners();
-                sub.GetOnClick().AddListener(() => AddValue(-setting.GetStep()));
+                sub.GetStateController().GetOnPressSuccess().RemoveAllListeners();
+                sub.GetStateController().GetOnPressSuccess().AddListener(() => AddValue(-setting.GetStep()));
             }
             else
             {
@@ -28,8 +28,8 @@ namespace IbrahKit
 
             if (add != null)
             {
-                add.GetOnClick().RemoveAllListeners();
-                add.GetOnClick().AddListener(() => AddValue(setting.GetStep()));
+                add.GetStateController().GetOnPressSuccess().RemoveAllListeners();
+                add.GetStateController().GetOnPressSuccess().AddListener(() => AddValue(setting.GetStep()));
             }
             else
             {

@@ -1,3 +1,5 @@
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,7 +8,7 @@ namespace IbrahKit
 {
     public class UI_Selectable_Group : MonoBehaviour
     {
-        private HashSet<UI_Selectable> selectables = new();
+        [SerializeField, ReadOnly] private List<UI_Selectable> selectables = new();
 
         [SerializeField] private bool deselectOnClickAnywhere;
 
@@ -32,9 +34,9 @@ namespace IbrahKit
 
             if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result) || result.CursorOverUI(EventSystem.current)) return;
 
-            foreach (var item in selectables)
+            foreach (var selectable in selectables)
             {
-                item.DeSelect();
+                selectable.GetStateController().PressedStop();
             }
         }
 
@@ -50,11 +52,11 @@ namespace IbrahKit
 
         public void OnSelect(UI_Selectable selected)
         {
-            foreach (var item in selectables)
+            foreach (var selectable in selectables)
             {
-                if (item != selected)
+                if (selectable != selected)
                 {
-                    item.DeSelect();
+                    selectable.GetStateController().PressedStop();
                 }
             }
         }

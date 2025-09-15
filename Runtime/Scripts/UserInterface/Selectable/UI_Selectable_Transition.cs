@@ -9,9 +9,9 @@ namespace IbrahKit
         {
             switch (state)
             {
-                case UI_SELECTABLE_STATE.None: OnNone(go); break;
-                case UI_SELECTABLE_STATE.Hovering: OnHovering(go); break;
-                case UI_SELECTABLE_STATE.Pressed: OnPressed(go); break;
+                case UI_SELECTABLE_STATE.NONE: OnNone(go); break;
+                case UI_SELECTABLE_STATE.SELECTED: OnHovering(go); break;
+                case UI_SELECTABLE_STATE.PRESSED: OnPressed(go); break;
             }
         }
 

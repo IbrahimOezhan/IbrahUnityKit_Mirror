@@ -13,8 +13,8 @@ public class ScrollView_Controller_Viewport : MonoBehaviour
 
     private void Awake()
     {
-        selectable.GetOnClick().AddListener(OnClick);
-        selectable.GetOnDeSelect().AddListener(OnClickStop);
+        selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
+        selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
     }
 
     private void Update()
