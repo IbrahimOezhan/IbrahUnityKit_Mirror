@@ -1,5 +1,4 @@
 using IbrahKit;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_Selectable_CursorInput : IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -7,7 +6,7 @@ public class UI_Selectable_CursorInput : IPointerEnterHandler, IPointerExitHandl
     private UI_Selectable_StateController stateController;
     private UI_Selectable_Group group;
 
-    public void Init(UI_Selectable_StateController stateController,UI_Selectable_Group group)
+    public void Init(UI_Selectable_StateController stateController, UI_Selectable_Group group)
     {
         this.stateController = stateController;
         this.group = group;

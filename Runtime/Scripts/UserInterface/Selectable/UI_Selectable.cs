@@ -1,8 +1,6 @@
-using Mono.CSharp;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace IbrahKit
@@ -11,7 +9,7 @@ namespace IbrahKit
     {
         private UI_Selectable_CursorInput cursorInput = new();
 
-        [SerializeField] 
+        [SerializeField]
         private UI_Selectable_StateController stateController;
 
         [TabGroup("Transition Settings"), SerializeReference]
@@ -39,7 +37,7 @@ namespace IbrahKit
 
             cursorInput.Init(stateController, selectableGroup);
 
-            stateController.Init(this,selectableGroup);
+            stateController.Init(this, selectableGroup);
         }
 
         protected override void OnEnable()

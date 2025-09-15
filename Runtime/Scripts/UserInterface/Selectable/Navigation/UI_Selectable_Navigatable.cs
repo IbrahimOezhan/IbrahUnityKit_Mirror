@@ -1,7 +1,3 @@
-using Sirenix.OdinInspector;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace IbrahKit
 {
     public class UI_Selectable_Navigatable : UI_Selectable

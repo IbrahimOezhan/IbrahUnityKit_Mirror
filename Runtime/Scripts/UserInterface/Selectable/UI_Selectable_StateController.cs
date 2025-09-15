@@ -9,7 +9,7 @@ public class UI_Selectable_StateController
     private UI_Selectable selectable;
     private UI_Selectable_Group group;
 
-    [SerializeField,ReadOnly]
+    [SerializeField, ReadOnly]
     private UI_SELECTABLE_STATE state;
 
     [SerializeField]
@@ -47,7 +47,7 @@ public class UI_Selectable_StateController
 
     public UI_SELECTABLE_STATE GetState()
     {
-        return this.state; 
+        return this.state;
     }
 
     public void Select()
