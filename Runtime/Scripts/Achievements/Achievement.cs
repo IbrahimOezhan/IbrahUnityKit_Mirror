@@ -16,7 +16,7 @@ namespace IbrahKit
 
             Sprite s = secret ? secretSprite : sprite;
 
-            s = IsUnlocked() ? s : Image_Utitlities.GrayscaleSprite(s);
+            s = IsUnlocked() ? s : Image_Utilities.GrayscaleSprite(s);
 
             return (s, data.Title(), data.Description());
         }

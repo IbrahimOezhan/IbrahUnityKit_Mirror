@@ -8,7 +8,7 @@ namespace IbrahKit
     {
         public static (bool, bool) Decrypt(string fileContent, string key, out string result)
         {
-            bool tryParse = Parse_Utilties.IsValidJson(fileContent);
+            bool tryParse = Parse_Utilities.IsValidJson(fileContent);
 
             bool decrypted = !tryParse;
 
@@ -18,7 +18,7 @@ namespace IbrahKit
 
                 Debug.Log("File probably encrypted. Attemping decryption");
 
-                tryParse = Parse_Utilties.IsValidJson(fileContent);
+                tryParse = Parse_Utilities.IsValidJson(fileContent);
 
                 if (!tryParse)
                 {

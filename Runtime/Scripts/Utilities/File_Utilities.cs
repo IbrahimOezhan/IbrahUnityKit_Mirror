@@ -2,7 +2,7 @@ using System.IO;
 
 namespace IbrahKit
 {
-    public class File_Utilities
+    public static class File_Utilities
     {
         public static void WriteToFile(string filePath, string fileContent, bool ifDoesntExist = false)
         {

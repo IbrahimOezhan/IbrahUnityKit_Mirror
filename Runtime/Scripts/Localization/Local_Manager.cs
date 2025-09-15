@@ -143,7 +143,7 @@ namespace IbrahKit
 
             for (int i = 1; i < rowOne.Length; i++)
             {
-                if (!Parse_Utilties.IsValidJson(rowOne[i]))
+                if (!Parse_Utilities.IsValidJson(rowOne[i]))
                 {
                     Debug.LogWarning($"Invalid json in row 0 column {i}");
                     return;

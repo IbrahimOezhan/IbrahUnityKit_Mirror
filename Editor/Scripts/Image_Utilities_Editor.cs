@@ -57,9 +57,9 @@ namespace IbrahKit
 
                 Sprite s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100);
 
-                Sprite grayscale = Image_Utitlities.GrayscaleSprite(s);
+                Sprite grayscale = Image_Utilities.GrayscaleSprite(s);
 
-                byte[] bytes = Image_Utitlities.ImageToByteArray(grayscale);
+                byte[] bytes = Image_Utilities.ImageToByteArray(grayscale);
 
                 FileInfo fileInfo = new(path);
 

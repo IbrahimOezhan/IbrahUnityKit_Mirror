@@ -5,13 +5,18 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public static class Image_Utitlities
+    public static class Image_Utilities
     {
+        private const string FORMAT = "yyyy-MM-dd HH-mm-ss";
+
         public static void Screenshot()
         {
-            string fileName = "Screenshot-" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".png";
+            string fileName = "Screenshot-" + DateTime.Now.ToString(FORMAT) + ".png";
+
             string screenshotsPath = Path.Combine(Path_Utilities.GetGamePath(), "Screenshots");
+
             if (!Directory.Exists(screenshotsPath)) Directory.CreateDirectory(screenshotsPath);
+
             ScreenCapture.CaptureScreenshot(Path.Combine(screenshotsPath, fileName));
         }
 
