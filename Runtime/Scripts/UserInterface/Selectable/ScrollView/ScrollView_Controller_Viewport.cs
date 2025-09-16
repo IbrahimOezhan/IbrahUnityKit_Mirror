@@ -1,49 +1,52 @@
-using IbrahKit;
 using UnityEngine;
 
-public class ScrollView_Controller_Viewport : MonoBehaviour
+namespace IbrahKit
 {
-    private bool holding;
-
-    private Vector2 lastMousePos;
-
-    [SerializeField] private ScrollView scrollView;
-
-    [SerializeField] private UI_Selectable selectable;
-
-    private void Awake()
+    public class ScrollView_Controller_Viewport : MonoBehaviour
     {
-        selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
-        selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
-    }
+        private bool holding;
 
-    private void Update()
-    {
-        if (holding)
+        private Vector2 lastMousePos;
+
+        [SerializeField] private ScrollView scrollView;
+
+        [SerializeField] private UI_Selectable selectable;
+
+        private void Awake()
         {
-            Vector2 newPos = GetMousePos(scrollView.GetCanvas());
+            selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
+            selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
+        }
 
-            Vector2 dif = newPos - lastMousePos;
+        private void Update()
+        {
+            if (holding)
+            {
+                Vector2 newPos = GetMousePos(scrollView.GetCanvas());
 
-            lastMousePos = newPos;
+                Vector2 dif = newPos - lastMousePos;
 
-            scrollView.GetContent().MoveChildren(new Vector2(0f, dif.y));
+                lastMousePos = newPos;
+
+                scrollView.GetContent().MoveChildren(new Vector2(0f, dif.y));
+            }
+        }
+
+        private void OnClick()
+        {
+            lastMousePos = GetMousePos(scrollView.GetCanvas());
+            holding = true;
+        }
+
+        private void OnClickStop()
+        {
+            holding = false;
+        }
+
+        private Vector2 GetMousePos(Canvas canvas)
+        {
+            return Cursor_Input_Manager.Instance.GetCanvasMousePos(scrollView.GetCanvas());
         }
     }
 
-    private void OnClick()
-    {
-        lastMousePos = GetMousePos(scrollView.GetCanvas());
-        holding = true;
-    }
-
-    private void OnClickStop()
-    {
-        holding = false;
-    }
-
-    private Vector2 GetMousePos(Canvas canvas)
-    {
-        return Cursor_Input_Manager.Instance.GetCanvasMousePos(scrollView.GetCanvas());
-    }
 }

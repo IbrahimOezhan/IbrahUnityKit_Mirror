@@ -6,7 +6,7 @@ namespace IbrahKit
 {
     public class UI_Config_Manager : Manager_DDOL<UI_Config_Manager>
     {
-        [SerializeField] private UI_Audio_SO defaultAudio;
+        [SerializeField] private UI_Audio_Config_SO defaultAudio;
 
         [SerializeField] private UI_Fitter_Config_SO defaultFitterConfig;
 
@@ -16,7 +16,7 @@ namespace IbrahKit
 
         [SerializeField] private UI_Layout_Config_SO layoutConfig;
 
-        public UI_Audio_SO GetAudioConfig(UI_Audio_SO overrideValue)
+        public UI_Audio_Config_SO GetAudioConfig(UI_Audio_Config_SO overrideValue)
         {
             if (overrideValue != null)
             {

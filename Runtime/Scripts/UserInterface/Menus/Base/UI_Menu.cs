@@ -9,7 +9,7 @@ namespace IbrahKit
         private bool initialized = false;
 
         [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
-        private UI_Audio_SO overrideAudio;
+        private UI_Audio_Config_SO overrideAudio;
 
         [SerializeField] private Menu_Content_Controller content;
         [SerializeField] private Menu_Visibility_Controller visiblity;

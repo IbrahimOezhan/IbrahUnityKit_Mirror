@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class ScrollView : MonoBehaviour
+namespace IbrahKit
 {
-    [SerializeField] private Canvas canvas;
-
-    [SerializeField] private ScrollView_Content content;
-
-    [SerializeField] private RectTransform track;
-
-    [SerializeField] private RectTransform canvasRect;
-
-    public RectTransform GetCanvasRect()
+    public class ScrollView : MonoBehaviour
     {
-        return canvasRect;
-    }
+        [SerializeField] private Canvas canvas;
 
-    public Canvas GetCanvas()
-    {
-        return canvas;
-    }
+        [SerializeField] private ScrollView_Content content;
 
-    public ScrollView_Content GetContent()
-    {
-        return content;
-    }
+        [SerializeField] private RectTransform track;
 
-    public RectTransform GetTrack()
-    {
-        return track;
+        [SerializeField] private RectTransform canvasRect;
+
+        public RectTransform GetCanvasRect()
+        {
+            return canvasRect;
+        }
+
+        public Canvas GetCanvas()
+        {
+            return canvas;
+        }
+
+        public ScrollView_Content GetContent()
+        {
+            return content;
+        }
+
+        public RectTransform GetTrack()
+        {
+            return track;
+        }
     }
 }

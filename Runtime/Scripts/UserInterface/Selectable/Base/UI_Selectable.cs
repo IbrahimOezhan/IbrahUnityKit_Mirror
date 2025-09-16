@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,20 +11,14 @@ namespace IbrahKit
         [SerializeField]
         private UI_Selectable_StateController stateController;
 
-        [TabGroup("Transition Settings"), SerializeReference]
-        private List<UI_Selectable_Transition> transitions = new();
-
-        [TabGroup("Transition Settings"), SerializeReference]
-        private List<UI_Selectable_Transition> transitionsInteractable = new();
-
-        [TabGroup("Transition Settings"), SerializeReference]
-        private List<UI_Selectable_Transition> transitionsNotInteractable = new();
-
-        [TabGroup("Runtime Data"), ReadOnly, SerializeField]
-        private UI_Selectable_Group selectableGroup;
+        [SerializeField]
+        private UI_Selectable_TransitionController transitionController;
 
         [SerializeField]
-        private UI_Audio_SO overrideAudio;
+        private UI_Audio_Config_SO overrideAudio;
+
+        [ReadOnly, SerializeField]
+        private UI_Selectable_Group selectableGroup;
 
         protected override void Awake()
         {
@@ -35,7 +28,7 @@ namespace IbrahKit
 
             transform.BetterTryGetComponentInParent(out selectableGroup);
 
-            cursorInput.Init(stateController, selectableGroup);
+            cursorInput.Init(stateController, this);
 
             stateController.Init(this, selectableGroup);
         }
@@ -60,25 +53,7 @@ namespace IbrahKit
 
         public void Visualize(UI_SELECTABLE_STATE state)
         {
-            for (int i = 0; i < transitions.Count; i++)
-            {
-                transitions[i].Apply(state, gameObject);
-            }
-
-            if (stateController.GetInteractable())
-            {
-                for (int i = 0; i < transitionsInteractable.Count; i++)
-                {
-                    transitionsInteractable[i].Apply(state, gameObject);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < transitionsNotInteractable.Count; i++)
-                {
-                    transitionsNotInteractable[i].Apply(state, gameObject);
-                }
-            }
+            transitionController.Transition(state,stateController.GetInteractable());
         }
 
         public void SetInteractable(bool value)
@@ -97,5 +72,15 @@ namespace IbrahKit
         public void OnPointerDown(PointerEventData eventData) => cursorInput.OnPointerDown(eventData);
 
         public void OnPointerUp(PointerEventData eventData) => cursorInput.OnPointerUp(eventData);
+
+        public bool DisallowPress()
+        {
+            return selectableGroup != null && stateController.GetState() == UI_SELECTABLE_STATE.PRESSED;
+        }
+
+        public bool DisallowPressOnUp()
+        {
+            return selectableGroup != null;
+        }
     }
 }

@@ -1,16 +1,18 @@
+using System;
+
 namespace IbrahKit
 {
-    public class OverrideFloat
+    public class OverrideValue<T> where T : struct
     {
-        private float baseValue;
-        private float? overrideValue = null;
+        private T baseValue;
+        private Nullable<T> overrideValue = null;
 
-        public OverrideFloat(float baseValue)
+        public OverrideValue(T baseValue)
         {
             this.baseValue = baseValue;
         }
 
-        public void SetOverride(float overrideBaseSpeed)
+        public void SetOverride(T overrideBaseSpeed)
         {
             this.overrideValue = overrideBaseSpeed;
         }
@@ -20,7 +22,7 @@ namespace IbrahKit
             this.overrideValue = null;
         }
 
-        public float GetValue()
+        public T GetValue()
         {
             return overrideValue != null ? overrideValue.Value : baseValue;
         }

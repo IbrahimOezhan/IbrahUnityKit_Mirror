@@ -26,7 +26,7 @@ namespace IbrahKit
 
             activeSelectables.Add(this);
 
-            if(input != null) input.Enable();
+            if (input != null) input.Enable();
         }
 
         protected override void OnDisable()
@@ -65,13 +65,13 @@ namespace IbrahKit
             {
                 Vector2 toCanditate = candidates[i].transform.position - current.transform.position;
 
-                float alignment = Vector2.Dot(toCanditate.normalized,inputVector.normalized);
+                float alignment = Vector2.Dot(toCanditate.normalized, inputVector.normalized);
 
                 if (alignment <= 0f) continue;
 
-                float score = alignment / (toCanditate.magnitude + Mathf.Epsilon); 
+                float score = alignment / (toCanditate.magnitude + Mathf.Epsilon);
 
-                if(score > highestScore)
+                if (score > highestScore)
                 {
                     highestScore = score;
 
