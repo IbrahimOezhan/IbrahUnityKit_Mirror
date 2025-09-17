@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public abstract class UI_Audio_Config_SO : ScriptableObject
+    [CreateAssetMenu(fileName = "NewAudioConfig", menuName = "IbrahKit/AudioConfig")]
+    public class UI_Audio_Config_SO : ScriptableObject
     {
-        public abstract void OnClick();
+        [SerializeReference] private UI_Audio_Config config;
 
-        public abstract void OnHover();
+        public UI_Audio_Config GetConfig() => config;
     }
 }

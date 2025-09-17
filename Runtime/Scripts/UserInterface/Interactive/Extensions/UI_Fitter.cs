@@ -50,12 +50,12 @@ namespace IbrahKit
 
             UI_Fitter_Config resolvedConfig = customConfig ? customConfig.GetConfig() : null;
 
-            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            if (UI_Configs.GetFitter(UI_Configs.GetConfigs(transform), out UI_Fitter_Config_SO result))
             {
-                resolvedConfig = result.GetFitterConfig(customConfig).GetConfig();
+                resolvedConfig = result.GetConfig();
             }
 
-            resolvedConfig = resolvedConfig == null ? new UI_Fitter_Config(0) : resolvedConfig;
+            resolvedConfig = resolvedConfig ?? new UI_Fitter_Config(0);
 
             return resolvedConfig;
         }

@@ -16,9 +16,6 @@ namespace IbrahKit
         [SerializeField]
         private Transform list;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
-        private UI_Menu_Config_SO overrideMenuConfig;
-
         [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeField, ShowIf(nameof(ShowMenuItems))]
         private List<Menu_Item> listMenuItems = new();
 
@@ -123,12 +120,9 @@ namespace IbrahKit
 
         public UI_Menu_Config_SO GetMenuConfig()
         {
-            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
-            {
-                return result.GetMenuConfig(overrideMenuConfig);
-            }
+            UI_Configs.GetMenu(UI_Configs.GetConfigs(menu.transform), out UI_Menu_Config_SO result);
 
-            return overrideMenuConfig;
+            return result;
         }
 
         public void Awake()

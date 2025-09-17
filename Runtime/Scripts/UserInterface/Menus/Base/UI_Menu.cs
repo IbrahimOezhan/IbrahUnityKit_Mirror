@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Menu : MonoBehaviour
+    public class UI_Menu : MonoBehaviour, IConfig
     {
         private bool initialized = false;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("Custom menu configuration, optional."), SerializeField]
-        private UI_Audio_Config_SO overrideAudio;
+        [SerializeField]
+        private UI_Configs configs;
 
         [SerializeField] private Menu_Content_Controller content;
         [SerializeField] private Menu_Visibility_Controller visiblity;
@@ -95,18 +95,23 @@ namespace IbrahKit
 
         public void OnClick()
         {
-            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform),out UI_Audio_Config_SO result))
             {
-                result.GetAudioConfig(overrideAudio).OnClick();
+                result.GetConfig().OnClick();
             }
         }
 
         public void OnHover()
         {
-            if (UI_Config_Manager.TryGet(out UI_Config_Manager result))
+            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
             {
-                result.GetAudioConfig(overrideAudio).OnHover();
+                result.GetConfig().OnHover();
             }
+        }
+
+        public UI_Configs GetConfigs()
+        {
+            return configs;
         }
     }
 }

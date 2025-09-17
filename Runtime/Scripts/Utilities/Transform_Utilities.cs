@@ -77,6 +77,32 @@ namespace IbrahKit
             return transform.parent.BetterGetComponentInParent<T>();
         }
 
+        public static T[] BetterGetComponentsInParents<T>(this Transform transform,bool includeThis = false)
+        {
+            List<T> result = new List<T>();
+
+            if(includeThis && transform.TryGetComponent<T>(out var element)) result.Add(element);
+
+            return transform.BetterGetComponentsInParent(result);
+        }
+
+        public static T[] BetterGetComponentsInParent<T>(this Transform transform, List<T> result)
+        {
+            Transform parent = transform.parent;
+
+            if (parent == null)
+            {
+                return result.ToArray();
+            }
+
+            if (parent.TryGetComponent<T>(out var element))
+            {
+                result.Add(element);
+            }
+
+            return parent.BetterGetComponentsInParent<T>(result);
+        }
+
         public static Quaternion GetRotation(Transform _transformToRotate, Transform _rotateTarget, float _offset)
         {
             var _heading = _rotateTarget.position - _transformToRotate.position;

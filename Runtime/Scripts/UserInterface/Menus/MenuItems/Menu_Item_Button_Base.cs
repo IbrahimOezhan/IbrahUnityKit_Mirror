@@ -15,14 +15,16 @@ namespace IbrahKit
 
         public override void Spawn(RectTransform parent, UI_Menu menu)
         {
+            UI_Menu_Config_SO menuConfig = menu.GetContentController().GetMenuConfig();
+
             switch (localType)
             {
                 case LocalType.LOCALIZE:
-                    spawnedButton = Object.Instantiate(menu.GetContentController().GetMenuConfig().GetConfig().GetMenuButton(), parent);
+                    spawnedButton = Object.Instantiate(menuConfig.GetConfig().GetMenuButton(), parent);
                     value = localizationKey;
                     break;
                 case LocalType.STATIC:
-                    spawnedButton = Object.Instantiate(menu.GetContentController().GetMenuConfig().GetConfig().GetMenuButtonStatic(), parent);
+                    spawnedButton = Object.Instantiate(menuConfig.GetConfig().GetMenuButtonStatic(), parent);
                     value = staticText;
                     break;
             }
