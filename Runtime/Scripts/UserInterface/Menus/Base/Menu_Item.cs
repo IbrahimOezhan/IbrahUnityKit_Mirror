@@ -1,5 +1,4 @@
-﻿using log4net.Util;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +23,7 @@ namespace IbrahKit
                 return null;
             }
 
-            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO result) && !UI_Config_Manager.Instance.ShowLayout(result,showOnLayouts)))
+            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO result) && !UI_Config_Manager.Instance.ShowLayout(result, showOnLayouts)))
             {
                 Debug.Log("Skipped due to layout specific");
                 return null;

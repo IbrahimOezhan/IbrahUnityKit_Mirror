@@ -8,8 +8,6 @@ namespace IbrahKit
     {
         protected RectTransform rect;
 
-        [SerializeField] protected UI_Fitter_Config_SO customConfig;
-
         [SerializeField, HorizontalGroup("Width")] protected bool scaleWidth = true;
 
         [SerializeField, HorizontalGroup("Width"), ShowIf(nameof(scaleWidth))] protected int maxWidth;
@@ -43,12 +41,7 @@ namespace IbrahKit
 
         protected UI_Fitter_Config GetConfig()
         {
-            if (customConfig != null)
-            {
-                return customConfig.GetConfig();
-            }
-
-            UI_Fitter_Config resolvedConfig = customConfig ? customConfig.GetConfig() : null;
+            UI_Fitter_Config resolvedConfig = null;
 
             if (UI_Configs.GetFitter(UI_Configs.GetConfigs(transform), out UI_Fitter_Config_SO result))
             {

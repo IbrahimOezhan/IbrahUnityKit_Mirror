@@ -77,11 +77,11 @@ namespace IbrahKit
             return transform.parent.BetterGetComponentInParent<T>();
         }
 
-        public static T[] BetterGetComponentsInParents<T>(this Transform transform,bool includeThis = false)
+        public static T[] BetterGetComponentsInParents<T>(this Transform transform, bool includeThis = false)
         {
             List<T> result = new List<T>();
 
-            if(includeThis && transform.TryGetComponent<T>(out var element)) result.Add(element);
+            if (includeThis && transform.TryGetComponent<T>(out var element)) result.Add(element);
 
             return transform.BetterGetComponentsInParent(result);
         }

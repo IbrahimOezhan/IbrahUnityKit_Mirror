@@ -6,7 +6,6 @@ namespace IbrahKit
     public class UI_Styling_Legacy : UI_Styling
     {
         [SerializeField] private Text text;
-        [SerializeField] private UI_Styling_Config_SO style;
 
         protected override void Init()
         {

@@ -23,7 +23,7 @@ namespace IbrahKit
             return default(T);
         }
 
-        public bool ShowLayout(UI_Layout_Config_SO layoutConfig,List<string> layouts)
+        public bool ShowLayout(UI_Layout_Config_SO layoutConfig, List<string> layouts)
         {
             return GetActiveLayouts(layoutConfig).Intersect(layouts).Count() > 0;
         }

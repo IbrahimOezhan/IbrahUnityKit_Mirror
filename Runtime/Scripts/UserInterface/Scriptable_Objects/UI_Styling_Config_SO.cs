@@ -7,9 +7,6 @@ namespace IbrahKit
     {
         [SerializeField] private UI_Styling_Config style = new();
 
-        public UI_Styling_Config GetStyle()
-        {
-            return style;
-        }
+        public UI_Styling_Config GetStyle() => style;
     }
 }

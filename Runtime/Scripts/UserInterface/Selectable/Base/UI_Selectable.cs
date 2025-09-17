@@ -14,9 +14,6 @@ namespace IbrahKit
         [SerializeField]
         private UI_Selectable_TransitionController transitionController;
 
-        [SerializeField]
-        private UI_Audio_Config_SO overrideAudio;
-
         [ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
 
@@ -53,7 +50,7 @@ namespace IbrahKit
 
         public void Visualize(UI_SELECTABLE_STATE state)
         {
-            transitionController.Transition(state,stateController.GetInteractable());
+            transitionController.Transition(state, stateController.GetInteractable());
         }
 
         public void SetInteractable(bool value)

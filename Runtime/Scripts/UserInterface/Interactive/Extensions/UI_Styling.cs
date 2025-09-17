@@ -5,8 +5,6 @@ namespace IbrahKit
 {
     public abstract class UI_Styling : UI_Extension
     {
-        [SerializeField] private UI_Styling_Config_SO customStyle;
-
         public UI_Styling_Config GetResolvedStyle(int defaultSize, Color defaultColor)
         {
             UI_Styling_Config defaultStyle = new UI_Styling_Config(
@@ -14,7 +12,7 @@ namespace IbrahKit
                 TMP_Settings.defaultFontAsset, defaultSize, defaultColor
             );
 
-            UI_Styling_Config resolvedStyle = customStyle.GetStyle();
+            UI_Styling_Config resolvedStyle = null;
 
             if (UI_Configs.GetStyle(UI_Configs.GetConfigs(transform), out UI_Styling_Config_SO result))
             {

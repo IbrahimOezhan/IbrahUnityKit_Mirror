@@ -95,7 +95,7 @@ namespace IbrahKit
 
         public void OnClick()
         {
-            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform),out UI_Audio_Config_SO result))
+            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
             {
                 result.GetConfig().OnClick();
             }

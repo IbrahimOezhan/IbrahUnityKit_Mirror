@@ -1,9 +1,10 @@
-using UnityEngine;
-
-[System.Serializable]
-public abstract class UI_Audio_Config
+namespace IbrahKit
 {
-    public abstract void OnClick();
+    [System.Serializable]
+    public abstract class UI_Audio_Config
+    {
+        public abstract void OnClick();
 
-    public abstract void OnHover();
+        public abstract void OnHover();
+    }
 }

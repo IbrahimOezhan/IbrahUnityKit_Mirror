@@ -7,9 +7,6 @@ namespace IbrahKit
     {
         [SerializeField] private UI_Fitter_Config config;
 
-        public UI_Fitter_Config GetConfig()
-        {
-            return config;
-        }
+        public UI_Fitter_Config GetConfig() => config;
     }
 }

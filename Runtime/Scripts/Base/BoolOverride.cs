@@ -6,7 +6,7 @@ public class BoolOverride<T>
 {
     [SerializeField] private bool overrideValue;
 
-    [SerializeField,ShowIf(nameof(GetOverride))] private T value;
+    [SerializeField, ShowIf(nameof(GetOverride))] private T value;
     protected virtual bool GetOverride()
     {
         return overrideValue;
