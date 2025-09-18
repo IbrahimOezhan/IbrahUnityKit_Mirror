@@ -6,11 +6,8 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewUILayoutConfig", menuName = "IbrahKit/UILayoutConfig")]
     public class UI_Layout_Config_SO : ScriptableObject
     {
-        [SerializeField] private List<string> activeLayouts = new();
+        [SerializeField] private UI_Layout_Config config;
 
-        public List<string> GetActiveLayouts()
-        {
-            return activeLayouts;
-        }
+        public UI_Layout_Config GetConfig() => config;
     }
 }

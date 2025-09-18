@@ -28,6 +28,6 @@ namespace IbrahKit
             return GetActiveLayouts(layoutConfig).Intersect(layouts).Count() > 0;
         }
 
-        private List<string> GetActiveLayouts(UI_Layout_Config_SO layoutConfig) => layoutConfig.GetActiveLayouts();
+        private List<string> GetActiveLayouts(UI_Layout_Config_SO layoutConfig) => layoutConfig.GetConfig().GetActiveLayouts();
     }
 }
