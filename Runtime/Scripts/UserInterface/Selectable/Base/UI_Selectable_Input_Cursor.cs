@@ -2,7 +2,7 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit
 {
-    public class UI_Selectable_CursorInput : IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    public class UI_Selectable_Input_Cursor : IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
         private UI_Selectable_StateController stateController;
         private UI_Selectable selectable;

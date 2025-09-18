@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace IbrahKit
@@ -6,7 +7,8 @@ namespace IbrahKit
     {
         public override void Apply(UI_SELECTABLE_STATE state)
         {
-            GetTarget().color = GetSO().GetValue(state);
+            Color newColor = GetSO().GetValue(state);
+            GetTarget().color = newColor;
         }
     }
 }

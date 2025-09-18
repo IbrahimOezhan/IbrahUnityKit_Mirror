@@ -7,10 +7,15 @@ namespace IbrahKit
     {
         [SerializeField] private UnityEvent unityEvent;
 
-        public override void Spawn(RectTransform parent, UI_Menu menu)
+        public override bool Spawn(RectTransform parent, UI_Menu menu)
         {
-            base.Spawn(parent, menu);
+            bool result = base.Spawn(parent, menu);
+
+            if (!result) return false;
+
             spawnedButton.Initialize(value).AddListener(() => { unityEvent.Invoke(); });
+
+            return true;
         }
     }
 }

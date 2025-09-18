@@ -13,9 +13,11 @@ namespace IbrahKit
         [SerializeField, Dropdown(Local_Manager.DROP), ShowIf(nameof(localType), LocalType.LOCALIZE)] private string localizationKey;
         [SerializeField, ShowIf(nameof(localType), LocalType.STATIC)] private string staticText;
 
-        public override void Spawn(RectTransform parent, UI_Menu menu)
+        public override bool Spawn(RectTransform parent, UI_Menu menu)
         {
             UI_Menu_Config_SO menuConfig = menu.GetContentController().GetMenuConfig();
+
+            if (menuConfig == null) return false;
 
             switch (localType)
             {
@@ -31,6 +33,8 @@ namespace IbrahKit
 
 
             spawnedObject = spawnedButton.gameObject;
+
+            return true;
         }
 
         private enum LocalType

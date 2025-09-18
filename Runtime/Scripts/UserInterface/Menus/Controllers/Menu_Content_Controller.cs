@@ -87,13 +87,16 @@ namespace IbrahKit
             }
         }
 
-        public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject _goInstance)
+        public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject result)
         {
-            _goInstance = null;
+            result = null;
 
-            _goInstance = menuItem.Spawn(parent, menu);
+            if(!menuItem.Spawn(parent, menu,out result))
+            {
+                return false;
+            }
 
-            return _goInstance != null;
+            return result != null;
         }
 
         public void AddUI(IMenuUpdate menuUpdate)
@@ -114,7 +117,7 @@ namespace IbrahKit
         {
             foreach (IMenuUpdate child in menuUI)
             {
-                child.MenuUpdate();
+                child.OnMenuElementAdded();
             }
         }
 

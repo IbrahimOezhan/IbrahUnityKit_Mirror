@@ -8,15 +8,20 @@ namespace IbrahKit
     {
         protected RectTransform rect;
 
-        [SerializeField, HorizontalGroup("Width")] protected bool scaleWidth = true;
+        [SerializeField, HorizontalGroup("Width")]
+        protected bool scaleWidth = true;
 
-        [SerializeField, HorizontalGroup("Width"), ShowIf(nameof(scaleWidth))] protected int maxWidth;
+        [SerializeField, HorizontalGroup("Width"), ShowIf(nameof(scaleWidth))]
+        protected int maxWidth;
 
-        [SerializeField, HorizontalGroup("Height")] protected bool scaleHeight = true;
+        [SerializeField, HorizontalGroup("Height")]
+        protected bool scaleHeight = true;
 
-        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int maxHeight;
+        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
+        protected int maxHeight;
 
-        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))] protected int heightOffset;
+        [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
+        protected int heightOffset;
 
         protected override void Init()
         {
@@ -31,13 +36,11 @@ namespace IbrahKit
         protected void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
         {
             float _max = Mathf.Clamp(size, 0, GetMax(maxHeight));
+
             rect.SetSizeWithCurrentAnchors(axis, _max + config.GetMargin() + offset);
         }
 
-        protected float GetMax(float max)
-        {
-            return max == 0 ? Mathf.Infinity : max;
-        }
+        protected float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
 
         protected UI_Fitter_Config GetConfig()
         {
@@ -48,21 +51,19 @@ namespace IbrahKit
                 resolvedConfig = result.GetConfig();
             }
 
-            resolvedConfig = resolvedConfig ?? new UI_Fitter_Config(0);
+            resolvedConfig ??= new UI_Fitter_Config(0);
 
             return resolvedConfig;
         }
 
         protected RectTransform GetRect()
         {
-            if (!Application.isPlaying)
-            {
-                return rect != null ? rect : GetComponent<RectTransform>();
-            }
-            else
+            if (Application.isPlaying)
             {
                 return rect;
             }
+
+            return rect != null ? rect : GetComponent<RectTransform>();
         }
 
         public override int GetOrder()

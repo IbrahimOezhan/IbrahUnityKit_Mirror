@@ -7,17 +7,20 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Interactive : UI_Base, IMenuUpdate
+    public class UI_Interactive : UI_Base
     {
         private const string NONE = "None";
 
-        [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))] private string extension = NONE;
+        [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))]
+        private string extension = NONE;
 
-        [SerializeField, ReadOnly] private List<UI_Extension> extensions = new();
+        [SerializeField, ReadOnly]
+        private List<UI_Extension> extensions = new();
 
         protected override void OnEnable()
         {
             base.OnEnable();
+
             UpdateUI();
         }
 
@@ -84,14 +87,19 @@ namespace IbrahKit
             }
         }
 
-        public new void MenuUpdate()
+        private IEnumerable GetAllSubtypes()
+        {
+            return Type_Utilities.GetAllTypesDropdownFormat(typeof(UI_Extension));
+        }
+
+        public override void OnMenuElementAdded()
         {
             UpdateUI();
         }
 
-        private IEnumerable GetAllSubtypes()
+        public override void OnMenuItemsInitialized()
         {
-            return Type_Utilities.GetAllTypesDropdownFormat(typeof(UI_Extension));
+            UpdateUI();
         }
     }
 }

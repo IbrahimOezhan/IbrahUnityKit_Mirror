@@ -6,7 +6,9 @@ namespace IbrahKit
 {
     public class UI_Selectable : UI_Base, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
-        private UI_Selectable_CursorInput cursorInput = new();
+        private bool initialized;
+
+        private UI_Selectable_Input_Cursor cursorInput = new();
 
         [SerializeField]
         private UI_Selectable_StateController stateController;
@@ -20,19 +22,13 @@ namespace IbrahKit
         protected override void Awake()
         {
             base.Awake();
-
-            stateController.GetOnStateChangedEvent().AddListener(Visualize);
-
-            transform.BetterTryGetComponentInParent(out selectableGroup);
-
-            cursorInput.Init(stateController, this);
-
-            stateController.Init(this, selectableGroup);
         }
 
         protected override void OnEnable()
         {
             base.OnEnable();
+
+            Init();
 
             if (selectableGroup != null) selectableGroup.Add(this);
 
@@ -48,6 +44,23 @@ namespace IbrahKit
             stateController.PressedStop();
         }
 
+        private void Init()
+        {
+            if (initialized) return;
+
+            initialized = true;
+
+            stateController.GetOnStateChangedEvent().AddListener(Visualize);
+
+            transform.BetterTryGetComponentInParent(out selectableGroup);
+
+            cursorInput.Init(stateController, this);
+
+            transitionController.Init(gameObject);
+
+            stateController.Init(this, selectableGroup);
+        }
+
         public void Visualize(UI_SELECTABLE_STATE state)
         {
             transitionController.Transition(state, stateController.GetInteractable());
@@ -60,6 +73,16 @@ namespace IbrahKit
             Visualize(stateController.GetState());
         }
 
+        public override void OnMenuElementAdded()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OnMenuItemsInitialized()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public UI_Selectable_StateController GetStateController() => stateController;
 
         public void OnPointerEnter(PointerEventData eventData) => cursorInput.OnPointerEnter(eventData);
@@ -70,14 +93,8 @@ namespace IbrahKit
 
         public void OnPointerUp(PointerEventData eventData) => cursorInput.OnPointerUp(eventData);
 
-        public bool DisallowPress()
-        {
-            return selectableGroup != null && stateController.GetState() == UI_SELECTABLE_STATE.PRESSED;
-        }
+        public bool DisallowPress() => selectableGroup != null && stateController.GetState() == UI_SELECTABLE_STATE.PRESSED;
 
-        public bool DisallowPressOnUp()
-        {
-            return selectableGroup != null;
-        }
+        public bool DisallowPressOnUp() => selectableGroup != null;
     }
 }

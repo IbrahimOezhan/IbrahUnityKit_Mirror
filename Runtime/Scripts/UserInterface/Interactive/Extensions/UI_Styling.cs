@@ -8,7 +8,9 @@ namespace IbrahKit
         public UI_Styling_Config GetResolvedStyle(int defaultSize, Color defaultColor)
         {
             UI_Styling_Config defaultStyle = new UI_Styling_Config(
+
                 Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"),
+
                 TMP_Settings.defaultFontAsset, defaultSize, defaultColor
             );
 
@@ -19,7 +21,7 @@ namespace IbrahKit
                 resolvedStyle = result.GetStyle();
             }
 
-            resolvedStyle = resolvedStyle ?? defaultStyle;
+            resolvedStyle ??= defaultStyle;
 
             return resolvedStyle;
         }

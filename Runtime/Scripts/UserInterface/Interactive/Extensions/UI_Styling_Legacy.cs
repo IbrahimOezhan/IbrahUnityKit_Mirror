@@ -22,6 +22,7 @@ namespace IbrahKit
             if (!IsInitialized()) return;
 
             Text _text = GetText();
+
             UI_Styling_Config _style = GetResolvedStyle(_text.fontSize, text.color);
 
             (_text.font, _text.color) = _style.GetStyle();

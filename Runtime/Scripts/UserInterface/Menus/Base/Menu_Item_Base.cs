@@ -12,6 +12,6 @@ namespace IbrahKit
             return spawnedObject;
         }
 
-        public abstract void Spawn(RectTransform parent, UI_Menu menu);
+        public abstract bool Spawn(RectTransform parent, UI_Menu menu);
     }
 }

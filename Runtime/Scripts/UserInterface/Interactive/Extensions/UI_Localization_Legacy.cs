@@ -14,6 +14,7 @@ namespace IbrahKit
             {
                 return;
             }
+
             base.Init();
         }
 
@@ -37,18 +38,17 @@ namespace IbrahKit
             {
                 return (text, Local_Manager.Instance);
             }
-            else
+
+            Local_Manager manager = FindFirstObjectByType<Local_Manager>();
+
+            if (manager != null)
             {
-                Local_Manager manager = FindFirstObjectByType<Local_Manager>();
-
-                if (manager == null)
-                {
-                    UnityEngine.Debug.LogWarning("No Localization_Manager found in scene.");
-                    return (text, null);
-                }
-
                 return (text != null ? text : GetComponent<Text>(), manager);
             }
+
+            UnityEngine.Debug.LogWarning("No Localization_Manager found in scene.");
+
+            return (text, null);
         }
     }
 }

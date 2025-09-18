@@ -26,19 +26,18 @@ namespace IbrahKit
             (TextMeshProUGUI text, RectTransform rect, UI_Fitter_Config config) = (GetText(), GetRect(), GetConfig());
 
             if (scaleWidth) SetSize(text.preferredWidth, maxWidth, 0, config, RectTransform.Axis.Horizontal);
+
             if (scaleHeight) SetSize(text.preferredHeight, maxHeight, heightOffset, config, RectTransform.Axis.Vertical);
         }
 
         private TextMeshProUGUI GetText()
         {
-            if (!Application.isPlaying)
-            {
-                return this.text != null ? this.text : GetComponent<TextMeshProUGUI>();
-            }
-            else
+            if (Application.isPlaying)
             {
                 return this.text;
             }
+
+            return this.text != null ? this.text : GetComponent<TextMeshProUGUI>();
         }
     }
 }

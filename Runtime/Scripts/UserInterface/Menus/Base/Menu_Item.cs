@@ -15,23 +15,29 @@ namespace IbrahKit
 
         [SerializeReference] private Menu_Item_Base menuItem;
 
-        public GameObject Spawn(RectTransform parent, UI_Menu menu)
+        public bool Spawn(RectTransform parent, UI_Menu menu, out GameObject result)
         {
+            result = null;
+
             if (skip)
             {
                 Debug.Log("Skipped");
-                return null;
+                return false;
             }
 
-            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO result) && !UI_Config_Manager.Instance.ShowLayout(result, showOnLayouts)))
+            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO config) && !UI_Config_Manager.Instance.ShowLayout(config, showOnLayouts)))
             {
                 Debug.Log("Skipped due to layout specific");
-                return null;
+                return false;
             }
 
-            menuItem.Spawn(parent, menu);
+            if(!menuItem.Spawn(parent, menu))
+            {
+                return false;
+            }
 
-            return menuItem.GetSpawnedObject();
+            result = menuItem.GetSpawnedObject();
+            return true;
         }
     }
 }

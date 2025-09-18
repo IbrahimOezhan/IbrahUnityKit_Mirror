@@ -10,7 +10,7 @@ namespace IbrahKit
 
         [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu menuReference;
 
-        public override void Spawn(RectTransform parent, UI_Menu menu)
+        public override bool Spawn(RectTransform parent, UI_Menu menu)
         {
             base.Spawn(parent, menu);
 
@@ -23,6 +23,8 @@ namespace IbrahKit
                     });
                     break;
             }
+
+            return true;
         }
 
         public enum Menu_Change_Type

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Base : MonoBehaviour, IMenuUpdate
+    public abstract class UI_Base : MonoBehaviour, IMenuUpdate
     {
         [SerializeField] private UI_Menu parentMenu;
 
@@ -40,14 +40,13 @@ namespace IbrahKit
             parentMenu.GetContentController().RemoveUI(this);
         }
 
-        public void MenuUpdate()
-        {
-
-        }
-
         public UI_Menu GetParentMenu()
         {
             return parentMenu;
         }
+
+        public abstract void OnMenuElementAdded();
+
+        public abstract void OnMenuItemsInitialized();
     }
 }

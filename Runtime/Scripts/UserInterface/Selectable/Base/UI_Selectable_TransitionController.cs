@@ -13,6 +13,13 @@ namespace IbrahKit
         [SerializeReference]
         private List<UI_Selectable_Transition> transitionsNotInteractable;
 
+        public void Init(GameObject go)
+        {
+            transitions.ForEach(x => x.Init(go));
+            transitionsInteractable.ForEach(x => x.Init(go));
+            transitionsNotInteractable.ForEach(x => x.Init(go));
+        }
+
         public void Transition(UI_SELECTABLE_STATE state, bool interactable)
         {
             transitions.ForEach(i => i.Apply(state));
