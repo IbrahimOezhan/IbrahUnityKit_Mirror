@@ -85,7 +85,7 @@ namespace IbrahKit
             return Type_Utilities.GetAllTypesDropdownFormat(typeof(UI_Extension));
         }
 
-        public override void OnMenuElementAdded()
+        public override void MenuUpdate()
         {
             UpdateUI();
         }

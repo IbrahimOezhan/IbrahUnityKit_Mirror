@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -12,6 +13,8 @@ namespace IbrahKit
         private UI_Menu menu;
 
         [SerializeField, ReadOnly] private UI_Menu previous;
+
+        private static HashSet<UI_Menu> activeMenus = new();
 
         public void Init(UI_Menu menu)
         {
@@ -90,6 +93,16 @@ namespace IbrahKit
         public void SetState(State state)
         {
             this.state = state;
+
+            switch (GetCompactState())
+            {
+                case StateCompact.ENABLED:
+                    activeMenus.Add(menu);
+                    break;
+                case StateCompact.DISABLED:
+                    activeMenus.Remove(menu);
+                    break;
+            }
         }
 
         public State GetState()

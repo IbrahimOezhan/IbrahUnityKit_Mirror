@@ -31,11 +31,6 @@ namespace IbrahKit
         [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
         protected List<IMenuUpdate> menuUI = new();
 
-        private bool ShowMenuItems()
-        {
-            return list != null;
-        }
-
         public void Init(UI_Menu menu)
         {
             this.menu = menu;
@@ -45,7 +40,7 @@ namespace IbrahKit
         {
             foreach (var item in spawnedMenuItems)
             {
-                GameObject.Destroy(item);
+                Object.Destroy(item);
             }
 
             spawnedMenuItems.Clear();
@@ -65,9 +60,7 @@ namespace IbrahKit
 
         private IEnumerator LoadMenuContentRoutine()
         {
-            List<Setting> _settings = new();
-
-            SpawnMenuContent(_settings);
+            SpawnMenuContent();
 
             MenuUpdate();
 
@@ -78,25 +71,20 @@ namespace IbrahKit
             //UI_Navigation_Manager.Instance.UpdateSelectables();
         }
 
-        private void SpawnMenuContent(List<Setting> _settings)
+        private void SpawnMenuContent()
         {
             foreach (Menu_Item menuItem in listMenuItems)
             {
-                if (SpawnMenuItem(menuItem, list as RectTransform, out GameObject _instance))
+                if (TrySpawnMenuItem(menuItem, list as RectTransform, out GameObject _instance))
                 {
                     spawnedMenuItems.Add(_instance);
                 }
             }
         }
 
-        public bool SpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject result)
+        public bool TrySpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject result)
         {
-            result = null;
-
-            if (!menuItem.Spawn(parent, menu, out result))
-            {
-                return false;
-            }
+            if (!menuItem.Spawn(parent, menu, out result)) return false;
 
             return result != null;
         }
@@ -119,7 +107,7 @@ namespace IbrahKit
         {
             foreach (IMenuUpdate child in menuUI)
             {
-                child.OnMenuElementAdded();
+                child.MenuUpdate();
             }
         }
 
@@ -129,6 +117,8 @@ namespace IbrahKit
 
             return result;
         }
+
+        private bool ShowMenuItems() => list != null;
 
         public void Awake()
         {

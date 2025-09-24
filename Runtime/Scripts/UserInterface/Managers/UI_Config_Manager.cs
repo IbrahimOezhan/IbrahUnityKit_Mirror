@@ -10,24 +10,22 @@ namespace IbrahKit
 
         public UI_Configs GetConfigs() => configs;
 
-        public T GetConfig<T>(params BoolOverride<T>[] configs)
+        public F GetConfig<F>(params BoolOverride<F>[] configs)
         {
             for (int i = 0; i < configs.Length; i++)
             {
-                if (configs[i].TryGet(out T value))
+                if (configs[i].TryGet(out F value))
                 {
                     return value;
                 }
             }
 
-            return default(T);
+            return default(F);
         }
 
         public bool ShowLayout(UI_Layout_Config_SO layoutConfig, List<string> layouts)
         {
-            return GetActiveLayouts(layoutConfig).Intersect(layouts).Count() > 0;
+            return layoutConfig.GetConfig().GetActiveLayouts().Intersect(layouts).Count() > 0;
         }
-
-        private List<string> GetActiveLayouts(UI_Layout_Config_SO layoutConfig) => layoutConfig.GetConfig().GetActiveLayouts();
     }
 }

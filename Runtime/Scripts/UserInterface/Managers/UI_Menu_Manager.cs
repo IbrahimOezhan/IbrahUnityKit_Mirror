@@ -6,11 +6,13 @@ namespace IbrahKit
     [DefaultExecutionOrder(Execution_Order.ui)]
     public class UI_Menu_Manager : Manager_DDOL<UI_Menu_Manager>
     {
-        [SerializeField] private List<UI_Menu> activeMenus = new();
-
         public void Transition(Menu_Transition transition, UI_Menu _overrideBackMenu = null)
         {
-            Debug.Log("Enable2");
+            if(transition == null)
+            {
+                Debug.LogWarning("Passed transition is null");
+                return;
+            }
 
             StartCoroutine(transition.Transition(_overrideBackMenu));
         }

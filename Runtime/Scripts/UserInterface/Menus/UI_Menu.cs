@@ -11,9 +11,14 @@ namespace IbrahKit
         [SerializeField]
         private UI_Configs configs;
 
-        [SerializeField] private Menu_Content_Controller content;
-        [SerializeField] private Menu_Visibility_Controller visiblity;
-        [SerializeField] private Menu_State_Controller state;
+        [SerializeField]
+        private Menu_Content_Controller content;
+
+        [SerializeField]
+        private Menu_Visibility_Controller visiblity;
+
+        [SerializeField]
+        private Menu_State_Controller state;
 
         public Action<bool> OnStateChanged;
 
@@ -68,11 +73,28 @@ namespace IbrahKit
         private void Init()
         {
             if (initialized) return;
+
             if (Application.isPlaying) initialized = true;
 
             visiblity.Init(this);
             content.Init(this);
             state.Init(this);
+        }
+
+        public void OnClick()
+        {
+            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
+            {
+                result.GetConfig().OnClick();
+            }
+        }
+
+        public void OnHover()
+        {
+            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
+            {
+                result.GetConfig().OnHover();
+            }
         }
 
         public IMenuVisibility GetVisbilityController()
@@ -93,25 +115,6 @@ namespace IbrahKit
             return content;
         }
 
-        public void OnClick()
-        {
-            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
-            {
-                result.GetConfig().OnClick();
-            }
-        }
-
-        public void OnHover()
-        {
-            if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
-            {
-                result.GetConfig().OnHover();
-            }
-        }
-
-        public UI_Configs GetConfigs()
-        {
-            return configs;
-        }
+        public UI_Configs GetConfigs() => configs;
     }
 }

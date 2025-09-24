@@ -34,6 +34,7 @@ namespace IbrahKit
             ReplacementFont font = replacementFonts.Find(x => Local_Manager.Instance.GetCurrent().GetSys() == x.GetLanguage());
 
             if (font != null) return (font.GetFont(), fontColor);
+
             else return (this.font, fontColor);
         }
 
@@ -42,6 +43,7 @@ namespace IbrahKit
             ReplacementFont font = replacementFonts.Find(x => Local_Manager.Instance.GetCurrent().GetSys() == x.GetLanguage());
 
             if (font != null) return (font.GetFontAsset(), fontColor);
+
             else return (fontAsset, fontColor);
         }
 
@@ -53,20 +55,11 @@ namespace IbrahKit
 
             [Dropdown(Local_Manager.SYS), SerializeField] private string language;
 
-            public Font GetFont()
-            {
-                return font;
-            }
+            public Font GetFont() => font;
 
-            public string GetLanguage()
-            {
-                return language;
-            }
+            public string GetLanguage() => language;
 
-            public TMP_FontAsset GetFontAsset()
-            {
-                return fontAsset;
-            }
+            public TMP_FontAsset GetFontAsset() => fontAsset;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace IbrahKit
             Visualize(stateController.GetState());
         }
 
-        public override void OnMenuElementAdded()
+        public override void MenuUpdate()
         {
 
         }

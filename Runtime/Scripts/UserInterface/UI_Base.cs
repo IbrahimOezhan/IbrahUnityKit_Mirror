@@ -45,7 +45,7 @@ namespace IbrahKit
             return parentMenu;
         }
 
-        public abstract void OnMenuElementAdded();
+        public abstract void MenuUpdate();
 
         public abstract void OnMenuEnabled();
     }
