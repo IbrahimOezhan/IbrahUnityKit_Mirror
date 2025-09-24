@@ -3,26 +3,27 @@ using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class UI_Menu_Button : MonoBehaviour
+    public class UI_Menu_Item_Button_Text : MonoBehaviour
     {
         [SerializeField] private UI_Selectable selec;
-        [SerializeField] private UI_Localization localization;
-        [SerializeField] private UI_Text_Setter textSetter;
+        [SerializeField] private UI_Text_Modifier text;
 
         public UnityEvent Initialize(string value)
         {
-            if (localization != null)
+            if (text == null)
             {
-                localization.SetKey(value);
+                Debug.LogError("Text is null");
+                return new();
+            }
 
-            }
-            else if (textSetter != null)
+            if (text is UI_Localization local)
             {
-                textSetter.SetText(value);
+                local.SetKey(value);
             }
-            else
+
+            if (text is UI_Text_Setter setter)
             {
-                Debug.LogError($"Neither {nameof(localization)} nor {textSetter} have been found");
+                setter.SetText(value);
             }
 
             if (selec == null)

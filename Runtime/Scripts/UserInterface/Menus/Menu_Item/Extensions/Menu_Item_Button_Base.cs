@@ -4,9 +4,9 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Button_Base : Menu_Item_Base
+    public class Menu_Item_Button_Base : Menu_Item_Extension
     {
-        protected UI_Menu_Button spawnedButton;
+        protected UI_Menu_Item_Button_Text spawnedButton;
         protected string value;
 
         [SerializeField] private LocalType localType = LocalType.LOCALIZE;

@@ -23,13 +23,13 @@ public class OverrideComponent<T> where T : Component
 
     public T GetValue()
     {
-        if(overrideValue != null)
+        if (overrideValue != null)
         {
             Debug.Log(overrideValue);
             Debug.Log("Returning Override");
             return overrideValue;
         }
 
-        return  baseValue;
+        return baseValue;
     }
 }

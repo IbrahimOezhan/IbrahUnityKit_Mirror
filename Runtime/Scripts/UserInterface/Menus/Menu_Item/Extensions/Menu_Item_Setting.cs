@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Setting : Menu_Item_Base
+    public class Menu_Item_Setting : Menu_Item_Extension
     {
         [SerializeField] private SettingsInterfaceType settingType;
 

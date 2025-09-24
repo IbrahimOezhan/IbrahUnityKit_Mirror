@@ -19,22 +19,6 @@ namespace IbrahKit
         [ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            Init();
-
-            if (selectableGroup != null) selectableGroup.Add(this);
-
-            Visualize(stateController.GetState());
-        }
-
         protected override void OnDisable()
         {
             stateController.SetState(UI_SELECTABLE_STATE.NONE);
@@ -75,12 +59,16 @@ namespace IbrahKit
 
         public override void OnMenuElementAdded()
         {
-            throw new System.NotImplementedException();
+
         }
 
-        public override void OnMenuItemsInitialized()
+        public override void OnMenuEnabled()
         {
-            throw new System.NotImplementedException();
+            Init();
+
+            if (selectableGroup != null) selectableGroup.Add(this);
+
+            Visualize(stateController.GetState());
         }
 
         public UI_Selectable_StateController GetStateController() => stateController;

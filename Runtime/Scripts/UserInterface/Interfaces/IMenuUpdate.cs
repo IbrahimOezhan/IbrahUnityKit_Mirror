@@ -4,6 +4,6 @@ namespace IbrahKit
     {
         public abstract void OnMenuElementAdded();
 
-        public abstract void OnMenuItemsInitialized();
+        public abstract void OnMenuEnabled();
     }
 }

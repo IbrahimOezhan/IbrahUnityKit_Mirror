@@ -8,11 +8,11 @@ namespace IbrahKit
     {
         private bool initialized;
 
-        [SerializeField,ReadOnly] private OverrideComponent<TTarget> fTarget;
-
-        [SerializeField] private TTarget target;
+        [SerializeField, ReadOnly] private OverrideComponent<TTarget> fTarget;
 
         [SerializeField, ReadOnly] private TTarget getComponentTarget;
+
+        [SerializeField] private TTarget target;
 
         [SerializeField] private SOTarget config;
 
@@ -41,7 +41,7 @@ namespace IbrahKit
             Debug.Log("GetTarget ", Color.magenta);
             TTarget target = fTarget.GetValue();
 
-            if(target == null)
+            if (target == null)
             {
                 Debug.LogWarning("ERRROR. NULL VALUE");
             }

@@ -1,13 +1,15 @@
 namespace IbrahKit
 {
-    public abstract class UI_Text_Setter : UI_Extension
+    public class UI_Text_Setter : UI_Text_Modifier
     {
         public void SetText(object value)
         {
-            SetText(value.ToString());
-        }
+            if (!IsInitialized()) return;
 
-        public abstract void SetText(string text);
+            text.SetText(value.ToString());
+
+            UpdateUI();
+        }
 
         public override int GetOrder()
         {

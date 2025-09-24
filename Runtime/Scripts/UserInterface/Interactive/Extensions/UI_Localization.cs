@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public abstract class UI_Localization : UI_Extension
+    public class UI_Localization : UI_Text_Modifier
     {
         [Dropdown("Localization"), SerializeField]
         protected string key;
@@ -25,6 +25,20 @@ namespace IbrahKit
             base.OnDestroy();
 
             if (Local_Manager.Instance != null) Local_Manager.Instance.OnLanguageChanged -= UpdateUI;
+        }
+
+        public override void Execute()
+        {
+            if (!IsInitialized()) return;
+
+            Local_Manager manager = GetText();
+
+            if (manager == null)
+            {
+                return;
+            }
+
+            text.SetText(GetContent(manager));
         }
 
         public void SetFallback(string _fallback)
@@ -64,6 +78,20 @@ namespace IbrahKit
         protected string GetContent(Local_Manager manager)
         {
             return manager.GetString(key, fallbackText, parameters);
+        }
+
+        private Local_Manager GetText()
+        {
+            if (Application.isPlaying)
+            {
+                return (Local_Manager.Instance);
+            }
+
+            Local_Manager manager = FindFirstObjectByType<Local_Manager>();
+
+            UnityEngine.Debug.LogWarning("No Localization_Manager found in scene.");
+
+            return manager;
         }
     }
 }

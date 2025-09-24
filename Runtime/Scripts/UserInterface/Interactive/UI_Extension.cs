@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [RequireComponent(typeof(UI_Interactive))]
-    [AddComponentMenu("")]
+    [RequireComponent(typeof(UI_Interactive)), AddComponentMenu("")]
     public abstract class UI_Extension : MonoBehaviour
     {
         private UI_Interactive uiInteractive;

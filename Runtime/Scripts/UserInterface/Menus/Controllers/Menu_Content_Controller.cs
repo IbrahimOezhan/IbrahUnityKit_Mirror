@@ -10,6 +10,8 @@ namespace IbrahKit
     {
         private const string SENDMESSAGE = "OnMenuLoaded";
 
+        private int openCounter;
+
         private UI_Menu menu;
 
         [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items.")]
@@ -91,7 +93,7 @@ namespace IbrahKit
         {
             result = null;
 
-            if(!menuItem.Spawn(parent, menu,out result))
+            if (!menuItem.Spawn(parent, menu, out result))
             {
                 return false;
             }
@@ -130,12 +132,17 @@ namespace IbrahKit
 
         public void Awake()
         {
-            if (!reloadOnOpen) ReloadMenuContent();
+
         }
 
         public void Enable()
         {
-            if (reloadOnOpen) ReloadMenuContent();
+            if (reloadOnOpen || (!reloadOnOpen && openCounter++ == 0)) ReloadMenuContent();
+
+            foreach (IMenuUpdate child in menuUI)
+            {
+                child.OnMenuEnabled();
+            }
         }
 
         public void Start()

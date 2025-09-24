@@ -27,14 +27,14 @@ namespace IbrahKit
 
         protected virtual void OnEnable()
         {
-            content.Enable();
             visiblity.Enable();
+            content.Enable();
         }
 
         protected virtual void OnDisable()
         {
-            content.Disable();
             visiblity.Disable();
+            content.Disable();
         }
 
         protected virtual void OnDestroy()

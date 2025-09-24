@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [CreateAssetMenu(fileName = "Test12123", menuName = "ScriptableObjects/Test323")]
+    [CreateAssetMenu(fileName = "NewScaleTransition", menuName = "ScriptableObjects/ScaleTransition")]
     public class ScaleTransition_SO : Selectable_Transition_SO<float>
     {
 

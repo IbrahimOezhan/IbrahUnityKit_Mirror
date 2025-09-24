@@ -6,16 +6,16 @@ namespace IbrahKit
     [System.Serializable]
     public class UI_Menu_Config
     {
-        [SerializeField] private UI_Menu_Button menuButtonPrefab;
-        [SerializeField] private UI_Menu_Button staticMenuButtonPrefab;
+        [SerializeField] private UI_Menu_Item_Button_Text menuButtonPrefab;
+        [SerializeField] private UI_Menu_Item_Button_Text staticMenuButtonPrefab;
         [SerializeField] private List<UI_Setting> settingPrefabs;
 
-        public UI_Menu_Button GetMenuButton()
+        public UI_Menu_Item_Button_Text GetMenuButton()
         {
             return menuButtonPrefab;
         }
 
-        public UI_Menu_Button GetMenuButtonStatic()
+        public UI_Menu_Item_Button_Text GetMenuButtonStatic()
         {
             return staticMenuButtonPrefab;
         }

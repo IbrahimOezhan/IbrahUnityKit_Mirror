@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public partial class Menu_Item
+    public class Menu_Item
     {
         [SerializeField] private bool skip;
 
@@ -13,7 +13,7 @@ namespace IbrahKit
 
         [ShowIf(nameof(layoutSpecific)), SerializeField] private List<string> showOnLayouts;
 
-        [SerializeReference] private Menu_Item_Base menuItem;
+        [SerializeReference] private Menu_Item_Extension menuItem;
 
         public bool Spawn(RectTransform parent, UI_Menu menu, out GameObject result)
         {
@@ -31,7 +31,7 @@ namespace IbrahKit
                 return false;
             }
 
-            if(!menuItem.Spawn(parent, menu))
+            if (!menuItem.Spawn(parent, menu))
             {
                 return false;
             }

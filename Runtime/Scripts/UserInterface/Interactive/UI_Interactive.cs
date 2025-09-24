@@ -17,13 +17,6 @@ namespace IbrahKit
         [SerializeField, ReadOnly]
         private List<UI_Extension> extensions = new();
 
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
-            UpdateUI();
-        }
-
         public void OnValueChanged()
         {
             SortList();
@@ -97,7 +90,7 @@ namespace IbrahKit
             UpdateUI();
         }
 
-        public override void OnMenuItemsInitialized()
+        public override void OnMenuEnabled()
         {
             UpdateUI();
         }

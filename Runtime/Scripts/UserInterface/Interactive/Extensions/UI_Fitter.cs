@@ -6,7 +6,11 @@ namespace IbrahKit
 {
     public abstract class UI_Fitter : UI_Extension
     {
+        private UI_Text_Wrapper text;
+
         protected RectTransform rect;
+
+        [SerializeField] private GameObject target;
 
         [SerializeField, HorizontalGroup("Width")]
         protected bool scaleWidth = true;
@@ -23,6 +27,13 @@ namespace IbrahKit
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
         protected int heightOffset;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            text = new(target ?? gameObject);
+        }
+
         protected override void Init()
         {
             if (rect == null && !TryGetComponent(out rect))
@@ -33,14 +44,21 @@ namespace IbrahKit
             base.Init();
         }
 
+        public override void Execute()
+        {
+            UI_Fitter_Config config = GetConfig();
+
+            if (scaleWidth) SetSize(text.GetPreferredSize().x, maxWidth, 0, config, RectTransform.Axis.Horizontal);
+
+            if (scaleHeight) SetSize(text.GetPreferredSize().y, maxHeight, heightOffset, config, RectTransform.Axis.Vertical);
+        }
+
         protected void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
         {
             float _max = Mathf.Clamp(size, 0, GetMax(maxHeight));
 
-            rect.SetSizeWithCurrentAnchors(axis, _max + config.GetMargin() + offset);
+            GetRect().SetSizeWithCurrentAnchors(axis, _max + config.GetMargin() + offset);
         }
-
-        protected float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
 
         protected UI_Fitter_Config GetConfig()
         {
@@ -56,19 +74,10 @@ namespace IbrahKit
             return resolvedConfig;
         }
 
-        protected RectTransform GetRect()
-        {
-            if (Application.isPlaying)
-            {
-                return rect;
-            }
+        protected RectTransform GetRect() => rect != null || Application.isPlaying ? rect : GetComponent<RectTransform>();
 
-            return rect != null ? rect : GetComponent<RectTransform>();
-        }
+        protected float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
 
-        public override int GetOrder()
-        {
-            return 100;
-        }
+        public override int GetOrder() => 100;
     }
 }
