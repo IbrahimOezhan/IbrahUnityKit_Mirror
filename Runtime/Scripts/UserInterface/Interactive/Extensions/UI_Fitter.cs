@@ -27,16 +27,21 @@ namespace IbrahKit
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
         protected int heightOffset;
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            text = new(target != null ? target : gameObject);
-        }
-
         protected override bool TryInit()
         {
-            return base.TryInit() && (rect != null || TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
+            if(text == null)
+            {
+                text = new(target != null ? target : gameObject);
+            }
+
+            bool result = base.TryInit() && (rect != null || TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
+
+            if (!result)
+            {
+                Debug.LogWarning($"TryInit failed: base={base.TryInit()} rect={rect} text={text} mode={text?.GetMode()}");
+            }
+
+            return result;
         }
 
         public override void Execute()

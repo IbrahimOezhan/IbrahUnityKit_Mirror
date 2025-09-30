@@ -20,8 +20,6 @@ namespace IbrahKit
         {
             if (initialized) return;
 
-            Debug.Log("Init " + go.name, Color.magenta);
-
             initialized = true;
 
             getComponentTarget = go.GetComponent<TTarget>();
