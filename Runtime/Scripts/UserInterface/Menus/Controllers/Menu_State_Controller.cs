@@ -8,9 +8,9 @@ namespace IbrahKit
     [System.Serializable]
     public class Menu_State_Controller : IMenuState
     {
-        private State state;
-
         private UI_Menu menu;
+
+        [SerializeField, ReadOnly] private State state = State.DISABLED;
 
         [SerializeField, ReadOnly] private UI_Menu previous;
 

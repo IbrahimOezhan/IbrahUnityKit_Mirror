@@ -26,11 +26,6 @@ namespace IbrahKit
 
             getComponentTarget = go.GetComponent<TTarget>();
 
-            if (getComponentTarget == null)
-            {
-                Debug.LogWarning("ERRROR. NULL VALUE 211111111");
-            }
-
             fTarget = new(getComponentTarget);
 
             fTarget.SetOverride(target);
@@ -38,13 +33,7 @@ namespace IbrahKit
 
         protected TTarget GetTarget()
         {
-            Debug.Log("GetTarget ", Color.magenta);
             TTarget target = fTarget.GetValue();
-
-            if (target == null)
-            {
-                Debug.LogWarning("ERRROR. NULL VALUE");
-            }
 
             return target;
         }

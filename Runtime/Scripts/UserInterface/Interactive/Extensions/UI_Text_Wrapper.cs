@@ -61,7 +61,9 @@ public class UI_Text_Wrapper
         return new();
     }
 
-    private enum Mode
+    public Mode GetMode() => mode;
+
+    public enum Mode
     {
         NONE,
         LEGACY,

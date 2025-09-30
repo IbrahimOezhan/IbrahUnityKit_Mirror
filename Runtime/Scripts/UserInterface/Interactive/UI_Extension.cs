@@ -11,7 +11,7 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
-            Init();
+            IsInitialized();
         }
 
         protected virtual void OnDestroy()
@@ -21,35 +21,27 @@ namespace IbrahKit
 
         protected bool IsInitialized()
         {
-            if (!init)
-            {
-                Init();
-            }
-            else
+            if (init == true)
             {
                 return true;
             }
 
-            if (!init)
+            if (!TryInit())
             {
                 Debug.LogWarning($"Could not initialize {this.GetType()} ({transform.GetTransformPath()})");
-
                 return false;
             }
 
+            init = true;
+
             Debug.Log("UI Extension Init Success", Color.green);
 
-            return true;
+            return init;
         }
 
-        protected virtual void Init()
+        protected virtual bool TryInit()
         {
-            if (uiInteractive == null && !TryGetComponent(out uiInteractive))
-            {
-                return;
-            }
-
-            init = true;
+            return (uiInteractive != null || TryGetComponent(out uiInteractive) == true);
         }
 
         public virtual void Execute()

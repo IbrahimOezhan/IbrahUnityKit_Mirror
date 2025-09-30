@@ -11,9 +11,6 @@ namespace IbrahKit
             UpdateUI();
         }
 
-        public override int GetOrder()
-        {
-            return 0;
-        }
+        public override int GetOrder() => 0;
     }
 }

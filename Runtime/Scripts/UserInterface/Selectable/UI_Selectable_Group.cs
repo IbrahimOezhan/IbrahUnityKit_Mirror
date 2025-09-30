@@ -39,14 +39,18 @@ namespace IbrahKit
             }
         }
 
-        public void Add(UI_Selectable selectable)
+        public bool Add(UI_Selectable selectable)
         {
+            if (selectables.Contains(selectable)) return false;
             selectables.Add(selectable);
+            return true;
         }
 
-        public void Remove(UI_Selectable selectable)
+        public bool Remove(UI_Selectable selectable)
         {
+            if (!selectables.Contains(selectable)) return false;
             selectables.Remove(selectable);
+            return true;
         }
 
         public void OnSelect(UI_Selectable selected)

@@ -31,21 +31,18 @@ namespace IbrahKit
         {
             base.Awake();
 
-            text = new(target ?? gameObject);
+            text = new(target != null ? target : gameObject);
         }
 
-        protected override void Init()
+        protected override bool TryInit()
         {
-            if (rect == null && !TryGetComponent(out rect))
-            {
-                return;
-            }
-
-            base.Init();
+            return base.TryInit() && (rect != null || TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }
 
         public override void Execute()
         {
+            if (!IsInitialized()) return;
+
             UI_Fitter_Config config = GetConfig();
 
             if (scaleWidth) SetSize(text.GetPreferredSize().x, maxWidth, 0, config, RectTransform.Axis.Horizontal);
@@ -53,14 +50,14 @@ namespace IbrahKit
             if (scaleHeight) SetSize(text.GetPreferredSize().y, maxHeight, heightOffset, config, RectTransform.Axis.Vertical);
         }
 
-        protected void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
+        private void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
         {
             float _max = Mathf.Clamp(size, 0, GetMax(maxHeight));
 
             GetRect().SetSizeWithCurrentAnchors(axis, _max + config.GetMargin() + offset);
         }
 
-        protected UI_Fitter_Config GetConfig()
+        private UI_Fitter_Config GetConfig()
         {
             UI_Fitter_Config resolvedConfig = null;
 
@@ -74,9 +71,9 @@ namespace IbrahKit
             return resolvedConfig;
         }
 
-        protected RectTransform GetRect() => rect != null || Application.isPlaying ? rect : GetComponent<RectTransform>();
+        private RectTransform GetRect() => rect != null || Application.isPlaying ? rect : GetComponent<RectTransform>();
 
-        protected float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
+        private float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
 
         public override int GetOrder() => 100;
     }

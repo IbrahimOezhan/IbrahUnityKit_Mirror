@@ -32,6 +32,12 @@ namespace IbrahKit
             }
 
 
+            if (spawnedButton == null)
+            {
+                Debug.LogWarning("Button could not be spawned");
+                return false;
+            }
+
             spawnedObject = spawnedButton.gameObject;
 
             return true;

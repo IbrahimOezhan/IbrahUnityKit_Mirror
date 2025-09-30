@@ -6,7 +6,7 @@ namespace IbrahKit
 {
     public class UI_Selectable : UI_Base, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
-        private bool initialized;
+        [SerializeField, ReadOnly] private bool initialized;
 
         private UI_Selectable_Input_Cursor cursorInput = new();
 
@@ -19,6 +19,13 @@ namespace IbrahKit
         [ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (selectableGroup != null) selectableGroup.Add(this);
+        }
+
         protected override void OnDisable()
         {
             stateController.SetState(UI_SELECTABLE_STATE.NONE);
@@ -28,21 +35,23 @@ namespace IbrahKit
             stateController.PressedStop();
         }
 
-        private void Init()
+        private bool Init()
         {
-            if (initialized) return;
+            if (initialized) return true;
 
-            initialized = true;
+            cursorInput.Init(stateController, this);
 
             stateController.GetOnStateChangedEvent().AddListener(Visualize);
 
             transform.BetterTryGetComponentInParent(out selectableGroup);
 
-            cursorInput.Init(stateController, this);
-
             transitionController.Init(gameObject);
 
             stateController.Init(this, selectableGroup);
+
+            initialized = true;
+
+            return true;
         }
 
         public void Visualize(UI_SELECTABLE_STATE state)
@@ -59,14 +68,20 @@ namespace IbrahKit
 
         public override void MenuUpdate()
         {
-
+            if (!Init())
+            {
+                Debug.Log("Init failed");
+                return;
+            }
         }
 
         public override void OnMenuEnabled()
         {
-            Init();
-
-            if (selectableGroup != null) selectableGroup.Add(this);
+            if(!Init())
+            {
+                Debug.Log("Init failed");
+                return;
+            }
 
             Visualize(stateController.GetState());
         }

@@ -81,7 +81,7 @@ namespace IbrahKit
             state.Init(this);
         }
 
-        public void OnClick()
+        public void OnClickAudio()
         {
             if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
             {
@@ -89,7 +89,7 @@ namespace IbrahKit
             }
         }
 
-        public void OnHover()
+        public void OnHoverAudio()
         {
             if (UI_Configs.GetAudio(UI_Configs.GetConfigs(transform), out UI_Audio_Config_SO result))
             {

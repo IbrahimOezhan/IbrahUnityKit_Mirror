@@ -7,7 +7,10 @@ namespace IbrahKit
     [System.Serializable]
     public class UI_Selectable_StateController
     {
+        [SerializeField, ReadOnly]
         private UI_Selectable selectable;
+
+        [SerializeField, ReadOnly]
         private UI_Selectable_Group group;
 
         [SerializeField, ReadOnly]
@@ -32,6 +35,7 @@ namespace IbrahKit
         public void Init(UI_Selectable selectable, UI_Selectable_Group group)
         {
             this.selectable = selectable;
+
             this.group = group;
         }
 
@@ -45,6 +49,7 @@ namespace IbrahKit
             }
 
             this.state = state;
+
             OnStateChanged.Invoke(state);
         }
 
@@ -59,7 +64,7 @@ namespace IbrahKit
 
             if (interactable)
             {
-                selectable.GetParentMenu().OnHover();
+                selectable.GetParentMenu().OnHoverAudio();
             }
         }
 
@@ -69,13 +74,17 @@ namespace IbrahKit
 
             currentlySelected = selectable;
 
-            if (group != null) group.OnSelect(selectable);
+            if (group != null)
+            {
+                group.OnSelect(selectable);
+                Debug.Log("Group On Select");
+            }
 
             if (interactable)
             {
                 OnPressedSuccess.Invoke();
 
-                selectable.GetParentMenu().OnClick();
+                selectable.GetParentMenu().OnClickAudio();
             }
             else
             {

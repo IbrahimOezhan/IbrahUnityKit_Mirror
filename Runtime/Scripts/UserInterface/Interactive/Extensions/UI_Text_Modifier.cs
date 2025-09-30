@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Text_Modifier : UI_Extension
+    public abstract class UI_Text_Modifier : UI_Extension
     {
         protected UI_Text_Wrapper text;
 
@@ -11,8 +11,16 @@ namespace IbrahKit
         protected override void Awake()
         {
             base.Awake();
+        }
 
-            text = new(target ?? gameObject);
+        protected override bool TryInit()
+        {
+            if(text == null)
+            {
+                text = new(target == null ? gameObject : target);
+            }
+
+            return base.TryInit() && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }
     }
 }
