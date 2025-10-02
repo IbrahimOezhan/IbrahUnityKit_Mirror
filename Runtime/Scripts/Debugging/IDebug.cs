@@ -6,8 +6,8 @@ namespace IbrahKit
     {
         GameObject gameObject { get; }
 
-        public string Run();
+        public string DebugContent();
 
-        public int Order();
+        public int DebugOrder();
     }
 }

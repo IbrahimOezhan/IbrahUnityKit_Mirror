@@ -78,12 +78,12 @@ namespace IbrahKit
             inputType = type;
         }
 
-        public string Run()
+        public string DebugContent()
         {
             return "Cursor Visibilty: " + IsVisible();
         }
 
-        public int Order()
+        public int DebugOrder()
         {
             return -70;
         }

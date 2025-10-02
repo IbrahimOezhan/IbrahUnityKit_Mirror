@@ -55,12 +55,12 @@ namespace IbrahKit
             return currentState.Equals(state);
         }
 
-        public string Run()
+        public string DebugContent()
         {
             return "Current State: " + currentState;
         }
 
-        public int Order()
+        public int DebugOrder()
         {
             return -60;
         }

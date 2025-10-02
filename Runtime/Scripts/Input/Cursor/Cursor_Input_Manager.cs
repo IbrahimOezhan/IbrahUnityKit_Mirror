@@ -88,12 +88,12 @@ namespace IbrahKit
             return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
         }
 
-        public string Run()
+        public string DebugContent()
         {
             return "Is Over UI: " + CursorOverUI(EventSystem.current);
         }
 
-        public int Order()
+        public int DebugOrder()
         {
             return -80;
         }

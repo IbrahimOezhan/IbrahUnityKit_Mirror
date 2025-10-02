@@ -67,12 +67,12 @@ namespace IbrahKit
             OnInputChanged?.Invoke(currentInputType);
         }
 
-        public string Run()
+        public string DebugContent()
         {
             return "Current Input Type: " + currentInputType + " Last Pressed: " + lastPressed.displayName;
         }
 
-        public int Order()
+        public int DebugOrder()
         {
             return -90;
         }

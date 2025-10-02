@@ -40,7 +40,7 @@ namespace IbrahKit
                 {
                     try
                     {
-                        sb.Append(debug.Run());
+                        sb.Append(debug.DebugContent());
                     }
                     catch (Exception ex)
                     {
@@ -65,7 +65,7 @@ namespace IbrahKit
             debugs.Add(debug);
             debugs.Sort((a, b) =>
             {
-                return a.Order().CompareTo(b.Order());
+                return a.DebugOrder().CompareTo(b.DebugOrder());
             });
         }
 
