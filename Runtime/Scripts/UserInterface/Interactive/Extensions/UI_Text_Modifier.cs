@@ -15,10 +15,7 @@ namespace IbrahKit
 
         protected override bool TryInit()
         {
-            if(text == null)
-            {
-                text = new(target == null ? gameObject : target);
-            }
+            text = new(target == null ? gameObject : target);
 
             return base.TryInit() && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }

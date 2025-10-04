@@ -29,10 +29,7 @@ namespace IbrahKit
 
         protected override bool TryInit()
         {
-            if(text == null)
-            {
-                text = new(target != null ? target : gameObject);
-            }
+            text = new(target != null ? target : gameObject);
 
             bool result = base.TryInit() && (rect != null || TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
 

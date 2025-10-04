@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
@@ -6,6 +7,12 @@ namespace IbrahKit
     public abstract class UI_Extension : MonoBehaviour
     {
         private UI_Interactive uiInteractive;
+
+        [Button]
+        private void DebugReset()
+        {
+            init = false;
+        }
 
         protected bool init;
 
@@ -32,11 +39,13 @@ namespace IbrahKit
                 return false;
             }
 
-            init = true;
+            bool playing = Application.isPlaying;
+
+            if(playing) init = true;
 
             Debug.Log("UI Extension Init Success", Color.green);
 
-            return init;
+            return true;
         }
 
         protected virtual bool TryInit()

@@ -31,14 +31,10 @@ namespace IbrahKit
         {
             if (!IsInitialized()) return;
 
-            Local_Manager manager = GetText();
-
-            if (manager == null)
+            if (Local_Manager.TryGet(out Local_Manager result))
             {
-                return;
+                text.SetText(GetContent(result));
             }
-
-            text.SetText(GetContent(manager));
         }
 
         public void SetFallback(string _fallback)
@@ -78,20 +74,6 @@ namespace IbrahKit
         protected string GetContent(Local_Manager manager)
         {
             return manager.GetString(key, fallbackText, parameters);
-        }
-
-        private Local_Manager GetText()
-        {
-            if (Application.isPlaying)
-            {
-                return (Local_Manager.Instance);
-            }
-
-            Local_Manager manager = FindFirstObjectByType<Local_Manager>();
-
-            UnityEngine.Debug.LogWarning("No Localization_Manager found in scene.");
-
-            return manager;
         }
     }
 }
