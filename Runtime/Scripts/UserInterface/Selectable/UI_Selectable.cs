@@ -28,7 +28,7 @@ namespace IbrahKit
 
         protected override void OnDisable()
         {
-            stateController.SetState(UI_SELECTABLE_STATE.NONE);
+            stateController.SetState(UI_SELECTABLE_STATE.NONE,false);
 
             if (selectableGroup != null) selectableGroup.Remove(this);
 
@@ -54,9 +54,9 @@ namespace IbrahKit
             return true;
         }
 
-        public void Visualize(UI_SELECTABLE_STATE state)
+        public void Visualize(UI_SELECTABLE_STATE state,bool animate = true)
         {
-            transitionController.Transition(state, stateController.GetInteractable());
+            if(animate) transitionController.Transition(state, stateController.GetInteractable());
         }
 
         public void SetInteractable(bool value)
