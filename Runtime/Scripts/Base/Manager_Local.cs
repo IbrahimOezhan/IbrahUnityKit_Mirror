@@ -37,12 +37,15 @@ namespace IbrahKit
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
+
                 return;
             }
+            else
+            {
+                Instance = (T)this;
 
-            Instance = (T)this;
-
-            OnAwake();
+                OnAwake();
+            }
         }
 
         protected virtual void OnAwake()
