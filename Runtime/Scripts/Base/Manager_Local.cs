@@ -29,7 +29,19 @@ namespace IbrahKit
 
         public static T GetInstance()
         {
-            return Instance;
+            T result = Instance;
+
+            if (result == null)
+            {
+                result = FindAnyObjectByType<T>();
+
+                if (result == null)
+                {
+                    Debug.LogWarning($"FindAnyObjectByType couldn't find object of type {nameof(T)}");
+                }
+            }
+
+            return result;
         }
 
         private void Awake()
