@@ -81,16 +81,16 @@ namespace IbrahKit
 
         public void Enable()
         {
-            if (!preventHideOnPause && Pause_Manager.Instance != null)
+            if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
             {
-                Pause_Manager.Instance.OnPause += OnPause;
-                Pause_Manager.Instance.UpdatePause();
+                Pause_Manager.GetInstance().OnPause += OnPause;
+                Pause_Manager.GetInstance().UpdatePause();
             }
 
-            if (Game_Utilities.Instance != null)
+            if (Game_Utilities.GetInstance() != null)
             {
-                Game_Utilities.Instance.OnHide += GU_Hide;
-                Game_Utilities.Instance.UpdateHide();
+                Game_Utilities.GetInstance().OnHide += GU_Hide;
+                Game_Utilities.GetInstance().UpdateHide();
             }
         }
 
@@ -101,14 +101,14 @@ namespace IbrahKit
 
         public void Disable()
         {
-            if (!preventHideOnPause && Pause_Manager.Instance != null)
+            if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
             {
-                Pause_Manager.Instance.OnPause -= OnPause;
+                Pause_Manager.GetInstance().OnPause -= OnPause;
             }
 
-            if (Game_Utilities.Instance != null)
+            if (Game_Utilities.GetInstance() != null)
             {
-                Game_Utilities.Instance.OnHide -= GU_Hide;
+                Game_Utilities.GetInstance().OnHide -= GU_Hide;
             }
         }
 

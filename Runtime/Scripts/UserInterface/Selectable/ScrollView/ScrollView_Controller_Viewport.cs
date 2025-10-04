@@ -45,7 +45,7 @@ namespace IbrahKit
 
         private Vector2 GetMousePos(Canvas canvas)
         {
-            return Cursor_Input_Manager.Instance.GetCanvasMousePos(scrollView.GetCanvas());
+            return Cursor_Input_Manager.GetInstance().GetCanvasMousePos(scrollView.GetCanvas());
         }
     }
 

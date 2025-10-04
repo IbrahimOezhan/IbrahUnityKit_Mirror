@@ -64,7 +64,7 @@ namespace IbrahKit
 
         private Vector2 GetMousePos(Canvas canvas)
         {
-            return Cursor_Input_Manager.Instance.GetCanvasMousePos(canvas);
+            return Cursor_Input_Manager.GetInstance().GetCanvasMousePos(canvas);
         }
     }
 }

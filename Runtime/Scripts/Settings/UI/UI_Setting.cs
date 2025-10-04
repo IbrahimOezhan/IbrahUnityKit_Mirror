@@ -216,7 +216,7 @@ namespace IbrahKit
 
                 case SettingsInterfaceType.KEY:
 
-                    Settings_Manager.Instance.GetSetting(settingKey, out setting);
+                    Settings_Manager.GetInstance().GetSetting(settingKey, out setting);
 
                     break;
                 case SettingsInterfaceType.LOCAL:

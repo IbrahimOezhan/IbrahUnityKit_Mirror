@@ -75,7 +75,7 @@ namespace IbrahKit
 
             DontDestroyOnLoad(gameObject);
 
-            saveData = (SaveData)Save_Manager.Instance.Load(SAVE, new SaveData());
+            saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
 
             Init();
 
@@ -101,7 +101,7 @@ namespace IbrahKit
 
                 saveData.SetLanguage(sys);
 
-                Save_Manager.Instance.Return(SAVE, saveData);
+                Save_Manager.GetInstance().Return(SAVE, saveData);
             }
         }
 

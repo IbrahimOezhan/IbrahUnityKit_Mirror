@@ -25,7 +25,7 @@ namespace IbrahKit
                 return false;
             }
 
-            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO config) && !UI_Config_Manager.Instance.ShowLayout(config, showOnLayouts)))
+            if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO config) && !UI_Config_Manager.GetInstance().ShowLayout(config, showOnLayouts)))
             {
                 Debug.Log("Skipped due to layout specific");
                 return false;

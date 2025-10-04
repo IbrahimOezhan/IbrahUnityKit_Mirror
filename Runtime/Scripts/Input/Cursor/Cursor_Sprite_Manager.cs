@@ -26,7 +26,7 @@ namespace IbrahKit
         {
             if (main == null) main = Camera.main;
 
-            Cursor_Input_Manager cim = Cursor_Input_Manager.Instance;
+            Cursor_Input_Manager cim = Cursor_Input_Manager.GetInstance();
 
             if (cim == null) return;
 
@@ -50,11 +50,11 @@ namespace IbrahKit
                 SetState(CursorState.None);
             }
 
-            Vector2 pos = GetCursorPos(main, canvas, Cursor_Input_Manager.Instance.GetMousePos());
+            Vector2 pos = GetCursorPos(main, canvas, Cursor_Input_Manager.GetInstance().GetMousePos());
 
             cursorTransform.localPosition = pos;
 
-            cursorTransform.gameObject.SetActive(Cursor_Visibilty_Manager.Instance.IsVisible());
+            cursorTransform.gameObject.SetActive(Cursor_Visibilty_Manager.GetInstance().IsVisible());
 
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;

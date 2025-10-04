@@ -29,12 +29,12 @@ namespace IbrahKit
                 }
             }
 
-            Unlockables_Manager.Instance.Unlock(this);
+            Unlockables_Manager.GetInstance().Unlock(this);
         }
 
         public bool IsUnlocked()
         {
-            return Unlockables_Manager.Instance.IsUnlocked(key);
+            return Unlockables_Manager.GetInstance().IsUnlocked(key);
         }
 
         public string GetKey()

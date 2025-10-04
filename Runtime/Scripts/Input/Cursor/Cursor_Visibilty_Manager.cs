@@ -15,13 +15,13 @@ namespace IbrahKit
         {
             base.OnAwake();
 
-            Input_Manager.Instance.OnInputChanged += OnInputTypeChanged;
-            Input_Manager.Instance.InputUpdate();
+            Input_Manager.GetInstance().OnInputChanged += OnInputTypeChanged;
+            Input_Manager.GetInstance().InputUpdate();
         }
 
         private void Start()
         {
-            Debug_Manager.Instance.Add(this);
+            Debug_Manager.GetInstance().Add(this);
         }
 
         private void Update()
@@ -33,9 +33,9 @@ namespace IbrahKit
 
                     string state = string.Empty;
 
-                    if (State_Manager.Instance != null)
+                    if (State_Manager.GetInstance() != null)
                     {
-                        state = State_Manager.Instance.GetCurrentState();
+                        state = State_Manager.GetInstance().GetCurrentState();
                     }
 
                     isVisible = IsVisible(state);
@@ -52,7 +52,7 @@ namespace IbrahKit
 
         private void OnDestroy()
         {
-            if (Input_Manager.Instance) Input_Manager.Instance.OnInputChanged -= OnInputTypeChanged;
+            if (Input_Manager.GetInstance()) Input_Manager.GetInstance().OnInputChanged -= OnInputTypeChanged;
         }
 
         private bool IsVisible(string state)

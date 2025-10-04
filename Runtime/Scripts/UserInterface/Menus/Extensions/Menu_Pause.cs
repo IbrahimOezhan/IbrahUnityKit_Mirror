@@ -7,13 +7,13 @@ namespace IbrahKit
     {
         public void MainMenu()
         {
-            Pause_Manager.Instance.Pause();
+            Pause_Manager.GetInstance().Pause();
             SceneManager.LoadScene(0);
         }
 
         public void OpenSettings()
         {
-            Settings_Manager.Instance.OpenSettings(this);
+            Settings_Manager.GetInstance().OpenSettings(this);
         }
 
         public void Quit()

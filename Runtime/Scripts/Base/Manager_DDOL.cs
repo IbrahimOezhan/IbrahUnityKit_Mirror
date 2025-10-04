@@ -4,7 +4,7 @@ namespace IbrahKit
 {
     public abstract class Manager_DDOL<T> : MonoBehaviour where T : Manager_DDOL<T>
     {
-        public static T Instance;
+        private static T Instance;
 
         public static bool TryGet(out T result, bool throwWarnings = true)
         {
@@ -27,21 +27,29 @@ namespace IbrahKit
             return result != null;
         }
 
+        public static T GetInstance()
+        {
+            return Instance;
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
+
                 return;
             }
+            else
+            {
+                Instance = (T)this;
 
-            Instance = (T)this;
+                if (transform.parent != null) transform.parent = null;
 
-            if (transform.parent != null) transform.parent = null;
+                DontDestroyOnLoad(gameObject);
 
-            DontDestroyOnLoad(gameObject);
-
-            OnAwake();
+                OnAwake();
+            }
         }
 
         protected virtual void OnAwake()

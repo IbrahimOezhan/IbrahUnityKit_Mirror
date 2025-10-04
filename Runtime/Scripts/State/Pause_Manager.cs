@@ -49,7 +49,7 @@ namespace IbrahKit
 
         public void Pause()
         {
-            string currentState = State_Manager.Instance.GetCurrentState();
+            string currentState = State_Manager.GetInstance().GetCurrentState();
 
             AllowPause allow = allowPause.Find(x => x.IsState(currentState));
 
@@ -63,7 +63,7 @@ namespace IbrahKit
 
                 stateBeforePause = currentState;
 
-                State_Manager.Instance.SetCurrentState(pausedState);
+                State_Manager.GetInstance().SetCurrentState(pausedState);
 
                 paused = _paused;
             }
@@ -71,7 +71,7 @@ namespace IbrahKit
             {
                 menu.GetStateController().Disable();
 
-                State_Manager.Instance.SetCurrentState(stateBeforePause);
+                State_Manager.GetInstance().SetCurrentState(stateBeforePause);
 
                 paused = _paused;
             }

@@ -18,7 +18,7 @@ namespace IbrahKit
 
         private void Start()
         {
-            Debug_Manager.Instance.Add(this);
+            Debug_Manager.GetInstance().Add(this);
         }
 
         private void OnValidate()

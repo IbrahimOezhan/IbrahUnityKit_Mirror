@@ -40,7 +40,7 @@ namespace IbrahKit
 
         private void OnDestroy()
         {
-            if (Instance == this)
+            if (GetInstance() == this)
             {
                 currentSave.Return(GENERIC_KEY, generic, encrypt);
             }

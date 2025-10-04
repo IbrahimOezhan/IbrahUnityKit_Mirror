@@ -23,9 +23,9 @@ namespace IbrahKit
 
         private void Start()
         {
-            if (Instance == this)
+            if (GetInstance() == this)
             {
-                data = (SaveData)Save_Manager.Instance.Load(KEY, new SaveData());
+                data = (SaveData)Save_Manager.GetInstance().Load(KEY, new SaveData());
 
                 for (int i = 0; i < settings.Count; i++)
                 {
@@ -37,7 +37,7 @@ namespace IbrahKit
 
         private void OnDestroy()
         {
-            if (Instance == this)
+            if (GetInstance() == this)
             {
                 for (int i = 0; i < settings.Count; i++)
                 {
@@ -46,7 +46,7 @@ namespace IbrahKit
                     data.SetValue(key, settings[i].GetValue().ToString());
                 }
 
-                Save_Manager.Instance.Return(KEY, data);
+                Save_Manager.GetInstance().Return(KEY, data);
             }
         }
 

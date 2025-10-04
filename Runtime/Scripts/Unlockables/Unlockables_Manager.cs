@@ -19,14 +19,14 @@ namespace IbrahKit
         {
             base.OnAwake();
 
-            saveData = (SaveData)Save_Manager.Instance.Load(saveDataName, new SaveData());
+            saveData = (SaveData)Save_Manager.GetInstance().Load(saveDataName, new SaveData());
         }
 
         private void OnDestroy()
         {
-            if (Instance == this)
+            if (GetInstance() == this)
             {
-                Save_Manager.Instance.Return(saveDataName, saveData);
+                Save_Manager.GetInstance().Return(saveDataName, saveData);
             }
         }
 

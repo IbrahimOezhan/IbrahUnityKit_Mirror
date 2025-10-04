@@ -44,14 +44,19 @@ public class UI_Configs
     {
         IConfig[] iConfigs = t.BetterGetComponentsInParents<IConfig>(true);
 
-        UI_Configs[] uiConfigs = new UI_Configs[iConfigs.Length + 1];
+        bool found = UI_Config_Manager.TryGet(out UI_Config_Manager result);
+
+        UI_Configs[] uiConfigs = new UI_Configs[iConfigs.Length + (found ? 1: 0)];
 
         for (int i = 0; i < iConfigs.Length; i++)
         {
             uiConfigs[i] = iConfigs[i].GetConfigs();
         }
 
-        uiConfigs[^1] = UI_Config_Manager.Instance.GetConfigs();
+        if(found)
+        {
+            uiConfigs[^1] = result.GetConfigs();
+        }
 
         return uiConfigs;
     }

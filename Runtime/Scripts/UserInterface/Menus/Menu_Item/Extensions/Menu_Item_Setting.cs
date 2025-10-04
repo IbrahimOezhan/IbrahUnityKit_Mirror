@@ -19,7 +19,7 @@ namespace IbrahKit
         {
             UI_Menu_Config_SO config = menu.GetContentController().GetMenuConfig();
 
-            if (!Settings_Manager.Instance.GetSetting(settingsKey, out Setting _foundSetting))
+            if (!Settings_Manager.GetInstance().GetSetting(settingsKey, out Setting _foundSetting))
             {
                 return false;
             }
