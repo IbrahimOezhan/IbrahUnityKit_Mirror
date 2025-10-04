@@ -28,7 +28,7 @@ namespace IbrahKit
         [SerializeField]
         private UnityEvent OnPressedStop;
 
-        private UnityEvent<UI_SELECTABLE_STATE,bool> OnStateChanged = new();
+        private UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
 
         public static UI_Selectable currentlySelected;
 
@@ -39,7 +39,7 @@ namespace IbrahKit
             this.group = group;
         }
 
-        public void SetState(UI_SELECTABLE_STATE state,bool animate = true)
+        public void SetState(UI_SELECTABLE_STATE state, bool animate = true)
         {
             if (this.state == state) return;
 
@@ -109,7 +109,7 @@ namespace IbrahKit
 
         public bool GetInteractable() => interactable;
 
-        public UnityEvent<UI_SELECTABLE_STATE,bool> GetOnStateChangedEvent() => OnStateChanged;
+        public UnityEvent<UI_SELECTABLE_STATE, bool> GetOnStateChangedEvent() => OnStateChanged;
         public UnityEvent GetOnPressSuccess() => OnPressedSuccess;
         public UnityEvent GetOnPressFail() => OnPressedFailed;
         public UnityEvent GetOnPressStop() => OnPressedStop;

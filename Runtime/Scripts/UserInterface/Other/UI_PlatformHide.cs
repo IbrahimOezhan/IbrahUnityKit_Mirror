@@ -14,7 +14,7 @@ namespace IbrahKit
                 Debug.LogWarning($"{nameof(hide)} is null");
                 return;
             }
-                
+
             if (hide.Contains(Application.platform))
             {
                 gameObject.SetActive(false);

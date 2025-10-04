@@ -41,7 +41,7 @@ namespace IbrahKit
 
             bool playing = Application.isPlaying;
 
-            if(playing) init = true;
+            if (playing) init = true;
 
             Debug.Log("UI Extension Init Success", Color.green);
 

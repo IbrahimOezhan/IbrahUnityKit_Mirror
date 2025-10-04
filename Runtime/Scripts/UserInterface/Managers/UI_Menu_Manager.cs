@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -8,7 +7,7 @@ namespace IbrahKit
     {
         public void Transition(Menu_Transition transition, UI_Menu _overrideBackMenu = null)
         {
-            if(transition == null)
+            if (transition == null)
             {
                 Debug.LogWarning("Passed transition is null");
                 return;

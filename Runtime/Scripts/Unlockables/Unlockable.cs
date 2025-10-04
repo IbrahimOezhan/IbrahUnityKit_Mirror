@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
@@ -6,7 +5,7 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "ScriptableObjects/Unlockable")]
     public class Unlockable : ScriptableObject
     {
-        [Dropdown(Local_Manager.DROP),SerializeField]
+        [Dropdown(Local_Manager.DROP), SerializeField]
         protected string key;
 
         [SerializeField]

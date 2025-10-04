@@ -46,14 +46,14 @@ public class UI_Configs
 
         bool found = UI_Config_Manager.TryGet(out UI_Config_Manager result);
 
-        UI_Configs[] uiConfigs = new UI_Configs[iConfigs.Length + (found ? 1: 0)];
+        UI_Configs[] uiConfigs = new UI_Configs[iConfigs.Length + (found ? 1 : 0)];
 
         for (int i = 0; i < iConfigs.Length; i++)
         {
             uiConfigs[i] = iConfigs[i].GetConfigs();
         }
 
-        if(found)
+        if (found)
         {
             uiConfigs[^1] = result.GetConfigs();
         }
