@@ -20,6 +20,9 @@ namespace IbrahKit
         private bool interactable = true;
 
         [SerializeField]
+        private bool playAudioOnStateChange = true;
+
+        [SerializeField]
         private UnityEvent OnPressedSuccess;
 
         [SerializeField]
@@ -62,7 +65,7 @@ namespace IbrahKit
         {
             SetState(UI_SELECTABLE_STATE.SELECTED);
 
-            if (interactable)
+            if (interactable && playAudioOnStateChange)
             {
                 selectable.GetParentMenu().OnHoverAudio();
             }
@@ -84,7 +87,7 @@ namespace IbrahKit
             {
                 OnPressedSuccess.Invoke();
 
-                selectable.GetParentMenu().OnClickAudio();
+                if (playAudioOnStateChange) selectable.GetParentMenu().OnClickAudio();
             }
             else
             {
