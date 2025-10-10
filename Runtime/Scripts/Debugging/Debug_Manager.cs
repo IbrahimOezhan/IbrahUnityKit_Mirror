@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,11 +11,11 @@ namespace IbrahKit
     {
         private List<IDebug> debugs = new();
 
-        [SerializeField] private UI_Text_Setter debugContent;
+        [SerializeField,Required] private UI_Text_Setter debugContent;
 
-        [SerializeField] private UI_Menu debugContainer;
+        [SerializeField, Required] private UI_Menu debugContainer;
 
-        [SerializeField] private KeyMap keyMap;
+        [SerializeField, Required] private KeyMap keyMap;
 
         public bool disableLogs;
 

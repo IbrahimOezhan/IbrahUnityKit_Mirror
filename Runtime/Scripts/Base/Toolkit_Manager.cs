@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -14,6 +15,8 @@ namespace IbrahKit
         [ValueDropdown(nameof(Dropdown)), SerializeField, OnValueChanged(nameof(OnValueChanged))]
         private string addManager;
 
+        [SerializeField] private bool excludeInScene;
+
         private void Awake()
         {
             if (Application.isPlaying)
@@ -24,16 +27,29 @@ namespace IbrahKit
 
         public IEnumerable Dropdown()
         {
-            List<string> types = GetManagerTypes().Select(x => x.FullName).ToList();
+            List<Type> types = GetManagerTypes().ToList();
 
-            types.Insert(0, "None");
+            if(excludeInScene)
+            {
+                for (int i = types.Count - 1; i >= 0; i--)
+                {
+                    if (FindAnyObjectByType(types[i]) != null)
+                    {
+                        types.Remove(types[i]);
+                    }
+                }
+            }
 
-            return types;
+            List<string> types2 = types.Select(x => x.FullName).ToList();
+
+            types2.Insert(0, "None");
+
+            return types2;
         }
 
         private Type[] GetManagerTypes()
         {
-            return Type_Utilities.GetAllTypes(typeof(Manager_DDOL<>));
+            return Type_Utilities.GetAllTypes(typeof(Manager<>)).Where(x => x.Namespace == nameof(IbrahKit)).ToArray();
         }
 
         public void OnValueChanged()
