@@ -12,14 +12,36 @@ namespace IbrahKit
             if (baseType == null)
             {
                 Debug.LogWarning("Base type is null");
-                return new Type[0];
+                return Array.Empty<Type>();
             }
 
             return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(t => t.IsClass
-                            && !t.IsAbstract
-                            && baseType.IsAssignableFrom(t)).ToArray();
+                .SelectMany(a =>
+                {
+                    try { return a.GetTypes(); }
+                    catch { return Array.Empty<Type>(); }
+                })
+                .Where(t =>
+                    t.IsClass &&
+                    !t.IsAbstract &&
+                    InheritsFromGeneric(t, baseType))
+                .ToArray();
+        }
+
+        private static bool InheritsFromGeneric(Type type, Type genericBase)
+        {
+            if (genericBase.IsInterface)
+                return type.GetInterfaces()
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericBase);
+
+            while (type != null && type != typeof(object))
+            {
+                var cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+                if (cur == genericBase)
+                    return true;
+                type = type.BaseType;
+            }
+            return false;
         }
 
         public static IEnumerable GetAllTypesDropdownFormat(Type baseType)

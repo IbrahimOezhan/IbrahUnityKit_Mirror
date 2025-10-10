@@ -1,9 +1,9 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 
 namespace IbrahKit
@@ -11,19 +11,8 @@ namespace IbrahKit
     [ExecuteInEditMode]
     public class Toolkit_Manager : MonoBehaviour
     {
-        public const string KEY = "TemplateManagers";
-
-        [ReadOnly, SerializeField]
-        private List<GameObject> managers = new();
-
-        [ReadOnly, SerializeField]
-        private List<string> names = new();
-
-        [ListDrawerSettings(OnTitleBarGUI = nameof(DrawRefreshButton)), ReadOnly, SerializeField]
-        private List<GameObject> spawnedManagers = new();
-
-        [LabelText("Add"), Dropdown(KEY), SerializeField]
-        private string ManagerToAdd;
+        [ValueDropdown(nameof(Dropdown)), SerializeField, OnValueChanged(nameof(OnValueChanged))]
+        private string addManager;
 
         private void Awake()
         {
@@ -33,105 +22,35 @@ namespace IbrahKit
             }
         }
 
-        private void OnValidate()
+        public IEnumerable Dropdown()
         {
-            if (gameObject.scene.IsValid() && ManagerToAdd != "None")
-            {
-                GameObject ob = managers.Find(x => x.name == ManagerToAdd);
+            List<string> types = GetManagerTypes().Select(x => x.FullName).ToList();
 
-                if (ob != null)
-                {
-                    if (spawnedManagers.Find(x => x.name == ManagerToAdd) != null)
-                    {
-                        Debug.LogWarning("Object of the same type already exists");
-                    }
-                    else
-                    {
-#if UNITY_EDITOR
-                        GameObject sOb = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(ob, transform);
-                        spawnedManagers.Add(sOb);
-                        sOb.name = ManagerToAdd;
-#endif
-                    }
-                }
-            }
+            types.Insert(0, "None");
 
-            ManagerToAdd = "None";
+            return types;
         }
 
-        private void OnTransformChildrenChanged()
+        private Type[] GetManagerTypes()
         {
-            StartCoroutine(DelayedUpdate());
+            return Type_Utilities.GetAllTypes(typeof(Manager_DDOL<>));
         }
 
-        private void OnAssetLoaded(GameObject loadedAsset)
+        public void OnValueChanged()
         {
-            managers.Add(loadedAsset);
-            names.Add(loadedAsset.name);
-            Debug.Log("Loaded Asset: " + loadedAsset.name);
-        }
+            if (addManager == "None") return;
 
-        private void OnAllAssetsLoaded(AsyncOperationHandle<IList<GameObject>> handle)
-        {
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                Debug.Log("All assets loaded successfully!");
-            }
-            else
-            {
-                Debug.LogWarning("Failed to load all assets!");
-            }
+            Type[] types = GetManagerTypes();
 
-            names.Sort((string one, string two) =>
-            {
-                return one.CompareTo(two);
-            });
+            Type getType = Type.GetType(addManager);
 
-            if (names.Count > 0)
-            {
-                names.Insert(0, "None");
-            }
-            else names.Add("None");
+            GameObject go = new(getType.Name);
 
-            Dropdown_Utilities.CreateDropdown(names, KEY);
-        }
+            go.transform.parent = transform;
 
-        private void DrawRefreshButton()
-        {
-            if (gameObject.activeInHierarchy)
-            {
-                StartCoroutine(DelayedUpdate());
-            }
-            else
-            {
-                Debug.Log("Object not active");
-            }
-        }
+            go.AddComponent(getType);
 
-        [Button]
-        public void Initialize()
-        {
-            managers.Clear();
-            names.Clear();
-            Addressables.LoadAssetsAsync<GameObject>("IbrahTemplate", OnAssetLoaded).Completed += OnAllAssetsLoaded;
-        }
-
-        [Button]
-        public void SortManangers()
-        {
-            Transform_Utilities.SortObjects(spawnedManagers);
-        }
-
-        private IEnumerator DelayedUpdate()
-        {
-            yield return new WaitForSeconds(.1f);
-
-            spawnedManagers.Clear();
-
-            foreach (Transform child in transform)
-            {
-                spawnedManagers.Add(child.gameObject);
-            }
+            addManager = "None";
         }
     }
 }
