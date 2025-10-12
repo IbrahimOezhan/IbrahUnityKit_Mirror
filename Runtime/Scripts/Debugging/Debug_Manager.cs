@@ -11,7 +11,7 @@ namespace IbrahKit
     {
         private List<IDebug> debugs = new();
 
-        [SerializeField,Required] private UI_Text_Setter debugContent;
+        [SerializeField, Required] private UI_Text_Setter debugContent;
 
         [SerializeField, Required] private UI_Menu debugContainer;
 

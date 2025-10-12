@@ -19,7 +19,18 @@ public class UI_Text_Wrapper
             Debug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
         }
 
-        mode = legacyText ? Mode.LEGACY : (tmpText) ? Mode.TMP : Mode.NONE;
+        if (legacyText != null)
+        {
+            mode = Mode.LEGACY;
+        }
+        else if (tmpText != null)
+        {
+            mode = Mode.TMP;
+        }
+        else
+        {
+            mode = Mode.NONE;
+        }
     }
 
     public void SetText(string value)

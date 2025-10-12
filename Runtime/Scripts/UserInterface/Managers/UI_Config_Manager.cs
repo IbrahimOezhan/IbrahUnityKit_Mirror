@@ -20,7 +20,7 @@ namespace IbrahKit
                 }
             }
 
-            return default(F);
+            return default;
         }
 
         public bool ShowLayout(UI_Layout_Config_SO layoutConfig, List<string> layouts)

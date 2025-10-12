@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace IbrahKit
 {
-    public class String_Utilities
+    public static class String_Utilities
     {
         private static readonly string[] zalgoChars =
         {
@@ -68,7 +68,7 @@ namespace IbrahKit
             return finalString;
         }
 
-        public static bool IsEmpty(string value)
+        public static bool IsEmpty(this string value)
         {
             return string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value) || value == string.Empty || value.Equals(string.Empty);
         }

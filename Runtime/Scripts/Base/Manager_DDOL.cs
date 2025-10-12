@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace IbrahKit
 {
     public abstract class Manager_DDOL<T> : Manager<T> where T : Manager_DDOL<T>

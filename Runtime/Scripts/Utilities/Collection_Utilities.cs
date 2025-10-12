@@ -6,7 +6,7 @@ namespace IbrahKit
 {
     public static class Collection_Utilities
     {
-        public static List<T> Shuffle<T>(List<T> list)
+        public static List<T> Shuffle<T>(this List<T> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -17,7 +17,7 @@ namespace IbrahKit
             return list;
         }
 
-        public static T[] Shuffle<T>(T[] list)
+        public static T[] Shuffle<T>(this T[] list)
         {
             T[] result = new T[list.Length];
 
@@ -35,7 +35,7 @@ namespace IbrahKit
             return result;
         }
 
-        public static T GetClampedElement<T>(T[] array, int index)
+        public static T GetClampedElement<T>(this T[] array, int index)
         {
             if (array.Length == 0) return default;
 
@@ -49,6 +49,7 @@ namespace IbrahKit
             lineSplit.RemoveAll(x => String_Utilities.IsEmpty(x.Trim()) || x.Trim() == "");
 
             int rowAmount = lineSplit.Count;
+
             int columnAmount = lineSplit[0].Split(';').Length;
 
             string[,] table = new string[columnAmount, rowAmount];
@@ -58,6 +59,7 @@ namespace IbrahKit
                 for (int y = 0; y < rowAmount; y++)
                 {
                     string[] rowSplit = lineSplit[y].Split(';');
+
                     table[x, y] = rowSplit[x];
                 }
             }

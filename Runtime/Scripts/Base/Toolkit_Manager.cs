@@ -29,7 +29,7 @@ namespace IbrahKit
         {
             List<Type> types = GetManagerTypes().ToList();
 
-            if(excludeInScene)
+            if (excludeInScene)
             {
                 for (int i = types.Count - 1; i >= 0; i--)
                 {
@@ -56,15 +56,21 @@ namespace IbrahKit
         {
             if (addManager == "None") return;
 
-            Type[] types = GetManagerTypes();
-
             Type getType = Type.GetType(addManager);
 
-            GameObject go = new(getType.Name);
+            if (getType == null)
+            {
+                Debug.Log(addManager + " type null");
+                return;
+            }
+
+            GameObject go = new(getType.FullName);
 
             go.transform.parent = transform;
 
             go.AddComponent(getType);
+
+            transform.SortChildren();
 
             addManager = "None";
         }

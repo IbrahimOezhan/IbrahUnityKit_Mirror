@@ -2,11 +2,16 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Version : MonoBehaviour
+    public class UI_Version : UI_Base
     {
         [SerializeField] private UI_Localization localization;
 
-        private void Awake()
+        public override void MenuUpdate()
+        {
+
+        }
+
+        public override void OnMenuEnabled()
         {
             if (localization == null && !TryGetComponent(out localization))
             {

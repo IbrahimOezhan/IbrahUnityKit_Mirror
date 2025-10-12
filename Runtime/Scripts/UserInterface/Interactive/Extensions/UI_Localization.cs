@@ -73,6 +73,11 @@ namespace IbrahKit
 
         protected string GetContent(Local_Manager manager)
         {
+            if (key.IsEmpty())
+            {
+                return "";
+            }
+
             return manager.GetString(key, fallbackText, parameters);
         }
     }

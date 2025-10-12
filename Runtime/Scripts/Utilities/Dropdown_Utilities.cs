@@ -31,17 +31,14 @@ namespace IbrahKit
                 return;
             }
 
-            int count = input.Count;
-
-            input.RemoveAll(x => String_Utilities.IsEmpty(x));
-
-            int removed = count - input.Count;
-
-            if (removed > 0)
+            for (int i = input.Count - 1; i >= 0; i--)
             {
-                Debug.LogWarning("Removed " + removed + " empty elements");
+                if (String_Utilities.IsEmpty(input[i]))
+                {
+                    input.RemoveAt(i);
+                    Debug.Log("Removed empty element at index " + i);
+                }
             }
-
             List<string> distinct = input.Distinct().ToList();
 
             if (input.Count != distinct.Count)
