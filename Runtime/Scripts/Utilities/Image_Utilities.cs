@@ -90,7 +90,7 @@ namespace IbrahKit
                 pixels[i] = new(range, range, range, pixels[i].a);
             }
 
-            Texture2D tex = new Texture2D(texture2D.width, texture2D.height, texture2D.format, false);
+            Texture2D tex = new (texture2D.width, texture2D.height, texture2D.format, false);
 
             tex.SetPixels(pixels);
 
