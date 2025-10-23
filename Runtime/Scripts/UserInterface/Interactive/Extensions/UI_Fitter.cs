@@ -4,7 +4,7 @@ using Application = UnityEngine.Application;
 
 namespace IbrahKit
 {
-    public abstract class UI_Fitter : UI_Extension
+    public class UI_Fitter : UI_Extension
     {
         private UI_Text_Wrapper text;
 
