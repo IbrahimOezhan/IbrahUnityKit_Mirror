@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [CreateAssetMenu(fileName = "NewUnlockable", menuName = "ScriptableObjects/Unlockable")]
+    [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
     public class Unlockable : ScriptableObject
     {
         [Dropdown(Local_Manager.DROP), SerializeField]
