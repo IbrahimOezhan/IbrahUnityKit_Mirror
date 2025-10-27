@@ -128,11 +128,11 @@ namespace IbrahKit
         {
             string result = "";
 
-            if (!GetString(key, current, out result))
+            if (!config.TryGetString(key, current, out result))
             {
                 Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
-                if (!GetString(key, config.GetLanguages()[0], out result))
+                if (!config.TryGetString(key, config.GetLanguages()[0], out result))
                 {
                     Debug.LogWarning($"Localzation for key {key} does not exist in default language {config.GetLanguages()[0]}");
                 }
@@ -143,22 +143,7 @@ namespace IbrahKit
                 result = processors[i].Process(result);
             }
 
-            return String_Utilities.IsEmpty(result) ? $"Error {key}" : FormatString(result, parameters);
-        }
-
-        private string FormatString(string text, params string[] parameters)
-        {
-            if (parameters == null || parameters.Length == 0) return text;
-
-            try
-            {
-                return String.Format(text, parameters);
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                return text;
-            }
+            return String_Utilities.IsEmpty(result) ? $"Error {key}" : result.SafeFormat(parameters);
         }
 
         public int IndexOf(LocalLanguage language)
@@ -169,24 +154,6 @@ namespace IbrahKit
         public int LanguageCount()
         {
             return config.GetLanguages().Count;
-        }
-        private bool GetString(string key, LocalLanguage language, out string result)
-        {
-            result = "";
-
-            if (config.TryGetValue(key, out var value))
-            {
-                result = value[IndexOf(language)];
-            }
-
-            bool empty = String_Utilities.IsEmpty(result);
-
-            if (empty)
-            {
-                Debug.Log($"String with key{key} and language index {currentIndex} and language {language} empty");
-            }
-
-            return !empty;
         }
 
         [System.Serializable]

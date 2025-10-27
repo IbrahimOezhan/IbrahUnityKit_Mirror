@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -140,6 +141,21 @@ namespace IbrahKit
             for (int i = 0; i < _data.Length; i++) _result += (char)(_data[i] ^ key[i % key.Length]);
 
             return _result;
+        }
+
+        public static string SafeFormat(this string value, params string[] parameters)
+        {
+            if (parameters == null || parameters.Length == 0) return value;
+
+            try
+            {
+                return String.Format(value, parameters);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                return value;
+            }
         }
     }
 }

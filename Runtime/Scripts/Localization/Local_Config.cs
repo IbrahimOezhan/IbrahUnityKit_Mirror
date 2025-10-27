@@ -20,7 +20,30 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
     [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
 
+    public LocalLanguage GetFirstLanguage() => languages[0];
+
     public List<LocalLanguage> GetLanguages() => languages;
+
+    public bool TryGetString(string key, LocalLanguage language, out string result)
+    {
+        result = "";
+
+        int index = languages.IndexOf(language);
+
+        if (TryGetValue(key, out var value))
+        {
+            result = value[index];
+        }
+
+        bool empty = String_Utilities.IsEmpty(result);
+
+        if (empty)
+        {
+            Debug.Log($"String with key{key} and language index {index} and language {language} empty");
+        }
+
+        return !empty;
+    }
 
     public bool TryGetValue(string key, out string[] value)
     {
