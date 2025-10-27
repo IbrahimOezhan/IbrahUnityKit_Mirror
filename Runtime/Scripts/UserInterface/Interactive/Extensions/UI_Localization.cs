@@ -17,14 +17,14 @@ namespace IbrahKit
         {
             base.Awake();
 
-            if (Local_Manager.Instance != null) Local_Manager.Instance.OnLanguageChanged += UpdateUI;
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.OnLanguageChanged += UpdateUI;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
-            if (Local_Manager.Instance != null) Local_Manager.Instance.OnLanguageChanged -= UpdateUI;
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.OnLanguageChanged -= UpdateUI;
         }
 
         public override void Execute()

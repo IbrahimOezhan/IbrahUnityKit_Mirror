@@ -6,19 +6,19 @@ namespace IbrahKit
         {
             base.Init(initialValue);
 
-            SetValueRange(new(0, Local_Manager.Instance.LanguageCount() - 1));
+            SetValueRange(new(0, Local_Manager.GetInstance().LanguageCount() - 1));
         }
 
         public override string GetDisplayValue()
         {
-            return $"{Local_Manager.Instance.GetCurrent().GetNative()} ({Local_Manager.Instance.GetCurrent().GetSys()})";
+            return $"{Local_Manager.GetInstance().GetCurrent().GetNative()} ({Local_Manager.GetInstance().GetCurrent().GetSys()})";
         }
 
         public override void ApplyChanges()
         {
             base.ApplyChanges();
 
-            Local_Manager.Instance.Set((int)GetValue());
+            Local_Manager.GetInstance().Set((int)GetValue());
         }
     }
 }

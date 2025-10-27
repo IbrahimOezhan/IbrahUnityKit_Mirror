@@ -20,9 +20,9 @@ namespace IbrahKit
         [Button]
         public void Validate()
         {
-            foreach(Transform child in transform)
+            foreach (Transform child in transform)
             {
-                child.SendMessage("OnValidate",SendMessageOptions.DontRequireReceiver);
+                child.SendMessage("OnValidate", SendMessageOptions.DontRequireReceiver);
             }
         }
 

@@ -31,7 +31,7 @@ namespace IbrahKit
 
         public (Font, Color) GetStyle()
         {
-            ReplacementFont font = replacementFonts.Find(x => Local_Manager.Instance.GetCurrent().GetSys() == x.GetLanguage());
+            ReplacementFont font = replacementFonts.Find(x => Local_Manager.GetInstance().GetCurrent().GetSys() == x.GetLanguage());
 
             if (font != null) return (font.GetFont(), fontColor);
 
@@ -40,7 +40,7 @@ namespace IbrahKit
 
         public (TMP_FontAsset, Color) GetStyleTMP()
         {
-            ReplacementFont font = replacementFonts.Find(x => Local_Manager.Instance.GetCurrent().GetSys() == x.GetLanguage());
+            ReplacementFont font = replacementFonts.Find(x => Local_Manager.GetInstance().GetCurrent().GetSys() == x.GetLanguage());
 
             if (font != null) return (font.GetFontAsset(), fontColor);
 

@@ -21,7 +21,7 @@ namespace IbrahKit
 
         public override string GetDisplayValue()
         {
-            return Local_Manager.Instance.GetString(Screen.fullScreenMode.ToString());
+            return Local_Manager.GetInstance().GetString(Screen.fullScreenMode.ToString());
         }
     }
 }

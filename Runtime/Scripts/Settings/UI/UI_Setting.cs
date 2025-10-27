@@ -236,7 +236,7 @@ namespace IbrahKit
 
             if (!subscribed)
             {
-                Local_Manager.Instance.OnLanguageChanged += UpdateUI;
+                Local_Manager.GetInstance().OnLanguageChanged += UpdateUI;
                 subscribed = true;
             }
             else

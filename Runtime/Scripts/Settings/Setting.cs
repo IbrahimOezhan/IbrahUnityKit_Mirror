@@ -91,7 +91,7 @@ namespace IbrahKit
                 IncludeFields = true
             };
 
-            string json = Local_Manager.Instance.GetString(settingsKey);
+            string json = Local_Manager.GetInstance().GetString(settingsKey);
 
             try
             {
@@ -127,7 +127,7 @@ namespace IbrahKit
                 case DisplayMode.INT:
                     return value.ToString("0");
                 case DisplayMode.KEY:
-                    return Local_Manager.Instance.GetString(keys[(int)(value / steps)]);
+                    return Local_Manager.GetInstance().GetString(keys[(int)(value / steps)]);
             }
 
             return "ERROR";

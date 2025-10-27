@@ -1,22 +1,16 @@
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.local)]
-    public class Local_Manager : SerializedMonoBehaviour
+    public partial class Local_Manager : Manager_DDOL<Local_Manager>
     {
         public const string DROP = "Localization";
 
         public const string SYS = "SysLanguage";
-
-        private const string LANG = "Language";
 
         private const string SETTING = "language";
 
@@ -30,54 +24,15 @@ namespace IbrahKit
 
         private List<Local_Processor> processors = new();
 
-        [SerializeField] private TextAsset localizationAssets;
-
-        [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
-
-        [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
+        [SerializeField] private Local_Config config;
 
         [HideInInspector] public Action OnLanguageChanged;
 
-        public static Local_Manager Instance;
-
-        public static bool TryGet(out Local_Manager result, bool throwWarnings = true)
+        protected override void OnAwake()
         {
-            result = Instance;
-
-            if (result != null)
-            {
-                return true;
-            }
-
-            Debug.LogWarning($"Instance of type {nameof(Local_Manager)} not assigned");
-
-            result = FindAnyObjectByType<Local_Manager>();
-
-            if (result == null)
-            {
-                Debug.LogWarning($"FindAnyObjectByType couldn't find object of type {nameof(Local_Manager)}");
-            }
-
-            return result != null;
-        }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-
-            transform.parent = null;
-
-            DontDestroyOnLoad(gameObject);
+            base.OnAwake();
 
             saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
-
-            Init();
 
             if (!saveData.SetAttempt())
             {
@@ -115,90 +70,6 @@ namespace IbrahKit
             processors.Remove(processor);
         }
 
-        [Button]
-        private void Init()
-        {
-            char seperator = ';';
-
-            languages = new();
-
-            keyValuePairs = new();
-
-            List<string> lines = localizationAssets.text.Split("\n").ToList();
-
-            lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), "")));
-
-            if (lines.Count == 0)
-            {
-                Debug.LogWarning("No elements after trimming");
-                return;
-            }
-
-            string[] rowOne = GetRow(lines[0], seperator);
-
-            JsonSerializerOptions options = new()
-            {
-                IncludeFields = true
-            };
-
-            for (int i = 1; i < rowOne.Length; i++)
-            {
-                if (!Parse_Utilities.IsValidJson(rowOne[i]))
-                {
-                    Debug.LogWarning($"Invalid json in row 0 column {i}");
-                    return;
-                }
-
-                try
-                {
-                    LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(rowOne[i], options);
-
-                    if (!ll.IsValid(out _))
-                    {
-                        Debug.LogWarning($"System language in column {i} cannot be parsed");
-                        return;
-                    }
-
-                    languages.Add(ll);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    return;
-                }
-            }
-
-            for (int i = 1; i < lines.Count; i++)
-            {
-                List<string> row = GetRow(lines[i], seperator).ToList();
-
-                int requiredCount = languages.Count + 1;
-
-                while (row.Count < requiredCount)
-                {
-                    row.Add(string.Empty);
-                }
-
-                while (row.Count > requiredCount)
-                {
-                    Debug.LogWarning($"Removed {row[row.Count - 1]} from the back");
-                    row.RemoveAt(row.Count - 1);
-                }
-
-                string key = row[0];
-
-                row.RemoveAt(0);
-
-                keyValuePairs.TryAdd(key, row.ToArray());
-            }
-
-            Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.ToList(), DROP);
-
-            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
-
-            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
-        }
-
         public void UpdateLanguage()
         {
             OnLanguageChanged?.Invoke();
@@ -206,13 +77,13 @@ namespace IbrahKit
 
         public void Set(int index)
         {
-            if (index < 0 || index >= languages.Count)
+            if (index < 0 || index >= config.GetLanguages().Count)
             {
-                Debug.LogWarning($"Index with value {index} out of range for range 0-{languages.Count - 1}");
+                Debug.LogWarning($"Index with value {index} out of range for range 0-{config.GetLanguages().Count - 1}");
                 return;
             }
 
-            SetLanguage(languages[index]);
+            SetLanguage(config.GetLanguages()[index]);
         }
 
         public void SetNext(int dir)
@@ -224,14 +95,14 @@ namespace IbrahKit
         {
             current = lang;
 
-            currentIndex = languages.IndexOf(lang);
+            currentIndex = config.GetLanguages().IndexOf(lang);
 
             UpdateLanguage();
         }
 
         private LocalLanguage GetSystemLanguage(SystemLanguage systemLanguage)
         {
-            LocalLanguage found = languages.Find(x => x.GetSystemLanguage() == systemLanguage);
+            LocalLanguage found = config.GetLanguages().Find(x => x.GetSystemLanguage() == systemLanguage);
 
             if (found == null)
             {
@@ -242,18 +113,13 @@ namespace IbrahKit
 
         private LocalLanguage GetNext(int dir)
         {
-            int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, languages.Count - 1);
-            return languages[newIndex];
+            int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
+            return config.GetLanguages()[newIndex];
         }
 
         public LocalLanguage GetCurrent()
         {
             return current;
-        }
-
-        private string[] GetRow(string line, char seperator)
-        {
-            return line.Split(seperator);
         }
 
         public string GetString(string key, string fallback, params string[] parameters)
@@ -273,9 +139,9 @@ namespace IbrahKit
             {
                 Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
-                if (!GetString(key, languages[0], out result))
+                if (!GetString(key, config.GetLanguages()[0], out result))
                 {
-                    Debug.LogWarning($"Localzation for key {key} does not exist in default language {languages[0]}");
+                    Debug.LogWarning($"Localzation for key {key} does not exist in default language {config.GetLanguages()[0]}");
                 }
             }
 
@@ -304,18 +170,18 @@ namespace IbrahKit
 
         public int IndexOf(LocalLanguage language)
         {
-            return languages.IndexOf(language);
+            return config.GetLanguages().IndexOf(language);
         }
 
         public int LanguageCount()
         {
-            return languages.Count;
+            return config.GetLanguages().Count;
         }
         private bool GetString(string key, LocalLanguage language, out string result)
         {
             result = "";
 
-            if (keyValuePairs.TryGetValue(key, out var value))
+            if (config.TryGetValue(key, out var value))
             {
                 result = value[IndexOf(language)];
             }
@@ -335,6 +201,7 @@ namespace IbrahKit
         {
             [JsonInclude]
             private bool attemptedGetSys;
+
             [JsonInclude]
             private SystemLanguage currentLanguage;
 
@@ -353,48 +220,6 @@ namespace IbrahKit
             public void SetLanguage(SystemLanguage language)
             {
                 currentLanguage = language;
-            }
-        }
-
-        [System.Serializable]
-        public class LocalLanguage
-        {
-            [JsonInclude, SerializeField]
-            private string sysLang;
-
-            [JsonInclude, SerializeField]
-            private string nativeLocal;
-
-            [SerializeField] private bool skip;
-
-            public bool IsValid(out SystemLanguage result)
-            {
-                return Enum.TryParse(sysLang, out result);
-            }
-
-            public SystemLanguage GetSystemLanguage()
-            {
-                return Enum.Parse<SystemLanguage>(sysLang);
-            }
-
-            public string GetSys()
-            {
-                return sysLang;
-            }
-
-            public string GetNative()
-            {
-                return nativeLocal;
-            }
-
-            public bool GetSkip()
-            {
-                return skip;
-            }
-
-            public override string ToString()
-            {
-                return sysLang;
             }
         }
     }
