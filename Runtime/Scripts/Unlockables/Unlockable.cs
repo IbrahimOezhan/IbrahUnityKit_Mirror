@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
@@ -5,10 +6,10 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
     public class Unlockable : ScriptableObject
     {
-        [Dropdown(Local_Manager.DROP), SerializeField]
+        [TabGroup("Base Data"),Dropdown(Local_Manager.DROP), SerializeField]
         protected string key;
 
-        [SerializeField]
+        [TabGroup("Base Data"),SerializeField]
         private Unlockable[] unlockOnUnlock;
 
         public virtual void Unlock()

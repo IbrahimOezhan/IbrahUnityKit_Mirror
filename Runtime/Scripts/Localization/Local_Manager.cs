@@ -34,14 +34,7 @@ namespace IbrahKit
 
             saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
 
-            if (!saveData.SetAttempt())
-            {
-                SetLanguage(GetSystemLanguage(Application.systemLanguage));
-            }
-            else
-            {
-                SetLanguage(GetSystemLanguage(saveData.GetLanguage()));
-            }
+            SetLanguage(GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()));
 
             AddProcessor(new Local_BreakProcessor());
 
