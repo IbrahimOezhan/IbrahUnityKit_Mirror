@@ -17,15 +17,6 @@ namespace IbrahKit
 
         [SerializeField] private bool excludeInScene;
 
-        [Button]
-        public void Validate()
-        {
-            foreach (Transform child in transform)
-            {
-                child.SendMessage("OnValidate", SendMessageOptions.DontRequireReceiver);
-            }
-        }
-
         private void Awake()
         {
             if (Application.isPlaying)

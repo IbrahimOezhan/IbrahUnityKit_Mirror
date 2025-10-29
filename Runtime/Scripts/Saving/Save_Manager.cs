@@ -44,9 +44,9 @@ namespace IbrahKit
         {
             if (GetInstance() == this)
             {
-                foreach (var item in loaded)
+                for (int i = loaded.Count - 1; i >= 0; i--)
                 {
-                    Return(item.Key, item.Value);
+                    Return(loaded.ElementAt(i).Key, loaded.ElementAt(i).Value);
                 }
 
                 currentSave.Return(GENERIC_KEY, generic, encrypt);
