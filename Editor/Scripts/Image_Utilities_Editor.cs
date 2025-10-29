@@ -1,8 +1,6 @@
-﻿using IbrahKit;
-using System.IO;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
-using Debug = IbrahKit.Debug;
 
 namespace IbrahKit
 {

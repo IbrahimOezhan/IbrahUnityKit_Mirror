@@ -6,10 +6,10 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
     public class Unlockable : ScriptableObject
     {
-        [TabGroup("Base Data"),Dropdown(Local_Manager.DROP), SerializeField]
+        [TabGroup("Base Data"), Dropdown(Local_Manager.DROP), SerializeField]
         protected string key;
 
-        [TabGroup("Base Data"),SerializeField]
+        [TabGroup("Base Data"), SerializeField]
         private Unlockable[] unlockOnUnlock;
 
         public virtual void Unlock()

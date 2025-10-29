@@ -47,7 +47,7 @@ namespace IbrahKit
 
                 saveData.SetLanguage(sys);
 
-                if(Save_Manager.TryGet(out Save_Manager result))
+                if (Save_Manager.TryGet(out Save_Manager result))
                 {
                     result.Return(SAVE, saveData);
                 }

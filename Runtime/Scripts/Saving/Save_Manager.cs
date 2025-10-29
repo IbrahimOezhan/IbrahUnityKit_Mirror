@@ -15,7 +15,7 @@ namespace IbrahKit
 
         private const string KEY = "a3c9e7r3gf3d5e7";
 
-        private Dictionary<string,Savable> loaded = new();
+        private Dictionary<string, Savable> loaded = new();
 
         [SerializeField] private bool encrypt;
 
@@ -66,7 +66,7 @@ namespace IbrahKit
         {
             bool removed = loaded.Remove(name);
 
-            if(removed) currentSave.Return(name, value, encrypt);
+            if (removed) currentSave.Return(name, value, encrypt);
         }
 
         public GenericSaveData GetGeneric()

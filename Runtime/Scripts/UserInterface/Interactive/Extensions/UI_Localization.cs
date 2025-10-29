@@ -81,11 +81,15 @@ namespace IbrahKit
             }
             else
             {
+#if UNITY_EDITOR
                 Local_Config config = Local_Settings.Config();
 
                 config.TryGetString(key, config.GetFirstLanguage(), out string res);
 
                 return res;
+#else
+                return "Local Manager missing";
+#endif
             }
         }
     }

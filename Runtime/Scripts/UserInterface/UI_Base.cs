@@ -43,7 +43,7 @@ namespace IbrahKit
         {
             if (init) return true;
 
-            if(!transform.BetterTryGetComponentInParent<UI_Menu>(out parentMenu, true))
+            if (!transform.BetterTryGetComponentInParent<UI_Menu>(out parentMenu, true))
             {
                 Debug.LogError($"UI Menu missing: {transform.GetTransformPath()}");
                 return false;
