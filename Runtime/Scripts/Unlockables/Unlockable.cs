@@ -29,12 +29,20 @@ namespace IbrahKit
                 }
             }
 
-            Unlockables_Manager.GetInstance().Unlock(this);
+            if (Unlockables_Manager.TryGet(out Unlockables_Manager result))
+            {
+                Unlockables_Manager.GetInstance().Unlock(this);
+            }
         }
 
         public bool IsUnlocked()
         {
-            return Unlockables_Manager.GetInstance().IsUnlocked(key);
+            if(Unlockables_Manager.TryGet(out Unlockables_Manager result))
+            {
+                return result.IsUnlocked(key);
+            }
+
+            return false;
         }
 
         public string GetKey()
