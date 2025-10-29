@@ -55,15 +55,20 @@ namespace IbrahKit
             return elements;
         }
 
-        public static bool BetterTryGetComponentInParent<T>(this Transform transform, out T result)
+        public static bool BetterTryGetComponentInParent<T>(this Transform transform, out T result, bool includeThis = false)
         {
-            result = transform.BetterGetComponentInParent<T>();
+            result = transform.BetterGetComponentInParent<T>(includeThis);
 
             return result != null;
         }
 
-        public static T BetterGetComponentInParent<T>(this Transform transform)
+        public static T BetterGetComponentInParent<T>(this Transform transform, bool includeThis = false)
         {
+            if (includeThis && transform.TryGetComponent<T>(out T result))
+            {
+                return result;
+            }
+
             if (transform.parent == null)
             {
                 return default;
@@ -74,7 +79,7 @@ namespace IbrahKit
                 return element;
             }
 
-            return transform.parent.BetterGetComponentInParent<T>();
+            return transform.parent.BetterGetComponentInParent<T>(false);
         }
 
         public static T[] BetterGetComponentsInParents<T>(this Transform transform, bool includeThis = false)
@@ -86,7 +91,7 @@ namespace IbrahKit
             return transform.BetterGetComponentsInParent(result);
         }
 
-        public static T[] BetterGetComponentsInParent<T>(this Transform transform, List<T> result)
+        private static T[] BetterGetComponentsInParent<T>(this Transform transform, List<T> result)
         {
             Transform parent = transform.parent;
 

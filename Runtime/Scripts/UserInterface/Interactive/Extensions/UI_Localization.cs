@@ -31,10 +31,7 @@ namespace IbrahKit
         {
             if (!IsInitialized()) return;
 
-            if (Local_Manager.TryGet(out Local_Manager result))
-            {
-                text.SetText(GetContent(result));
-            }
+            text.SetText(GetContent());
         }
 
         public void SetFallback(string _fallback)
@@ -71,14 +68,25 @@ namespace IbrahKit
             UpdateUI();
         }
 
-        protected string GetContent(Local_Manager manager)
+        protected string GetContent()
         {
             if (key.IsEmpty())
             {
                 return "";
             }
 
-            return manager.GetString(key, fallbackText, parameters);
+            if (Local_Manager.TryGet(out Local_Manager result))
+            {
+                return result.GetString(key, fallbackText, parameters);
+            }
+            else
+            {
+                Local_Config config = Local_Settings.Config();
+
+                config.TryGetString(key, config.GetFirstLanguage(), out string res);
+
+                return res;
+            }
         }
     }
 }

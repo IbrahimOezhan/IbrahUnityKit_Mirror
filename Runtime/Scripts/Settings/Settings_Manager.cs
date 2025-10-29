@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 namespace IbrahKit
@@ -11,10 +12,10 @@ namespace IbrahKit
     [DefaultExecutionOrder(Execution_Order.settings)]
     public class Settings_Manager : Manager_DDOL<Settings_Manager>
     {
-        public const string KEY = "Settings";
+        public const string SAVE_DATA_KEY = "Settings";
         private const string NONE = "None";
 
-        private SaveData data;
+        private SaveData saveData;
 
         [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllTypesDropdownFormat))]
         private string addSetting = NONE;
@@ -25,12 +26,12 @@ namespace IbrahKit
         {
             if (GetInstance() == this)
             {
-                data = (SaveData)Save_Manager.GetInstance().Load(KEY, new SaveData());
+                saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE_DATA_KEY, new SaveData());
 
                 for (int i = 0; i < settings.Count; i++)
                 {
                     string key = settings[i].GetKey();
-                    settings[i].Init(data.GetValue(key));
+                    settings[i].Init(saveData.GetValue(key));
                 }
             }
         }
@@ -43,17 +44,23 @@ namespace IbrahKit
                 {
                     string key = settings[i].GetKey();
 
-                    data.SetValue(key, settings[i].GetValue().ToString());
+                    saveData.SetValue(key, settings[i].GetValue().ToString());
                 }
 
-                Save_Manager.GetInstance().Return(KEY, data);
+                if (GetInstance() == this)
+                {
+                    if (Save_Manager.TryGet(out Save_Manager result))
+                    {
+                        result.Return(SAVE_DATA_KEY, saveData);
+                    }
+                }
             }
         }
 
         [Button(Name = "Validate")]
         private void OnValidate()
         {
-            Dropdown_Utilities.CreateDropdown(settings.Select(x => x.GetKey()).ToList(), KEY);
+            Dropdown_Utilities.CreateDropdown(settings.Select(x => x.GetKey()).ToList(), SAVE_DATA_KEY);
         }
 
         private IEnumerable GetAllTypesDropdownFormat() { return Type_Utilities.GetAllTypesDropdownFormat(typeof(Setting)); }

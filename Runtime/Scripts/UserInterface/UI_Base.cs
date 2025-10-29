@@ -43,11 +43,9 @@ namespace IbrahKit
         {
             if (init) return true;
 
-            parentMenu = transform.BetterGetComponentInParent<UI_Menu>();
-
-            if (parentMenu == null)
+            if(!transform.BetterTryGetComponentInParent<UI_Menu>(out parentMenu, true))
             {
-                Debug.LogError("UI Menu missing");
+                Debug.LogError($"UI Menu missing: {transform.GetTransformPath()}");
                 return false;
             }
 
@@ -60,7 +58,10 @@ namespace IbrahKit
 
         public UI_Menu GetParentMenu()
         {
-            if (!Init()) Debug.LogWarning("Parent Menu is null");
+            if (!Init())
+            {
+                Debug.LogWarning("Parent Menu is null");
+            }
 
             return parentMenu;
         }

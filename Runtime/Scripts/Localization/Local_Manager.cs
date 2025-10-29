@@ -37,8 +37,6 @@ namespace IbrahKit
             SetLanguage(GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()));
 
             AddProcessor(new Local_BreakProcessor());
-
-            Debug.Log($"{nameof(Local_Manager)} initialized successfully", Color.green);
         }
 
         private void OnDestroy()
@@ -49,7 +47,10 @@ namespace IbrahKit
 
                 saveData.SetLanguage(sys);
 
-                Save_Manager.GetInstance().Return(SAVE, saveData);
+                if(Save_Manager.TryGet(out Save_Manager result))
+                {
+                    result.Return(SAVE, saveData);
+                }
             }
         }
 
@@ -107,6 +108,7 @@ namespace IbrahKit
         private LocalLanguage GetNext(int dir)
         {
             int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
+
             return config.GetLanguages()[newIndex];
         }
 
@@ -126,9 +128,7 @@ namespace IbrahKit
 
         public string GetString(string key, params string[] parameters)
         {
-            string result = "";
-
-            if (!config.TryGetString(key, current, out result))
+            if (!config.TryGetString(key, current, out string result))
             {
                 Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
@@ -168,7 +168,9 @@ namespace IbrahKit
             public bool SetAttempt()
             {
                 bool previous = attemptedGetSys;
+
                 attemptedGetSys = true;
+
                 return previous;
             }
 

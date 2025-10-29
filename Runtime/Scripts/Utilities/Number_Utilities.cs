@@ -80,6 +80,5 @@ namespace IbrahKit
         {
             return (value - min) / (max - min);
         }
-
     }
 }

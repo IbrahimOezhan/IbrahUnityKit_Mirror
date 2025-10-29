@@ -1,6 +1,5 @@
+using Sirenix.Utilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -9,35 +8,29 @@ namespace IbrahKit
     [DefaultExecutionOrder(Execution_Order.unlock)]
     public class Unlockables_Manager : Manager_DDOL<Unlockables_Manager>
     {
-        private const string saveDataName = "Unlockables";
+        private const string SAVE_DATA_NAME = "Unlockables";
 
         [SerializeField] private SaveData saveData = new();
-
-        [SerializeField] private List<Unlockable> unlockables = new();
 
         protected override void OnAwake()
         {
             base.OnAwake();
 
-            saveData = (SaveData)Save_Manager.GetInstance().Load(saveDataName, new SaveData());
+            saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE_DATA_NAME, new SaveData());
         }
 
         private void OnDestroy()
         {
             if (GetInstance() == this)
             {
-                Save_Manager.GetInstance().Return(saveDataName, saveData);
+                if (Save_Manager.TryGet(out Save_Manager result))
+                {
+                    result.Return(SAVE_DATA_NAME, saveData);
+                }
             }
         }
 
-        public void LoadUnlockables(IEnumerable<Unlockable> list)
-        {
-            List<Unlockable> newUnlockables = new(list);
-
-            unlockables.AddRange(newUnlockables.Except(unlockables));
-        }
-
-        public void Unlock(List<Unlockable> unlockable)
+        public void Unlock(IEnumerable<Unlockable> unlockable)
         {
             unlockable.ForEach(x => Unlock(x));
         }
@@ -50,20 +43,6 @@ namespace IbrahKit
         public void Unlock(string key)
         {
             saveData.Unlock(key);
-        }
-
-        public void ListUnlockables()
-        {
-            StringBuilder sb = new();
-
-            sb.AppendLine("\nAll Unlockables:");
-
-            for (int i = 0; i < unlockables.Count; i++)
-            {
-                sb.AppendLine("Key: " + unlockables[i].GetKey() + " Unlocked? " + unlockables[i].IsUnlocked());
-            }
-
-            Debug.Log(sb.ToString());
         }
 
         public bool IsUnlocked(string key)

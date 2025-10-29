@@ -23,7 +23,7 @@ namespace IbrahKit
 
         [TabGroup("Setting")]
         [ShowIf(nameof(interfaceType), SettingsInterfaceType.KEY)]
-        [Dropdown(Settings_Manager.KEY)]
+        [Dropdown(Settings_Manager.SAVE_DATA_KEY)]
         [SerializeField, LabelText("Setting Key")]
         private string settingKey;
 
@@ -245,8 +245,6 @@ namespace IbrahKit
             }
 
             initialized = true;
-
-            Debug.Log("UI Setting Initialized successfully", Color.green);
 
             return true;
         }

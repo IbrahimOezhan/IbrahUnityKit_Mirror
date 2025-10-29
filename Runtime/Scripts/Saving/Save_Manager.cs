@@ -15,6 +15,8 @@ namespace IbrahKit
 
         private const string KEY = "a3c9e7r3gf3d5e7";
 
+        private Dictionary<string,Savable> loaded = new();
+
         [SerializeField] private bool encrypt;
 
         private static Save currentSave;
@@ -42,18 +44,29 @@ namespace IbrahKit
         {
             if (GetInstance() == this)
             {
+                foreach (var item in loaded)
+                {
+                    Return(item.Key, item.Value);
+                }
+
                 currentSave.Return(GENERIC_KEY, generic, encrypt);
             }
         }
 
         public Savable Load(string name, Savable defaultValue)
         {
-            return currentSave.Load(name, defaultValue);
+            Savable savable = currentSave.Load(name, defaultValue);
+
+            loaded.Add(name, savable);
+
+            return savable;
         }
 
         public void Return(string name, Savable value)
         {
-            currentSave.Return(name, value, encrypt);
+            bool removed = loaded.Remove(name);
+
+            if(removed) currentSave.Return(name, value, encrypt);
         }
 
         public GenericSaveData GetGeneric()

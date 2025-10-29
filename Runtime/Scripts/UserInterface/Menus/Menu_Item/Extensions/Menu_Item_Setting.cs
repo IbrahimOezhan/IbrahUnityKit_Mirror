@@ -12,7 +12,7 @@ namespace IbrahKit
         [ShowIf(nameof(settingType), SettingsInterfaceType.LOCAL), SerializeField]
         private Setting_Container reference;
 
-        [ShowIf(nameof(settingType), SettingsInterfaceType.KEY), Dropdown(Settings_Manager.KEY), SerializeField]
+        [ShowIf(nameof(settingType), SettingsInterfaceType.KEY), Dropdown(Settings_Manager.SAVE_DATA_KEY), SerializeField]
         private string settingsKey;
 
         public override bool Spawn(RectTransform parent, UI_Menu menu)

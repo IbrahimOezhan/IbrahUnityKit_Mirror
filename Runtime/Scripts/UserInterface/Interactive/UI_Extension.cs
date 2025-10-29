@@ -43,8 +43,6 @@ namespace IbrahKit
 
             if (playing) init = true;
 
-            Debug.Log("UI Extension Init Success", Color.green);
-
             return true;
         }
 
