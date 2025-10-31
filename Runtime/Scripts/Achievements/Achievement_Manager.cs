@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
 {
     public class Achievement_Manager : Manager_DDOL<Achievement_Manager>
     {
-        private const string prefix = "achievement_";
+        private const string PREFIX = "achievement_";
 
-        [SerializeField] private List<Achievement> achievements = new();
-
-        [SerializeField, Dropdown(Local_Manager.DROP)] private string secretString;
-
-        [SerializeField] private Sprite secretSprite;
+        [SerializeField] private Achievement_Config achievementConfig;
 
         public static Action<string, bool> OnAchievementUnlocked;
 
@@ -23,11 +18,7 @@ namespace IbrahKit
 
         public void Unlock(string key)
         {
-            key = key.Replace(prefix, "");
-
-            string localKey = (prefix + key.ToLower());
-
-            Achievement found = achievements.Find(x => x.GetKey() == localKey);
+            Achievement found = achievementConfig.GetWithKey(key);
 
             if (found != null)
             {
@@ -39,20 +30,8 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning($"Achievement with key {localKey} not found");
+                Debug.LogWarning($"Achievement with key {key} not found");
             }
-        }
-
-        public (Sprite, string, string)[] GetAchievements()
-        {
-            (Sprite, string, string)[] result = new (Sprite, string, string)[achievements.Count];
-
-            for (int i = 0; i < achievements.Count; i++)
-            {
-                result[i] = achievements[i].GetData(secretString, secretSprite);
-            }
-
-            return result;
         }
     }
 }

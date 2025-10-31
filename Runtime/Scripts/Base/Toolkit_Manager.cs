@@ -12,10 +12,13 @@ namespace IbrahKit
     [ExecuteInEditMode]
     public class Toolkit_Manager : MonoBehaviour
     {
+        private const string NONE = "None";
+
         [ValueDropdown(nameof(Dropdown)), SerializeField, OnValueChanged(nameof(OnValueChanged))]
         private string addManager;
 
-        [SerializeField] private bool excludeInScene;
+        [SerializeField]
+        private bool excludeInScene;
 
         private void Awake()
         {
@@ -42,7 +45,7 @@ namespace IbrahKit
 
             List<string> types2 = types.Select(x => x.FullName).ToList();
 
-            types2.Insert(0, "None");
+            types2.Insert(0, NONE);
 
             return types2;
         }
@@ -54,7 +57,7 @@ namespace IbrahKit
 
         public void OnValueChanged()
         {
-            if (addManager == "None") return;
+            if (addManager == NONE) return;
 
             Type getType = Type.GetType(addManager);
 
@@ -64,7 +67,7 @@ namespace IbrahKit
                 return;
             }
 
-            GameObject go = new(getType.FullName);
+            GameObject go = new(getType.Name);
 
             go.transform.parent = transform;
 
@@ -72,7 +75,7 @@ namespace IbrahKit
 
             transform.SortChildren();
 
-            addManager = "None";
+            addManager = NONE;
         }
     }
 }

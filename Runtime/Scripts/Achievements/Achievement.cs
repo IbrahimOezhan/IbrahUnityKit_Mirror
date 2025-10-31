@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Text.Json;
 using UnityEngine;
 
 namespace IbrahKit
@@ -10,32 +9,31 @@ namespace IbrahKit
         [SerializeField, PreviewField] private Sprite sprite;
         [SerializeField] private bool secret;
 
-        public (Sprite, string, string) GetData(string secretData, Sprite secretSprite)
+        /// <summary>
+        /// Returns the data to be displayed. A sprite, a name and a description
+        /// </summary>
+        /// <param name="secretLoca">The local key incase the achievement is secret</param>
+        /// <param name="secretSprite">The sprite incase the achievement is secret</param>
+        /// <returns>A sprite, a name and a description</returns>
+        public (Sprite, string, string) GetData(string secretLoca, Sprite secretSprite)
         {
-            Achievement_JsonData data = GetJson(secret ? secretData : key);
+            Achievement_JsonData jsonData = GetJson(secret ? secretLoca : key);
 
-            Sprite s = secret ? secretSprite : sprite;
+            Sprite sprite = secret ? secretSprite : this.sprite;
 
-            s = IsUnlocked() ? s : Image_Utilities.GrayscaleSprite(s);
+            sprite = IsUnlocked() ? sprite : Image_Utilities.GrayscaleSprite(sprite);
 
-            return (s, data.Title(), data.Description());
+            return (sprite, jsonData.Title(), jsonData.Description());
         }
 
         private Achievement_JsonData GetJson(string json)
         {
-            JsonSerializerOptions options = new();
-            options.IncludeFields = true;
-
-            try
+            if (Json_Utilities.TryDeserialize(json, out Achievement_JsonData res))
             {
-                Achievement_JsonData data = JsonSerializer.Deserialize<Achievement_JsonData>(json, options);
-                return data;
-            }
-            catch
-            {
-                return new();
+                return res;
             }
 
+            return new();
         }
     }
 }

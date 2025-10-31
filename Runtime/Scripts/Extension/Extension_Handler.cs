@@ -6,16 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Extension_Handler<T> where T : Extension
 {
     private const string NONE = "None";
 
-    [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))] private string extension = NONE;
+    [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))]
+    private string extension = NONE;
 
-    [SerializeField, ReadOnly] private List<T> extensions = new();
+    [SerializeField, ReadOnly]
+    private List<T> extensions = new();
 
-    [SerializeField] private GameObject target;
+    [SerializeField]
+    private GameObject target;
 
     public void OnValueChanged()
     {
@@ -50,6 +53,11 @@ public class Extension_Handler<T> where T : Extension
         });
     }
 
+    private IEnumerable GetAllSubtypes()
+    {
+        return Type_Utilities.GetAllTypesDropdownFormat(typeof(T));
+    }
+
     [Button]
     private void UpdateExtensionList()
     {
@@ -60,10 +68,5 @@ public class Extension_Handler<T> where T : Extension
         extensions.ForEach(x => x.ResetInit());
 
         SortList();
-    }
-
-    private IEnumerable GetAllSubtypes()
-    {
-        return Type_Utilities.GetAllTypesDropdownFormat(typeof(T));
     }
 }

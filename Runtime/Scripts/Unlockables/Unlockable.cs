@@ -37,7 +37,7 @@ namespace IbrahKit
 
         public bool IsUnlocked()
         {
-            if(Unlockables_Manager.TryGet(out Unlockables_Manager result))
+            if (Unlockables_Manager.TryGet(out Unlockables_Manager result))
             {
                 return result.IsUnlocked(key);
             }

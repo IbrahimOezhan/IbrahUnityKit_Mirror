@@ -1,48 +1,50 @@
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace IbrahKit
 {
+    /// <summary>
+    /// A wrapper class for unitys standard debug class that adds additional functionality
+    /// </summary>
     public static class Debug
     {
         public static bool DisableLogs { get; set; } = false;
 
-        public static void Log(object message, Color c = default, UnityEngine.Object context = null, [CallerMemberName] string caller = null)
+        public static void Log(object message, Color c = default, Object context = null, [CallerMemberName] string caller = null)
         {
             if (c == default) c = Color.white;
 
             if (DisableLogs) return;
 
-            string formattedMsg = $"[Log] {message} (Caller: {caller})";
-
-            formattedMsg = c.UseOnString(formattedMsg);
+            string formattedMsg = c.UseOnString($"[Log] {message} (Caller: {caller})");
 
             if (context != null) UnityEngine.Debug.Log(formattedMsg, context);
             else UnityEngine.Debug.Log(formattedMsg);
         }
 
-        public static void LogWarning(object message, UnityEngine.Object context = null, [CallerMemberName] string caller = null)
+        public static void LogWarning(object message, Object context = null, [CallerMemberName] string caller = null)
         {
             if (DisableLogs) return;
 
-            string formattedMsg = $"<color=yellow>[Warning] {message} (Caller: {caller})</color>";
+            string formattedMsg = Color_Utilities.UseOnString(Color.yellow, $"[Warning] {message} (Caller: {caller})");
 
             if (context != null) UnityEngine.Debug.LogWarning(formattedMsg, context);
             else UnityEngine.Debug.LogWarning(formattedMsg);
         }
 
-        public static void LogError(object message, UnityEngine.Object context = null, [CallerMemberName] string caller = null)
+        public static void LogError(object message, Object context = null, [CallerMemberName] string caller = null)
         {
             if (DisableLogs) return;
 
-            string formattedMsg = $"<color=red>[Error] {message} (Caller: {caller})</color>";
+            string formattedMsg = Color_Utilities.UseOnString(Color.red, $"[Error] {message} (Caller: {caller})");
 
             if (context != null) UnityEngine.Debug.LogError(formattedMsg, context);
             else UnityEngine.Debug.LogError(formattedMsg);
         }
 
-        public static void LogException(Exception exception, UnityEngine.Object context = null)
+        public static void LogException(Exception exception, Object context = null)
         {
             if (DisableLogs) return;
 

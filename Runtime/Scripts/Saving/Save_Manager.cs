@@ -15,8 +15,6 @@ namespace IbrahKit
 
         private const string KEY = "a3c9e7r3gf3d5e7";
 
-        private Dictionary<string, Savable> loaded = new();
-
         [SerializeField] private bool encrypt;
 
         private static Save currentSave;
@@ -34,9 +32,9 @@ namespace IbrahKit
                 Directory.CreateDirectory(saveFolderPath);
             }
 
-            if (currentSave == null) currentSave = GetCurrentFolder(saveFolderPath, KEY);
+            currentSave ??= GetCurrentFolder(saveFolderPath, KEY);
 
-            if (generic == null) generic = (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
+            generic ??= (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
 
         }
 
@@ -44,12 +42,7 @@ namespace IbrahKit
         {
             if (GetInstance() == this)
             {
-                for (int i = loaded.Count - 1; i >= 0; i--)
-                {
-                    Return(loaded.ElementAt(i).Key, loaded.ElementAt(i).Value);
-                }
-
-                currentSave.Return(GENERIC_KEY, generic, encrypt);
+                currentSave.FlushAll(encrypt);
             }
         }
 
@@ -57,16 +50,12 @@ namespace IbrahKit
         {
             Savable savable = currentSave.Load(name, defaultValue);
 
-            loaded.Add(name, savable);
-
             return savable;
         }
 
-        public void Return(string name, Savable value)
+        public void Return(string name, Savable value, bool stillInUse = false)
         {
-            bool removed = loaded.Remove(name);
-
-            if (removed) currentSave.Return(name, value, encrypt);
+            currentSave.Return(name, value, encrypt, stillInUse);
         }
 
         public GenericSaveData GetGeneric()

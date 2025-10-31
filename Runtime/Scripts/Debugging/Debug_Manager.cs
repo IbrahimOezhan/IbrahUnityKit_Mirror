@@ -20,6 +20,7 @@ namespace IbrahKit
         public bool disableLogs;
 
         public static bool bufferLogs;
+
         public static bool s_disableLogs;
 
         private void Update()
@@ -28,39 +29,40 @@ namespace IbrahKit
             {
                 debugContainer.GetStateController().Toggle();
             }
+
             s_disableLogs = disableLogs;
         }
 
         private void FixedUpdate()
         {
-            if (debugContainer.GetStateController().GetCompactState() == Menu_State_Controller.StateCompact.ENABLED)
+            if (debugContainer.GetStateController().GetCompactState() != Menu_State_Controller.StateCompact.ENABLED)
             {
-                StringBuilder sb = new();
-
-                foreach (IDebug debug in debugs)
-                {
-                    try
-                    {
-                        sb.Append(debug.DebugContent());
-                    }
-                    catch (Exception ex)
-                    {
-                        sb.Append(debug.gameObject.name + " caused an exception: " + ex.Message);
-                    }
-
-                    sb.AppendLine();
-                }
-
-                string s = sb.ToString();
-
-                if (String_Utilities.IsEmpty(s))
-                {
-                    debugContent.SetText("No Information");
-                }
-                else debugContent.SetText(s);
+                return;
             }
+
+            StringBuilder sb = new();
+
+            foreach (IDebug debug in debugs)
+            {
+                try
+                {
+                    sb.AppendLine(debug.DebugContent());
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine($"{debug.gameObject.name} caused an exception: {ex.Message}");
+                }
+            }
+
+            string s = sb.ToString();
+
+            debugContent.SetText(s.IsEmpty() ? "No Information" : s);
         }
 
+        /// <summary>
+        /// Adds a debug to the list
+        /// </summary>
+        /// <param name="debug">The debug to add</param>
         public void Add(IDebug debug)
         {
             debugs.Add(debug);
@@ -70,6 +72,10 @@ namespace IbrahKit
             });
         }
 
+        /// <summary>
+        /// Removes a debug from the list
+        /// </summary>
+        /// <param name="debug">The debug to remove</param>
         public void Remove(IDebug debug)
         {
             debugs.Remove(debug);

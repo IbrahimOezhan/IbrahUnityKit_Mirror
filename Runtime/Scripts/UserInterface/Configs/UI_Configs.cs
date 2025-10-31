@@ -4,11 +4,11 @@ using UnityEngine;
 [System.Serializable]
 public class UI_Configs
 {
-    [SerializeField] private BoolOverride<UI_Audio_Config_SO> audio;
-    [SerializeField] private BoolOverride<UI_Fitter_Config_SO> fitter;
-    [SerializeField] private BoolOverride<UI_Layout_Config_SO> layout;
-    [SerializeField] private BoolOverride<UI_Menu_Config_SO> menu;
-    [SerializeField] private BoolOverride<UI_Styling_Config_SO> style;
+    [SerializeField] private OverrideSO<UI_Audio_Config_SO> audio;
+    [SerializeField] private OverrideSO<UI_Fitter_Config_SO> fitter;
+    [SerializeField] private OverrideSO<UI_Layout_Config_SO> layout;
+    [SerializeField] private OverrideSO<UI_Menu_Config_SO> menu;
+    [SerializeField] private OverrideSO<UI_Styling_Config_SO> style;
 
     private bool GetAudio(out UI_Audio_Config_SO result)
     {

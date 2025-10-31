@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [System.Serializable]
-public class BoolOverride<T>
+public class OverrideSO<T> where T : ScriptableObject
 {
     [SerializeField] private bool overrideValue;
 

@@ -2,10 +2,17 @@ using IbrahKit;
 using UnityEngine;
 using Debug = IbrahKit.Debug;
 
+/// <summary>
+/// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
+/// </summary>
 public abstract class Extension : MonoBehaviour
 {
     protected bool init;
 
+    /// <summary>
+    /// Get the order in which the extension is executed
+    /// </summary>
+    /// <returns>The order in which the extension is executed</returns>
     public int GetOrder()
     {
         return Order();
@@ -34,6 +41,9 @@ public abstract class Extension : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Resets the extensions initialized state
+    /// </summary>
     public void ResetInit()
     {
         init = false;

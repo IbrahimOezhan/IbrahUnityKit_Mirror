@@ -10,11 +10,11 @@ namespace IbrahKit
 
         public UI_Configs GetConfigs() => configs;
 
-        public F GetConfig<F>(params BoolOverride<F>[] configs)
+        public T GetConfig<T>(params OverrideSO<T>[] configs) where T : ScriptableObject
         {
             for (int i = 0; i < configs.Length; i++)
             {
-                if (configs[i].TryGet(out F value))
+                if (configs[i].TryGet(out T value))
                 {
                     return value;
                 }

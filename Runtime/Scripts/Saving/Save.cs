@@ -26,6 +26,12 @@ namespace IbrahKit
 
         private Dictionary<string, Savable> loadable = new();
 
+        private static readonly JsonSerializerOptions Options = new()
+        {
+            IncludeFields = true,
+            WriteIndented = true,
+        };
+
         public void Init(string folderPath, string key)
         {
             this.folderPath = folderPath;
@@ -121,6 +127,10 @@ namespace IbrahKit
             }
         }
 
+        /// <summary>
+        /// Gets the amount of valid files in this save
+        /// </summary>
+        /// <returns>The amount of valid files</returns>
         public int GetValidFileCount()
         {
             int amount = 0;
@@ -133,26 +143,48 @@ namespace IbrahKit
             return amount;
         }
 
+        /// <summary>
+        /// Gets the total state of the this save
+        /// </summary>
+        /// <returns>Gets the total state of this save</returns>
         public State GetState()
         {
             return state;
         }
 
+        /// <summary>
+        /// Gets the keys of this save
+        /// </summary>
+        /// <returns>The keys of this save</returns>
         public List<string> GetKeys()
         {
             return loadable.Keys.ToList();
         }
 
+        /// <summary>
+        /// Gets the savables of this save
+        /// </summary>
+        /// <returns>Gets the savables</returns>
         public List<Savable> GetSavables()
         {
             return loadable.Values.ToList();
         }
 
+        /// <summary>
+        /// Deletes this save
+        /// </summary>
         public void Delete()
         {
             Directory.Delete(folderPath, true);
         }
 
+        /// <summary>
+        /// Loads a savable from this save
+        /// </summary>
+        /// <param name="name">The name of the savable to load</param>
+        /// <param name="defaultValue">The default value of the savable to load incase the savable doesnt exist</param>
+        /// <returns>The loaded saveable</returns>
+        /// <exception cref="SaveInUseException">Throws if the saveable has already been loaded by another object</exception>
         public Savable Load(string name, Savable defaultValue)
         {
             if (loadable.TryGetValue(name, out Savable savable))
@@ -167,16 +199,23 @@ namespace IbrahKit
 
                 return savable;
             }
-            else
+            else // Does not exist so return default
             {
                 loadable.Add(name, defaultValue);
+
                 inUse.Add(defaultValue);
 
-                //Does not exist . New save json
                 return defaultValue;
             }
         }
 
+        /// <summary>
+        /// Returns a savable
+        /// </summary>
+        /// <param name="name">The name of the savable to return</param>
+        /// <param name="value">The value of the saveable to return</param>
+        /// <param name="encrypt">Whether to encrypt the returned savable</param>
+        /// <param name="stillInUse">Whether its still in use. In that case don't remove it from the inUse list. This can be used for saving the game without quitting</param>
         public void Return(string name, Savable value, bool encrypt, bool stillInUse = false)
         {
             try
@@ -199,23 +238,27 @@ namespace IbrahKit
             }
         }
 
-        public void FlushAll(bool encrypt, bool keep = true)
+        /// <summary>
+        /// Returns all loaded savables
+        /// </summary>
+        /// <param name="encrypt">Whether to encrypt the savables</param>
+        /// <param name="stillInuse">Whether they are still in use. In that case don't remove them from the inUse list. This can be used for saving the game without quitting</param>
+        public void FlushAll(bool encrypt, bool stillInuse = true)
         {
             foreach (var item in loadable)
             {
                 if (inUse.Contains(item.Value))
                 {
-                    Return(item.Key, item.Value, encrypt, keep);
+                    Return(item.Key, item.Value, encrypt, stillInuse);
                 }
             }
         }
 
-        private static readonly JsonSerializerOptions Options = new()
-        {
-            IncludeFields = true,
-            WriteIndented = true,
-        };
-
+        /// <summary>
+        /// Compare this save's version to another save
+        /// </summary>
+        /// <param name="otherSave">The second save to compare to</param>
+        /// <returns>An integer representing what save has the lower version</returns>
         public int CompareTo(Save otherSave)
         {
             return String_Utilities.CompareVersions(version, otherSave.version);
@@ -245,7 +288,7 @@ namespace IbrahKit
 
                     fileState = State.Valid;
                 }
-                catch (JsonException e)
+                catch (JsonException)
                 {
                     Type t = Save_Utilities.GetSavableType(savable);
 
@@ -253,12 +296,14 @@ namespace IbrahKit
                     {
                         // Type does not exist. File is useless
                         fileState = State.Corrupted;
+
                         return;
                     }
 
                     try
                     {
                         result = (Savable)Activator.CreateInstance(t);
+
                         fileState = State.Outdated;
                     }
                     catch (Exception ex)
@@ -278,7 +323,7 @@ namespace IbrahKit
 
             public State GetFileState()
             {
-                return (fileState);
+                return fileState;
             }
 
             public Savable GetSavable()
@@ -287,6 +332,9 @@ namespace IbrahKit
             }
         }
 
+        /// <summary>
+        /// The state of the save/savable
+        /// </summary>
         public enum State
         {
             Valid = 0,
