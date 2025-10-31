@@ -6,6 +6,12 @@ namespace IbrahKit
 {
     public static class Collection_Utilities
     {
+        /// <summary>
+        /// Shuffels a list and returns it
+        /// </summary>
+        /// <typeparam name="T">The type of the list</typeparam>
+        /// <param name="list">The list to shuffle</param>
+        /// <returns>The shuffled list</returns>
         public static List<T> Shuffle<T>(this List<T> list)
         {
             for (int i = 0; i < list.Count; i++)
@@ -17,6 +23,12 @@ namespace IbrahKit
             return list;
         }
 
+        /// <summary>
+        /// Shuffels an array and returns it
+        /// </summary>
+        /// <typeparam name="T">The type of Array Elements</typeparam>
+        /// <param name="list">The array to shuffle</param>
+        /// <returns>The shuffled array</returns>
         public static T[] Shuffle<T>(this T[] list)
         {
             T[] result = new T[list.Length];
@@ -35,11 +47,32 @@ namespace IbrahKit
             return result;
         }
 
+        /// <summary>
+        /// Returns an element from an aray but clamps it at its max index to prevent outofbounds exceptions
+        /// </summary>
+        /// <typeparam name="T">The type of the array</typeparam>
+        /// <param name="array">The array to be used</param>
+        /// <param name="index">The index to be used</param>
+        /// <returns>An element from the array preferably at the specified index but if its outofbounds its the next closest element</returns>
         public static T GetClampedElement<T>(this T[] array, int index)
         {
             if (array.Length == 0) return default;
 
             return array[Mathf.Clamp(index, 0, array.Length - 1)];
+        }
+
+        /// <summary>
+        /// Returns an element from a list but clamps it at its max index to prevent outofbounds exceptions
+        /// </summary>
+        /// <typeparam name="T">The type of the list</typeparam>
+        /// <param name="list">The list to be used</param>
+        /// <param name="index">The index to be used</param>
+        /// <returns>An element from the list preferably at the specified index but if its outofbounds its the next closest element</returns>
+        public static T GetClampedElement<T>(this List<T> list, int index)
+        {
+            if (list.Count == 0) return default;
+
+            return list[Mathf.Clamp(index, 0, list.Count - 1)];
         }
 
         public static string[,] GetAsMatrix(string _text)

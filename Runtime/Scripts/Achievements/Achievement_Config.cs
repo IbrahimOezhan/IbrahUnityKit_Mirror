@@ -5,20 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AchievementConfig", menuName = "IbrahKit/AchievemntConfig")]
 public class Achievement_Config : ScriptableObject
 {
-    [SerializeField] private List<Achievement> achievements = new();
+    [SerializeField, Dropdown(Local_Manager.DROP)]
+    private string secretString;
 
-    [SerializeField, Dropdown(Local_Manager.DROP)] private string secretString;
+    [SerializeField]
+    private Sprite secretSprite;
 
-    [SerializeField] private Sprite secretSprite;
+    [SerializeField]
+    private List<Achievement> achievements = new();
 
     public List<Achievement> Get()
     {
         return achievements;
     }
 
-    public Achievement GetWithKey(string key)
+    /// <summary>
+    /// Tries getting an achivement with the specified key
+    /// </summary>
+    /// <param name="key">The key to use</param>
+    /// <param name="result">The resulting achievement</param>
+    /// <returns>Whether an achievement was found</returns>
+    public bool TryGet(string key,out Achievement result)
     {
-        return achievements.Find(x => x.GetKey().Equals(key));
+        result = achievements.Find(x => x.GetKey().Equals(key));
+
+        return result != null;
     }
 
     public (Sprite, string, string)[] GetAchievements()

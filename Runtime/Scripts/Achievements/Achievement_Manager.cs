@@ -11,22 +11,28 @@ namespace IbrahKit
 
         public static Action<string, bool> OnAchievementUnlocked;
 
+        /// <summary>
+        /// Unlocks an achievement
+        /// </summary>
+        /// <param name="achievement">The achievement to unlock</param>
         public void Unlock(Achievement achievement)
         {
             Unlock(achievement.GetKey());
         }
 
+        /// <summary>
+        /// Unlocks an achievement
+        /// </summary>
+        /// <param name="key">The key of the achievement to unlock</param>
         public void Unlock(string key)
         {
-            Achievement found = achievementConfig.GetWithKey(key);
-
-            if (found != null)
+            if (achievementConfig.TryGet(key, out Achievement result))
             {
-                bool unlocked = found.IsUnlocked();
+                bool unlocked = result.IsUnlocked();
 
                 OnAchievementUnlocked?.Invoke(key, unlocked);
 
-                found.Unlock();
+                result.Unlock();
             }
             else
             {
