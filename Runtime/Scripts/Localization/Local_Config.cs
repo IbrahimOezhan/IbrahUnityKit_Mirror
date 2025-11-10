@@ -127,7 +127,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
             keyValuePairs.TryAdd(key, row.ToArray());
         }
 
-        Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.ToList(), DROP);
+        Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.OrderBy(x => x).ToList(), DROP);
 
         Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
 
