@@ -71,7 +71,7 @@ namespace IbrahKit
             }
         }
 
-        public void Pressed()
+        public void Pressed(bool skipOnPress = false)
         {
             SetState(UI_SELECTABLE_STATE.PRESSED);
 
@@ -80,8 +80,11 @@ namespace IbrahKit
             if (group != null)
             {
                 group.OnSelect(selectable);
+
                 Debug.Log("Group On Select");
             }
+
+            if (skipOnPress) return;
 
             if (interactable)
             {
