@@ -36,7 +36,11 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
             {
                 result = value[index];
             }
-            else Debug.LogError($"Index {index} out of range for length {value.Length} and key {key}");
+            else
+            {
+                Debug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
+                return false;
+            }
         }
 
         bool empty = String_Utilities.IsEmpty(result);
