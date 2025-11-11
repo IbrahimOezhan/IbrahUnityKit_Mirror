@@ -32,7 +32,11 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
         if (TryGetValue(key, out var value))
         {
-            result = value[index];
+            if (index >= 0 &&index < value.Length)
+            {
+                result = value[index];
+            }
+            else Debug.LogError($"Index {index} out of range for length {value.Length} and key {key}");
         }
 
         bool empty = String_Utilities.IsEmpty(result);

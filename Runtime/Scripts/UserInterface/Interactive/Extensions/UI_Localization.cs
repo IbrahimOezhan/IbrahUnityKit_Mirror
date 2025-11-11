@@ -84,6 +84,8 @@ namespace IbrahKit
 #if UNITY_EDITOR
                 Local_Config config = Local_Settings.Config();
 
+                if (config == null) return "Local Config couldnt be found";
+
                 config.TryGetString(key, config.GetFirstLanguage(), out string res);
 
                 return res;

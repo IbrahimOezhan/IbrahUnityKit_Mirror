@@ -1,8 +1,10 @@
+using System;
+using System.Diagnostics;
 using System.Text.Json;
 
 public static class Json_Utilities
 {
-    public static bool TryDeserialize<T>(string json, out T result) where T : new()
+    public static bool TryDeserialize<T>(string json, out T result, bool throwWarning = true) where T : new()
     {
         JsonSerializerOptions options = new()
         {
@@ -15,8 +17,10 @@ public static class Json_Utilities
 
             return true;
         }
-        catch
+        catch(Exception e)
         {
+            if (throwWarning) IbrahKit.Debug.LogWarning(e.Message); 
+
             result = default;
 
             return false;
