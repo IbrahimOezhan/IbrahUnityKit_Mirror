@@ -17,6 +17,8 @@ namespace IbrahKit
 
         [SerializeField, Required] private KeyMap keyMap;
 
+        [SerializeField] private bool catchExceptions = true;
+
         public bool disableLogs;
 
         public static bool bufferLogs;
@@ -44,6 +46,11 @@ namespace IbrahKit
 
             foreach (IDebug debug in debugs)
             {
+                if (!catchExceptions)
+                {
+                    sb.AppendLine(debug.DebugContent());
+                    continue;
+                }
                 try
                 {
                     sb.AppendLine(debug.DebugContent());
