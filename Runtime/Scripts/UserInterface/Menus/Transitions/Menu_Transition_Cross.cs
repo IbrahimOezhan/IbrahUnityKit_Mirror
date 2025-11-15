@@ -28,6 +28,7 @@ namespace IbrahKit
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
 
             if (inExists) menuIn.GetVisbilityController().SetAlpha(1);
+
             if (outExists) menuOut.GetVisbilityController().SetAlpha(0);
 
             while (t < 1)
@@ -37,6 +38,7 @@ namespace IbrahKit
                 yield return null;
 
                 if (inExists) menuIn.GetVisbilityController().SetAlpha(1 - t);
+
                 if (outExists) menuOut.GetVisbilityController().SetAlpha(t);
             }
 
