@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Text.Json;
 
 public static class Json_Utilities
@@ -17,9 +16,9 @@ public static class Json_Utilities
 
             return true;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            if (throwWarning) IbrahKit.Debug.LogWarning(e.Message); 
+            if (throwWarning) IbrahKit.Debug.LogWarning(e.Message);
 
             result = default;
 

@@ -25,7 +25,7 @@ public class Achievement_Config : ScriptableObject
     /// <param name="key">The key to use</param>
     /// <param name="result">The resulting achievement</param>
     /// <returns>Whether an achievement was found</returns>
-    public bool TryGet(string key,out Achievement result)
+    public bool TryGet(string key, out Achievement result)
     {
         result = achievements.Find(x => x.GetKey().Equals(key));
 

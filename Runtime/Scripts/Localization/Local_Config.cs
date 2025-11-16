@@ -32,7 +32,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
         if (TryGetValue(key, out var value))
         {
-            if (index >= 0 &&index < value.Length)
+            if (index >= 0 && index < value.Length)
             {
                 result = value[index];
             }

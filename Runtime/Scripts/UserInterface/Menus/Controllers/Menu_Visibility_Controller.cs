@@ -28,7 +28,7 @@ namespace IbrahKit
 
         public void SetInteractable(bool value)
         {
-            enabledGroup.interactable = value;
+            enabledGroup.blocksRaycasts = value;
         }
 
         public void SetAlpha(float value)
