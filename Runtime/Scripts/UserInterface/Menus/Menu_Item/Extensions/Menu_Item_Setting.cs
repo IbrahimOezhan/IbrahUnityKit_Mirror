@@ -7,12 +7,12 @@ namespace IbrahKit
     [System.Serializable]
     public class Menu_Item_Setting : Menu_Item_Extension
     {
-        [SerializeField] private SettingsInterfaceType settingType;
+        [SerializeField] private Settings_Interface_Type settingType;
 
-        [ShowIf(nameof(settingType), SettingsInterfaceType.LOCAL), SerializeField]
+        [ShowIf(nameof(settingType), Settings_Interface_Type.LOCAL), SerializeField]
         private Setting_Container reference;
 
-        [ShowIf(nameof(settingType), SettingsInterfaceType.KEY), Dropdown(Settings_Manager.SAVE_DATA_KEY), SerializeField]
+        [ShowIf(nameof(settingType), Settings_Interface_Type.KEY), Dropdown(Settings_Manager.SAVE_DATA_KEY), SerializeField]
         private string settingsKey;
 
         public override bool Spawn(RectTransform parent, UI_Menu menu)
@@ -32,10 +32,10 @@ namespace IbrahKit
 
             switch (settingType)
             {
-                case SettingsInterfaceType.KEY:
+                case Settings_Interface_Type.KEY:
                     settingInstance.Setup(settingsKey);
                     break;
-                case SettingsInterfaceType.LOCALREFERENCE:
+                case Settings_Interface_Type.LOCALREFERENCE:
                     settingInstance.Setup(reference);
                     break;
             }

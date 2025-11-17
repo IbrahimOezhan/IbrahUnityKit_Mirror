@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace IbrahKit
 {
-    public class Save
+    internal class Save
     {
         private string key;
 

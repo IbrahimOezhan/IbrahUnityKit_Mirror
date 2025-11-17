@@ -14,6 +14,6 @@ namespace IbrahKit
 
         public UI_Menu_Item_Button_Text GetMenuButtonStatic() => staticMenuButtonPrefab;
 
-        public UI_Setting GetSettingsPrefab(SettingsType settingsType) => settingPrefabs.Find(x => x.GetSettingsType() == settingsType);
+        public UI_Setting GetSettingsPrefab(Settings_Type settingsType) => settingPrefabs.Find(x => x.GetSettingsType() == settingsType);
     }
 }

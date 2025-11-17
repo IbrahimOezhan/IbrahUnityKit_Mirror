@@ -8,9 +8,16 @@ namespace IbrahKit
     {
         private bool initialized;
 
-        [SerializeField, ReadOnly] private OverrideComponent<TTarget> fTarget;
+#if ODIN_INSPECTOR
+        [SerializeField, ReadOnly]
+#endif
+        private OverrideComponent<TTarget> fTarget;
 
-        [SerializeField, ReadOnly] private TTarget getComponentTarget;
+#if ODIN_INSPECTOR
+        [SerializeField, ReadOnly]
+#endif
+        private TTarget getComponentTarget;
+
 
         [SerializeField] private TTarget target;
 

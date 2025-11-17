@@ -7,13 +7,19 @@ namespace IbrahKit
     [System.Serializable]
     public class UI_Selectable_StateController
     {
+#if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
+#endif
         private UI_Selectable selectable;
 
+#if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
+#endif
         private UI_Selectable_Group group;
 
+#if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
+#endif
         private UI_SELECTABLE_STATE state;
 
         [SerializeField]
@@ -31,7 +37,7 @@ namespace IbrahKit
         [SerializeField]
         private UnityEvent OnPressedStop;
 
-        private UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
+        private readonly UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
 
         public static UI_Selectable currentlySelected;
 

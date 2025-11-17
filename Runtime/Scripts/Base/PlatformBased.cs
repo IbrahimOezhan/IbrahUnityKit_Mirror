@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class PlatformBased
+    public abstract class PlatformBased
     {
         [SerializeField] private RuntimePlatform platform;
 
