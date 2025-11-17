@@ -146,7 +146,7 @@ namespace IbrahKit
 
             if (settingLocal == null)
             {
-                Debug.LogWarning($"{nameof(settingLocal)} is null");
+                IbrahDebug.LogWarning($"{nameof(settingLocal)} is null");
                 return;
             }
 
@@ -156,12 +156,12 @@ namespace IbrahKit
 
             if (titleEmpty)
             {
-                Debug.LogWarning("Title is empty");
+                IbrahDebug.LogWarning("Title is empty");
             }
 
             if (titleNull)
             {
-                Debug.LogWarning("Title is null");
+                IbrahDebug.LogWarning("Title is null");
             }
 
             if (!titleEmpty && !titleNull)
@@ -196,13 +196,13 @@ namespace IbrahKit
         {
             if (initialized)
             {
-                Debug.LogWarning("UI Setting Already Initialized");
+                IbrahDebug.LogWarning("UI Setting Already Initialized");
                 return true;
             }
 
             if (value == null)
             {
-                Debug.LogWarning($"{nameof(value)} is null");
+                IbrahDebug.LogWarning($"{nameof(value)} is null");
                 return false;
             }
 
@@ -228,7 +228,7 @@ namespace IbrahKit
 
             if (setting == null)
             {
-                Debug.LogWarning($"{nameof(setting)} is null");
+                IbrahDebug.LogWarning($"{nameof(setting)} is null");
                 return false;
             }
 
@@ -241,7 +241,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning($"Already subscribed to {nameof(Local_Manager)}");
+                IbrahDebug.LogWarning($"Already subscribed to {nameof(Local_Manager)}");
             }
 
             initialized = true;
@@ -260,7 +260,7 @@ namespace IbrahKit
         {
             if (!initialized)
             {
-                Debug.LogWarning("Initialization of UI Setting Failed");
+                IbrahDebug.LogWarning("Initialization of UI Setting Failed");
             }
 
             return initialized;

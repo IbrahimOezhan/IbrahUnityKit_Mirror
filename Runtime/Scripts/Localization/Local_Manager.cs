@@ -12,8 +12,6 @@ namespace IbrahKit
 
         public const string SYS = "SysLanguage";
 
-        private const string SETTING = "language";
-
         private const string SAVE = "LocalizationManager";
 
         private int currentIndex;
@@ -22,7 +20,7 @@ namespace IbrahKit
 
         private SaveData saveData;
 
-        private List<Local_Processor> processors = new();
+        private readonly List<Local_Processor> processors = new();
 
         [SerializeField] private Local_Config config;
 
@@ -32,11 +30,14 @@ namespace IbrahKit
         {
             base.OnAwake();
 
-            saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
+            if (Save_Manager.GetInstance().TryLoad(SAVE, new SaveData(), out saveData))
+            {
+                saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
 
-            SetLanguage(GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()));
+                SetLanguage(GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()));
 
-            AddProcessor(new Local_BreakProcessor());
+                AddProcessor(new Local_BreakProcessor());
+            }
         }
 
         private void OnDestroy()
@@ -73,14 +74,14 @@ namespace IbrahKit
         {
             if (index < 0 || index >= config.GetLanguages().Count)
             {
-                Debug.LogWarning($"Index with value {index} out of range for range 0-{config.GetLanguages().Count - 1}");
+                IbrahDebug.LogWarning($"Index with value {index} out of range for range 0-{config.GetLanguages().Count - 1}");
                 return;
             }
 
             SetLanguage(config.GetLanguages()[index]);
         }
 
-        public void SetNext(int dir)
+        public void SetNextLanguage(int dir)
         {
             SetLanguage(GetNext(dir));
         }
@@ -130,11 +131,11 @@ namespace IbrahKit
         {
             if (!config.TryGetString(key, current, out string result))
             {
-                Debug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
+                IbrahDebug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
                 if (!config.TryGetString(key, config.GetLanguages()[0], out result))
                 {
-                    Debug.LogWarning($"Localzation for key {key} does not exist in default language {config.GetLanguages()[0]}");
+                    IbrahDebug.LogWarning($"Localzation for key {key} does not exist in default language {config.GetLanguages()[0]}");
                 }
             }
 
@@ -156,7 +157,7 @@ namespace IbrahKit
             return config.GetLanguages().Count;
         }
 
-        [System.Serializable]
+        [Serializable]
         private class SaveData : Savable
         {
             [JsonInclude]

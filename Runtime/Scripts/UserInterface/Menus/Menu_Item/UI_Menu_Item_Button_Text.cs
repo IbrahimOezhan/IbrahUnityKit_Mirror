@@ -12,7 +12,7 @@ namespace IbrahKit
         {
             if (text == null)
             {
-                Debug.LogError("Text is null");
+                IbrahDebug.LogError("Text is null");
                 return new();
             }
 
@@ -28,7 +28,7 @@ namespace IbrahKit
 
             if (selec == null)
             {
-                Debug.LogWarning($"{nameof(selec)} is null. Passing new unity event");
+                IbrahDebug.LogWarning($"{nameof(selec)} is null. Passing new unity event");
                 return new();
             }
 

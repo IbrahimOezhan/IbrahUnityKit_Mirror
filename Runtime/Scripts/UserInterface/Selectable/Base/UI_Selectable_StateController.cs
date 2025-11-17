@@ -81,7 +81,7 @@ namespace IbrahKit
             {
                 group.OnSelect(selectable);
 
-                Debug.Log("Group On Select");
+                IbrahDebug.Log("Group On Select");
             }
 
             if (skipOnPress) return;

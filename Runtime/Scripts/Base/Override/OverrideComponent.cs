@@ -1,3 +1,4 @@
+using IbrahKit;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,8 +26,8 @@ public class OverrideComponent<T> where T : Component
     {
         if (overrideValue != null)
         {
-            Debug.Log(overrideValue);
-            Debug.Log("Returning Override");
+            IbrahDebug.Log(overrideValue);
+            IbrahDebug.Log("Returning Override");
             return overrideValue;
         }
 

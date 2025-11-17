@@ -70,7 +70,7 @@ namespace IbrahKit
         {
             if (!Init())
             {
-                Debug.Log("Init failed");
+                IbrahDebug.Log("Init failed");
                 return;
             }
         }
@@ -79,7 +79,7 @@ namespace IbrahKit
         {
             if (!Init())
             {
-                Debug.Log("Init failed");
+                IbrahDebug.Log("Init failed");
                 return;
             }
 

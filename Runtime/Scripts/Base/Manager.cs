@@ -15,13 +15,13 @@ namespace IbrahKit
                 return true;
             }
 
-            if (throwWarnings) Debug.LogWarning($"Instance of type {typeof(T)} not assigned");
+            if (throwWarnings) IbrahDebug.LogWarning($"Instance of type {typeof(T)} not assigned");
 
             result = FindAnyObjectByType<T>();
 
             if (result == null && throwWarnings)
             {
-                Debug.LogWarning($"FindAnyObjectByType couldn't find object of type {typeof(T)}");
+                IbrahDebug.LogWarning($"FindAnyObjectByType couldn't find object of type {typeof(T)}");
             }
 
             return result != null;
@@ -37,7 +37,7 @@ namespace IbrahKit
 
                 if (result == null)
                 {
-                    Debug.LogWarning($"FindAnyObjectByType couldn't find object of type {typeof(T)}");
+                    IbrahDebug.LogWarning($"FindAnyObjectByType couldn't find object of type {typeof(T)}");
                 }
             }
 

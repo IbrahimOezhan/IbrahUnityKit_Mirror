@@ -8,7 +8,11 @@ namespace IbrahKit
     {
         [SerializeField] private bool secret;
 
-        [SerializeField, PreviewField] private Sprite sprite;
+        [SerializeField]
+#if ODIN_INSPECTOR
+        [PreviewField]
+#endif
+        private Sprite sprite;
 
         /// <summary>
         /// Returns the data to be displayed. A sprite, a name and a description

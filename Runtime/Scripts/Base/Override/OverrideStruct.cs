@@ -2,12 +2,12 @@ using System;
 
 namespace IbrahKit
 {
-    public class OverrideValue<T> where T : struct
+    public class OverrideStruct<T> where T : struct
     {
-        private T baseValue;
+        private readonly T baseValue;
         private Nullable<T> overrideValue = null;
 
-        public OverrideValue(T baseValue)
+        public OverrideStruct(T baseValue)
         {
             this.baseValue = baseValue;
         }

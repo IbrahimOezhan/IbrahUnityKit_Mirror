@@ -101,8 +101,8 @@ namespace IbrahKit
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
-                Debug.Log(json);
+                IbrahDebug.LogException(e);
+                IbrahDebug.Log(json);
 
                 return new();
             }

@@ -70,7 +70,7 @@ namespace IbrahKit
             }
             catch (Exception ex)
             {
-                Debug.LogWarning(ex.Message);
+                IbrahDebug.LogWarning(ex.Message);
 
                 state = State.Corrupted;
 
@@ -95,7 +95,7 @@ namespace IbrahKit
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogWarning($"{filePaths[i]} - {ex.Message}");
+                    IbrahDebug.LogWarning($"{filePaths[i]} - {ex.Message}");
 
                     fileContents[i] = string.Empty;
                     fileState[i] = State.Corrupted;
@@ -234,7 +234,7 @@ namespace IbrahKit
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"{name} - {ex.Message}");
+                IbrahDebug.LogWarning($"{name} - {ex.Message}");
             }
         }
 
@@ -308,7 +308,7 @@ namespace IbrahKit
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogWarning($"[{filePath}] {ex.Message}");
+                        IbrahDebug.LogWarning($"[{filePath}] {ex.Message}");
 
                         result = null;
 

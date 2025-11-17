@@ -26,7 +26,7 @@ namespace IbrahKit
         {
             if (transform == null)
             {
-                Debug.LogWarning("Transform is null");
+                IbrahDebug.LogWarning("Transform is null");
                 return new(0);
             }
 
@@ -135,14 +135,14 @@ namespace IbrahKit
         {
             if (children == null)
             {
-                Debug.LogWarning("List is null");
+                IbrahDebug.LogWarning("List is null");
 
                 return;
             }
 
             if (children.Count == 0)
             {
-                Debug.LogWarning("List is empty");
+                IbrahDebug.LogWarning("List is empty");
 
                 return;
             }

@@ -1,22 +1,25 @@
+using IbrahKit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Text_Wrapper
 {
-    private Text legacyText;
-    private TextMeshProUGUI tmpText;
+    private readonly Text legacyText;
 
-    private Mode mode;
+    private readonly TextMeshProUGUI tmpText;
+
+    private readonly Mode mode;
 
     public UI_Text_Wrapper(GameObject target)
     {
         legacyText = target.GetComponent<Text>();
+
         tmpText = target.GetComponent<TextMeshProUGUI>();
 
         if (legacyText && tmpText)
         {
-            Debug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
+            IbrahDebug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
         }
 
         if (legacyText != null)

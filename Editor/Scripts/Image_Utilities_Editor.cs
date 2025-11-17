@@ -51,7 +51,7 @@ namespace IbrahKit
 
                 Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
 
-                Debug.Log($"Format: {tex.format}, IsReadable: {tex.isReadable}, Name: {tex.name}");
+                IbrahDebug.Log($"Format: {tex.format}, IsReadable: {tex.isReadable}, Name: {tex.name}");
 
                 Sprite s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100);
 
@@ -76,7 +76,7 @@ namespace IbrahKit
 
                 File.WriteAllBytes(newPath, bytes);
 
-                Debug.Log("Test");
+                IbrahDebug.Log("Test");
 
                 importer.textureType = TextureImporterType.Sprite;
 

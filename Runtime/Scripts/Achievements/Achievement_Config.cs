@@ -19,12 +19,6 @@ public class Achievement_Config : ScriptableObject
         return achievements;
     }
 
-    /// <summary>
-    /// Tries getting an achivement with the specified key
-    /// </summary>
-    /// <param name="key">The key to use</param>
-    /// <param name="result">The resulting achievement</param>
-    /// <returns>Whether an achievement was found</returns>
     public bool TryGet(string key, out Achievement result)
     {
         result = achievements.Find(x => x.GetKey().Equals(key));

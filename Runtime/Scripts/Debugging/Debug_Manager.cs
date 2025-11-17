@@ -9,7 +9,7 @@ namespace IbrahKit
 {
     public class Debug_Manager : Manager_DDOL<Debug_Manager>
     {
-        private List<IDebug> debugs = new();
+        private readonly List<IDebug> debugs = new();
 
         [SerializeField, Required] private UI_Text_Setter debugContent;
 

@@ -57,7 +57,7 @@ namespace IbrahKit
             {
                 byte[] data = udpClient.Receive(ref serverEndPoint);
                 string message = Encoding.UTF8.GetString(data);
-                Debug.Log("Received message from server: " + message);
+                IbrahDebug.Log("Received message from server: " + message);
                 OnMessageRecieved?.Invoke(message);
             }
         }

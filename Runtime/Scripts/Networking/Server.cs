@@ -75,7 +75,7 @@ namespace IbrahKit
                 {
                     byte[] data = responseClient.Receive(ref clientEndPoint);
                     string response = Encoding.UTF8.GetString(data);
-                    Debug.Log("Received response from client: " + response);
+                    IbrahDebug.Log("Received response from client: " + response);
                     OnMessageRecieved?.Invoke(response);
                 }
             }

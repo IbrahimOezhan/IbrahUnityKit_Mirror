@@ -43,7 +43,7 @@ namespace IbrahKit
 
             if (cam == null)
             {
-                Debug.LogWarning("No camera with tag MainCamera found");
+                IbrahDebug.LogWarning("No camera with tag MainCamera found");
                 return;
             }
 

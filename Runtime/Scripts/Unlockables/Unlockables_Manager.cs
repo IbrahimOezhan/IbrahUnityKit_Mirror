@@ -65,7 +65,7 @@ namespace IbrahKit
                 if (!unlockedUnlockables.Contains(key))
                 {
                     unlockedUnlockables.Add(key);
-                    Debug.Log("Unlocked " + key);
+                    IbrahDebug.Log("Unlocked " + key);
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace IbrahKit
 
             if (!result)
             {
-                Debug.LogWarning($"TryInit failed: base={base.TryInit()} rect={rect} text={text} mode={text?.GetMode()}");
+                IbrahDebug.LogWarning($"TryInit failed: base={base.TryInit()} rect={rect} text={text} mode={text?.GetMode()}");
             }
 
             return result;

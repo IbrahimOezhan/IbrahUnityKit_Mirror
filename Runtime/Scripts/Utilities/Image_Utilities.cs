@@ -29,7 +29,7 @@ namespace IbrahKit
         {
             if (sprite == null)
             {
-                Debug.LogWarning("Sprite is null");
+                IbrahDebug.LogWarning("Sprite is null");
                 return new byte[0];
             }
 
@@ -40,7 +40,7 @@ namespace IbrahKit
         {
             if (texture == null)
             {
-                Debug.LogWarning("Texture is null");
+                IbrahDebug.LogWarning("Texture is null");
                 return new byte[0];
             }
 
@@ -51,13 +51,13 @@ namespace IbrahKit
         {
             if (bytes == null)
             {
-                Debug.LogWarning("Bytes array is null");
+                IbrahDebug.LogWarning("Bytes array is null");
                 return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
 
             if (bytes.Length == 0)
             {
-                Debug.LogWarning("Bytes array is empty");
+                IbrahDebug.LogWarning("Bytes array is empty");
                 return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
 
@@ -72,7 +72,7 @@ namespace IbrahKit
         {
             if (_sprite == null)
             {
-                Debug.LogWarning("Sprite is empty");
+                IbrahDebug.LogWarning("Sprite is empty");
 
                 return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
@@ -183,13 +183,13 @@ namespace IbrahKit
         {
             if (bytes == null)
             {
-                Debug.LogWarning("Bytes array is null");
+                IbrahDebug.LogWarning("Bytes array is null");
                 return new(0, 0);
             }
 
             if (bytes.Length == 0)
             {
-                Debug.LogWarning("Bytes array is empty");
+                IbrahDebug.LogWarning("Bytes array is empty");
                 return new(0, 0);
             }
 
@@ -206,7 +206,7 @@ namespace IbrahKit
         {
             if (from.width != to.width || from.height != to.height)
             {
-                Debug.LogWarning("Textures must have the same size");
+                IbrahDebug.LogWarning("Textures must have the same size");
                 return from;
             }
 

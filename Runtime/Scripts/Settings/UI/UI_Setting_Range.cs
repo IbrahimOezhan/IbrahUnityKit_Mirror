@@ -23,7 +23,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning("Sub Selectable is null");
+                IbrahDebug.LogWarning("Sub Selectable is null");
             }
 
             if (add != null)
@@ -33,7 +33,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning("Add Selectable is null");
+                IbrahDebug.LogWarning("Add Selectable is null");
             }
 
             return true;

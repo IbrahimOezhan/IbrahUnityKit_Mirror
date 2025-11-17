@@ -7,23 +7,16 @@ namespace IbrahKit
     {
         private const string PREFIX = "achievement_";
 
-        [SerializeField] private Achievement_Config achievementConfig;
+        [SerializeField]
+        private Achievement_Config achievementConfig;
 
         public static Action<string, bool> OnAchievementUnlocked;
 
-        /// <summary>
-        /// Unlocks an achievement
-        /// </summary>
-        /// <param name="achievement">The achievement to unlock</param>
         public void Unlock(Achievement achievement)
         {
             Unlock(achievement.GetKey());
         }
 
-        /// <summary>
-        /// Unlocks an achievement
-        /// </summary>
-        /// <param name="key">The key of the achievement to unlock</param>
         public void Unlock(string key)
         {
             if (achievementConfig.TryGet(key, out Achievement result))
@@ -36,7 +29,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning($"Achievement with key {key} not found");
+                IbrahDebug.LogWarning($"Achievement with key {key} not found");
             }
         }
     }

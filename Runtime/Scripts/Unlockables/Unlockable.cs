@@ -22,7 +22,7 @@ namespace IbrahKit
                 {
                     if (unlockOnUnlock[i] == null)
                     {
-                        Debug.LogWarning(nameof(unlockOnUnlock) + " contains null values");
+                        IbrahDebug.LogWarning(nameof(unlockOnUnlock) + " contains null values");
                         continue;
                     }
                     unlockOnUnlock[i].Unlock();

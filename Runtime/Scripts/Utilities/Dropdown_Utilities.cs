@@ -15,19 +15,19 @@ namespace IbrahKit
 
             if (input == null)
             {
-                Debug.LogError("Passed input list is null");
+                IbrahDebug.LogError("Passed input list is null");
                 return;
             }
 
             if (input.Count == 0)
             {
-                Debug.LogWarning("Passed input list is empty");
+                IbrahDebug.LogWarning("Passed input list is empty");
                 return;
             }
 
             if (String_Utilities.IsEmpty(fileName))
             {
-                Debug.LogWarning("File name is empty or null");
+                IbrahDebug.LogWarning("File name is empty or null");
                 return;
             }
 
@@ -36,20 +36,20 @@ namespace IbrahKit
                 if (String_Utilities.IsEmpty(input[i]))
                 {
                     input.RemoveAt(i);
-                    Debug.Log("Removed empty element at index " + i);
+                    IbrahDebug.Log("Removed empty element at index " + i);
                 }
             }
             List<string> distinct = input.Distinct().ToList();
 
             if (input.Count != distinct.Count)
             {
-                Debug.LogWarning("Duplicate keys found in input");
+                IbrahDebug.LogWarning("Duplicate keys found in input");
 
                 List<string> duplicates = input.Except(distinct).ToList();
 
                 for (int i = 0; i < duplicates.Count; i++)
                 {
-                    Debug.LogWarning("Duplicate: " + duplicates[i]);
+                    IbrahDebug.LogWarning("Duplicate: " + duplicates[i]);
                 }
 
                 return;

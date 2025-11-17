@@ -63,7 +63,7 @@ namespace IbrahKit
 
             if (getType == null)
             {
-                Debug.Log(addManager + " type null");
+                IbrahDebug.Log(addManager + " type null");
                 return;
             }
 

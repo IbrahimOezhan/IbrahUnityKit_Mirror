@@ -11,7 +11,7 @@ namespace IbrahKit
         {
             if (baseType == null)
             {
-                Debug.LogWarning("Base type is null");
+                IbrahDebug.LogWarning("Base type is null");
                 return Array.Empty<Type>();
             }
 

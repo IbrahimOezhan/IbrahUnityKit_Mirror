@@ -11,7 +11,7 @@ namespace IbrahKit
         {
             if (hide == null)
             {
-                Debug.LogWarning($"{nameof(hide)} is null");
+                IbrahDebug.LogWarning($"{nameof(hide)} is null");
                 return;
             }
 

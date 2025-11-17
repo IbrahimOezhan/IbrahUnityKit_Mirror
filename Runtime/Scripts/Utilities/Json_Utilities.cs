@@ -18,7 +18,7 @@ public static class Json_Utilities
         }
         catch (Exception e)
         {
-            if (throwWarning) IbrahKit.Debug.LogWarning(e.Message);
+            if (throwWarning) IbrahKit.IbrahDebug.LogWarning(e.Message);
 
             result = default;
 

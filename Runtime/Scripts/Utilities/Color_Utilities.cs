@@ -54,13 +54,13 @@ namespace IbrahKit
         {
             if (colors == null)
             {
-                Debug.LogWarning("Color list is null");
+                IbrahDebug.LogWarning("Color list is null");
                 return Color.white;
             }
 
             if (colors.Length == 0)
             {
-                Debug.LogWarning("Color list is empty");
+                IbrahDebug.LogWarning("Color list is empty");
                 return Color.white;
             }
 
@@ -86,7 +86,7 @@ namespace IbrahKit
         {
             if (alpha < 0 || alpha > 1)
             {
-                Debug.LogWarning($"Alpha with value {alpha} out of bounds for min 0 and max 1");
+                IbrahDebug.LogWarning($"Alpha with value {alpha} out of bounds for min 0 and max 1");
 
                 alpha = Mathf.Clamp01(alpha);
             }

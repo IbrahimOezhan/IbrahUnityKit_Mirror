@@ -1,6 +1,6 @@
 using IbrahKit;
 using UnityEngine;
-using Debug = IbrahKit.Debug;
+using IbrahDebug = IbrahKit.IbrahDebug;
 
 /// <summary>
 /// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
@@ -31,12 +31,12 @@ public abstract class Extension : MonoBehaviour
 
         if (!init)
         {
-            Debug.LogWarning($"Could not initialize {this.GetType()} ({transform.GetTransformPath()})");
+            IbrahDebug.LogWarning($"Could not initialize {this.GetType()} ({transform.GetTransformPath()})");
 
             return false;
         }
 
-        Debug.Log("UI Extension Init Success", Color.green);
+        IbrahDebug.Log("UI Extension Init Success", Color.green);
 
         return true;
     }

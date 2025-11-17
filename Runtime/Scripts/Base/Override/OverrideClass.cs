@@ -1,3 +1,4 @@
+using IbrahKit;
 using UnityEngine;
 
 public class OverrideClass<T> where T : class
@@ -29,8 +30,8 @@ public class OverrideClass<T> where T : class
     {
         if (overrideValue != null)
         {
-            Debug.Log(overrideValue);
-            Debug.Log("Returning Override");
+            IbrahDebug.Log(overrideValue);
+            IbrahDebug.Log("Returning Override");
             return overrideValue;
         }
 

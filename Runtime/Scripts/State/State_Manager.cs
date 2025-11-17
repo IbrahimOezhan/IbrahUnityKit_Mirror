@@ -36,7 +36,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning($"State {newState} does not exist");
+                IbrahDebug.LogWarning($"State {newState} does not exist");
             }
         }
 

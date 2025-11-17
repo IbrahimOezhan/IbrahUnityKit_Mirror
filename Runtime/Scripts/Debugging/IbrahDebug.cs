@@ -8,7 +8,7 @@ namespace IbrahKit
     /// <summary>
     /// A wrapper class for unitys standard debug class that adds additional functionality
     /// </summary>
-    public static class Debug
+    public static class IbrahDebug
     {
         public static bool DisableLogs { get; set; } = false;
 
@@ -20,8 +20,8 @@ namespace IbrahKit
 
             string formattedMsg = c.UseOnString($"[Log] {message} (Caller: {caller})");
 
-            if (context != null) UnityEngine.Debug.Log(formattedMsg, context);
-            else UnityEngine.Debug.Log(formattedMsg);
+            if (context != null) Debug.Log(formattedMsg, context);
+            else Debug.Log(formattedMsg);
         }
 
         public static void LogWarning(object message, Object context = null, [CallerMemberName] string caller = null)
@@ -30,8 +30,8 @@ namespace IbrahKit
 
             string formattedMsg = Color_Utilities.UseOnString(Color.yellow, $"[Warning] {message} (Caller: {caller})");
 
-            if (context != null) UnityEngine.Debug.LogWarning(formattedMsg, context);
-            else UnityEngine.Debug.LogWarning(formattedMsg);
+            if (context != null) Debug.LogWarning(formattedMsg, context);
+            else Debug.LogWarning(formattedMsg);
         }
 
         public static void LogError(object message, Object context = null, [CallerMemberName] string caller = null)
@@ -40,16 +40,16 @@ namespace IbrahKit
 
             string formattedMsg = Color_Utilities.UseOnString(Color.red, $"[Error] {message} (Caller: {caller})");
 
-            if (context != null) UnityEngine.Debug.LogError(formattedMsg, context);
-            else UnityEngine.Debug.LogError(formattedMsg);
+            if (context != null) Debug.LogError(formattedMsg, context);
+            else Debug.LogError(formattedMsg);
         }
 
         public static void LogException(Exception exception, Object context = null)
         {
             if (DisableLogs) return;
 
-            if (context != null) UnityEngine.Debug.LogException(exception, context);
-            else UnityEngine.Debug.LogException(exception);
+            if (context != null) Debug.LogException(exception, context);
+            else Debug.LogException(exception);
         }
     }
 }

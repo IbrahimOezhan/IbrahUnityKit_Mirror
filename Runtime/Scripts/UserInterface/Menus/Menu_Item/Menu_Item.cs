@@ -21,13 +21,13 @@ namespace IbrahKit
 
             if (skip)
             {
-                Debug.Log("Skipped");
+                IbrahDebug.Log("Skipped");
                 return false;
             }
 
             if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO config) && !UI_Config_Manager.GetInstance().ShowLayout(config, showOnLayouts)))
             {
-                Debug.Log("Skipped due to layout specific");
+                IbrahDebug.Log("Skipped due to layout specific");
                 return false;
             }
 

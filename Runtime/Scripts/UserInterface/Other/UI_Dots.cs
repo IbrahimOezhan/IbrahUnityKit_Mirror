@@ -36,7 +36,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.LogWarning($"{nameof(dotsText)} is null");
+                IbrahDebug.LogWarning($"{nameof(dotsText)} is null");
             }
         }
     }

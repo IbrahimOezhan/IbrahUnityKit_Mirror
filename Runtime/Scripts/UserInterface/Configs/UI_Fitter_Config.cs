@@ -19,7 +19,7 @@ namespace IbrahKit
         {
             if (marginOverride == null)
             {
-                Debug.LogWarning($"{nameof(marginOverride)} is null");
+                IbrahDebug.LogWarning($"{nameof(marginOverride)} is null");
                 return margin;
             }
 

@@ -14,19 +14,19 @@ namespace IbrahKit
         {
             if (chances == null)
             {
-                Debug.LogWarning("Passed chances list is null");
+                IbrahDebug.LogWarning("Passed chances list is null");
                 return -1;
             }
 
             if (chances.Count == 0)
             {
-                Debug.LogWarning("Passed chances list is empty");
+                IbrahDebug.LogWarning("Passed chances list is empty");
                 return -1;
             }
 
             if (chances.Count == 1)
             {
-                Debug.Log("Returned the only element");
+                IbrahDebug.Log("Returned the only element");
                 return 0;
             }
 

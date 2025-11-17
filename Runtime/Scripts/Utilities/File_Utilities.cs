@@ -25,7 +25,7 @@ namespace IbrahKit
             }
             else
             {
-                Debug.Log("File at " + filePath + " does not exist");
+                IbrahDebug.Log("File at " + filePath + " does not exist");
             }
 
             return fileContent;

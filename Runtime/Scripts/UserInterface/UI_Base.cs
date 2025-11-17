@@ -10,7 +10,7 @@ namespace IbrahKit
 
         protected virtual void Awake()
         {
-            if (!Init()) Debug.Log("Init failed");
+            if (!Init()) IbrahDebug.Log("Init failed");
         }
 
         protected virtual void Start()
@@ -45,7 +45,7 @@ namespace IbrahKit
 
             if (!transform.BetterTryGetComponentInParent<UI_Menu>(out parentMenu, true))
             {
-                Debug.LogError($"UI Menu missing: {transform.GetTransformPath()}");
+                IbrahDebug.LogError($"UI Menu missing: {transform.GetTransformPath()}");
                 return false;
             }
 
@@ -60,7 +60,7 @@ namespace IbrahKit
         {
             if (!Init())
             {
-                Debug.LogWarning("Parent Menu is null");
+                IbrahDebug.LogWarning("Parent Menu is null");
             }
 
             return parentMenu;

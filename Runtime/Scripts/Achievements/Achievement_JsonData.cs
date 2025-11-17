@@ -7,8 +7,11 @@ namespace IbrahKit
     /// </summary>
     public class Achievement_JsonData
     {
-        [JsonInclude] private string title;
-        [JsonInclude] private string description;
+        [JsonInclude]
+        private string title;
+
+        [JsonInclude]
+        private string description;
 
         public string Title()
         {

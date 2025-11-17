@@ -84,7 +84,7 @@ namespace IbrahKit
         {
             if (_origin == null)
             {
-                Debug.LogWarning("Provided origin menu is null");
+                IbrahDebug.LogWarning("Provided origin menu is null");
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace IbrahKit
 
             if (String_Utilities.IsEmpty(_key))
             {
-                Debug.LogWarning("Provided key is empty or null");
+                IbrahDebug.LogWarning("Provided key is empty or null");
                 return false;
             }
 
@@ -105,7 +105,7 @@ namespace IbrahKit
 
             if (setting == null)
             {
-                Debug.LogWarning("No setting found with key: " + _key);
+                IbrahDebug.LogWarning("No setting found with key: " + _key);
                 return false;
             }
 

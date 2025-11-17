@@ -153,7 +153,7 @@ namespace IbrahKit
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                IbrahDebug.LogException(e);
                 return value;
             }
         }

@@ -53,6 +53,25 @@ namespace IbrahKit
             return savable;
         }
 
+        public bool TryLoad<T>(string name, Savable defaultValue, out T result, bool logWarning = true) where T : Savable
+        {
+            Savable savable = currentSave.Load(name, defaultValue);
+
+            if (savable is T casted)
+            {
+                result = casted;
+                return true;
+            }
+
+            if (logWarning)
+            {
+                IbrahDebug.LogWarning($"Savable of the name {name} is not of type {typeof(T)}");
+            }
+
+            result = default;
+            return false;
+        }
+
         public void Return(string name, Savable value, bool stillInUse = false)
         {
             currentSave.Return(name, value, encrypt, stillInUse);
@@ -82,7 +101,8 @@ namespace IbrahKit
 
             if (folders.Count == 0)
             {
-                Debug.Log("Returned new save folder");
+                IbrahDebug.Log("Returned new save folder");
+
                 return new(new(), new(), Path.Combine(saveFolderPath, Application.version), key, encrypt);
             }
 
@@ -96,14 +116,15 @@ namespace IbrahKit
 
                 if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save.State.Valid)
                 {
-                    Debug.Log("Returned save folder with same version");
+                    IbrahDebug.Log("Returned save folder with same version");
+
                     return save;
                 }
             }
 
             saves = saves.OrderByDescending(x => x.GetValidFileCount()).ThenBy(x => x.GetState()).ToList();
 
-            Debug.Log("Returned best save folder");
+            IbrahDebug.Log("Returned best save folder");
 
             return saves[0];
         }

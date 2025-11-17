@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using UnityEngine;
 using static IbrahKit.Local_Manager;
-using Debug = IbrahKit.Debug;
+using IbrahDebug = IbrahKit.IbrahDebug;
 
 [CreateAssetMenu(fileName = "LocalConfig", menuName = "ScriptableObjects/LocalConfig")]
 public class Local_Config : SerializedScriptableObject, IFileWatcher
@@ -38,7 +38,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
             }
             else
             {
-                Debug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
+                IbrahDebug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
                 return false;
             }
         }
@@ -47,7 +47,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
         if (empty)
         {
-            Debug.Log($"String with key{key} and language index {index} and language {language} empty");
+            IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
         }
 
         return !empty;
@@ -73,7 +73,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
         if (lines.Count == 0)
         {
-            Debug.LogWarning("No elements after trimming");
+            IbrahDebug.LogWarning("No elements after trimming");
             return;
         }
 
@@ -88,7 +88,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
         {
             if (!Parse_Utilities.IsValidJson(rowOne[i]))
             {
-                Debug.LogWarning($"Invalid json in row 0 column {i}");
+                IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
                 return;
             }
 
@@ -98,7 +98,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
                 if (!ll.IsValid(out _))
                 {
-                    Debug.LogWarning($"System language in column {i} cannot be parsed");
+                    IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
                     return;
                 }
 
@@ -106,7 +106,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
             }
             catch (Exception e)
             {
-                Debug.LogException(e);
+                IbrahDebug.LogException(e);
                 return;
             }
         }
@@ -124,7 +124,7 @@ public class Local_Config : SerializedScriptableObject, IFileWatcher
 
             while (row.Count > requiredCount)
             {
-                Debug.LogWarning($"Removed {row[row.Count - 1]} from the back");
+                IbrahDebug.LogWarning($"Removed {row[row.Count - 1]} from the back");
                 row.RemoveAt(row.Count - 1);
             }
 

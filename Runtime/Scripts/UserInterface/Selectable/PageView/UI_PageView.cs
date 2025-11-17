@@ -19,7 +19,7 @@ namespace IbrahKit
         {
             if (left == null)
             {
-                Debug.LogWarning($"{nameof(left)} is null");
+                IbrahDebug.LogWarning($"{nameof(left)} is null");
             }
             else
             {
@@ -28,7 +28,7 @@ namespace IbrahKit
 
             if (right == null)
             {
-                Debug.LogWarning($"{nameof(right)} is null");
+                IbrahDebug.LogWarning($"{nameof(right)} is null");
             }
             else
             {
@@ -83,7 +83,7 @@ namespace IbrahKit
         {
             if (pageText == null)
             {
-                Debug.LogWarning($"{nameof(pageText)} is null");
+                IbrahDebug.LogWarning($"{nameof(pageText)} is null");
             }
             else
             {
@@ -92,7 +92,7 @@ namespace IbrahKit
 
             if (left == null)
             {
-                Debug.LogWarning($"{nameof(left)} is null");
+                IbrahDebug.LogWarning($"{nameof(left)} is null");
             }
             else
             {
@@ -101,7 +101,7 @@ namespace IbrahKit
 
             if (right == null)
             {
-                Debug.LogWarning($"{nameof(right)} is null");
+                IbrahDebug.LogWarning($"{nameof(right)} is null");
             }
             else
             {

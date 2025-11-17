@@ -16,13 +16,13 @@ namespace IbrahKit
             {
                 fileContent = String_Utilities.Encrypt(fileContent, key);
 
-                Debug.Log("File probably encrypted. Attemping decryption");
+                IbrahDebug.Log("File probably encrypted. Attemping decryption");
 
                 tryParse = Parse_Utilities.IsValidJson(fileContent);
 
                 if (!tryParse)
                 {
-                    Debug.LogError("File still not in json format after decryption. Probably damaged");
+                    IbrahDebug.LogError("File still not in json format after decryption. Probably damaged");
                 }
             }
 
@@ -51,13 +51,13 @@ namespace IbrahKit
         {
             if (String_Utilities.IsEmpty(json))
             {
-                Debug.LogWarning("Passed json is null or empty");
+                IbrahDebug.LogWarning("Passed json is null or empty");
                 return null;
             }
 
             if (type == null)
             {
-                Debug.LogWarning("Passed type is null");
+                IbrahDebug.LogWarning("Passed type is null");
                 return null;
             }
 

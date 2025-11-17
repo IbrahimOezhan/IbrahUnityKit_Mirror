@@ -9,7 +9,7 @@ namespace IbrahKit
         {
             if (transition == null)
             {
-                Debug.LogWarning("Passed transition is null");
+                IbrahDebug.LogWarning("Passed transition is null");
                 return;
             }
 
