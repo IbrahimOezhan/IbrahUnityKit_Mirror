@@ -4,17 +4,22 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Button_Base : Menu_Item_Extension
+    public class Menu_Item_Button_Base : Menu_Item_Base
     {
         protected UI_Menu_Item_Button_Text spawnedButton;
+
         protected string value;
 
         [SerializeField] private LocalType localType = LocalType.LOCALIZE;
+
         [SerializeField, Dropdown(Local_Manager.DROP), ShowIf(nameof(localType), LocalType.LOCALIZE)] private string localizationKey;
+
         [SerializeField, ShowIf(nameof(localType), LocalType.STATIC)] private string staticText;
 
-        public override bool Spawn(RectTransform parent, UI_Menu menu)
+        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {
+            go = null;
+
             UI_Menu_Config_SO menuConfigSO = menu.GetContentController().GetMenuConfig();
 
             if (menuConfigSO == null) return false;
@@ -39,7 +44,7 @@ namespace IbrahKit
                 return false;
             }
 
-            spawnedObject = spawnedButton.gameObject;
+            go = spawnedButton.gameObject;
 
             return true;
         }

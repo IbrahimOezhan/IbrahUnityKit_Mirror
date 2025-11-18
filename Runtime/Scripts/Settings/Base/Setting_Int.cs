@@ -12,7 +12,7 @@ public class Setting_Int : Setting_Number<int>
         throw new System.NotImplementedException();
     }
 
-    public override bool SetValue(int value)
+    public override bool TrySetValue(int value)
     {
         throw new System.NotImplementedException();
     }

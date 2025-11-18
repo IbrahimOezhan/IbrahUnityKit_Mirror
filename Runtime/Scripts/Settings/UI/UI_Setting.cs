@@ -1,6 +1,7 @@
+using IbrahKit;
 using UnityEngine;
 
-public class UI_Setting : MonoBehaviour
+public class UI_Setting<TSetting> : MonoBehaviour
 {
 
 }

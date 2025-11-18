@@ -1,10 +1,13 @@
 using IbrahKit;
 using UnityEngine;
 
-public class Setting_String : Setting<string>
+namespace IbrahKit.Settings
 {
-    public override bool SetValue(string value)
+    public class Setting_String : Setting<string>
     {
-        throw new System.NotImplementedException();
+        public override bool TrySetValue(string value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

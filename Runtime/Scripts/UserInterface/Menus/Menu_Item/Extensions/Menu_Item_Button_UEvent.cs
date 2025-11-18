@@ -3,15 +3,15 @@ using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class Menu_Item_UEvent : Menu_Item_Button_Base
+    public class Menu_Item_Button_UEvent : Menu_Item_Button_Base
     {
         [SerializeField] private UnityEvent unityEvent;
 
-        public override bool Spawn(RectTransform parent, UI_Menu menu)
+        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {
-            bool result = base.Spawn(parent, menu);
+            bool res = base.TrySpawnPro(parent, menu, out go);
 
-            if (!result) return false;
+            if (res) return false;
 
             spawnedButton.Initialize(value).AddListener(() => { unityEvent.Invoke(); });
 

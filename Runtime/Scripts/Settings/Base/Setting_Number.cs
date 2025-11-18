@@ -1,13 +1,16 @@
 using IbrahKit;
 using UnityEngine;
 
-public abstract class Setting_Number<TNumber> : Setting<TNumber>
+namespace IbrahKit.Settings
 {
-    [SerializeField] protected TNumber min;
-    [SerializeField] protected TNumber max;
-    [SerializeField] protected TNumber increment;
+    public abstract class Setting_Number<TNumber> : Setting<TNumber>
+    {
+        public abstract void Increment();
 
-    public abstract void Increment();
+        public abstract void Decrement();
 
-    public abstract void Decrement();
+        public abstract bool IsMin();
+
+        public abstract bool IsMax();
+    }
 }

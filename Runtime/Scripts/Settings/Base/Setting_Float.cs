@@ -1,26 +1,33 @@
+using Codice.Client.BaseCommands;
 using UnityEngine;
 
-public class Setting_Float : Setting_Number<float>
+namespace IbrahKit.Settings
 {
-    public override void Decrement()
+    public class Setting_Float : Setting_Number<float>, ISettingRange
     {
-        currentValue -= increment;
-    }
-
-    public override void Increment()
-    {
-        currentValue += increment;
-    }
-
-    public override bool SetValue(float value)
-    {
-        bool condition = value >= min && value <= max;
-
-        if (condition)
+        public override void Decrement()
         {
-            currentValue = value;
+
         }
 
-        return condition;
+        public override void Increment()
+        {
+
+        }
+
+        public void Next()
+        {
+
+        }
+
+        public void Previous()
+        {
+
+        }
+
+        public override bool TrySetValue(float value)
+        {
+
+        }
     }
 }

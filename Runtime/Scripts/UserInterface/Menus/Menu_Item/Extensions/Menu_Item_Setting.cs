@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Setting : Menu_Item_Extension
+    public class Menu_Item_Setting : Menu_Item_Base
     {
         [SerializeField] private Settings_Interface_Type settingType;
 
@@ -43,6 +43,11 @@ namespace IbrahKit
             settingInstance.UpdateUI();
 
             return true;
+        }
+
+        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
