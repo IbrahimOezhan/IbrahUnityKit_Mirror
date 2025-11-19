@@ -10,9 +10,11 @@ namespace IbrahKit
 
         [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu menuReference;
 
-        public override bool Spawn(RectTransform parent, UI_Menu menu)
+        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {
-            base.Spawn(parent, menu);
+            bool result = base.TrySpawnPro(parent, menu, out go);
+
+            if (!result) return false;
 
             switch (changeType)
             {

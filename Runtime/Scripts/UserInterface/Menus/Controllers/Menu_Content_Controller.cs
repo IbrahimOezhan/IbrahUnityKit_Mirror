@@ -18,8 +18,8 @@ namespace IbrahKit
         [SerializeField]
         private Transform list;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeField, ShowIf(nameof(ShowMenuItems))]
-        private List<Menu_Item> listMenuItems = new();
+        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeReference, ShowIf(nameof(ShowMenuItems))]
+        private List<Menu_Item_Base> listMenuItems = new();
 
         [TabGroup("Menu Settings", order: -1), Tooltip("If true, reload menu items every time the menu is opened.")]
         [SerializeField]
@@ -73,7 +73,7 @@ namespace IbrahKit
 
         private void SpawnMenuContent()
         {
-            foreach (Menu_Item menuItem in listMenuItems)
+            foreach (Menu_Item_Base menuItem in listMenuItems)
             {
                 if (TrySpawnMenuItem(menuItem, list as RectTransform, out GameObject _instance))
                 {
@@ -82,9 +82,9 @@ namespace IbrahKit
             }
         }
 
-        public bool TrySpawnMenuItem(Menu_Item menuItem, RectTransform parent, out GameObject result)
+        public bool TrySpawnMenuItem(Menu_Item_Base menuItem, RectTransform parent, out GameObject result)
         {
-            if (!menuItem.Spawn(parent, menu, out result)) return false;
+            if (!menuItem.TrySpawn(parent, menu, out result)) return false;
 
             return result != null;
         }

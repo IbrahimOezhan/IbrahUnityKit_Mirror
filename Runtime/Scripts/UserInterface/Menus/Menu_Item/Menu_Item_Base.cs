@@ -1,7 +1,6 @@
 using IbrahKit;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public abstract class Menu_Item_Base
@@ -33,5 +32,5 @@ public abstract class Menu_Item_Base
         return false;
     }
 
-    protected abstract bool TrySpawnPro(RectTransform parent, UI_Menu menu,out GameObject go);
+    protected abstract bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go);
 }

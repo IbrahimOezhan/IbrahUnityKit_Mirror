@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Settings_UI_Config : MonoBehaviour
+namespace IbrahKit
 {
-    private struct SettingsMap
+    public class Settings_UI_Config : MonoBehaviour
     {
-        [SerializeField] private Setting
+
     }
 }

@@ -1,6 +1,3 @@
-using IbrahKit;
-using UnityEngine;
-
 namespace IbrahKit.Settings
 {
     public class Setting_String : Setting<string>

@@ -5,9 +5,11 @@ namespace IbrahKit
     [System.Serializable]
     public class Menu_Item_Back : Menu_Item_Button_Base
     {
-        public override bool Spawn(RectTransform parent, UI_Menu menu)
+        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {
-            base.Spawn(parent, menu);
+            bool result = base.TrySpawnPro(parent, menu, out go);
+
+            if (!result) return false;
 
             spawnedButton.Initialize(value).AddListener(() =>
             {

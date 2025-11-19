@@ -1,7 +1,7 @@
-using IbrahKit;
+using IbrahKit.Settings;
 using UnityEngine;
 
-public class UI_Setting<TSetting> : MonoBehaviour
+public abstract class UI_Setting : MonoBehaviour
 {
-
+    public abstract bool TryInit(Setting_Base setting);
 }

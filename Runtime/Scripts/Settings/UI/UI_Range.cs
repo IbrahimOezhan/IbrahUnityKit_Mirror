@@ -1,8 +1,9 @@
 using IbrahKit.Settings;
-using System;
-using UnityEngine;
 
-public class UI_Range : UI_Setting<ISettingNumber>
+public class UI_Range : UI_Setting
 {
-
+    public override bool TryInit(Setting_Base setting)
+    {
+        return setting is ISettingNumber;
+    }
 }
