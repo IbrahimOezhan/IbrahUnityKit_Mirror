@@ -1,12 +1,15 @@
-public interface IUnityCallbacks
+namespace IbrahKit
 {
-    public void Awake();
+    public interface IUnityCallbacks
+    {
+        public abstract void Awake();
 
-    public void Enable();
+        public abstract void Enable();
 
-    public void Start();
+        public abstract void Start();
 
-    public void Disable();
+        public abstract void Disable();
 
-    public void Destroy();
+        public abstract void Destroy();
+    }
 }

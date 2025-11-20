@@ -1,4 +1,7 @@
-public class UI_Config
+namespace IbrahKit
 {
+    public abstract class UI_Config
+    {
 
+    }
 }

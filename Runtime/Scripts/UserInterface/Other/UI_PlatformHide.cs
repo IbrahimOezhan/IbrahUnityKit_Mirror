@@ -5,7 +5,8 @@ namespace IbrahKit
 {
     public class UI_PlatformHide : MonoBehaviour
     {
-        [SerializeField] private List<RuntimePlatform> hide = new();
+        [SerializeField]
+        private List<RuntimePlatform> hide = new();
 
         private void Awake()
         {

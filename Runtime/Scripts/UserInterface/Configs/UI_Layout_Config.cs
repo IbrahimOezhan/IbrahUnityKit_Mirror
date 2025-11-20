@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class UI_Layout_Config : UI_Config
+namespace IbrahKit
 {
-    [SerializeField] private List<string> activeLayouts = new();
-
-    public List<string> GetActiveLayouts()
+    [System.Serializable]
+    public class UI_Layout_Config : UI_Config
     {
-        return activeLayouts;
+        [SerializeField] private List<string> activeLayouts = new();
+
+        public List<string> GetActiveLayouts()
+        {
+            return activeLayouts;
+        }
     }
 }

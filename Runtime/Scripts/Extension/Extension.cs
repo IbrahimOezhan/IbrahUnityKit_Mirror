@@ -1,55 +1,66 @@
-using IbrahKit;
+using System;
 using UnityEngine;
-using IbrahDebug = IbrahKit.IbrahDebug;
 
-/// <summary>
-/// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
-/// </summary>
-public abstract class Extension : MonoBehaviour
+namespace IbrahKit
 {
-    protected bool init;
-
     /// <summary>
-    /// Get the order in which the extension is executed
+    /// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
     /// </summary>
-    /// <returns>The order in which the extension is executed</returns>
-    public int GetOrder()
+    public abstract class Extension
     {
-        return Order();
-    }
+        protected bool init;
 
-    protected bool IsInitialized()
-    {
-        if (!init)
+        protected GameObject go;
+
+        protected Extension_Handler_Base extension;
+
+        public Action runAllActions;
+
+        public Extension(GameObject go)
         {
-            Init();
-        }
-        else
-        {
-            return true;
+            this.go = go;
         }
 
-        if (!init)
+        public bool Init()
         {
-            IbrahDebug.LogWarning($"Could not initialize {this.GetType()} ({transform.GetTransformPath()})");
+            if (init) return true;
 
-            return false;
+            if (Application.isPlaying) return true;
+
+            init = InitPro();
+
+            return init;
         }
 
-        IbrahDebug.Log("UI Extension Init Success", Color.green);
+        protected abstract bool InitPro();
 
-        return true;
+        public void Cleanup()
+        {
+            CleanupPro();
+        }
+
+        protected abstract void CleanupPro();
+
+        public void ResetInit()
+        {
+            init = false;
+        }
+
+        public int GetOrder()
+        {
+            return GetOrderPro();
+        }
+
+        protected abstract int GetOrderPro();
+
+        public void Run()
+        {
+            if (Init())
+            {
+                RunPro();
+            }
+        }
+
+        protected abstract void RunPro();
     }
-
-    /// <summary>
-    /// Resets the extensions initialized state
-    /// </summary>
-    public void ResetInit()
-    {
-        init = false;
-    }
-
-    protected abstract int Order();
-
-    protected abstract void Init();
 }

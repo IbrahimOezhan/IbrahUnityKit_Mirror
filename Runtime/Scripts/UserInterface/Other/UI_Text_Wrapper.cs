@@ -1,86 +1,76 @@
-using IbrahKit;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Text_Wrapper
+namespace IbrahKit
 {
-    private readonly Text legacyText;
-
-    private readonly TextMeshProUGUI tmpText;
-
-    private readonly Mode mode;
-
-    public UI_Text_Wrapper(GameObject target)
+    public class UI_Text_Wrapper
     {
-        legacyText = target.GetComponent<Text>();
+        private readonly Text legacyText;
 
-        tmpText = target.GetComponent<TextMeshProUGUI>();
+        private readonly TextMeshProUGUI tmpText;
 
-        if (legacyText && tmpText)
+        private readonly Mode mode;
+
+        public UI_Text_Wrapper(GameObject target)
         {
-            IbrahDebug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
+            legacyText = target.GetComponent<Text>();
+
+            tmpText = target.GetComponent<TextMeshProUGUI>();
+
+            if (legacyText && tmpText)
+            {
+                IbrahDebug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
+            }
+
+            if (legacyText != null) mode = Mode.LEGACY;
+            else if (tmpText != null) mode = Mode.TMP;
+            else mode = Mode.NONE;
         }
 
-        if (legacyText != null)
+        public void SetText(string value)
         {
-            mode = Mode.LEGACY;
-        }
-        else if (tmpText != null)
-        {
-            mode = Mode.TMP;
-        }
-        else
-        {
-            mode = Mode.NONE;
-        }
-    }
-
-    public void SetText(string value)
-    {
-        switch (mode)
-        {
-            case Mode.LEGACY:
-                legacyText.text = value;
-                break;
-            case Mode.TMP:
-                tmpText.text = value;
-                break;
-        }
-    }
-
-    public void SetColor(Color c)
-    {
-        switch (mode)
-        {
-            case Mode.LEGACY:
-                legacyText.color = c;
-                break;
-            case Mode.TMP:
-                tmpText.color = c;
-                break;
-        }
-    }
-
-    public Vector2 GetPreferredSize()
-    {
-        switch (mode)
-        {
-            case Mode.LEGACY:
-                return new(legacyText.preferredWidth, legacyText.preferredHeight);
-            case Mode.TMP:
-                return new(tmpText.preferredWidth, tmpText.preferredHeight);
+            switch (mode)
+            {
+                case Mode.LEGACY:
+                    legacyText.text = value;
+                    break;
+                case Mode.TMP:
+                    tmpText.text = value;
+                    break;
+            }
         }
 
-        return new();
-    }
+        public void SetColor(Color c)
+        {
+            switch (mode)
+            {
+                case Mode.LEGACY:
+                    legacyText.color = c;
+                    break;
+                case Mode.TMP:
+                    tmpText.color = c;
+                    break;
+            }
+        }
 
-    public Mode GetMode() => mode;
+        public Vector2 GetPreferredSize()
+        {
+            return mode switch
+            {
+                Mode.LEGACY => new(legacyText.preferredWidth, legacyText.preferredHeight),
+                Mode.TMP => new(tmpText.preferredWidth, tmpText.preferredHeight),
+                _ => new(),
+            };
+        }
 
-    public enum Mode
-    {
-        NONE,
-        LEGACY,
-        TMP,
+        public Mode GetMode() => mode;
+
+        public enum Mode
+        {
+            NONE,
+            LEGACY,
+            TMP,
+        }
     }
 }

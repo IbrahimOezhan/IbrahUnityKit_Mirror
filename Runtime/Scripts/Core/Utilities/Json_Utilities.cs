@@ -1,28 +1,31 @@
 using System;
 using System.Text.Json;
 
-public static class Json_Utilities
+namespace IbrahKit
 {
-    public static bool TryDeserialize<T>(string json, out T result, bool throwWarning = true) where T : new()
+    public static class Json_Utilities
     {
-        JsonSerializerOptions options = new()
+        public static bool TryDeserialize<T>(string json, out T result, bool throwWarning = true) where T : new()
         {
-            IncludeFields = true,
-        };
+            JsonSerializerOptions options = new()
+            {
+                IncludeFields = true,
+            };
 
-        try
-        {
-            result = JsonSerializer.Deserialize<T>(json, options);
+            try
+            {
+                result = JsonSerializer.Deserialize<T>(json, options);
 
-            return true;
-        }
-        catch (Exception e)
-        {
-            if (throwWarning) IbrahKit.IbrahDebug.LogWarning(e.Message);
+                return true;
+            }
+            catch (Exception e)
+            {
+                if (throwWarning) IbrahKit.IbrahDebug.LogWarning(e.Message);
 
-            result = default;
+                result = default;
 
-            return false;
+                return false;
+            }
         }
     }
 }

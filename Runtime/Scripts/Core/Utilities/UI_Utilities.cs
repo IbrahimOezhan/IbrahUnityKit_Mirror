@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public static class UI_Utilities
+namespace IbrahKit
 {
-    public static Vector3[] GetCanvasCorners(this RectTransform transform, Canvas canvas)
+    public static class UI_Utilities
     {
-        Vector3[] corners = new Vector3[4];
+        public static Vector3[] GetCanvasCorners(this RectTransform transform, Canvas canvas)
+        {
+            Vector3[] corners = new Vector3[4];
 
-        transform.GetWorldCorners(corners);
+            transform.GetWorldCorners(corners);
 
-        for (int i = 0; i < 4; i++) corners[i] = canvas.transform.InverseTransformPoint(corners[i]);
+            for (int i = 0; i < 4; i++) corners[i] = canvas.transform.InverseTransformPoint(corners[i]);
 
-        return corners;
+            return corners;
+        }
     }
 }

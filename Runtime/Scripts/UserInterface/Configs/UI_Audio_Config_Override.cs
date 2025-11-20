@@ -1,7 +1,8 @@
-using IbrahKit;
-
-[System.Serializable]
-public class UI_Audio_Config_Override : OverrideSO<UI_Audio_Config_SO>
+namespace IbrahKit
 {
+    [System.Serializable]
+    public class UI_Audio_Config_Override : Override_Config_SO<UI_Audio_Config_SO>
+    {
 
+    }
 }

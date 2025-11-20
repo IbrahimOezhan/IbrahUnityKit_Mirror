@@ -22,6 +22,37 @@ namespace IbrahKit
             return result.ToString();
         }
 
+        public static List<T> GetComponentsByLevel<T>(this Transform root, bool includeThis = false, bool bottomFirst = false)
+        {
+            List<T> result = new();
+            if (root == null)
+                return result;
+
+            Queue<Transform> queue = new();
+
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                Transform current = queue.Dequeue();
+
+                if (includeThis || current != root)
+                {
+                    result.AddRange(current.GetComponents<T>());
+                }
+
+                for (int i = 0; i < current.childCount; i++)
+                {
+                    queue.Enqueue(current.GetChild(i));
+                }
+            }
+
+            if (bottomFirst) result.Reverse();
+
+            return result;
+        }
+
+
         public static List<T> BetterGetComponentsInChildren<T>(this Transform transform, bool includeThis = false)
         {
             if (transform == null)
@@ -84,7 +115,7 @@ namespace IbrahKit
 
         public static T[] BetterGetComponentsInParents<T>(this Transform transform, bool includeThis = false)
         {
-            List<T> result = new List<T>();
+            List<T> result = new();
 
             if (includeThis && transform.TryGetComponent<T>(out var element)) result.Add(element);
 
