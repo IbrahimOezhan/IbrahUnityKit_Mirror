@@ -7,7 +7,7 @@ public static class Json_Utilities
     {
         JsonSerializerOptions options = new()
         {
-            IncludeFields = true
+            IncludeFields = true,
         };
 
         try

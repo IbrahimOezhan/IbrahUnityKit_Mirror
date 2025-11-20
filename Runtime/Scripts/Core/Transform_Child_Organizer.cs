@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class ChildSorter : MonoBehaviour
+    public class Transform_Child_Organizer : MonoBehaviour
     {
         [Button]
         public void SortChildren()

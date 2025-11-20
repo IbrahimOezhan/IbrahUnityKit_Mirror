@@ -50,7 +50,7 @@ namespace IbrahKit
 
             float msy = lastMousePos.y;
 
-            float n = Number_Utilities.Normalize(msy, btm, top);
+            float n = Math_Utilities.Normalize(msy, btm, top);
 
             scrollView.GetContent().Move(n);
 

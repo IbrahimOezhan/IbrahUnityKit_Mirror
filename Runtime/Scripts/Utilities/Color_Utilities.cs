@@ -41,7 +41,7 @@ namespace IbrahKit
         /// <returns>The hex representation of the color</returns>
         public static string ToHex(this Color color, bool includeAlpha = false)
         {
-            Color32 c = color; // Auto-converts to Color32 with 0–255 range
+            Color32 c = color; // From 0-1 to 0-255 Range
             return includeAlpha ? $"#{c.r:X2}{c.g:X2}{c.b:X2}{c.a:X2}" : $"#{c.r:X2}{c.g:X2}{c.b:X2}";
         }
 

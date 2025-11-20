@@ -13,7 +13,7 @@ namespace IbrahKit
         {
             string fileName = "Screenshot-" + DateTime.Now.ToString(FORMAT) + ".png";
 
-            string screenshotsPath = Path.Combine(Path_Utilities.GetGamePath(), "Screenshots");
+            string screenshotsPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Screenshots");
 
             if (!Directory.Exists(screenshotsPath)) Directory.CreateDirectory(screenshotsPath);
 

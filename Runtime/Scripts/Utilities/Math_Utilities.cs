@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public static class Number_Utilities
+    public static class Math_Utilities
     {
         public static float Map(float _x, float _in_min, float _in_max, float _out_min, float _out_max)
         {

@@ -108,7 +108,7 @@ namespace IbrahKit
 
         private LocalLanguage GetNext(int dir)
         {
-            int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
+            int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
 
             return config.GetLanguages()[newIndex];
         }

@@ -6,8 +6,8 @@ namespace IbrahKit
 {
     public static class Dropdown_Utilities
     {
-        private static string directory = "Assets/Resources/DropdownFiles/";
-        private const string fileEnding = ".txt";
+        private static string DROPDOWN_DIR = "Assets/Resources/DropdownFiles/";
+        private const string TXT = ".txt";
 
         public static void CreateDropdown(List<string> input, string fileName)
         {
@@ -55,9 +55,9 @@ namespace IbrahKit
                 return;
             }
 
-            if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            if (!Directory.Exists(DROPDOWN_DIR)) Directory.CreateDirectory(DROPDOWN_DIR);
 
-            using StreamWriter sw = new(GetPath(fileName));
+            using StreamWriter sw = new(Path.Combine(DROPDOWN_DIR, fileName + TXT));
 
             for (int i = 0; i < input.Count; i++)
             {
@@ -67,7 +67,7 @@ namespace IbrahKit
 
         public static bool GetDropdown(string fileName, out IEnumerable<string> result)
         {
-            string path = GetPath(fileName);
+            string path = Path.Combine(DROPDOWN_DIR,fileName + TXT);
 
             if (File.Exists(path))
             {
@@ -79,11 +79,6 @@ namespace IbrahKit
             result = new List<string>();
 
             return false;
-        }
-
-        private static string GetPath(string fileName)
-        {
-            return Path.Combine(directory, fileName + fileEnding);
         }
     }
 }
