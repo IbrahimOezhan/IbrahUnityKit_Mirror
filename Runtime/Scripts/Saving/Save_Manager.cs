@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Save
 {
     /// <summary>
     /// A script that manages loading data on game start and saving it when you close the game

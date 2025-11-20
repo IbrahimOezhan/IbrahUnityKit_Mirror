@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class UI_Fitter_Config
+    public class UI_Fitter_Config : UI_Config
     {
         [SerializeField] private float margin;
 

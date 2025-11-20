@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace IbrahKit
+namespace IbrahKit.Save
 {
     internal class Save
     {

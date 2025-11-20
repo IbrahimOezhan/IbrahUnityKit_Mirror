@@ -21,7 +21,9 @@ public abstract class Menu_Item_Base
             return false;
         }
 
-        if (layoutSpecific && (UI_Configs.GetLayout(UI_Configs.GetConfigs(parent), out UI_Layout_Config_SO config) && !UI_Config_Manager.GetInstance().ShowLayout(config, showOnLayouts)))
+        if (layoutSpecific &&
+            ((UI_Configs.TryGet<UI_Layout_Config_Override, UI_Layout_Config_SO, UI_Layout_Config>(UI_Configs.GetConfigs(parent), out UI_Layout_Config result)
+            && !UI_Config_Manager.GetInstance().ShowLayout(result, showOnLayouts))))
         {
             IbrahDebug.Log("Skipped due to layout specific");
             return false;

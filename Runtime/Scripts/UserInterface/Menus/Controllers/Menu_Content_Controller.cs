@@ -111,9 +111,9 @@ namespace IbrahKit
             }
         }
 
-        public UI_Menu_Config_SO GetMenuConfig()
+        public UI_Menu_Config GetMenuConfig()
         {
-            UI_Configs.GetMenu(UI_Configs.GetConfigs(menu.transform), out UI_Menu_Config_SO result);
+            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(UI_Configs.GetConfigs(menu.transform), out UI_Menu_Config result);
 
             return result;
         }

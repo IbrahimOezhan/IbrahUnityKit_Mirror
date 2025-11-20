@@ -1,11 +1,7 @@
 namespace IbrahKit.Settings
 {
-    public class Setting_Float : Setting_Number<float>, ISettingNumber
+    public class Setting_Float : Setting_Number<float>
     {
-        public Setting_Float(float value) : base(value)
-        {
-        }
-
         public override void Decrement()
         {
             throw new System.NotImplementedException();
@@ -22,6 +18,11 @@ namespace IbrahKit.Settings
         }
 
         public override bool IsMin()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool TrySetValue(string value)
         {
             throw new System.NotImplementedException();
         }

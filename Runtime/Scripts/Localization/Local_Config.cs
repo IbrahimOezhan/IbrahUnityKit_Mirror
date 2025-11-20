@@ -1,4 +1,3 @@
-using IbrahKit;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
@@ -6,144 +5,146 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using UnityEngine;
-using static IbrahKit.Local_Manager;
-using IbrahDebug = IbrahKit.IbrahDebug;
+using static IbrahKit.Localization.Local_Manager;
 
-[CreateAssetMenu(fileName = "LocalConfig", menuName = "ScriptableObjects/LocalConfig")]
-public class Local_Config : SerializedScriptableObject, IFileWatcher
+namespace IbrahKit.Localization
 {
-    private const string LANG = "Language";
-
-    [SerializeField, OnValueChanged(nameof(Update))] private TextAsset localizationAssets;
-
-    [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
-
-    [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
-
-    public LocalLanguage GetFirstLanguage() => languages[0];
-
-    public List<LocalLanguage> GetLanguages() => languages;
-
-    public bool TryGetString(string key, LocalLanguage language, out string result)
+    [CreateAssetMenu(fileName = "LocalConfig", menuName = "ScriptableObjects/LocalConfig")]
+    public class Local_Config : SerializedScriptableObject, IFileWatcher
     {
-        result = "";
+        private const string LANG = "Language";
 
-        int index = languages.IndexOf(language);
+        [SerializeField, OnValueChanged(nameof(Update))] private TextAsset localizationAssets;
 
-        if (TryGetValue(key, out var value))
+        [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
+
+        [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
+
+        public LocalLanguage GetFirstLanguage() => languages[0];
+
+        public List<LocalLanguage> GetLanguages() => languages;
+
+        public bool TryGetString(string key, LocalLanguage language, out string result)
         {
-            if (index >= 0 && index < value.Length)
+            result = "";
+
+            int index = languages.IndexOf(language);
+
+            if (TryGetValue(key, out var value))
             {
-                result = value[index];
+                if (index >= 0 && index < value.Length)
+                {
+                    result = value[index];
+                }
+                else
+                {
+                    IbrahDebug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
+                    return false;
+                }
             }
-            else
+
+            bool empty = String_Utilities.IsEmpty(result);
+
+            if (empty)
             {
-                IbrahDebug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
-                return false;
+                IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
             }
+
+            return !empty;
         }
 
-        bool empty = String_Utilities.IsEmpty(result);
-
-        if (empty)
+        public bool TryGetValue(string key, out string[] value)
         {
-            IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
+            return keyValuePairs.TryGetValue(key, out value);
         }
 
-        return !empty;
-    }
-
-    public bool TryGetValue(string key, out string[] value)
-    {
-        return keyValuePairs.TryGetValue(key, out value);
-    }
-
-    [Button]
-    public void Update()
-    {
-        char seperator = ';';
-
-        languages = new();
-
-        keyValuePairs = new();
-
-        List<string> lines = localizationAssets.text.Split("\n").ToList();
-
-        lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), "")));
-
-        if (lines.Count == 0)
+        [Button]
+        public void Update()
         {
-            IbrahDebug.LogWarning("No elements after trimming");
-            return;
-        }
+            char seperator = ';';
 
-        string[] rowOne = GetRow(lines[0], seperator);
+            languages = new();
 
-        JsonSerializerOptions options = new()
-        {
-            IncludeFields = true
-        };
+            keyValuePairs = new();
 
-        for (int i = 1; i < rowOne.Length; i++)
-        {
-            if (!Parse_Utilities.IsValidJson(rowOne[i]))
+            List<string> lines = localizationAssets.text.Split("\n").ToList();
+
+            lines.RemoveAll(x => String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), "")));
+
+            if (lines.Count == 0)
             {
-                IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
+                IbrahDebug.LogWarning("No elements after trimming");
                 return;
             }
 
-            try
-            {
-                LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(rowOne[i], options);
+            string[] rowOne = GetRow(lines[0], seperator);
 
-                if (!ll.IsValid(out _))
+            JsonSerializerOptions options = new()
+            {
+                IncludeFields = true
+            };
+
+            for (int i = 1; i < rowOne.Length; i++)
+            {
+                if (!Parse_Utilities.IsValidJson(rowOne[i]))
                 {
-                    IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
+                    IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
                     return;
                 }
 
-                languages.Add(ll);
+                try
+                {
+                    LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(rowOne[i], options);
+
+                    if (!ll.IsValid(out _))
+                    {
+                        IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
+                        return;
+                    }
+
+                    languages.Add(ll);
+                }
+                catch (Exception e)
+                {
+                    IbrahDebug.LogException(e);
+                    return;
+                }
             }
-            catch (Exception e)
+
+            for (int i = 1; i < lines.Count; i++)
             {
-                IbrahDebug.LogException(e);
-                return;
+                List<string> row = GetRow(lines[i], seperator).ToList();
+
+                int requiredCount = languages.Count + 1;
+
+                while (row.Count < requiredCount)
+                {
+                    row.Add(string.Empty);
+                }
+
+                while (row.Count > requiredCount)
+                {
+                    IbrahDebug.LogWarning($"Removed {row[row.Count - 1]} from the back");
+                    row.RemoveAt(row.Count - 1);
+                }
+
+                string key = row[0];
+
+                row.RemoveAt(0);
+
+                keyValuePairs.TryAdd(key, row.ToArray());
             }
+
+            Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.OrderBy(x => x).ToList(), DROP);
+
+            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
+
+            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
         }
 
-        for (int i = 1; i < lines.Count; i++)
+        private string[] GetRow(string line, char seperator)
         {
-            List<string> row = GetRow(lines[i], seperator).ToList();
-
-            int requiredCount = languages.Count + 1;
-
-            while (row.Count < requiredCount)
-            {
-                row.Add(string.Empty);
-            }
-
-            while (row.Count > requiredCount)
-            {
-                IbrahDebug.LogWarning($"Removed {row[row.Count - 1]} from the back");
-                row.RemoveAt(row.Count - 1);
-            }
-
-            string key = row[0];
-
-            row.RemoveAt(0);
-
-            keyValuePairs.TryAdd(key, row.ToArray());
+            return line.Split(seperator);
         }
-
-        Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.OrderBy(x => x).ToList(), DROP);
-
-        Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
-
-        Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
-    }
-
-    private string[] GetRow(string line, char seperator)
-    {
-        return line.Split(seperator);
     }
 }

@@ -63,10 +63,7 @@ namespace IbrahKit
         {
             UI_Fitter_Config resolvedConfig = null;
 
-            if (UI_Configs.GetFitter(UI_Configs.GetConfigs(transform), out UI_Fitter_Config_SO result))
-            {
-                resolvedConfig = result.GetConfig();
-            }
+            UI_Configs.TryGet<UI_Fitter_Config_Override, UI_Fitter_Config_SO, UI_Fitter_Config>(UI_Configs.GetConfigs(transform), out resolvedConfig);
 
             resolvedConfig ??= new UI_Fitter_Config(0);
 

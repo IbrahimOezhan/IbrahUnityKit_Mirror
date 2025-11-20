@@ -2,7 +2,7 @@ using System;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     public partial class Local_Manager
     {

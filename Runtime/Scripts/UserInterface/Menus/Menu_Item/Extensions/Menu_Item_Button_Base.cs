@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using IbrahKit.Localization;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
@@ -20,11 +21,9 @@ namespace IbrahKit
         {
             go = null;
 
-            UI_Menu_Config_SO menuConfigSO = menu.GetContentController().GetMenuConfig();
+            UI_Menu_Config menuConfig = menu.GetContentController().GetMenuConfig();
 
-            if (menuConfigSO == null) return false;
-
-            UI_Menu_Config menuConfig = menuConfigSO.GetConfig();
+            if (menuConfig == null) return false;
 
             switch (localType)
             {

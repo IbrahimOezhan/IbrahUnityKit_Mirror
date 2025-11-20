@@ -1,18 +1,15 @@
 namespace IbrahKit.Settings
 {
-    public abstract class Setting_Number<TNumber> : Setting<TNumber>
+    public abstract class Setting_Number<TNumber> : Setting<TNumber>, ISettingNumber
     {
-        public Setting_Number(TNumber value)
+        public override bool Init(string initialValue)
         {
-            TrySetValue(value);
+            return TrySetValue(initialValue);
         }
 
-        public abstract void Increment();
-
         public abstract void Decrement();
-
-        public abstract bool IsMin();
-
+        public abstract void Increment();
         public abstract bool IsMax();
+        public abstract bool IsMin();
     }
 }

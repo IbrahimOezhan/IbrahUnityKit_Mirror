@@ -1,9 +1,10 @@
+using IbrahKit.Save;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     [DefaultExecutionOrder(Execution_Order.local)]
     public partial class Local_Manager : Manager_DDOL<Local_Manager>

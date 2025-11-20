@@ -1,3 +1,4 @@
+using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

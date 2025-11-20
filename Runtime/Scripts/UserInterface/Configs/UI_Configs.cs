@@ -1,44 +1,37 @@
 using IbrahKit;
+using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
 public class UI_Configs
 {
-    [SerializeField] private OverrideSO<UI_Audio_Config_SO> audio;
-    [SerializeField] private OverrideSO<UI_Fitter_Config_SO> fitter;
-    [SerializeField] private OverrideSO<UI_Layout_Config_SO> layout;
-    [SerializeField] private OverrideSO<UI_Menu_Config_SO> menu;
-    [SerializeField] private OverrideSO<UI_Styling_Config_SO> style;
+    [SerializeReference, TypeFilter(nameof(Filter))] private List<Override_SO_Base> overrides = new();
 
-    private bool GetAudio(out UI_Audio_Config_SO result)
+    private IEnumerable<Type> Filter()
     {
-        result = audio.Get();
-        return result != null;
+        return Type_Utilities.GetAllTypes(typeof(Override_SO_Base)).Except(Type_Utilities.GetTypesInCollection(overrides)).Where(x => !x.ContainsGenericParameters);
     }
 
-    public bool GetFitter(out UI_Fitter_Config_SO result)
+    public bool TryGet<TOverrideSO, TConfigSO, TConfig>(out TConfig result)
+        where TConfig : UI_Config where TConfigSO : UI_Config_SO<TConfig> where TOverrideSO : OverrideSO<TConfigSO>
     {
-        result = fitter.Get();
-        return result != null;
+        foreach (var item in overrides)
+        {
+            if (item is TOverrideSO so)
+            {
+                TConfigSO configSO = so.Get();
+                result = configSO.GetConfig();
+                return result != null;
+            }
+        }
+
+        result = default;
+        return false;
     }
 
-    public bool GetLayout(out UI_Layout_Config_SO result)
-    {
-        result = layout.Get();
-        return result != null;
-    }
-
-    public bool GetMenu(out UI_Menu_Config_SO result)
-    {
-        result = menu.Get();
-        return result != null;
-    }
-
-    public bool GetStyle(out UI_Styling_Config_SO result)
-    {
-        result = style.Get();
-        return result != null;
-    }
 
     public static UI_Configs[] GetConfigs(Transform t)
     {
@@ -61,49 +54,13 @@ public class UI_Configs
         return uiConfigs;
     }
 
-    public static bool GetAudio(UI_Configs[] configs, out UI_Audio_Config_SO result)
+    public static bool TryGet<TOverrideSO, TConfigSO, TConfig>(UI_Configs[] configs, out TConfig result)
+        where TConfig : UI_Config where TConfigSO : UI_Config_SO<TConfig> where TOverrideSO : OverrideSO<TConfigSO>
     {
         result = null;
         for (int i = 0; i < configs.Length; i++)
-            if (configs[i].GetAudio(out result))
+            if (configs[i].TryGet<TOverrideSO, TConfigSO, TConfig>(out result))
                 return true;
         return false;
     }
-
-    public static bool GetFitter(UI_Configs[] configs, out UI_Fitter_Config_SO result)
-    {
-        result = null;
-        for (int i = 0; i < configs.Length; i++)
-            if (configs[i].GetFitter(out result))
-                return true;
-        return false;
-    }
-
-    public static bool GetLayout(UI_Configs[] configs, out UI_Layout_Config_SO result)
-    {
-        result = null;
-        for (int i = 0; i < configs.Length; i++)
-            if (configs[i].GetLayout(out result))
-                return true;
-        return false;
-    }
-
-    public static bool GetMenu(UI_Configs[] configs, out UI_Menu_Config_SO result)
-    {
-        result = null;
-        for (int i = 0; i < configs.Length; i++)
-            if (configs[i].GetMenu(out result))
-                return true;
-        return false;
-    }
-
-    public static bool GetStyle(UI_Configs[] configs, out UI_Styling_Config_SO result)
-    {
-        result = null;
-        for (int i = 0; i < configs.Length; i++)
-            if (configs[i].GetStyle(out result))
-                return true;
-        return false;
-    }
-
 }
