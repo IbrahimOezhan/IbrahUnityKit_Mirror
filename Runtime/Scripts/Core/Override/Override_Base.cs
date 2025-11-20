@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class Override_Base<T>
 {
     public abstract void SetOverride(T value);

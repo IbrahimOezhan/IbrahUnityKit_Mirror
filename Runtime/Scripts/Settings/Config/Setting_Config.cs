@@ -1,50 +1,51 @@
-using IbrahKit;
-using IbrahKit.Settings;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Setting_Config<T> : ScriptableObject where T : Setting_Base, new()
+namespace IbrahKit.Settings
 {
-    [SerializeField] private string key;
-
-    [SerializeField, Dropdown(nameof(GetDropdown))] private string type;
-
-    public IEnumerable GetDropdown()
+    public abstract class Setting_Config<T> : ScriptableObject where T : Setting_Base, new()
     {
-        return Type_Utilities.GetAllTypesDropdownFormat(typeof(T));
+        [SerializeField] private string key;
 
-    }
+        [SerializeField, Dropdown(nameof(GetDropdown))] private string type;
 
-    public bool TryCreateAndDisplay(UI_Setting ui, out Setting_Base result)
-    {
-        if (TryCreate(out result))
+        public IEnumerable GetDropdown()
         {
-            if (ui.TryInit(result))
-            {
-                return true;
-            }
+            return Type_Utilities.GetAllTypesDropdownFormat(typeof(T));
+
         }
 
-        result = null;
-        return false;
-    }
-
-    public bool TryCreate(out Setting_Base result)
-    {
-        if (Settings_Manager.GetInstance().TryGetValue(GetKey(), GetDefaultValue(), out string value))
+        public bool TryCreateAndDisplay(UI_Setting ui, out Setting_Base result)
         {
-            if (float.TryParse(value, out float floatValue))
+            if (TryCreate(out result))
             {
-                result = new T();
-                return true;
+                if (ui.TryInit(result))
+                {
+                    return true;
+                }
             }
+
+            result = null;
+            return false;
         }
 
-        result = null;
-        return false;
+        public bool TryCreate(out Setting_Base result)
+        {
+            if (Settings_Manager.GetInstance().TryGetValue(GetKey(), GetDefaultValue(), out string value))
+            {
+                if (float.TryParse(value, out float floatValue))
+                {
+                    result = new T();
+                    return true;
+                }
+            }
+
+            result = null;
+            return false;
+        }
+
+        public string GetKey() => key;
+
+        public abstract string GetDefaultValue();
     }
-
-    public string GetKey() => key;
-
-    public abstract string GetDefaultValue();
 }

@@ -1,14 +1,16 @@
-using IbrahKit.Settings;
 using UnityEngine;
 
-public class Setting_Config_Float : Setting_Config_Number<Setting_Float>
+namespace IbrahKit.Settings
 {
-    [SerializeField] private float defaultValue;
-
-    [SerializeField] private Vector2 valueRange;
-
-    public override string GetDefaultValue()
+    public class Setting_Config_Float : Setting_Config_Number<Setting_Float>
     {
-        return defaultValue.ToString();
+        [SerializeField] private float defaultValue;
+
+        [SerializeField] private Vector2 valueRange;
+
+        public override string GetDefaultValue()
+        {
+            return defaultValue.ToString();
+        }
     }
 }

@@ -1,24 +1,26 @@
-using IbrahKit.Settings;
 using UnityEngine;
 
-public abstract class UI_Setting : MonoBehaviour
+namespace IbrahKit.Settings
 {
-    private Setting_Base setting;
-
-    public bool TryInit(Setting_Base setting)
+    public abstract class UI_Setting : MonoBehaviour
     {
-        if (TryInitPro(setting))
+        private Setting_Base setting;
+
+        public bool TryInit(Setting_Base setting)
         {
-            this.setting = setting;
-            return true;
+            if (TryInitPro(setting))
+            {
+                this.setting = setting;
+                return true;
+            }
+
+            return false;
         }
 
-        return false;
+        protected abstract bool TryInitPro(Setting_Base setting);
+
+        public abstract void UpdateUI();
+
+        public Setting_Base GetSetting() => setting;
     }
-
-    protected abstract bool TryInitPro(Setting_Base setting);
-
-    public abstract void UpdateUI();
-
-    public Setting_Base GetSetting() => setting;
 }
