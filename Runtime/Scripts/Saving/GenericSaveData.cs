@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace IbrahKit
+namespace IbrahKit.Save
 {
     [Serializable]
     public class GenericSaveData : Savable

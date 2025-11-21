@@ -1,72 +1,97 @@
-using IbrahKit;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[Serializable]
-public class Extension_Handler<T> where T : Extension
+namespace IbrahKit
 {
-    private const string NONE = "None";
-
-    [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))]
-    private string extension = NONE;
-
-    [SerializeField, ReadOnly]
-    private List<T> extensions = new();
-
-    [SerializeField]
-    private GameObject target;
-
-    public void OnValueChanged()
+    [Serializable]
+    public class Extension_Handler<TExtension> : Extension_Handler_Base where TExtension : Extension
     {
-        SortList();
+        private const string NONE = "None";
 
-        Type[] types = Type_Utilities.GetAllTypes(typeof(T));
+        [SerializeField, OnValueChanged(nameof(AddExtension)), ValueDropdown(nameof(GetDropdown))]
+        private string extension = NONE;
 
-        for (int i = 0; i < types.Length; i++)
+        [OdinSerialize, SerializeReference, ListDrawerSettings(HideAddButton = true), DisableContextMenu]
+        private List<Extension> extensions = new();
+
+        private IEnumerable GetDropdown()
         {
-            if (types[i].Name == extension)
+            return Type_Utilities.GetAllTypesDropdownFormat(typeof(TExtension), extensions.Select(x => x.GetType()));
+        }
+
+        public void AddExtension()
+        {
+            SortList();
+
+            Type[] types = Type_Utilities.GetAllTypes(typeof(TExtension));
+
+            for (int i = 0; i < types.Length; i++)
             {
-                T extensionToAdd = target.AddComponent(types[i]) as T;
+                if (types[i].FullName == extension)
+                {
+                    extensions.Add((TExtension)Activator.CreateInstance(types[i], new object[] { this }));
 
-                extensions.Add(extensionToAdd);
+                    SortList();
 
-                SortList();
+                    break;
+                }
+            }
 
-                break;
+            extension = NONE;
+        }
+
+        private void SortList()
+        {
+            extensions.RemoveAll(x => x == null);
+
+            extensions.Sort((a, b) =>
+            {
+                return a.GetOrder().CompareTo(b.GetOrder());
+            });
+        }
+
+        public bool TryGet<TExtension2>(out TExtension2 result) where TExtension2 : TExtension
+        {
+            foreach (var item in extensions)
+            {
+                if (item is TExtension2 ex)
+                {
+                    result = ex;
+                    return true;
+                }
+            }
+
+            result = null;
+            return false;
+        }
+
+        public override void RunExtensions()
+        {
+            foreach (var item in extensions)
+            {
+                item.Run();
             }
         }
 
-        extension = NONE;
-    }
-
-    private void SortList()
-    {
-        extensions.RemoveAll(x => x == null);
-
-        extensions.Sort((a, b) =>
+        public override void InitExtensions()
         {
-            return a.GetOrder().CompareTo(b.GetOrder());
-        });
-    }
+            foreach (var item in extensions)
+            {
+                item.Init();
+            }
+        }
 
-    private IEnumerable GetAllSubtypes()
-    {
-        return Type_Utilities.GetAllTypesDropdownFormat(typeof(T));
-    }
-
-    [Button]
-    private void UpdateExtensionList()
-    {
-        T[] _extension = target.GetComponents<T>();
-
-        extensions = new(_extension.ToList());
-
-        extensions.ForEach(x => x.ResetInit());
-
-        SortList();
+        public override void Cleanup()
+        {
+            foreach (var item in extensions)
+            {
+                item.Cleanup();
+            }
+        }
     }
 }

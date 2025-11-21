@@ -1,4 +1,7 @@
-public interface IConfig
+namespace IbrahKit
 {
-    public UI_Configs GetConfigs();
+    public interface IConfig
+    {
+        public UI_Configs GetConfigs();
+    }
 }

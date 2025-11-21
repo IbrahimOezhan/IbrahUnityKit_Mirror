@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
 
     public class Local_Settings : EditorWindow

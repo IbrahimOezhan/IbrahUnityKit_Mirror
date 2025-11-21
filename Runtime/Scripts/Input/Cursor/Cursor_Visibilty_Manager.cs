@@ -11,9 +11,9 @@ namespace IbrahKit
 
         [SerializeField] private List<CursorVisibilty> cursorVisibility;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             Input_Manager.GetInstance().OnInputChanged += OnInputTypeChanged;
             Input_Manager.GetInstance().InputUpdate();
@@ -50,9 +50,14 @@ namespace IbrahKit
             }
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
-            if (Input_Manager.GetInstance()) Input_Manager.GetInstance().OnInputChanged -= OnInputTypeChanged;
+            base.InstanceDestroy();
+
+            if (Input_Manager.GetInstance())
+            {
+                Input_Manager.GetInstance().OnInputChanged -= OnInputTypeChanged;
+            }
         }
 
         private bool IsVisible(string state)

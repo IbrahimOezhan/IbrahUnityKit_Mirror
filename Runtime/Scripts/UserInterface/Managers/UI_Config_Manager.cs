@@ -10,7 +10,7 @@ namespace IbrahKit
 
         public UI_Configs GetConfigs() => configs;
 
-        public T GetConfig<T>(params OverrideSO<T>[] configs) where T : ScriptableObject
+        public T GetConfig<T>(params Override_Config_SO<T>[] configs) where T : ScriptableObject
         {
             for (int i = 0; i < configs.Length; i++)
             {
@@ -23,9 +23,9 @@ namespace IbrahKit
             return default;
         }
 
-        public bool ShowLayout(UI_Layout_Config_SO layoutConfig, List<string> layouts)
+        public bool ShowLayout(UI_Layout_Config layoutConfig, List<string> layouts)
         {
-            return layoutConfig.GetConfig().GetActiveLayouts().Intersect(layouts).Count() > 0;
+            return layoutConfig.GetActiveLayouts().Intersect(layouts).Count() > 0;
         }
     }
 }

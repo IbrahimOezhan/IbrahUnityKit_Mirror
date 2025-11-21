@@ -1,5 +1,4 @@
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace IbrahKit
     {
         private readonly List<IDebug> debugs = new();
 
-        [SerializeField, Required] private UI_Text_Setter debugContent;
+        [SerializeField, Required] private UI_Interative_Extension_Text_Setter debugContent;
 
         [SerializeField, Required] private UI_Menu debugContainer;
 
@@ -37,7 +36,7 @@ namespace IbrahKit
 
         private void FixedUpdate()
         {
-            if (debugContainer.GetStateController().GetCompactState() != Menu_State_Controller.StateCompact.ENABLED)
+            if (debugContainer.GetStateController().GetCompactState() != UI_Menu_Controller_State.StateCompact.ENABLED)
             {
                 return;
             }
@@ -46,19 +45,7 @@ namespace IbrahKit
 
             foreach (IDebug debug in debugs)
             {
-                if (!catchExceptions)
-                {
-                    sb.AppendLine(debug.DebugContent());
-                    continue;
-                }
-                try
-                {
-                    sb.AppendLine(debug.DebugContent());
-                }
-                catch (Exception ex)
-                {
-                    sb.AppendLine($"{debug.gameObject.name} caused an exception: {ex.Message}");
-                }
+                debug.Run(sb, catchExceptions);
             }
 
             string s = sb.ToString();

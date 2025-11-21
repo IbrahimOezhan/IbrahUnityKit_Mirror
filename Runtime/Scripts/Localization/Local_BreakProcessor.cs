@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     public class Local_BreakProcessor : Local_Processor
     {

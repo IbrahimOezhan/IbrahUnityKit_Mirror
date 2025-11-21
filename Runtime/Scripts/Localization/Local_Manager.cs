@@ -1,9 +1,10 @@
+using IbrahKit.Save;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     [DefaultExecutionOrder(Execution_Order.local)]
     public partial class Local_Manager : Manager_DDOL<Local_Manager>
@@ -26,9 +27,9 @@ namespace IbrahKit
 
         [HideInInspector] public Action OnLanguageChanged;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             if (Save_Manager.GetInstance().TryLoad(SAVE, new SaveData(), out saveData))
             {
@@ -40,18 +41,15 @@ namespace IbrahKit
             }
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
-            if (Instance == this)
+            current.IsValid(out SystemLanguage sys);
+
+            saveData.SetLanguage(sys);
+
+            if (Save_Manager.TryGet(out Save_Manager result))
             {
-                current.IsValid(out SystemLanguage sys);
-
-                saveData.SetLanguage(sys);
-
-                if (Save_Manager.TryGet(out Save_Manager result))
-                {
-                    result.Return(SAVE, saveData);
-                }
+                result.Return(SAVE, saveData);
             }
         }
 
@@ -108,7 +106,7 @@ namespace IbrahKit
 
         private LocalLanguage GetNext(int dir)
         {
-            int newIndex = Number_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
+            int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
 
             return config.GetLanguages()[newIndex];
         }

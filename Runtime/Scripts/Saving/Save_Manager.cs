@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Save
 {
     /// <summary>
     /// A script that manages loading data on game start and saving it when you close the game
@@ -21,11 +21,11 @@ namespace IbrahKit
 
         private static GenericSaveData generic;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
-            string saveFolderPath = Path.Combine(Path_Utilities.GetGamePath(), "Saves");
+            string saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
 
             if (!Directory.Exists(saveFolderPath))
             {
@@ -38,12 +38,11 @@ namespace IbrahKit
 
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
-            if (GetInstance() == this)
-            {
-                currentSave.FlushAll(encrypt);
-            }
+            base.InstanceDestroy();
+
+            currentSave.FlushAll(encrypt);
         }
 
         public Savable Load(string name, Savable defaultValue)
@@ -88,7 +87,7 @@ namespace IbrahKit
 
             Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
 
-            if (bestSave.GetState() == Save.State.Valid) return bestSave;
+            if (bestSave.GetState() == SaveState.Valid) return bestSave;
 
             return new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
         }
@@ -112,14 +111,14 @@ namespace IbrahKit
             {
                 Save save = new(folders[i], key);
 
-                saves.Add(save);
-
-                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save.State.Valid)
+                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == SaveState.Valid)
                 {
                     IbrahDebug.Log("Returned save folder with same version");
 
                     return save;
                 }
+
+                saves.Add(save);
             }
 
             saves = saves.OrderByDescending(x => x.GetValidFileCount()).ThenBy(x => x.GetState()).ToList();

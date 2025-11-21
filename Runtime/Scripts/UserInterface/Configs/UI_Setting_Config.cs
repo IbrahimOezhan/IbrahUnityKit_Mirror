@@ -1,0 +1,17 @@
+using IbrahKit.Settings;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace IbrahKit
+{
+    public class UI_Setting_Config : UI_Config
+    {
+        [SerializeField] private List<SettingsMap> settings;
+
+        private struct SettingsMap
+        {
+            [SerializeField] private Setting_Base setting;
+            [SerializeField] private UI_Setting settingUI;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 using System;
 
-namespace IbrahKit
+namespace IbrahKit.Save
 {
     public class SaveInUseException : Exception
     {

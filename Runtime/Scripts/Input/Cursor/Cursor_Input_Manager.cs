@@ -15,9 +15,9 @@ namespace IbrahKit
 
         public Action OnLMB;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             input = new();
 
@@ -37,8 +37,10 @@ namespace IbrahKit
             mousePos = input.Map.MousePos.ReadValue<Vector2>();
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
+            base.InstanceDestroy();
+
             if (input != null)
             {
                 input.Map.LMB.performed -= LMB;

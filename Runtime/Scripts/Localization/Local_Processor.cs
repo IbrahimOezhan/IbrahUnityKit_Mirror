@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     public abstract class Local_Processor
     {
