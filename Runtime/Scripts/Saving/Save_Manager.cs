@@ -21,9 +21,9 @@ namespace IbrahKit.Save
 
         private static GenericSaveData generic;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             string saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
 
@@ -38,12 +38,11 @@ namespace IbrahKit.Save
 
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
-            if (GetInstance() == this)
-            {
-                currentSave.FlushAll(encrypt);
-            }
+            base.InstanceDestroy();
+
+            currentSave.FlushAll(encrypt);
         }
 
         public Savable Load(string name, Savable defaultValue)
@@ -88,7 +87,7 @@ namespace IbrahKit.Save
 
             Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
 
-            if (bestSave.GetState() == Save.State.Valid) return bestSave;
+            if (bestSave.GetState() == SaveState.Valid) return bestSave;
 
             return new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
         }
@@ -112,14 +111,14 @@ namespace IbrahKit.Save
             {
                 Save save = new(folders[i], key);
 
-                saves.Add(save);
-
-                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save.State.Valid)
+                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == SaveState.Valid)
                 {
                     IbrahDebug.Log("Returned save folder with same version");
 
                     return save;
                 }
+
+                saves.Add(save);
             }
 
             saves = saves.OrderByDescending(x => x.GetValidFileCount()).ThenBy(x => x.GetState()).ToList();

@@ -6,7 +6,7 @@ namespace IbrahKit
     public class UI_Menu_Item_Button_Text : MonoBehaviour
     {
         [SerializeField] private UI_Selectable selec;
-        [SerializeField] private UI_Text_Modifier text;
+        [SerializeField] private UI_Interative_Extension_Text_Modifier text;
 
         public UnityEvent Initialize(string value)
         {
@@ -16,12 +16,12 @@ namespace IbrahKit
                 return new();
             }
 
-            if (text is UI_Localization local)
+            if (text is UI_Interactive_Extension_Localization local)
             {
                 local.SetKey(value);
             }
 
-            if (text is UI_Text_Setter setter)
+            if (text is UI_Interative_Extension_Text_Setter setter)
             {
                 setter.SetText(value);
             }

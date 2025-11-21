@@ -12,7 +12,7 @@ namespace IbrahKit
         private UI_Selectable right;
 
         [SerializeField]
-        private UI_Text_Setter value;
+        private UI_Interative_Extension_Text_Setter value;
 
         protected override bool TryInitPro(Setting_Base setting)
         {

@@ -13,9 +13,9 @@ namespace IbrahKit
 
         [SerializeField] private SaveData saveData = new();
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE_DATA_NAME, new SaveData());
         }

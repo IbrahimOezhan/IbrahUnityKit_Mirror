@@ -20,9 +20,9 @@ namespace IbrahKit
             input.Navigation.Move.performed += Navigate;
         }
 
-        protected override void OnEnable()
+        protected override void Enable()
         {
-            base.OnEnable();
+            base.Enable();
 
             activeSelectables.Add(this);
 

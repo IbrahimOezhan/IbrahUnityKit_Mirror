@@ -21,9 +21,9 @@ namespace IbrahKit
 
         public Action<bool> OnPause;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             input = new();
 
@@ -32,8 +32,10 @@ namespace IbrahKit
             input.Map.Pause.performed += Pause;
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
+            base.InstanceDestroy();
+
             if (input != null)
             {
                 input.Map.Pause.performed -= Pause;
@@ -67,7 +69,7 @@ namespace IbrahKit
 
                 paused = _paused;
             }
-            else if (!_paused && menu.GetStateController().GetCompactState() == Menu_State_Controller.StateCompact.ENABLED)
+            else if (!_paused && menu.GetStateController().GetCompactState() == UI_Menu_Controller_State.StateCompact.ENABLED)
             {
                 menu.GetStateController().Disable();
 

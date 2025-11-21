@@ -19,20 +19,25 @@ namespace IbrahKit
 
             if (unlockOnUnlock != null)
             {
-                for (int i = 0; i < unlockOnUnlock.Length; i++)
-                {
-                    if (unlockOnUnlock[i] == null)
-                    {
-                        IbrahDebug.LogWarning(nameof(unlockOnUnlock) + " contains null values");
-                        continue;
-                    }
-                    unlockOnUnlock[i].Unlock();
-                }
+                UnlockOnUnlock();
             }
 
             if (Unlockables_Manager.TryGet(out Unlockables_Manager result))
             {
                 Unlockables_Manager.GetInstance().Unlock(this);
+            }
+        }
+
+        private void UnlockOnUnlock()
+        {
+            for (int i = 0; i < unlockOnUnlock.Length; i++)
+            {
+                if (unlockOnUnlock[i] == null)
+                {
+                    IbrahDebug.LogWarning(nameof(unlockOnUnlock) + " contains null values");
+                    continue;
+                }
+                unlockOnUnlock[i].Unlock();
             }
         }
 

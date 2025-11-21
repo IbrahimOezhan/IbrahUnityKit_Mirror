@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace IbrahKit.Save
 {
-    internal class Save
+    internal partial class Save
     {
         private string key;
 
@@ -14,13 +14,13 @@ namespace IbrahKit.Save
 
         private string version;
 
-        private State state = State.Valid;
+        private SaveState state = SaveState.Valid;
 
         private string[] filePaths = new string[0];
 
         private bool[] encrypted = new bool[0];
 
-        private State[] fileState = new State[0];
+        private SaveState[] fileState = new SaveState[0];
 
         private HashSet<Savable> inUse = new();
 
@@ -72,14 +72,14 @@ namespace IbrahKit.Save
             {
                 IbrahDebug.LogWarning(ex.Message);
 
-                state = State.Corrupted;
+                state = SaveState.Corrupted;
 
                 return;
             }
 
             string[] fileContents = new string[filePaths.Length];
 
-            fileState = new State[filePaths.Length];
+            fileState = new SaveState[filePaths.Length];
 
             bool[] validDecrypt = new bool[filePaths.Length];
 
@@ -98,7 +98,7 @@ namespace IbrahKit.Save
                     IbrahDebug.LogWarning($"{filePaths[i]} - {ex.Message}");
 
                     fileContents[i] = string.Empty;
-                    fileState[i] = State.Corrupted;
+                    fileState[i] = SaveState.Corrupted;
                 }
             }
 
@@ -108,22 +108,22 @@ namespace IbrahKit.Save
 
                 if (!validDecrypt[i])
                 {
-                    fileState[i] = State.Corrupted;
+                    fileState[i] = SaveState.Corrupted;
                 }
             }
 
             for (int i = 0; i < outdatedValidation.Length; i++)
             {
-                outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == State.Corrupted);
+                outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == SaveState.Corrupted);
 
                 fileState[i] = outdatedValidation[i].GetFileState();
 
-                state = (State)MathF.Max((int)state, (int)fileState[i]);
+                state = (SaveState)MathF.Max((int)state, (int)fileState[i]);
             }
 
             for (int i = 0; i < outdatedValidation.Length; i++)
             {
-                if (fileState[i] != State.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), outdatedValidation[i].GetSavable());
+                if (fileState[i] != SaveState.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), outdatedValidation[i].GetSavable());
             }
         }
 
@@ -137,7 +137,7 @@ namespace IbrahKit.Save
 
             for (int i = 0; i < fileState.Length; i++)
             {
-                if (fileState[i] == State.Valid) amount++;
+                if (fileState[i] == SaveState.Valid) amount++;
             }
 
             return amount;
@@ -147,7 +147,7 @@ namespace IbrahKit.Save
         /// Gets the total state of the this save
         /// </summary>
         /// <returns>Gets the total state of this save</returns>
-        public State GetState()
+        internal SaveState GetState()
         {
             return state;
         }
@@ -187,19 +187,7 @@ namespace IbrahKit.Save
         /// <exception cref="SaveInUseException">Throws if the saveable has already been loaded by another object</exception>
         public Savable Load(string name, Savable defaultValue)
         {
-            if (loadable.TryGetValue(name, out Savable savable))
-            {
-                if (inUse.Contains(savable))
-                {
-                    //InUse error
-                    throw new SaveInUseException();
-                }
-
-                inUse.Add(savable);
-
-                return savable;
-            }
-            else // Does not exist so return default
+            if (!loadable.TryGetValue(name, out Savable savable)) // Does not exist so return default
             {
                 loadable.Add(name, defaultValue);
 
@@ -207,6 +195,16 @@ namespace IbrahKit.Save
 
                 return defaultValue;
             }
+
+            if (inUse.Contains(savable))
+            {
+                //InUse error
+                throw new SaveInUseException();
+            }
+
+            inUse.Add(savable);
+
+            return savable;
         }
 
         /// <summary>
@@ -262,84 +260,6 @@ namespace IbrahKit.Save
         public int CompareTo(Save otherSave)
         {
             return String_Utilities.CompareVersions(version, otherSave.version);
-        }
-
-        private class ValidateTask
-        {
-            private State fileState;
-
-            private Savable result;
-
-            public ValidateTask(string filePath, string fileContent, bool instantFail)
-            {
-                // File couldnt be parsed and therefor the type cannot be read and file is useless
-                if (instantFail)
-                {
-                    fileState = State.Corrupted;
-                    result = null;
-                    return;
-                }
-
-                Savable savable = Save_Utilities.GetSavable(fileContent);
-
-                try
-                {
-                    result = Save_Utilities.GetDerivedSavable(fileContent, savable);
-
-                    fileState = State.Valid;
-                }
-                catch (JsonException)
-                {
-                    Type t = Save_Utilities.GetSavableType(savable);
-
-                    if (t == null)
-                    {
-                        // Type does not exist. File is useless
-                        fileState = State.Corrupted;
-
-                        return;
-                    }
-
-                    try
-                    {
-                        result = (Savable)Activator.CreateInstance(t);
-
-                        fileState = State.Outdated;
-                    }
-                    catch (Exception ex)
-                    {
-                        IbrahDebug.LogWarning($"[{filePath}] {ex.Message}");
-
-                        result = null;
-
-                        fileState = State.Corrupted;
-                    }
-                }
-                catch
-                {
-                    fileState = State.Corrupted;
-                }
-            }
-
-            public State GetFileState()
-            {
-                return fileState;
-            }
-
-            public Savable GetSavable()
-            {
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// The state of the save/savable
-        /// </summary>
-        public enum State
-        {
-            Valid = 0,
-            Outdated = 1,
-            Corrupted = 2,
         }
     }
 }

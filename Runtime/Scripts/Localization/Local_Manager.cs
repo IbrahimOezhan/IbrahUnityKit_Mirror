@@ -27,9 +27,9 @@ namespace IbrahKit.Localization
 
         [HideInInspector] public Action OnLanguageChanged;
 
-        protected override void OnAwake()
+        protected override void InstanceAwake()
         {
-            base.OnAwake();
+            base.InstanceAwake();
 
             if (Save_Manager.GetInstance().TryLoad(SAVE, new SaveData(), out saveData))
             {
@@ -41,18 +41,15 @@ namespace IbrahKit.Localization
             }
         }
 
-        private void OnDestroy()
+        protected override void InstanceDestroy()
         {
-            if (Instance == this)
+            current.IsValid(out SystemLanguage sys);
+
+            saveData.SetLanguage(sys);
+
+            if (Save_Manager.TryGet(out Save_Manager result))
             {
-                current.IsValid(out SystemLanguage sys);
-
-                saveData.SetLanguage(sys);
-
-                if (Save_Manager.TryGet(out Save_Manager result))
-                {
-                    result.Return(SAVE, saveData);
-                }
+                result.Return(SAVE, saveData);
             }
         }
 

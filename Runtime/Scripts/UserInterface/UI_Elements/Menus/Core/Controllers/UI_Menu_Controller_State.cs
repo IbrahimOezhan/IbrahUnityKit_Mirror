@@ -6,7 +6,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_State_Controller : IMenuState
+    public class UI_Menu_Controller_State : UI_Menu_Controller, IMenuState
     {
         private UI_Menu menu;
 
@@ -14,14 +14,15 @@ namespace IbrahKit
 
         [SerializeField, ReadOnly] private UI_Menu previous;
 
-        private static HashSet<UI_Menu> activeMenus = new();
+        private static readonly HashSet<UI_Menu> activeMenus = new();
 
-        public void Init(UI_Menu menu)
+        public void ToggleEditor(UI_Menu menu)
         {
-            this.menu = menu;
+            bool menuEnabled = GetCompactState() == StateCompact.ENABLED;
+
+            Menu_Transition.Transition(menuEnabled ? menu : null, menuEnabled ? null : menu);
         }
 
-        [Button]
         public void Enable()
         {
             Enable<Menu_Transition_Instant>();
@@ -34,7 +35,6 @@ namespace IbrahKit
             Transition(tr);
         }
 
-        [Button]
         public void Disable()
         {
             Disable<Menu_Transition_Instant>();
@@ -54,25 +54,21 @@ namespace IbrahKit
 
         public void Toggle<T>(params object[] args) where T : Menu_Transition
         {
-            bool en = GetCompactState() == StateCompact.ENABLED;
+            bool menuEnabled = GetCompactState() == StateCompact.ENABLED;
 
-            Menu_Transition tr = GenericToTransition<T>(en ? menu : null, en ? null : menu, args);
+            Menu_Transition tr = GenericToTransition<T>(menuEnabled ? menu : null, menuEnabled ? null : menu, args);
 
             Transition(tr);
         }
 
         public void Transition<T>(UI_Menu menuOut, UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
-            Menu_Transition tr = GenericToTransition<T>(menu, menuOut, args);
-
-            Transition(tr, backOverride);
+            Transition(GenericToTransition<T>(menu, menuOut, args), backOverride);
         }
 
         public void TransitionToPrevious<T>(UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
-            Menu_Transition tr = GenericToTransition<T>(menu, previous, args);
-
-            Transition(tr, backOverride);
+            Transition(GenericToTransition<T>(menu, previous, args), backOverride);
         }
 
         private void Transition(Menu_Transition tr, UI_Menu backOverride = null)
@@ -80,10 +76,6 @@ namespace IbrahKit
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
                 result.Transition(tr, backOverride);
-            }
-            else
-            {
-                tr.TransitionBackup();
             }
         }
 
@@ -122,6 +114,7 @@ namespace IbrahKit
             object[] array = new object[args.Length + 2];
 
             array[0] = menuIn;
+
             array[1] = menuOut;
 
             for (int i = 2; i < array.Length; i++)
@@ -130,6 +123,26 @@ namespace IbrahKit
             }
 
             return (Menu_Transition)Activator.CreateInstance(typeof(T), array);
+        }
+
+        public override void Init(UI_Menu menu)
+        {
+            this.menu = menu;
+        }
+
+        public override void OnMenuEnabled()
+        {
+
+        }
+
+        public override void Lifecycle()
+        {
+
+        }
+
+        public override void OnMenuDisabled()
+        {
+
         }
 
         public enum State

@@ -1,4 +1,4 @@
-using static IbrahKit.Menu_State_Controller;
+using static IbrahKit.UI_Menu_Controller_State;
 
 namespace IbrahKit
 {

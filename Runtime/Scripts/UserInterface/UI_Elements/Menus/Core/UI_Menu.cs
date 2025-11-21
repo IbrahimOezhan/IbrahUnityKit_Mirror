@@ -1,73 +1,64 @@
+using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
 {
     public class UI_Menu : MonoBehaviour, IConfig
     {
-        private bool initialized = false;
+        private readonly List<UI_Menu_Controller> controllers = new();
 
         [SerializeField]
         private UI_Configs configs;
 
         [SerializeField]
-        private Menu_Content_Controller content;
+        private UI_Menu_Controller_Content content;
 
         [SerializeField]
-        private Menu_Visibility_Controller visiblity;
+        private UI_Menu_Controller_Visibility visiblity;
 
         [SerializeField]
-        private Menu_State_Controller state;
+        private UI_Menu_Controller_State state;
+
+        public Action OnFocusOrResolutionChanged;
 
         public Action<bool> OnStateChanged;
 
         protected virtual void Awake()
         {
-            Init();
+            controllers.Add(content);
+            controllers.Add(visiblity);
+            controllers.Add(state);
 
-            content.Awake();
-            visiblity.Awake();
+            BeforeInit();
+
+            controllers.ForEach(x => x.Init(this));
+        }
+
+        protected virtual void BeforeInit()
+        {
+
         }
 
         protected virtual void OnEnable()
         {
-            visiblity.Enable();
-            content.Enable();
+            controllers.ForEach(x => x.OnMenuEnabled());
         }
 
         protected virtual void OnDisable()
         {
-            visiblity.Disable();
-            content.Disable();
-        }
-
-        protected virtual void OnDestroy()
-        {
-            content.Destroy();
-            visiblity.Destroy();
+            controllers.ForEach(x => x.OnMenuDisabled());
         }
 
         private void OnRectTransformDimensionsChange()
         {
-            content.OnMenuElementChanged();
+            OnFocusOrResolutionChanged.Invoke();
         }
 
         private void OnApplicationFocus(bool _focus)
         {
-            content.OnMenuElementChanged();
-        }
-
-        private void Init()
-        {
-            if (initialized) return;
-
-            if (Application.isPlaying) initialized = true;
-
-            visiblity.Init(this);
-
-            content.Init(this);
-
-            state.Init(this);
+            OnFocusOrResolutionChanged.Invoke();
         }
 
         public void OnClickAudio()
@@ -88,22 +79,25 @@ namespace IbrahKit
 
         public IMenuVisibility GetVisbilityController()
         {
-            Init();
             return visiblity;
         }
 
         public IMenuState GetStateController()
         {
-            Init();
             return state;
         }
 
         public IMenuContent GetContentController()
         {
-            Init();
             return content;
         }
 
         public UI_Configs GetConfigs() => configs;
+
+        [Button("Toggle")]
+        public void ToggleEditor()
+        {
+            state.ToggleEditor(this);
+        }
     }
 }

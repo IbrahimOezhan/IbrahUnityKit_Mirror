@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Visibility_Controller : IMenuVisibility, IUnityCallbacks
+    public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuVisibility
     {
         private UI_Menu menu;
         [TabGroup("Menu Settings", order: -1), SerializeField]
@@ -20,11 +20,6 @@ namespace IbrahKit
 
         [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
         private HashSet<string> hiddenBy = new();
-
-        public void Init(UI_Menu menu)
-        {
-            this.menu = menu;
-        }
 
         public void SetInteractable(bool value)
         {
@@ -74,12 +69,12 @@ namespace IbrahKit
             else ShowBy("paused");
         }
 
-        public void Awake()
+        public override void Init(UI_Menu menu)
         {
-
+            this.menu = menu;
         }
 
-        public void Enable()
+        public override void OnMenuEnabled()
         {
             if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
             {
@@ -94,12 +89,12 @@ namespace IbrahKit
             }
         }
 
-        public void Start()
+        public override void Lifecycle()
         {
 
         }
 
-        public void Disable()
+        public override void OnMenuDisabled()
         {
             if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
             {
@@ -110,11 +105,6 @@ namespace IbrahKit
             {
                 Game_Utilities.GetInstance().OnHide -= GU_Hide;
             }
-        }
-
-        public void Destroy()
-        {
-
         }
     }
 }

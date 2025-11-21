@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Localization : UI_Text_Modifier
+    [System.Serializable]
+    public class UI_Interactive_Extension_Localization : UI_Interative_Extension_Text_Modifier
     {
         [Dropdown("Localization"), SerializeField]
         protected string key;
@@ -14,7 +15,7 @@ namespace IbrahKit
         [SerializeField]
         protected string[] parameters;
 
-        public UI_Localization(GameObject go) : base(go)
+        public UI_Interactive_Extension_Localization(UI_Interactive extension) : base(extension)
         {
 
         }

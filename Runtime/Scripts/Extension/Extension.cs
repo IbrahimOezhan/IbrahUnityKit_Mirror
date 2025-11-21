@@ -6,19 +6,18 @@ namespace IbrahKit
     /// <summary>
     /// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
     /// </summary>
+    [System.Serializable]
     public abstract class Extension
     {
         protected bool init;
-
-        protected GameObject go;
 
         protected Extension_Handler_Base extension;
 
         public Action runAllActions;
 
-        public Extension(GameObject go)
+        public Extension(Extension_Handler_Base extension)
         {
-            this.go = go;
+            this.extension = extension;
         }
 
         public bool Init()

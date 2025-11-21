@@ -1,7 +1,9 @@
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace IbrahKit
@@ -11,13 +13,18 @@ namespace IbrahKit
     {
         private const string NONE = "None";
 
-        [SerializeField, OnValueChanged(nameof(OnValueChanged)), ValueDropdown(nameof(GetAllSubtypes))]
+        [SerializeField, OnValueChanged(nameof(AddExtension)), ValueDropdown(nameof(GetDropdown))]
         private string extension = NONE;
 
-        [SerializeField, ReadOnly]
-        private List<TExtension> extensions = new();
+        [OdinSerialize, SerializeReference, ListDrawerSettings(HideAddButton = true), DisableContextMenu]
+        private List<Extension> extensions = new();
 
-        public void OnValueChanged()
+        private IEnumerable GetDropdown()
+        {
+            return Type_Utilities.GetAllTypesDropdownFormat(typeof(TExtension), extensions.Select(x => x.GetType()));
+        }
+
+        public void AddExtension()
         {
             SortList();
 
@@ -25,9 +32,9 @@ namespace IbrahKit
 
             for (int i = 0; i < types.Length; i++)
             {
-                if (types[i].Name == extension)
+                if (types[i].FullName == extension)
                 {
-                    extensions.Add((TExtension)Activator.CreateInstance(types[i]));
+                    extensions.Add((TExtension)Activator.CreateInstance(types[i], new object[] { this }));
 
                     SortList();
 
@@ -48,9 +55,19 @@ namespace IbrahKit
             });
         }
 
-        private IEnumerable GetAllSubtypes()
+        public bool TryGet<TExtension2>(out TExtension2 result) where TExtension2 : TExtension
         {
-            return Type_Utilities.GetAllTypesDropdownFormat(typeof(TExtension));
+            foreach (var item in extensions)
+            {
+                if (item is TExtension2 ex)
+                {
+                    result = ex;
+                    return true;
+                }
+            }
+
+            result = null;
+            return false;
         }
 
         public override void RunExtensions()
@@ -61,7 +78,15 @@ namespace IbrahKit
             }
         }
 
-        public void Cleanup()
+        public override void InitExtensions()
+        {
+            foreach (var item in extensions)
+            {
+                item.Init();
+            }
+        }
+
+        public override void Cleanup()
         {
             foreach (var item in extensions)
             {

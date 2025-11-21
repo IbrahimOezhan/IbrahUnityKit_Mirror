@@ -1,11 +1,15 @@
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 using Application = UnityEngine.Application;
 
 namespace IbrahKit
 {
-    public class UI_Fitter : UI_Interactive_Extension
+    [System.Serializable]
+    public class UI_Interative_Extension_Fitter : UI_Interactive_Extension
     {
+        private Nullable<Vector2> lastPrefferedSize = null;
+
         private UI_Text_Wrapper text;
 
         protected RectTransform rect;
@@ -27,34 +31,45 @@ namespace IbrahKit
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
         protected int heightOffset;
 
-        public UI_Fitter(GameObject go) : base(go)
+        public UI_Interative_Extension_Fitter(UI_Interactive extension) : base(extension)
         {
+
         }
 
         protected override bool InitPro()
         {
-            text = new(target != null ? target : go);
+            text = new(target != null ? target : extension.gameObject);
 
-            bool result = (rect != null || go.TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
+            bool result = (rect != null || extension.TryGetComponent(out rect)) && text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
 
             if (!result)
             {
                 IbrahDebug.LogWarning($"TryInit failed: rect={rect} text={text} mode={text?.GetMode()}");
+                return false;
             }
 
-            return result;
-        }
+            interactive.GetMenu().OnFocusOrResolutionChanged += extension.RunExtensions;
 
-        protected override int GetOrderPro()
-        {
-            return 100;
+            return true;
         }
 
         protected override void RunPro()
         {
-            if (!Init()) return;
+            if (!Init())
+            {
+                return;
+            }
 
             UI_Fitter_Config config = GetConfig();
+
+            Vector2 preferred = text.GetPreferredSize();
+
+            if (preferred == lastPrefferedSize)
+            {
+                return;
+            }
+
+            lastPrefferedSize = preferred;
 
             if (scaleWidth) SetSize(text.GetPreferredSize().x, maxWidth, 0, config, RectTransform.Axis.Horizontal);
 
@@ -63,7 +78,12 @@ namespace IbrahKit
 
         protected override void CleanupPro()
         {
+            interactive.GetMenu().OnFocusOrResolutionChanged -= extension.RunExtensions;
+        }
 
+        protected override int GetOrderPro()
+        {
+            return 100;
         }
 
         private void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
@@ -75,14 +95,14 @@ namespace IbrahKit
 
         private UI_Fitter_Config GetConfig()
         {
-            UI_Configs.TryGet<UI_Fitter_Config_Override, UI_Fitter_Config_SO, UI_Fitter_Config>(UI_Configs.GetConfigs(go.transform), out UI_Fitter_Config resolvedConfig);
+            UI_Configs.TryGet<UI_Fitter_Config_Override, UI_Fitter_Config_SO, UI_Fitter_Config>(UI_Configs.GetConfigs(extension.transform), out UI_Fitter_Config resolvedConfig);
 
             resolvedConfig ??= new UI_Fitter_Config(0);
 
             return resolvedConfig;
         }
 
-        private RectTransform GetRect() => rect != null || Application.isPlaying ? rect : go.GetComponent<RectTransform>();
+        private RectTransform GetRect() => rect != null || Application.isPlaying ? rect : extension.GetComponent<RectTransform>();
 
         private float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
     }

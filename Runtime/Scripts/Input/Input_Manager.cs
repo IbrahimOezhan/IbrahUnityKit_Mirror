@@ -28,29 +28,32 @@ namespace IbrahKit
             {
                 foreach (InputControl control in InputSystem.devices[i].allControls)
                 {
-                    if (control is ButtonControl button && button.wasPressedThisFrame)
+                    if (!(control is ButtonControl button && button.wasPressedThisFrame))
                     {
-                        switch (control.device)
-                        {
-                            case Mouse:
-                                currentInputType = InputType.MOUSE;
-                                lastPressed = button;
-                                break;
-                            case Gamepad:
-                                currentInputType = InputType.GAMEPAD;
-                                lastPressed = button;
-                                break;
-                            case Keyboard:
-                                currentInputType = InputType.KEYBOARD;
-                                lastPressed = button;
-                                break;
-                            case Touchscreen:
-                                currentInputType = InputType.TOUCHSCREEN;
-                                lastPressed = button;
-                                break;
-                        }
-                        break;
+                        continue;
                     }
+
+                    switch (control.device)
+                    {
+                        case Mouse:
+                            currentInputType = InputType.MOUSE;
+                            lastPressed = button;
+                            break;
+                        case Gamepad:
+                            currentInputType = InputType.GAMEPAD;
+                            lastPressed = button;
+                            break;
+                        case Keyboard:
+                            currentInputType = InputType.KEYBOARD;
+                            lastPressed = button;
+                            break;
+                        case Touchscreen:
+                            currentInputType = InputType.TOUCHSCREEN;
+                            lastPressed = button;
+                            break;
+                    }
+
+                    break;
                 }
             }
 

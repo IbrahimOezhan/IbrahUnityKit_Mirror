@@ -56,11 +56,24 @@ namespace IbrahKit
             {
                 Instance = (T)this;
 
-                OnAwake();
+                InstanceAwake();
             }
         }
 
-        protected virtual void OnAwake()
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                InstanceDestroy();
+            }
+        }
+
+        protected virtual void InstanceAwake()
+        {
+
+        }
+
+        protected virtual void InstanceDestroy()
         {
 
         }

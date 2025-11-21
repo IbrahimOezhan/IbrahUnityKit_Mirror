@@ -1,26 +1,44 @@
-using UnityEngine;
+using IbrahKit;
 
-namespace IbrahKit
+public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate
 {
-    public class UI_Interactive : UI_Base
+    UI_Menu menu;
+
+    private void Awake()
     {
-        [SerializeField] private Extension_Handler<UI_Interactive_Extension> extensionHandler;
+        Init();
+        if (IsInit()) ((IMenuUpdate)this).RegisterElement(menu);
+    }
 
-        public override void OnMenuElementChanged()
-        {
-            extensionHandler.RunExtensions();
-        }
+    protected void OnDisable()
+    {
+        Cleanup();
+        if (IsInit()) ((IMenuUpdate)this).UnRegisterElement(menu);
+    }
 
-        public override void OnMenuEnabled()
-        {
-            extensionHandler.RunExtensions();
-        }
+    public void OnMenuInit()
+    {
+        InitExtensions();
+        RunExtensions();
+    }
 
-        protected override void OnDisable()
-        {
-            base.OnDisable();
+    public void OnMenuUpdate()
+    {
 
-            extensionHandler.Cleanup();
-        }
+    }
+
+    public void Init()
+    {
+        ((IMenuUpdate)this).TryGetMenu(out menu);
+    }
+
+    public bool IsInit()
+    {
+        return menu != null;
+    }
+
+    public UI_Menu GetMenu()
+    {
+        return menu;
     }
 }

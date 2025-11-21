@@ -18,12 +18,12 @@ namespace IbrahKit
             if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
             if (outExists) menuOut.GetVisbilityController().SetAlpha(1);
             if (outExists) menuOut.GetVisbilityController().SetActive(true);
-            if (outExists) menuOut.GetStateController().SetState(Menu_State_Controller.State.ENABLED);
+            if (outExists) menuOut.GetStateController().SetState(UI_Menu_Controller_State.State.ENABLED);
             if (outExists) menuOut.GetStateController().SetPreviousMenu(backOverride ?? menuIn);
 
             yield return null;
 
-            if (inExists) menuIn.GetStateController().SetState(Menu_State_Controller.State.DISABLED);
+            if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLED);
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
             if (inExists) menuIn.GetVisbilityController().SetAlpha(0);
             if (inExists) menuIn.GetVisbilityController().SetActive(false);

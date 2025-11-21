@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit
 {
-    public class UI_Selectable : UI_Base, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
+    public class UI_Selectable : UnityCallbacks, IMenuUpdate, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
         private readonly UI_Selectable_Input_Cursor cursorInput = new();
 
@@ -34,6 +34,17 @@ namespace IbrahKit
             if (selectableGroup != null) selectableGroup.Remove(this);
 
             stateController.PressedStop();
+        }
+
+        public void OnMenuInit()
+        {
+            if (!Init())
+            {
+                IbrahDebug.Log("Init failed");
+                return;
+            }
+
+            Visualize(stateController.GetState());
         }
 
         private bool Init()
@@ -67,26 +78,6 @@ namespace IbrahKit
             Visualize(stateController.GetState());
         }
 
-        public override void OnMenuElementChanged()
-        {
-            if (!Init())
-            {
-                IbrahDebug.Log("Init failed");
-                return;
-            }
-        }
-
-        public override void OnMenuEnabled()
-        {
-            if (!Init())
-            {
-                IbrahDebug.Log("Init failed");
-                return;
-            }
-
-            Visualize(stateController.GetState());
-        }
-
         public UI_Selectable_StateController GetStateController() => stateController;
 
         public void OnPointerEnter(PointerEventData eventData) => cursorInput.OnPointerEnter(eventData);
@@ -100,5 +91,20 @@ namespace IbrahKit
         public bool DisallowPress() => selectableGroup != null && stateController.GetState() == UI_SELECTABLE_STATE.PRESSED;
 
         public bool DisallowPressOnUp() => selectableGroup != null;
+
+        void IMenuUpdate.Init()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsInit()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public UI_Menu GetMenu()
+        {
+            return null;
+        }
     }
 }

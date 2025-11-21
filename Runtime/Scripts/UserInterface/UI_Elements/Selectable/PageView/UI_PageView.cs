@@ -1,44 +1,57 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class UI_PageView : MonoBehaviour
+    public class UI_PageView : MonoBehaviour, IMenuUpdate
     {
         private int currentPageIndex;
+
         private int amountPerPage;
+
         private int maxPageIndex;
-        private UnityEvent<int> OnPageChanged = new();
 
         [SerializeField] private UI_Selectable left;
+
         [SerializeField] private UI_Selectable right;
-        [SerializeField] private UI_Localization pageText;
+
+        [SerializeField] private UI_Interactive_Extension_Localization pageText;
+
         [SerializeField] private Transform pageContent;
 
-        private void Awake()
+        public Action<int> onPageChanged;
+
+        public void Init()
         {
-            if (left == null)
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsInit()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnMenuInit()
+        {
+            if (left != null)
             {
-                IbrahDebug.LogWarning($"{nameof(left)} is null");
-            }
-            else
-            {
+                onPageChanged += UpdateLeftButton;
                 left.GetStateController().GetOnPressSuccess().AddListener(GoLeft);
             }
 
-            if (right == null)
+            if (right != null)
             {
-                IbrahDebug.LogWarning($"{nameof(right)} is null");
-            }
-            else
-            {
+                onPageChanged += UpdateRightButton;
                 right.GetStateController().GetOnPressSuccess().AddListener(GoRight);
             }
 
-            UpdateUI();
+            if (pageText != null)
+            {
+                onPageChanged += UpdatePageText;
+            }
         }
 
-        public void Initialize(int amount, int amountPerPage)
+        public void Config(int amount, int amountPerPage)
         {
             int i = 0;
 
@@ -57,13 +70,14 @@ namespace IbrahKit
 
             this.maxPageIndex = maxPageIndex;
 
-            UpdateUI();
+            OnPageChanged();
         }
 
         public void GoLeft() => ChangePage(-1);
+
         public void GoRight() => ChangePage(1);
 
-        public void ChangePage(int dir)
+        private void ChangePage(int dir)
         {
             foreach (Transform child in pageContent)
             {
@@ -74,50 +88,30 @@ namespace IbrahKit
 
             currentPageIndex = Mathf.Clamp(currentPageIndex, 0, maxPageIndex);
 
-            OnPageChanged?.Invoke(currentPageIndex);
-
-            UpdateUI();
+            OnPageChanged();
         }
 
-        public void UpdateUI()
+        public void OnPageChanged()
         {
-            if (pageText == null)
-            {
-                IbrahDebug.LogWarning($"{nameof(pageText)} is null");
-            }
-            else
-            {
-                pageText.SetParam((currentPageIndex + 1 + "/" + (maxPageIndex + 1)).ToString());
-            }
-
-            if (left == null)
-            {
-                IbrahDebug.LogWarning($"{nameof(left)} is null");
-            }
-            else
-            {
-                left.gameObject.SetActive(currentPageIndex != 0);
-            }
-
-            if (right == null)
-            {
-                IbrahDebug.LogWarning($"{nameof(right)} is null");
-            }
-            else
-            {
-                right.gameObject.SetActive(currentPageIndex != maxPageIndex);
-            }
+            onPageChanged?.Invoke(currentPageIndex);
         }
 
-        public UnityEvent<int> GetOnPageChanged()
+        private void UpdatePageText(int page)
         {
-            return OnPageChanged;
+            pageText.SetParam((page + 1 + "/" + (maxPageIndex + 1)).ToString());
         }
 
-        public Transform GetPageContent()
+        private void UpdateLeftButton(int page)
         {
-            return pageContent;
+            left.gameObject.SetActive(page != 0);
         }
+
+        private void UpdateRightButton(int page)
+        {
+            right.gameObject.SetActive(page != maxPageIndex);
+        }
+
+        public Transform GetPageContent() => pageContent;
 
         public (int, int) GetIndexRange(int maxIndex)
         {
@@ -128,9 +122,6 @@ namespace IbrahKit
             return (startIndex, endIndex);
         }
 
-        public int GetCurrentPage()
-        {
-            return currentPageIndex;
-        }
+        public int GetCurrentPage() => currentPageIndex;
     }
 }

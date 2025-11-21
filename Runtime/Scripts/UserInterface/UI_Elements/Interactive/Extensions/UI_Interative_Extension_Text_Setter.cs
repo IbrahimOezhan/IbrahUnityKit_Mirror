@@ -1,10 +1,9 @@
-using UnityEngine;
-
 namespace IbrahKit
 {
-    public class UI_Text_Setter : UI_Text_Modifier
+    [System.Serializable]
+    public class UI_Interative_Extension_Text_Setter : UI_Interative_Extension_Text_Modifier
     {
-        public UI_Text_Setter(GameObject go) : base(go)
+        public UI_Interative_Extension_Text_Setter(UI_Interactive extension) : base(extension)
         {
 
         }

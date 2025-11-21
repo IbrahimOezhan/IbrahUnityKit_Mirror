@@ -53,25 +53,29 @@ namespace IbrahKit
             return false;
         }
 
-        public static IEnumerable GetAllTypesDropdownFormat(Type baseType)
+        public static IEnumerable GetAllTypesDropdownFormat(Type baseType, IEnumerable<Type> except = null)
         {
-            List<string> subtypes = GetAllTypes(baseType).Select(x => x.FullName).ToList();
+            IEnumerable<Type> subtypes = GetAllTypes(baseType).ToList();
 
-            subtypes.Sort((a, b) =>
+            if (except != null) subtypes = subtypes.Except(except);
+
+            List<string> subtypeNames = subtypes.Select(x => x.FullName).ToList();
+
+            subtypeNames.Sort((a, b) =>
             {
                 return a.CompareTo(b);
             });
 
-            if (subtypes.Count > 0)
+            if (subtypeNames.Count > 0)
             {
-                subtypes.Insert(0, "None");
+                subtypeNames.Insert(0, "None");
             }
             else
             {
-                subtypes.Add("None");
+                subtypeNames.Add("None");
             }
 
-            return subtypes;
+            return subtypeNames;
         }
     }
 }

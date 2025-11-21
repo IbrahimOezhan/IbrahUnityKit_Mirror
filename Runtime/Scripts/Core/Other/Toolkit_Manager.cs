@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
 namespace IbrahKit
 {
     [ExecuteInEditMode]
@@ -32,16 +31,7 @@ namespace IbrahKit
         {
             List<Type> types = GetManagerTypes().ToList();
 
-            if (excludeInScene)
-            {
-                for (int i = types.Count - 1; i >= 0; i--)
-                {
-                    if (FindAnyObjectByType(types[i]) != null)
-                    {
-                        types.Remove(types[i]);
-                    }
-                }
-            }
+            if (excludeInScene) types.RemoveAll(x => FindAnyObjectByType(x) != null);
 
             List<string> types2 = types.Select(x => x.FullName).ToList();
 

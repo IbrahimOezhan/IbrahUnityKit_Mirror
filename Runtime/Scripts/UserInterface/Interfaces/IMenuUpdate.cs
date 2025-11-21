@@ -1,9 +1,28 @@
+using UnityEngine;
+
 namespace IbrahKit
 {
-    public interface IMenuUpdate
+    public interface IMenuUpdate : IMenuUpdateBase
     {
-        public abstract void OnMenuElementChanged();
+        public Transform transform { get; }
 
-        public abstract void OnMenuEnabled();
+        public bool TryGetMenu(out UI_Menu menu)
+        {
+            return transform.BetterTryGetComponentInParent(out menu, true);
+        }
+
+        public void RegisterElement(UI_Menu menu)
+        {
+            menu.GetContentController().AddUI(this);
+        }
+
+        public void UnRegisterElement(UI_Menu menu)
+        {
+            menu.GetContentController().RemoveUI(this);
+        }
+
+        public void Init();
+
+        public abstract bool IsInit();
     }
 }

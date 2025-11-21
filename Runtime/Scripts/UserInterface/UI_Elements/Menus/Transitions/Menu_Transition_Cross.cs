@@ -21,9 +21,9 @@ namespace IbrahKit
 
             if (outExists) menuOut.GetStateController().SetPreviousMenu(backOverride ?? menuIn);
 
-            if (outExists) menuOut.GetStateController().SetState(Menu_State_Controller.State.ENABLING);
+            if (outExists) menuOut.GetStateController().SetState(UI_Menu_Controller_State.State.ENABLING);
 
-            if (inExists) menuIn.GetStateController().SetState(Menu_State_Controller.State.DISABLING);
+            if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLING);
 
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
 
@@ -42,11 +42,11 @@ namespace IbrahKit
                 if (outExists) menuOut.GetVisbilityController().SetAlpha(t);
             }
 
-            if (inExists) menuIn.GetStateController().SetState(Menu_State_Controller.State.DISABLED);
+            if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLED);
 
             if (inExists) menuIn.GetVisbilityController().SetActive(false);
 
-            if (outExists) menuOut.GetStateController().SetState(Menu_State_Controller.State.ENABLED);
+            if (outExists) menuOut.GetStateController().SetState(UI_Menu_Controller_State.State.ENABLED);
 
             if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
         }

@@ -9,7 +9,9 @@ namespace IbrahKit
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty("m_RaycastTarget"));
+
             serializedObject.ApplyModifiedProperties();
         }
     }

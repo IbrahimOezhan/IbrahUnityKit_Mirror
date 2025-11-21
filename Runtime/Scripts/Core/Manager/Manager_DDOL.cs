@@ -18,7 +18,7 @@ namespace IbrahKit
 
                 DontDestroyOnLoad(gameObject);
 
-                OnAwake();
+                InstanceAwake();
             }
         }
     }
