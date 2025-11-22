@@ -96,7 +96,7 @@ namespace IbrahKit
         [System.Serializable]
         private class CursorVisibilty
         {
-            [Dropdown(State_Manager.KEY), SerializeField] private string state;
+            [SerializeField] private State_Key state;
             [SerializeField] private bool visible;
 
             public bool Match(string state, out bool result)

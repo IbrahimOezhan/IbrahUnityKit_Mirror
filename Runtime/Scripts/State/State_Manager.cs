@@ -23,7 +23,7 @@ namespace IbrahKit
 
         private void OnValidate()
         {
-            Dropdown_Utilities.CreateDropdown(statesList, KEY);
+            Key_Database_Finder.TrySetKeys(KEY, statesList);
         }
 
         public void SetCurrentState(string newState)

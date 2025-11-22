@@ -6,8 +6,8 @@ namespace IbrahKit
     [System.Serializable]
     public class UI_Interactive_Extension_Localization : UI_Interative_Extension_Text_Modifier
     {
-        [Dropdown("Localization"), SerializeField]
-        protected string key;
+        [SerializeField]
+        protected Local_Key_Reference key;
 
         [SerializeField]
         protected string fallbackText;
@@ -79,7 +79,7 @@ namespace IbrahKit
 
         protected string GetContent()
         {
-            if (key.IsEmpty())
+            if (key.Value.IsEmpty())
             {
                 return "";
             }

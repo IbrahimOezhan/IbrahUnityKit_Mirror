@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace IbrahKit.Save
 {
     [Serializable]
-    public class GenericSaveData : Savable
+    public class Save_Data_Generic : Savable
     {
         [JsonInclude] private Dictionary<string, string> values = new();
 

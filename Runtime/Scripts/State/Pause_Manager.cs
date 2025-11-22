@@ -13,7 +13,7 @@ namespace IbrahKit
 
         private UI_Input input;
 
-        [SerializeField, Dropdown(State_Manager.KEY)] private string pausedState;
+        [SerializeField] private State_Key pausedState;
 
         [SerializeField] private List<AllowPause> allowPause = new();
 
@@ -93,7 +93,7 @@ namespace IbrahKit
         {
             [SerializeField] private bool allow;
 
-            [Dropdown(State_Manager.KEY), SerializeField] private string state;
+            [SerializeField] private State_Key state;
 
             public bool Allow()
             {

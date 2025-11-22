@@ -7,7 +7,7 @@ namespace IbrahKit.Save
     {
         private class ValidateTask
         {
-            private SaveState fileState;
+            private Save_State fileState;
 
             private Savable result;
 
@@ -16,7 +16,7 @@ namespace IbrahKit.Save
                 // File couldnt be parsed and therefor the type cannot be read and file is useless
                 if (instantFail)
                 {
-                    fileState = SaveState.Corrupted;
+                    fileState = Save_State.Corrupted;
                     result = null;
                     return;
                 }
@@ -27,7 +27,7 @@ namespace IbrahKit.Save
                 {
                     result = Save_Utilities.GetDerivedSavable(fileContent, savable);
 
-                    fileState = SaveState.Valid;
+                    fileState = Save_State.Valid;
                 }
                 catch (JsonException)
                 {
@@ -35,7 +35,7 @@ namespace IbrahKit.Save
                 }
                 catch
                 {
-                    fileState = SaveState.Corrupted;
+                    fileState = Save_State.Corrupted;
                 }
             }
 
@@ -46,7 +46,7 @@ namespace IbrahKit.Save
                 if (t == null)
                 {
                     // Type does not exist. File is useless
-                    fileState = SaveState.Corrupted;
+                    fileState = Save_State.Corrupted;
 
                     return;
                 }
@@ -55,7 +55,7 @@ namespace IbrahKit.Save
                 {
                     result = (Savable)Activator.CreateInstance(t);
 
-                    fileState = SaveState.Outdated;
+                    fileState = Save_State.Outdated;
                 }
                 catch (Exception ex)
                 {
@@ -63,11 +63,11 @@ namespace IbrahKit.Save
 
                     result = null;
 
-                    fileState = SaveState.Corrupted;
+                    fileState = Save_State.Corrupted;
                 }
             }
 
-            public SaveState GetFileState()
+            public Save_State GetFileState()
             {
                 return fileState;
             }

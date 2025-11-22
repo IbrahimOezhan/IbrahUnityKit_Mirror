@@ -19,7 +19,7 @@ namespace IbrahKit.Save
 
         private static Save currentSave;
 
-        private static GenericSaveData generic;
+        private static Save_Data_Generic generic;
 
         protected override void InstanceAwake()
         {
@@ -34,7 +34,7 @@ namespace IbrahKit.Save
 
             currentSave ??= GetCurrentFolder(saveFolderPath, KEY);
 
-            generic ??= (GenericSaveData)currentSave.Load(GENERIC_KEY, new GenericSaveData());
+            generic ??= (Save_Data_Generic)currentSave.Load(GENERIC_KEY, new Save_Data_Generic());
 
         }
 
@@ -76,7 +76,7 @@ namespace IbrahKit.Save
             currentSave.Return(name, value, encrypt, stillInUse);
         }
 
-        public GenericSaveData GetGeneric()
+        public Save_Data_Generic GetGeneric()
         {
             return generic;
         }
@@ -87,7 +87,7 @@ namespace IbrahKit.Save
 
             Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
 
-            if (bestSave.GetState() == SaveState.Valid) return bestSave;
+            if (bestSave.GetState() == Save_State.Valid) return bestSave;
 
             return new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
         }
@@ -111,7 +111,7 @@ namespace IbrahKit.Save
             {
                 Save save = new(folders[i], key);
 
-                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == SaveState.Valid)
+                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) && save.GetState() == Save_State.Valid)
                 {
                     IbrahDebug.Log("Returned save folder with same version");
 

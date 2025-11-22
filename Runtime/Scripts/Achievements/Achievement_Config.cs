@@ -1,13 +1,12 @@
 using IbrahKit;
-using IbrahKit.Localization;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AchievementConfig", menuName = "IbrahKit/AchievemntConfig")]
 public class Achievement_Config : ScriptableObject
 {
-    [SerializeField, Dropdown(Local_Manager.DROP)]
-    private string secretString;
+    [SerializeField]
+    private Local_Key_Reference secretString;
 
     [SerializeField]
     private Sprite secretSprite;

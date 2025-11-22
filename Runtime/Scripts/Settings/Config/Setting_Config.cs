@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace IbrahKit.Settings
     {
         [SerializeField] private string key;
 
-        [SerializeField, Dropdown(nameof(GetDropdown))] private string type;
+        [SerializeField, ValueDropdown(nameof(GetDropdown))] private string type;
 
         public IEnumerable GetDropdown()
         {
@@ -19,7 +20,7 @@ namespace IbrahKit.Settings
         {
             if (TryCreate(out result))
             {
-                if (ui.TryInit(result))
+                if (ui.CanSpawn(result))
                 {
                     return true;
                 }

@@ -17,7 +17,7 @@ namespace IbrahKit.Localization
 
         private int currentIndex;
 
-        private LocalLanguage current;
+        private Local_Language current;
 
         private SaveData saveData;
 
@@ -84,7 +84,7 @@ namespace IbrahKit.Localization
             SetLanguage(GetNext(dir));
         }
 
-        public void SetLanguage(LocalLanguage lang)
+        public void SetLanguage(Local_Language lang)
         {
             current = lang;
 
@@ -93,9 +93,9 @@ namespace IbrahKit.Localization
             UpdateLanguage();
         }
 
-        private LocalLanguage GetSystemLanguage(SystemLanguage systemLanguage)
+        private Local_Language GetSystemLanguage(SystemLanguage systemLanguage)
         {
-            LocalLanguage found = config.GetLanguages().Find(x => x.GetSystemLanguage() == systemLanguage);
+            Local_Language found = config.GetLanguages().Find(x => x.GetSystemLanguage() == systemLanguage);
 
             if (found == null)
             {
@@ -104,14 +104,14 @@ namespace IbrahKit.Localization
             else return found;
         }
 
-        private LocalLanguage GetNext(int dir)
+        private Local_Language GetNext(int dir)
         {
             int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
 
             return config.GetLanguages()[newIndex];
         }
 
-        public LocalLanguage GetCurrent()
+        public Local_Language GetCurrent()
         {
             return current;
         }
@@ -145,7 +145,7 @@ namespace IbrahKit.Localization
             return String_Utilities.IsEmpty(result) ? $"Error {key}" : result.SafeFormat(parameters);
         }
 
-        public int IndexOf(LocalLanguage language)
+        public int IndexOf(Local_Language language)
         {
             return config.GetLanguages().IndexOf(language);
         }

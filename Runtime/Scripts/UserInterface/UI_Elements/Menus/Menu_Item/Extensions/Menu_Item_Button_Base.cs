@@ -1,5 +1,4 @@
-﻿using IbrahKit.Localization;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
@@ -13,7 +12,7 @@ namespace IbrahKit
 
         [SerializeField] private LocalType localType = LocalType.LOCALIZE;
 
-        [SerializeField, Dropdown(Local_Manager.DROP), ShowIf(nameof(localType), LocalType.LOCALIZE)] private string localizationKey;
+        [SerializeField, ShowIf(nameof(localType), LocalType.LOCALIZE)] private Local_Key_Reference localizationKey;
 
         [SerializeField, ShowIf(nameof(localType), LocalType.STATIC)] private string staticText;
 

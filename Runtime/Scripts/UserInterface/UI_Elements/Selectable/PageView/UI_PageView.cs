@@ -21,17 +21,7 @@ namespace IbrahKit
 
         public Action<int> onPageChanged;
 
-        public void Init()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool IsInit()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnMenuInit()
+        public void OnMenuInit(UI_Menu menu)
         {
             if (left != null)
             {

@@ -20,8 +20,7 @@ namespace IbrahKit
         [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeReference, ShowIf(nameof(ShowMenuItems))]
         private List<Menu_Item_Base> listMenuItems = new();
 
-        [TabGroup("Runtime", order: -1), ShowInInspector, ReadOnly]
-        private List<GameObject> spawnedMenuItems = new();
+        private readonly List<GameObject> spawnedMenuItems = new();
 
         private readonly List<IMenuUpdate> menuUI = new();
 
@@ -43,6 +42,11 @@ namespace IbrahKit
             if (!menuItem.TrySpawn(parent, menu, out result)) return false;
 
             return result != null;
+        }
+
+        public void SpawnMenuElement(IMenuUpdate prefab, Transform parent, Vector2 pos)
+        {
+
         }
 
         public UI_Menu_Config GetMenuConfig()
@@ -85,7 +89,7 @@ namespace IbrahKit
             while (uninitialized.Count > 0)
             {
                 IMenuUpdate up = uninitialized.Dequeue();
-                up.OnMenuInit();
+                up.OnMenuInit(menu);
             }
         }
 

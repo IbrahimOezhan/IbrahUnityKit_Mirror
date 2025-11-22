@@ -14,13 +14,13 @@ namespace IbrahKit.Save
 
         private string version;
 
-        private SaveState state = SaveState.Valid;
+        private Save_State state = Save_State.Valid;
 
         private string[] filePaths = new string[0];
 
         private bool[] encrypted = new bool[0];
 
-        private SaveState[] fileState = new SaveState[0];
+        private Save_State[] fileState = new Save_State[0];
 
         private HashSet<Savable> inUse = new();
 
@@ -72,14 +72,14 @@ namespace IbrahKit.Save
             {
                 IbrahDebug.LogWarning(ex.Message);
 
-                state = SaveState.Corrupted;
+                state = Save_State.Corrupted;
 
                 return;
             }
 
             string[] fileContents = new string[filePaths.Length];
 
-            fileState = new SaveState[filePaths.Length];
+            fileState = new Save_State[filePaths.Length];
 
             bool[] validDecrypt = new bool[filePaths.Length];
 
@@ -98,7 +98,7 @@ namespace IbrahKit.Save
                     IbrahDebug.LogWarning($"{filePaths[i]} - {ex.Message}");
 
                     fileContents[i] = string.Empty;
-                    fileState[i] = SaveState.Corrupted;
+                    fileState[i] = Save_State.Corrupted;
                 }
             }
 
@@ -108,22 +108,22 @@ namespace IbrahKit.Save
 
                 if (!validDecrypt[i])
                 {
-                    fileState[i] = SaveState.Corrupted;
+                    fileState[i] = Save_State.Corrupted;
                 }
             }
 
             for (int i = 0; i < outdatedValidation.Length; i++)
             {
-                outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == SaveState.Corrupted);
+                outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == Save_State.Corrupted);
 
                 fileState[i] = outdatedValidation[i].GetFileState();
 
-                state = (SaveState)MathF.Max((int)state, (int)fileState[i]);
+                state = (Save_State)MathF.Max((int)state, (int)fileState[i]);
             }
 
             for (int i = 0; i < outdatedValidation.Length; i++)
             {
-                if (fileState[i] != SaveState.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), outdatedValidation[i].GetSavable());
+                if (fileState[i] != Save_State.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), outdatedValidation[i].GetSavable());
             }
         }
 
@@ -137,7 +137,7 @@ namespace IbrahKit.Save
 
             for (int i = 0; i < fileState.Length; i++)
             {
-                if (fileState[i] == SaveState.Valid) amount++;
+                if (fileState[i] == Save_State.Valid) amount++;
             }
 
             return amount;
@@ -147,7 +147,7 @@ namespace IbrahKit.Save
         /// Gets the total state of the this save
         /// </summary>
         /// <returns>Gets the total state of this save</returns>
-        internal SaveState GetState()
+        internal Save_State GetState()
         {
             return state;
         }

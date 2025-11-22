@@ -1,4 +1,3 @@
-using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,8 +6,8 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
     public class Unlockable : ScriptableObject
     {
-        [TabGroup("Base Data"), Dropdown(Local_Manager.DROP), SerializeField]
-        protected string key;
+        [TabGroup("Base Data"), SerializeField]
+        protected Local_Key_Reference key;
 
         [TabGroup("Base Data"), SerializeField]
         private Unlockable[] unlockOnUnlock;

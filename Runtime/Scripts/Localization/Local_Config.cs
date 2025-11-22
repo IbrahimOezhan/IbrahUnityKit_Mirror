@@ -18,13 +18,13 @@ namespace IbrahKit.Localization
 
         [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [SerializeField, OdinSerialize, NonSerialized] private List<LocalLanguage> languages = new();
+        [SerializeField, OdinSerialize, NonSerialized] private List<Local_Language> languages = new();
 
-        public LocalLanguage GetFirstLanguage() => languages[0];
+        public Local_Language GetFirstLanguage() => languages[0];
 
-        public List<LocalLanguage> GetLanguages() => languages;
+        public List<Local_Language> GetLanguages() => languages;
 
-        public bool TryGetString(string key, LocalLanguage language, out string result)
+        public bool TryGetString(string key, Local_Language language, out string result)
         {
             result = "";
 
@@ -79,11 +79,6 @@ namespace IbrahKit.Localization
 
             string[] rowOne = GetRow(lines[0], seperator);
 
-            JsonSerializerOptions options = new()
-            {
-                IncludeFields = true
-            };
-
             for (int i = 1; i < rowOne.Length; i++)
             {
                 if (!Parse_Utilities.IsValidJson(rowOne[i]))
@@ -94,15 +89,18 @@ namespace IbrahKit.Localization
 
                 try
                 {
-                    LocalLanguage ll = JsonSerializer.Deserialize<LocalLanguage>(rowOne[i], options);
+                    if(!Json_Utilities.TryDeserialize(rowOne[i], out Local_Language result))
+                    {
+                        return;
+                    }
 
-                    if (!ll.IsValid(out _))
+                    if (!result.IsValid(out _))
                     {
                         IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
                         return;
                     }
 
-                    languages.Add(ll);
+                    languages.Add(result);
                 }
                 catch (Exception e)
                 {
@@ -135,11 +133,11 @@ namespace IbrahKit.Localization
                 keyValuePairs.TryAdd(key, row.ToArray());
             }
 
-            Dropdown_Utilities.CreateDropdown(keyValuePairs.Keys.OrderBy(x => x).ToList(), DROP);
+            Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
 
-            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetNative()).ToList(), LANG);
+            Key_Database_Finder.TrySetKeys(LANG, languages.Select(x => x.GetNative()).ToList());
 
-            Dropdown_Utilities.CreateDropdown(languages.Select(x => x.GetSys()).ToList(), SYS);
+            Key_Database_Finder.TrySetKeys(SYS, languages.Select(x => x.GetSys()).ToList());
         }
 
         private string[] GetRow(string line, char seperator)

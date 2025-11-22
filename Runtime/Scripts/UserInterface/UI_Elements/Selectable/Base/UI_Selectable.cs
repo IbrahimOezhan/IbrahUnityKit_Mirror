@@ -6,10 +6,9 @@ namespace IbrahKit
 {
     public class UI_Selectable : UnityCallbacks, IMenuUpdate, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
-        private readonly UI_Selectable_Input_Cursor cursorInput = new();
+        private UI_Menu menu;
 
-        [SerializeField, ReadOnly]
-        private bool initialized;
+        private readonly UI_Selectable_Input_Cursor cursorInput = new();
 
         [SerializeField]
         private UI_Selectable_StateController stateController;
@@ -36,20 +35,9 @@ namespace IbrahKit
             stateController.PressedStop();
         }
 
-        public void OnMenuInit()
+        public void OnMenuInit(UI_Menu menu)
         {
-            if (!Init())
-            {
-                IbrahDebug.Log("Init failed");
-                return;
-            }
-
-            Visualize(stateController.GetState());
-        }
-
-        private bool Init()
-        {
-            if (initialized) return true;
+            this.menu = menu;
 
             cursorInput.Init(stateController, this);
 
@@ -61,9 +49,7 @@ namespace IbrahKit
 
             stateController.Init(this, selectableGroup);
 
-            initialized = true;
-
-            return true;
+            Visualize(stateController.GetState());
         }
 
         public void Visualize(UI_SELECTABLE_STATE state, bool animate = true)
@@ -92,19 +78,9 @@ namespace IbrahKit
 
         public bool DisallowPressOnUp() => selectableGroup != null;
 
-        void IMenuUpdate.Init()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public bool IsInit()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public UI_Menu GetMenu()
         {
-            return null;
+            return menu;
         }
     }
 }

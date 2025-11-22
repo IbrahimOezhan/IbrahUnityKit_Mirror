@@ -7,7 +7,7 @@ namespace IbrahKit.Localization
     public partial class Local_Manager
     {
         [System.Serializable]
-        public class LocalLanguage
+        public class Local_Language
         {
             [JsonInclude, SerializeField]
             private string sysLang;

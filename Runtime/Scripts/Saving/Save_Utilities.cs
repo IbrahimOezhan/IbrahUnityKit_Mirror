@@ -10,8 +10,6 @@ namespace IbrahKit.Save
         {
             bool tryParse = Parse_Utilities.IsValidJson(fileContent);
 
-            bool decrypted = !tryParse;
-
             if (!tryParse)
             {
                 fileContent = String_Utilities.Encrypt(fileContent, key);
@@ -33,13 +31,7 @@ namespace IbrahKit.Save
 
         public static Savable GetSavable(string json)
         {
-            JsonSerializerOptions genericOptions = new()
-            {
-                IncludeFields = true,
-                WriteIndented = true,
-            };
-
-            return JsonSerializer.Deserialize<Savable>(json, genericOptions);
+            return Json_Utilities.Deserialize<Savable>(json);
         }
 
         public static Type GetSavableType(Savable type)
@@ -61,16 +53,9 @@ namespace IbrahKit.Save
                 return null;
             }
 
-            JsonSerializerOptions genericOptions = new()
-            {
-                IncludeFields = true,
-                WriteIndented = true,
-                UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
-            };
-
             Type instanceType = GetSavableType(type);
 
-            return (Savable)JsonSerializer.Deserialize(json, instanceType, genericOptions);
+            return (Savable)Json_Utilities.Deserialize(json, instanceType, JsonUnmappedMemberHandling.Disallow);
         }
     }
 
