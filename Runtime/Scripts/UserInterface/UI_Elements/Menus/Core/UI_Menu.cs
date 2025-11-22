@@ -46,6 +46,11 @@ namespace IbrahKit
             controllers.ForEach(x => x.OnMenuEnabled());
         }
 
+        protected virtual void Update()
+        {
+            controllers.ForEach(x => x.Lifecycle());
+        }
+
         protected virtual void OnDisable()
         {
             controllers.ForEach(x => x.OnMenuDisabled());
@@ -53,12 +58,12 @@ namespace IbrahKit
 
         private void OnRectTransformDimensionsChange()
         {
-            OnFocusOrResolutionChanged.Invoke();
+            OnFocusOrResolutionChanged?.Invoke();
         }
 
         private void OnApplicationFocus(bool _focus)
         {
-            OnFocusOrResolutionChanged.Invoke();
+            OnFocusOrResolutionChanged?.Invoke();
         }
 
         public void OnClickAudio()

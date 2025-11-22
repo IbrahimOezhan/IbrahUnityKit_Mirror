@@ -2,9 +2,7 @@ namespace IbrahKit
 {
     public interface IMenuContent
     {
-        public void AddUI(IMenuUpdate value);
-
-        public void RemoveUI(IMenuUpdate value);
+        public void RegisterUI(IMenuUpdate value);
 
         public UI_Menu_Config GetMenuConfig();
     }

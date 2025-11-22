@@ -25,13 +25,17 @@ namespace IbrahKit
         public static (float, float) DegreeShortest(float degree1, float degree2)
         {
             float degree1Inv = DegreeInvert(degree1);
+
             float degree2Inv = DegreeInvert(degree2);
 
             float ab12 = DegreeDifference(degree1, degree2);
+
             float ab1Inv2 = DegreeDifference(degree1Inv, degree2);
+
             float ab1I2Inv = DegreeDifference(degree1, degree2Inv);
 
             if (ab12 < ab1Inv2 && ab12 < ab1I2Inv) return (degree1, degree2);
+
             if (ab1Inv2 < ab12 && ab1Inv2 < ab1I2Inv) return (degree1Inv, degree2);
 
             return (degree1, degree2Inv);

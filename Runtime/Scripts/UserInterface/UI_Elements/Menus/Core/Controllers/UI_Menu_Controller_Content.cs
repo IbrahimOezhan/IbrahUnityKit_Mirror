@@ -22,9 +22,44 @@ namespace IbrahKit
 
         private readonly List<GameObject> spawnedMenuItems = new();
 
-        private readonly List<IMenuUpdate> menuUI = new();
-
         private readonly Queue<IMenuUpdate> uninitialized = new();
+
+        public override void Init(UI_Menu menu)
+        {
+            this.menu = menu;
+
+            LoadMenuContent();
+
+            List<IMenuUpdate> subtree = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(menu.transform, true, true);
+
+            InitializeSubTree(subtree);
+
+            state = State.AFTERINIT;
+        }
+
+        public override void OnMenuEnabled()
+        {
+
+        }
+
+        public override void Lifecycle()
+        {
+            if (state != State.AFTERINIT) return;
+
+            while (uninitialized.Count > 0)
+            {
+                IMenuUpdate up = uninitialized.Dequeue();
+
+                List<IMenuUpdate> subtree = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(up.transform, true, true);
+
+                InitializeSubTree(subtree);
+            }
+        }
+
+        public override void OnMenuDisabled()
+        {
+
+        }
 
         private void LoadMenuContent()
         {
@@ -44,9 +79,19 @@ namespace IbrahKit
             return result != null;
         }
 
-        public void SpawnMenuElement(IMenuUpdate prefab, Transform parent, Vector2 pos)
+        public void RegisterUI(IMenuUpdate element)
         {
+            if (state == State.BEFOREINIT) return;
 
+            uninitialized.Enqueue(element);
+        }
+
+        private void InitializeSubTree(List<IMenuUpdate> elements)
+        {
+            foreach (var item in elements)
+            {
+                item.OnMenuInit(menu);
+            }
         }
 
         public UI_Menu_Config GetMenuConfig()
@@ -57,46 +102,6 @@ namespace IbrahKit
         }
 
         private bool ShowMenuItems() => list != null;
-
-        public void AddUI(IMenuUpdate value)
-        {
-            IEnumerable<IMenuUpdate> values = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(value.transform, true, false);
-
-            menuUI.AddRange(values);
-        }
-
-        public void RemoveUI(IMenuUpdate value)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Init(UI_Menu menu)
-        {
-            this.menu = menu;
-            LoadMenuContent();
-            state = State.AFTERINIT;
-        }
-
-        public override void OnMenuEnabled()
-        {
-
-        }
-
-        public override void Lifecycle()
-        {
-            if (state != State.AFTERINIT) return;
-
-            while (uninitialized.Count > 0)
-            {
-                IMenuUpdate up = uninitialized.Dequeue();
-                up.OnMenuInit(menu);
-            }
-        }
-
-        public override void OnMenuDisabled()
-        {
-
-        }
 
         private enum State
         {
