@@ -1,17 +1,18 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
 {
     [System.Serializable]
-    public class UI_Selectable_TransitionController
+    public class UI_Selectable_TransitionController : ISelfValidator
     {
         [SerializeReference]
-        private List<UI_Selectable_Transition> transitions;
+        private List<UI_Selectable_Transition> transitions = new();
         [SerializeReference]
-        private List<UI_Selectable_Transition> transitionsInteractable;
+        private List<UI_Selectable_Transition> transitionsInteractable = new();
         [SerializeReference]
-        private List<UI_Selectable_Transition> transitionsNotInteractable;
+        private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
         public void Init(GameObject go)
         {
@@ -31,6 +32,14 @@ namespace IbrahKit
             else
             {
                 transitionsNotInteractable.ForEach(i => i.Apply(state));
+            }
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if(transitions.Count == 0 && transitionsInteractable.Count == 0 && transitionsNotInteractable.Count == 0)
+            {
+                result.AddWarning("The selectable has no transitions");
             }
         }
     }

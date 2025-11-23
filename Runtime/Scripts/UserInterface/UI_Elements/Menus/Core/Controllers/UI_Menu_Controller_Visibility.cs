@@ -8,11 +8,11 @@ namespace IbrahKit
     public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuVisibility
     {
         private UI_Menu menu;
-        [TabGroup("Menu Settings", order: -1), SerializeField]
 
+        [TabGroup("Menu Settings", order: -1), SerializeField,Required]
         private CanvasGroup enabledGroup;
-        [TabGroup("Menu Settings", order: -1), SerializeField]
 
+        [TabGroup("Menu Settings", order: -1), SerializeField, Required]
         private CanvasGroup hiddenGroup;
 
         [TabGroup("Menu Settings", order: -1), SerializeField]

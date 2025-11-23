@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -10,6 +11,8 @@ namespace IbrahKit
         private int amountPerPage;
 
         private int maxPageIndex;
+
+        private List<Transform> content = new();
 
         [SerializeField] private UI_Selectable left;
 
@@ -41,13 +44,22 @@ namespace IbrahKit
             }
         }
 
-        public void Config(int amount, int amountPerPage)
+        public void Config(List<Transform> content, int amountPerPage)
         {
             int i = 0;
 
             int maxPageIndex = 0;
 
-            while (i < amount)
+            foreach (var item in this.content)
+            {
+                Destroy(gameObject);
+            }
+
+            content.Clear();
+
+            this.content = content;
+
+            while (i < content.Count)
             {
                 i++;
 
@@ -63,17 +75,12 @@ namespace IbrahKit
             OnPageChanged();
         }
 
-        public void GoLeft() => ChangePage(-1);
+        private void GoLeft() => ChangePage(-1);
 
-        public void GoRight() => ChangePage(1);
+        private void GoRight() => ChangePage(1);
 
         private void ChangePage(int dir)
         {
-            foreach (Transform child in pageContent)
-            {
-                Destroy(child.gameObject);
-            }
-
             currentPageIndex += dir;
 
             currentPageIndex = Mathf.Clamp(currentPageIndex, 0, maxPageIndex);
@@ -81,8 +88,17 @@ namespace IbrahKit
             OnPageChanged();
         }
 
-        public void OnPageChanged()
+        private void OnPageChanged()
         {
+            (int start, int end) = GetIndexRange();
+
+            for(int i = 0; i < content.Count; i++)
+            {
+                bool inRange = i >= start && i < end;
+
+                content[i].gameObject.SetActive(inRange);
+            }
+
             onPageChanged?.Invoke(currentPageIndex);
         }
 
@@ -101,17 +117,13 @@ namespace IbrahKit
             right.gameObject.SetActive(page != maxPageIndex);
         }
 
-        public Transform GetPageContent() => pageContent;
-
-        public (int, int) GetIndexRange(int maxIndex)
+        private (int start, int end) GetIndexRange()
         {
             int startIndex = amountPerPage * currentPageIndex;
 
-            int endIndex = Mathf.Clamp(startIndex + amountPerPage, startIndex, maxIndex);
+            int endIndex = Mathf.Clamp(startIndex + amountPerPage, startIndex, content.Count);
 
             return (startIndex, endIndex);
         }
-
-        public int GetCurrentPage() => currentPageIndex;
     }
 }

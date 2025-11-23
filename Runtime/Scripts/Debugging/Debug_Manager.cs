@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor.Validation;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -6,11 +7,13 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Debug_Manager : Manager_DDOL<Debug_Manager>
+    public class Debug_Manager : Manager_DDOL<Debug_Manager>, ISelfValidator
     {
         private readonly List<IDebug> debugs = new();
 
-        [SerializeField, Required] private UI_Interative_Extension_Text_Setter debugContent;
+        private UI_Interative_Extension_Text_Setter textSetter;
+
+        [SerializeField] private UI_Interactive debugContent;
 
         [SerializeField, Required] private UI_Menu debugContainer;
 
@@ -23,6 +26,13 @@ namespace IbrahKit
         public static bool bufferLogs;
 
         public static bool s_disableLogs;
+
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            debugContent.TryGet(out textSetter);
+        }
 
         private void Update()
         {
@@ -50,7 +60,7 @@ namespace IbrahKit
 
             string s = sb.ToString();
 
-            debugContent.SetText(s.IsEmpty() ? "No Information" : s);
+            textSetter.SetText(s.IsEmpty() ? "No Information" : s);
         }
 
         /// <summary>
@@ -73,6 +83,20 @@ namespace IbrahKit
         public void Remove(IDebug debug)
         {
             debugs.Remove(debug);
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if(debugContent == null)
+            {
+                result.AddError("Debug Content is null");
+                return;
+            }
+
+            if(!debugContent.TryGet(out textSetter))
+            {
+                result.AddError("UI Interactive doesnt contain Text Setter");
+            }
         }
     }
 }

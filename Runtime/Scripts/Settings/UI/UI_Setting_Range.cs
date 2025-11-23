@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    public class UI_Range : UI_Setting
+    public class UI_Setting_Range : UI_Setting
     {
+        private UI_Interative_Extension_Text_Setter textSetter;
+
         [SerializeField]
         private UI_Selectable left;
 
@@ -12,7 +14,7 @@ namespace IbrahKit
         private UI_Selectable right;
 
         [SerializeField]
-        private UI_Interative_Extension_Text_Setter value;
+        private UI_Interactive value;
 
         protected override bool CanSpawnPro(Setting_Base setting)
         {
@@ -34,12 +36,17 @@ namespace IbrahKit
             left.GetStateController().GetOnPressSuccess().AddListener(num.Increment);
             right.GetStateController().GetOnPressSuccess().AddListener(num.Decrement);
 
+            if (!value.TryGet(out textSetter))
+            {
+                return false;
+            }
+
             return true;
         }
 
         public override void UpdateUI()
         {
-            value.SetText(GetSetting().GetValue());
+            textSetter.SetText(GetSetting().GetValue());
         }
 
         public override void OnMenuInit(UI_Menu menu)

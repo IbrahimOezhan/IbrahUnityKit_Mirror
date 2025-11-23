@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit.Settings
 {
+    [CreateAssetMenu(fileName = "NewSettingConfigNumer", menuName = "IbrahKit/SettingConfigNumber")]
     public class Setting_Config_Float : Setting_Config_Number<Setting_Float>
     {
         [SerializeField] private float defaultValue;

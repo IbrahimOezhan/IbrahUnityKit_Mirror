@@ -1,12 +1,13 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit
 {
     public class Selectable_Transition_SO<T> : Selectable_Transition_SO
     {
-        [SerializeField] private T none;
-        [SerializeField] private T selected;
-        [SerializeField] private T pressed;
+        [SerializeField,Required] private T none;
+        [SerializeField, Required] private T selected;
+        [SerializeField, Required] private T pressed;
 
         public T GetValue(UI_SELECTABLE_STATE state)
         {

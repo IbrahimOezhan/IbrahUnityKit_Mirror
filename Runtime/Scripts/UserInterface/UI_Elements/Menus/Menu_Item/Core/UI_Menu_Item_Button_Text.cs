@@ -1,20 +1,20 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace IbrahKit
 {
-    public class UI_Menu_Item_Button_Text : MonoBehaviour
+    public class UI_Menu_Item_Button_Text : MonoBehaviour, ISelfValidator
     {
-        [SerializeField] private UI_Selectable selec;
-        [SerializeField] private UI_Interative_Extension_Text_Modifier text;
+        private UI_Interative_Extension_Text_Modifier text;
+
+        [SerializeField,Required] private UI_Selectable selectable;
+        [SerializeField] private UI_Interactive interactive;
+
 
         public UnityEvent Initialize(string value)
         {
-            if (text == null)
-            {
-                IbrahDebug.LogError("Text is null");
-                return new();
-            }
+            interactive.TryGet(out text);
 
             if (text is UI_Interactive_Extension_Localization local)
             {
@@ -26,13 +26,21 @@ namespace IbrahKit
                 setter.SetText(value);
             }
 
-            if (selec == null)
+            return selectable.GetStateController().GetOnPressSuccess();
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if(interactive == null)
             {
-                IbrahDebug.LogWarning($"{nameof(selec)} is null. Passing new unity event");
-                return new();
+                result.AddError("Interative is required");
+                return;
             }
 
-            return selec.GetStateController().GetOnPressSuccess();
+            if(!interactive.TryGet(out UI_Interative_Extension_Text_Modifier modifier))
+            {
+                result.AddError("Interative needs text modifier");
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace IbrahKit
 
         public static List<string> GetKeys(string name)
         {
-            if (GetDatabase(out Key_Database db))
+            if (TryGetDatabase(out Key_Database db))
             {
                 if (db.Get().TryGetValue(name, out List<string> keys))
                 {
@@ -25,7 +25,7 @@ namespace IbrahKit
 
         public static bool TrySetKeys(string name, List<string> keys)
         {
-            if (GetDatabase(out Key_Database db))
+            if (TryGetDatabase(out Key_Database db))
             {
                 if (db.Get().ContainsKey(name))
                 {
@@ -45,7 +45,7 @@ namespace IbrahKit
             return false;
         }
 
-        public static bool GetDatabase(out Key_Database db)
+        public static bool TryGetDatabase(out Key_Database db)
         {
             if (cached != null)
             {

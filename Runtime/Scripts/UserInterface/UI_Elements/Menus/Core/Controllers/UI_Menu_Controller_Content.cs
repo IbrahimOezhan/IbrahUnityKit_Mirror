@@ -7,14 +7,11 @@ namespace IbrahKit
     [System.Serializable]
     public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuContent
     {
-        private const string SENDMESSAGE = "OnMenuLoaded";
-
         private UI_Menu menu;
 
         private State state = State.BEFOREINIT;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items.")]
-        [SerializeField]
+        [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items."), SerializeField]
         private Transform list;
 
         [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeReference, ShowIf(nameof(ShowMenuItems))]
