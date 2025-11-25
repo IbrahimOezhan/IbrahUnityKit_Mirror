@@ -19,7 +19,7 @@ namespace IbrahKit.Save
 
         private readonly string[] filePaths = new string[0];
 
-        private readonly bool[] encrypted = new bool[0];
+        private readonly bool[] encrypionSuccess = new bool[0];
 
         private readonly Save_State[] fileState = new Save_State[0];
 
@@ -74,48 +74,37 @@ namespace IbrahKit.Save
 
             int LENGTH = filePaths.Length;
 
-            string[] fileContents = new string[LENGTH];
-
             fileState = new Save_State[LENGTH];
 
-            bool[] validDecrypt = new bool[LENGTH];
+            encrypionSuccess = new bool[LENGTH];
 
-            encrypted = new bool[LENGTH];
-
-            ValidateTask[] outdatedValidation = new ValidateTask[LENGTH];
-
-            for (int i = 0; i < fileContents.Length; i++)
+            for (int i = 0; i < LENGTH; i++)
             {
-                if(!FileSystem_Utilities.TryReadFromFile(filePaths[i], out fileContents[i]))
+                if(!FileSystem_Utilities.TryReadFromFile(filePaths[i], out string fileContents))
                 {
                     IbrahDebug.LogWarning($"{filePaths[i]} doesnt exist");
 
                     fileState[i] = Save_State.Corrupted;
+
+                    continue;
                 }
-            }
 
-            for (int i = 0; i < validDecrypt.Length; i++)
-            {
-                (validDecrypt[i], encrypted[i]) = Save_Utilities.Decrypt(fileContents[i], key, out fileContents[i]);
+                encrypionSuccess[i] = Save_Utilities.Decrypt(fileContents, key, out fileContents);
 
-                if (!validDecrypt[i])
+                if (!encrypionSuccess[i])
                 {
                     fileState[i] = Save_State.Corrupted;
+
+                    continue;
                 }
-            }
 
-            for (int i = 0; i < outdatedValidation.Length; i++)
-            {
-                outdatedValidation[i] = new(filePaths[i], fileContents[i], fileState[i] == Save_State.Corrupted);
+                ValidateTask validationTask = new(filePaths[i], fileContents, fileState[i] == Save_State.Corrupted);
 
-                fileState[i] = outdatedValidation[i].GetFileState();
+                fileState[i] = validationTask.GetFileState();
+
+                if (fileState[i] != Save_State.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), validationTask.GetSavable());
 
                 state = (Save_State)MathF.Max((int)state, (int)fileState[i]);
-            }
-
-            for (int i = 0; i < outdatedValidation.Length; i++)
-            {
-                if (fileState[i] != Save_State.Corrupted) loadable.Add(Path.GetFileName(filePaths[i]), outdatedValidation[i].GetSavable());
             }
         }
 
@@ -139,28 +128,19 @@ namespace IbrahKit.Save
         /// Gets the total state of the this save
         /// </summary>
         /// <returns>Gets the total state of this save</returns>
-        internal Save_State GetState()
-        {
-            return state;
-        }
+        internal Save_State GetState() => state;
 
         /// <summary>
         /// Gets the keys of this save
         /// </summary>
         /// <returns>The keys of this save</returns>
-        public List<string> GetKeys()
-        {
-            return loadable.Keys.ToList();
-        }
+        public List<string> GetKeys() => loadable.Keys.ToList();
 
         /// <summary>
         /// Gets the savables of this save
         /// </summary>
         /// <returns>Gets the savables</returns>
-        public List<Savable> GetSavables()
-        {
-            return loadable.Values.ToList();
-        }
+        public List<Savable> GetSavables() => loadable.Values.ToList();
 
         /// <summary>
         /// Deletes this save
@@ -190,7 +170,6 @@ namespace IbrahKit.Save
 
             if (inUse.Contains(savable))
             {
-                //InUse error
                 throw new SaveInUseException();
             }
 
@@ -249,9 +228,6 @@ namespace IbrahKit.Save
         /// </summary>
         /// <param name="otherSave">The second save to compare to</param>
         /// <returns>An integer representing what save has the lower version</returns>
-        public int CompareTo(Save otherSave)
-        {
-            return String_Utilities.CompareVersions(version, otherSave.version);
-        }
+        public int CompareTo(Save otherSave) => String_Utilities.CompareVersions(version, otherSave.version);
     }
 }

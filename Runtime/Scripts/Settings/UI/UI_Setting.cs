@@ -8,16 +8,14 @@ namespace IbrahKit.Settings
 
         public bool CanSpawn(Setting_Base setting)
         {
-            if (!CanSpawnPro(setting))
-            {
-                return false;
-            }
+            return CanSpawnPro(setting);
+        }
 
+        public void Init(Setting_Base setting)
+        {
             this.setting = setting;
 
             setting.OnValueChanged += UpdateUI;
-
-            return true;
         }
 
         protected abstract bool CanSpawnPro(Setting_Base setting);

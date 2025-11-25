@@ -46,16 +46,9 @@ namespace IbrahKit.Save
             currentSave.FlushAll(encrypt);
         }
 
-        public Savable Load(string name, Savable defaultValue)
+        public bool TryLoad<T>(string name, out T result, bool logWarning = true) where T : Savable, new()
         {
-            Savable savable = currentSave.Load(name, defaultValue);
-
-            return savable;
-        }
-
-        public bool TryLoad<T>(string name, Savable defaultValue, out T result, bool logWarning = true) where T : Savable
-        {
-            Savable savable = currentSave.Load(name, defaultValue);
+            Savable savable = currentSave.Load(name, new T());
 
             if (savable is T casted)
             {
@@ -95,9 +88,7 @@ namespace IbrahKit.Save
 
         private Save GetBestFolder(string thisVersionFolder, string saveFolderPath, string key)
         {
-            List<string> folders = Directory.GetDirectories(saveFolderPath).ToList();
-
-            folders.RemoveAll(x => !String_Utilities.TryParseVersion(Path.GetFileName(x)));
+            List<string> folders = Directory.GetDirectories(saveFolderPath).Where(x => String_Utilities.TryParseVersion(Path.GetFileName(x))).ToList();
 
             if (folders.Count == 0)
             {

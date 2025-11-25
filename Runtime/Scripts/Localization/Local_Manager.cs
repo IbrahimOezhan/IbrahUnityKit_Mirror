@@ -32,9 +32,9 @@ namespace IbrahKit.Localization
         {
             base.InstanceAwake();
 
-            if (Save_Manager.GetInstance().TryLoad(SAVE, new SaveData(), out saveData))
+            if (Save_Manager.GetInstance().TryLoad(SAVE, out saveData))
             {
-                saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE, new SaveData());
+                Save_Manager.GetInstance().TryLoad(SAVE, out saveData);
 
                 SetLanguage(GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()));
 

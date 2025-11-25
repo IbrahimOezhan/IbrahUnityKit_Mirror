@@ -7,7 +7,7 @@ namespace IbrahKit.Save
 {
     public static class Save_Utilities
     {
-        public static (bool, bool) Decrypt(string fileContent, string key, out string result)
+        public static bool Decrypt(string fileContent, string key, out string result)
         {
             bool tryParse = Json_Utilities.IsValidJson(fileContent);
 
@@ -27,7 +27,7 @@ namespace IbrahKit.Save
 
             result = fileContent;
 
-            return (tryParse, tryParse);
+            return tryParse;
         }
 
         public static Savable GetSavable(string json)

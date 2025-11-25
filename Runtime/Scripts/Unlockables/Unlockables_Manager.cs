@@ -18,7 +18,7 @@ namespace IbrahKit
         {
             base.InstanceAwake();
 
-            saveData = (SaveData)Save_Manager.GetInstance().Load(SAVE_DATA_NAME, new SaveData());
+            Save_Manager.GetInstance().TryLoad(SAVE_DATA_NAME, out saveData);
         }
 
         private void OnDestroy()

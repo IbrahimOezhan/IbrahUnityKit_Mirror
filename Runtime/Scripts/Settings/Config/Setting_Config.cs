@@ -1,13 +1,12 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 namespace IbrahKit.Settings
 {
     [CreateAssetMenu(fileName = "NewSettingConfig", menuName = "IbrahKit/SettingConfig")]
-    public abstract class Setting_Config<TSetting> : ScriptableObject where TSetting : Setting_Base, new()
+    public abstract class Setting_Config<TSetting> : ScriptableObject, ISettingConfig, ISelfValidator where TSetting : Setting_Base, new()
     {
         [SerializeField] private string key;
 
@@ -22,48 +21,52 @@ namespace IbrahKit.Settings
             return Type_Utilities.GetAllTypesDropdownFormat(typeof(TSetting));
         }
 
-        //public bool TryCreateAndDisplay<TSettingUI>(TSettingUI ui, out Setting_Base result) where TSettingUI : UI_Setting , new()
-        //{
-        //    if (TryCreate(out result))
-        //    {
-        //        TSettingUI test = new();
+        public bool TryCreateUserInterface<TSettingUI>(Vector3 positon, Quaternion rotation, Transform parent,out UI_Setting result)
+        {
+            if (TryGetInstance(out Setting_Base settingResult))
+            {
+                result = Instantiate(setting, positon, rotation);
 
-        //        if (test.CanSpawn(result))
-        //        {
-        //            return true;
-        //        }
-        //    }
+                result.transform.parent = parent;
 
-        //    result = null;
-        //    return false;
-        //}
+                result.Init(settingResult);
 
-        //public bool TryCreate(out Setting_Base result)
-        //{
-        //    if (Settings_Manager.GetInstance().TryGetValue(GetKey(), GetDefaultValue(), out string value))
-        //    {
-        //        if (float.TryParse(value, out float floatValue))
-        //        {
-        //            result = new TSetting();
-        //            return true;
-        //        }
-        //    }
+                return true;
+            }
 
-        //    result = null;
-        //    return false;
-        //}
+            result = null;
 
-        //public string GetKey() => key;
+            return false;
+        }
 
+        public bool TryGetInstance(out Setting_Base result)
+        {
+            if(Settings_Manager.GetInstance().TryGet(GetKey(), out result)) return true;
 
+            string value = Settings_Manager.GetInstance().GetValue(GetKey(), GetDefaultValue());
 
-        //public void Validate(SelfValidationResult result)
-        //{
-        //    Setting_Base setting = new TSetting();
+            if (float.TryParse(value, out float _))
+            {
+                result = new TSetting();
+                return true;
+            }
 
-        //    UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
+            result = null;
+            return false;
+        }
 
+        public string GetKey() => key;
 
-        //}
+        public void Validate(SelfValidationResult result)
+        {
+            Setting_Base setting = new TSetting();
+
+            UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
+
+            if(!settingTest.CanSpawn(setting))
+            {
+                result.AddError("UI is not compatible with the setting");
+            }
+        }
     }
 }
