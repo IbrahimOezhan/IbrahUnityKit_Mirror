@@ -2,7 +2,7 @@ namespace IbrahKit
 {
     public abstract class Manager_DDOL<T> : Manager<T> where T : Manager_DDOL<T>
     {
-        protected override void Awake()
+        protected sealed override void Awake()
         {
             if (Instance != null && Instance != this)
             {

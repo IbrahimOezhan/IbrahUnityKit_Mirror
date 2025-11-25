@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace IbrahKit
 {
     [RequireComponent(typeof(Camera))]
-    public class OverlayAssign : MonoBehaviour
+    public class Camera_Overlay_Assign : MonoBehaviour
     {
         private Camera overlayCam;
 
@@ -66,9 +66,9 @@ namespace IbrahKit
 
                 list.Sort((a, b) =>
                 {
-                    if (a.TryGetComponent(out OverlayAssign overlayA))
+                    if (a.TryGetComponent(out Camera_Overlay_Assign overlayA))
                     {
-                        if (b.TryGetComponent(out OverlayAssign overlayB))
+                        if (b.TryGetComponent(out Camera_Overlay_Assign overlayB))
                         {
                             return overlayA.priority.CompareTo(overlayB.priority);
                         }
