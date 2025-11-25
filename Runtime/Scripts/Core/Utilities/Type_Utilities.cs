@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace IbrahKit
     {
         public static IEnumerable<Type> GetTypesInCollection(IEnumerable<object> collection)
         {
-            List<Type> types = new List<Type>();
+            List<Type> types = new();
 
             foreach (object item in collection)
             {

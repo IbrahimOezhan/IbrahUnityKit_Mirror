@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using IbrahKit.Save;
 using Sirenix.Utilities;
 using System.Collections.Generic;
@@ -66,7 +67,6 @@ namespace IbrahKit
                 if (!unlockedUnlockables.Contains(key))
                 {
                     unlockedUnlockables.Add(key);
-                    IbrahDebug.Log("Unlocked " + key);
                 }
             }
         }

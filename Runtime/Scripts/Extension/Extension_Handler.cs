@@ -70,7 +70,7 @@ namespace IbrahKit
             return false;
         }
 
-        public override void RunExtensions()
+        public sealed override void RunExtensions()
         {
             foreach (var item in extensions)
             {
@@ -78,7 +78,7 @@ namespace IbrahKit
             }
         }
 
-        public override void InitExtensions()
+        public sealed override void InitExtensions()
         {
             foreach (var item in extensions)
             {
@@ -86,7 +86,7 @@ namespace IbrahKit
             }
         }
 
-        public override void Cleanup()
+        public sealed override void Cleanup()
         {
             foreach (var item in extensions)
             {

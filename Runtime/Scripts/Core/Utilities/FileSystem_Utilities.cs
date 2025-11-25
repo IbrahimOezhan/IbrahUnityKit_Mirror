@@ -43,26 +43,26 @@ namespace IbrahKit
             if (File.Exists(filePath) && ifDoesntExist) return;
 
             using StreamWriter writer = new(filePath);
+
             writer.Write(fileContent);
         }
 
-        public static string ReadFromFile(string filePath)
+        public static bool TryReadFromFile(string filePath, out string result)
         {
-            string fileContent = string.Empty;
+            result = string.Empty;
 
             bool fileExists = File.Exists(filePath);
 
             if (fileExists)
             {
                 using StreamReader reader = new(filePath);
-                fileContent = reader.ReadToEnd();
-            }
-            else
-            {
-                IbrahDebug.Log("File at " + filePath + " does not exist");
+
+                result = reader.ReadToEnd();
+
+                return true;
             }
 
-            return fileContent;
+            return false;
         }
     }
 }

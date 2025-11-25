@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using UnityEngine;
 
 namespace IbrahKit

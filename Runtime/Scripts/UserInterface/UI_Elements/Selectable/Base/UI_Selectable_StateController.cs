@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;

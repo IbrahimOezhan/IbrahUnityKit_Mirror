@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -6,6 +7,19 @@ namespace IbrahKit
 {
     public static class Json_Utilities
     {
+        public static string Serialize<T>(T obj, Type type)
+        {
+            return JsonSerializer.Serialize(obj,type , new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            });
+        }
+
+        public static string Serialize<T>(T obj)
+        {
+            return Serialize(obj, typeof(T));
+        }
+
         public static bool TryDeserialize<T>(string json, out T result) where T : new()
         {
             bool resultTry = TryDeserialize(json, typeof(T), out object resultOb);
@@ -55,6 +69,24 @@ namespace IbrahKit
             };
 
             return (object)JsonSerializer.Deserialize(json, t, options);
+        }
+
+        public static bool IsValidJson(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                return false;
+
+            try
+            {
+                using (JsonDocument.Parse(json))
+                {
+                    return true;
+                }
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
         }
     }
 }

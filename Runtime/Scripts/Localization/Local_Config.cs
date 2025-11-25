@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
@@ -87,7 +88,7 @@ namespace IbrahKit.Localization
 
             for (int i = 1; i < line.Length; i++)
             {
-                if (!Parse_Utilities.IsValidJson(line[i]))
+                if (!Json_Utilities.IsValidJson(line[i]))
                 {
                     IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
                     return false;

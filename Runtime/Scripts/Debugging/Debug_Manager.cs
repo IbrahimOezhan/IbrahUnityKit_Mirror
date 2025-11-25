@@ -1,11 +1,10 @@
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Validation;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace IbrahKit
+namespace IbrahKit.Debug
 {
     public class Debug_Manager : Manager_DDOL<Debug_Manager>, ISelfValidator
     {

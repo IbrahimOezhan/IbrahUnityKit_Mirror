@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using IbrahKit.Debug;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IbrahKit

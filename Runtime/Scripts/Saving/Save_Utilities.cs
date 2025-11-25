@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -8,7 +9,7 @@ namespace IbrahKit.Save
     {
         public static (bool, bool) Decrypt(string fileContent, string key, out string result)
         {
-            bool tryParse = Parse_Utilities.IsValidJson(fileContent);
+            bool tryParse = Json_Utilities.IsValidJson(fileContent);
 
             if (!tryParse)
             {
@@ -16,7 +17,7 @@ namespace IbrahKit.Save
 
                 IbrahDebug.Log("File probably encrypted. Attemping decryption");
 
-                tryParse = Parse_Utilities.IsValidJson(fileContent);
+                tryParse = Json_Utilities.IsValidJson(fileContent);
 
                 if (!tryParse)
                 {

@@ -37,25 +37,7 @@ namespace IbrahKit
                 _seconds -= 60;
             }
 
-            return $"{_minutes.ToString("00")}:{_seconds.ToString("00")}";
-        }
-
-        public static bool IsValidJson(string json)
-        {
-            if (string.IsNullOrWhiteSpace(json))
-                return false;
-
-            try
-            {
-                using (JsonDocument.Parse(json))
-                {
-                    return true;
-                }
-            }
-            catch (JsonException)
-            {
-                return false;
-            }
+            return $"{_minutes:00}:{_seconds:00}";
         }
     }
 }

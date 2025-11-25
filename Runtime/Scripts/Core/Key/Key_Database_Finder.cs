@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using IbrahKit.Debug;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -63,10 +64,10 @@ namespace IbrahKit
                     db = cached;
                     return true;
                 case 0:
-                    Debug.LogWarning("No DB found");
+                    IbrahDebug.LogWarning("No DB found");
                     break;
                 default:
-                    Debug.LogWarning("More than 1 DB found");
+                    IbrahDebug.LogWarning("More than 1 DB found");
                     break;
             }
 

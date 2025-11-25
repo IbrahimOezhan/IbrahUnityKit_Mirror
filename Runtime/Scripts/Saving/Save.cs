@@ -1,3 +1,4 @@
+using IbrahKit.Debug;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,23 +15,17 @@ namespace IbrahKit.Save
 
         private string version;
 
-        private Save_State state = Save_State.Valid;
+        private readonly Save_State state = Save_State.Valid;
 
-        private string[] filePaths = new string[0];
+        private readonly string[] filePaths = new string[0];
 
-        private bool[] encrypted = new bool[0];
+        private readonly bool[] encrypted = new bool[0];
 
-        private Save_State[] fileState = new Save_State[0];
+        private readonly Save_State[] fileState = new Save_State[0];
 
-        private HashSet<Savable> inUse = new();
+        private readonly HashSet<Savable> inUse = new();
 
-        private Dictionary<string, Savable> loadable = new();
-
-        private static readonly JsonSerializerOptions Options = new()
-        {
-            IncludeFields = true,
-            WriteIndented = true,
-        };
+        private readonly Dictionary<string, Savable> loadable = new();
 
         public void Init(string folderPath, string key)
         {
@@ -77,27 +72,24 @@ namespace IbrahKit.Save
                 return;
             }
 
-            string[] fileContents = new string[filePaths.Length];
+            int LENGTH = filePaths.Length;
 
-            fileState = new Save_State[filePaths.Length];
+            string[] fileContents = new string[LENGTH];
 
-            bool[] validDecrypt = new bool[filePaths.Length];
+            fileState = new Save_State[LENGTH];
 
-            encrypted = new bool[filePaths.Length];
+            bool[] validDecrypt = new bool[LENGTH];
 
-            ValidateTask[] outdatedValidation = new ValidateTask[filePaths.Length];
+            encrypted = new bool[LENGTH];
+
+            ValidateTask[] outdatedValidation = new ValidateTask[LENGTH];
 
             for (int i = 0; i < fileContents.Length; i++)
             {
-                try
+                if(!FileSystem_Utilities.TryReadFromFile(filePaths[i], out fileContents[i]))
                 {
-                    fileContents[i] = File.ReadAllText(filePaths[i]);
-                }
-                catch (Exception ex)
-                {
-                    IbrahDebug.LogWarning($"{filePaths[i]} - {ex.Message}");
+                    IbrahDebug.LogWarning($"{filePaths[i]} doesnt exist");
 
-                    fileContents[i] = string.Empty;
                     fileState[i] = Save_State.Corrupted;
                 }
             }
@@ -220,7 +212,7 @@ namespace IbrahKit.Save
             {
                 Type t = Save_Utilities.GetSavableType(value);
 
-                string json = JsonSerializer.Serialize(value, t, Options);
+                string json = Json_Utilities.Serialize(value, t);
 
                 string fileContent = encrypt ? String_Utilities.Encrypt(json, key) : json;
 
