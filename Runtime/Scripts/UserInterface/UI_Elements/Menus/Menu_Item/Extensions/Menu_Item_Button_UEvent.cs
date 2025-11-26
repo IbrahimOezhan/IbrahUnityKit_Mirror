@@ -7,13 +7,9 @@ namespace IbrahKit
     {
         [SerializeField] private UnityEvent unityEvent;
 
-        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
+        protected override bool TrySpawnProPro(RectTransform parent, UI_Menu menu, UI_Menu_Item_Button_Text spawnedButton)
         {
-            bool res = base.TrySpawnPro(parent, menu, out go);
-
-            if (res) return false;
-
-            spawnedButton.Initialize(value).AddListener(() => { unityEvent.Invoke(); });
+            spawnedButton.GetSelectable().GetStateController().GetOnPressSuccess().AddListener(() => { unityEvent.Invoke(); });
 
             return true;
         }

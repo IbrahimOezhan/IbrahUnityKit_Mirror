@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 
 namespace IbrahKit.Save
 {
@@ -80,7 +79,7 @@ namespace IbrahKit.Save
 
             for (int i = 0; i < LENGTH; i++)
             {
-                if(!FileSystem_Utilities.TryReadFromFile(filePaths[i], out string fileContents))
+                if (!FileSystem_Utilities.TryReadFromFile(filePaths[i], out string fileContents))
                 {
                     IbrahDebug.LogWarning($"{filePaths[i]} doesnt exist");
 

@@ -92,7 +92,7 @@ namespace IbrahKit
         {
             (int start, int end) = GetIndexRange();
 
-            for(int i = 0; i < content.Count; i++)
+            for (int i = 0; i < content.Count; i++)
             {
                 bool inRange = i >= start && i < end;
 

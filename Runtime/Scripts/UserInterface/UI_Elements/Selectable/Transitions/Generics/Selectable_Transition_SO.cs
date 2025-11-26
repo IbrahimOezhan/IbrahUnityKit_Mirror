@@ -5,7 +5,7 @@ namespace IbrahKit
 {
     public class Selectable_Transition_SO<T> : Selectable_Transition_SO
     {
-        [SerializeField,Required] private T none;
+        [SerializeField, Required] private T none;
         [SerializeField, Required] private T selected;
         [SerializeField, Required] private T pressed;
 

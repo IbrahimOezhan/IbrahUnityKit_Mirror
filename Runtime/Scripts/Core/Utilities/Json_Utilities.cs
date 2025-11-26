@@ -9,7 +9,7 @@ namespace IbrahKit
     {
         public static string Serialize<T>(T obj, Type type)
         {
-            return JsonSerializer.Serialize(obj,type , new JsonSerializerOptions()
+            return JsonSerializer.Serialize(obj, type, new JsonSerializerOptions()
             {
                 WriteIndented = true
             });
@@ -36,11 +36,11 @@ namespace IbrahKit
             return resultTry;
         }
 
-        public static bool TryDeserialize(string json,Type t, out object result)
+        public static bool TryDeserialize(string json, Type t, out object result)
         {
             try
             {
-                result = Deserialize(json,t, JsonUnmappedMemberHandling.Disallow);
+                result = Deserialize(json, t, JsonUnmappedMemberHandling.Disallow);
 
                 return true;
             }
@@ -56,7 +56,7 @@ namespace IbrahKit
 
         public static T Deserialize<T>(string json, JsonUnmappedMemberHandling unmappedMemberHandling = JsonUnmappedMemberHandling.Skip) where T : new()
         {
-            return (T) Deserialize(json, typeof(T), unmappedMemberHandling);
+            return (T)Deserialize(json, typeof(T), unmappedMemberHandling);
         }
 
         public static object Deserialize(string json, Type t, JsonUnmappedMemberHandling unmappedMemberHandling = JsonUnmappedMemberHandling.Skip)

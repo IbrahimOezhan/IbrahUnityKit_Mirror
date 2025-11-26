@@ -9,7 +9,7 @@ namespace IbrahKit
     {
         private UI_Menu menu;
 
-        [TabGroup("Menu Settings", order: -1), SerializeField,Required]
+        [TabGroup("Menu Settings", order: -1), SerializeField, Required]
         private CanvasGroup enabledGroup;
 
         [TabGroup("Menu Settings", order: -1), SerializeField, Required]

@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace IbrahKit
 {
@@ -8,11 +7,11 @@ namespace IbrahKit
     {
         private UI_Interative_Extension_Text_Modifier text;
 
-        [SerializeField,Required] private UI_Selectable selectable;
+        [SerializeField, Required] private UI_Selectable selectable;
+
         [SerializeField] private UI_Interactive interactive;
 
-
-        public UnityEvent Initialize(string value)
+        public void Initialize(string value)
         {
             interactive.TryGet(out text);
 
@@ -25,19 +24,19 @@ namespace IbrahKit
             {
                 setter.SetText(value);
             }
-
-            return selectable.GetStateController().GetOnPressSuccess();
         }
+
+        public UI_Selectable GetSelectable() => selectable;
 
         public void Validate(SelfValidationResult result)
         {
-            if(interactive == null)
+            if (interactive == null)
             {
                 result.AddError("Interative is required");
                 return;
             }
 
-            if(!interactive.TryGet(out UI_Interative_Extension_Text_Modifier modifier))
+            if (!interactive.TryGet(out UI_Interative_Extension_Text_Modifier _))
             {
                 result.AddError("Interative needs text modifier");
             }

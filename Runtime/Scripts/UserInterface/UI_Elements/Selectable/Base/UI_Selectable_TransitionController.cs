@@ -37,7 +37,7 @@ namespace IbrahKit
 
         public void Validate(SelfValidationResult result)
         {
-            if(transitions.Count == 0 && transitionsInteractable.Count == 0 && transitionsNotInteractable.Count == 0)
+            if (transitions.Count == 0 && transitionsInteractable.Count == 0 && transitionsNotInteractable.Count == 0)
             {
                 result.AddWarning("The selectable has no transitions");
             }

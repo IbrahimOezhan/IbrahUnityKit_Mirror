@@ -5,11 +5,11 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable]
-    public class Menu_Item_Button_Base : Menu_Item_Base
+    public abstract class Menu_Item_Button_Base : Menu_Item_Base
     {
-        protected UI_Menu_Item_Button_Text spawnedButton;
+        private UI_Menu_Item_Button_Text spawnedButton;
 
-        protected string value;
+        private string value;
 
         [SerializeField] private LocalType localType = LocalType.LOCALIZE;
 
@@ -17,7 +17,7 @@ namespace IbrahKit
 
         [SerializeField, ShowIf(nameof(localType), LocalType.STATIC)] private string staticText;
 
-        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
+        protected sealed override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {
             go = null;
 
@@ -43,10 +43,14 @@ namespace IbrahKit
                 return false;
             }
 
+            spawnedButton.Initialize(value);
+
             go = spawnedButton.gameObject;
 
-            return true;
+            return TrySpawnProPro(parent, menu, spawnedButton);
         }
+
+        protected abstract bool TrySpawnProPro(RectTransform parent, UI_Menu menu, UI_Menu_Item_Button_Text spawnedButton);
 
         private enum LocalType
         {

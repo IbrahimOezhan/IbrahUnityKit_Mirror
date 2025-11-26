@@ -27,16 +27,16 @@ namespace IbrahKit
         {
             base.InstanceAwake();
 
-            if(Save_Manager.GetInstance().TryLoad(SAVE_DATA_SETTINGS, out saveData))
+            if (Save_Manager.GetInstance().TryLoad(SAVE_DATA_SETTINGS, out saveData))
             {
 
             }
 
             settings.GetConfigs().ForEach(x =>
             {
-                if(x.TryGetInstance(out Setting_Base res))
+                if (x.TryGetInstance(out Setting_Base res))
                 {
-                    if(settingsInit.TryAdd(x.GetKey(), res));
+                    if (settingsInit.TryAdd(x.GetKey(), res)) ;
                     {
 
                     }
@@ -46,7 +46,7 @@ namespace IbrahKit
 
         public string GetValue(string key, string defaultValue)
         {
-            if(saveData.GetKeyValues().TryGetValue(key, out string value))
+            if (saveData.GetKeyValues().TryGetValue(key, out string value))
             {
                 return value;
             }

@@ -12,8 +12,6 @@ namespace IbrahKit.Settings
 
         [SerializeField, ValueDropdown(nameof(GetDropdown))] private string type;
 
-        [SerializeField] private UI_Setting setting;
-
         public abstract string GetDefaultValue();
 
         public IEnumerable GetDropdown()
@@ -21,27 +19,9 @@ namespace IbrahKit.Settings
             return Type_Utilities.GetAllTypesDropdownFormat(typeof(TSetting));
         }
 
-        public bool TryCreateUserInterface<TSettingUI>(Vector3 positon, Quaternion rotation, Transform parent,out UI_Setting result)
-        {
-            if (TryGetInstance(out Setting_Base settingResult))
-            {
-                result = Instantiate(setting, positon, rotation);
-
-                result.transform.parent = parent;
-
-                result.Init(settingResult);
-
-                return true;
-            }
-
-            result = null;
-
-            return false;
-        }
-
         public bool TryGetInstance(out Setting_Base result)
         {
-            if(Settings_Manager.GetInstance().TryGet(GetKey(), out result)) return true;
+            if (Settings_Manager.GetInstance().TryGet(GetKey(), out result)) return true;
 
             string value = Settings_Manager.GetInstance().GetValue(GetKey(), GetDefaultValue());
 
@@ -63,7 +43,7 @@ namespace IbrahKit.Settings
 
             UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
 
-            if(!settingTest.CanSpawn(setting))
+            if (!settingTest.CanSpawn(setting))
             {
                 result.AddError("UI is not compatible with the setting");
             }

@@ -5,7 +5,7 @@ namespace IbrahKit
 {
     public class Menu_Settings : MonoBehaviour
     {
-        [SerializeField,Required] private UI_Menu menu;
+        [SerializeField, Required] private UI_Menu menu;
 
         public static UI_Menu Instance;
 

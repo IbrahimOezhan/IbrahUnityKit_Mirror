@@ -68,7 +68,7 @@ namespace IbrahKit.Localization
                 return;
             }
 
-            if(!TryGetLanguages(out languages, lines[0].Split(seperator)))
+            if (!TryGetLanguages(out languages, lines[0].Split(seperator)))
             {
                 return;
             }

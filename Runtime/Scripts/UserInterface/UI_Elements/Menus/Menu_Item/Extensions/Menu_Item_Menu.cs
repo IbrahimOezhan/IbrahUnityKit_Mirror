@@ -10,16 +10,12 @@ namespace IbrahKit
 
         [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField] private UI_Menu menuReference;
 
-        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
+        protected override bool TrySpawnProPro(RectTransform parent, UI_Menu menu, UI_Menu_Item_Button_Text spawnedButton)
         {
-            bool result = base.TrySpawnPro(parent, menu, out go);
-
-            if (!result) return false;
-
             switch (changeType)
             {
                 case Menu_Change_Type.REFERENCE:
-                    spawnedButton.Initialize(value).AddListener(() =>
+                    spawnedButton.GetSelectable().GetStateController().GetOnPressSuccess().AddListener(() =>
                     {
                         menu.GetStateController().Transition<Menu_Transition_Instant>(menuReference);
                     });
@@ -29,7 +25,7 @@ namespace IbrahKit
             return true;
         }
 
-        public enum Menu_Change_Type
+        private enum Menu_Change_Type
         {
             REFERENCE,
         }

@@ -86,13 +86,13 @@ namespace IbrahKit.Debug
 
         public void Validate(SelfValidationResult result)
         {
-            if(debugContent == null)
+            if (debugContent == null)
             {
                 result.AddError("Debug Content is null");
                 return;
             }
 
-            if(!debugContent.TryGet(out textSetter))
+            if (!debugContent.TryGet(out textSetter))
             {
                 result.AddError("UI Interactive doesnt contain Text Setter");
             }

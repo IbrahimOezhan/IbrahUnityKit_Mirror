@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IbrahKit.UI;
 using UnityEngine;
 
 namespace IbrahKit
