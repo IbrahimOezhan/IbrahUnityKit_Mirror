@@ -1,5 +1,6 @@
 using IbrahKit.UI;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -11,13 +12,15 @@ namespace IbrahKit.Debug
     {
         private readonly List<IDebug> debugs = new();
 
+        private Action action;
+
         private UI_Interative_Extension_Text_Setter textSetter;
 
         [SerializeField] private UI_Interactive debugContent;
 
         [SerializeField, Required] private UI_Menu debugContainer;
 
-        [SerializeField, Required] private KeyMap keyMap;
+        [SerializeField, Required] private Key debugKey;
 
         [SerializeField] private bool catchExceptions = true;
 
@@ -34,18 +37,17 @@ namespace IbrahKit.Debug
             debugContent.TryGet(out textSetter);
         }
 
-        private void Update()
+        private void Start()
         {
-            if (Keyboard.current[keyMap.debugMenu].wasPressedThisFrame)
-            {
-                debugContainer.GetStateController().Toggle();
-            }
+            action = () => debugContainer.GetStateController().Toggle();
 
-            s_disableLogs = disableLogs;
+            Input_Shortcut_Manager.GetInstance().RegisterAction(debugKey, action);
         }
 
         private void FixedUpdate()
         {
+            s_disableLogs = disableLogs;
+
             if (debugContainer.GetStateController().GetCompactState() != UI_Menu_Controller_State.StateCompact.ENABLED)
             {
                 return;
@@ -61,6 +63,13 @@ namespace IbrahKit.Debug
             string s = sb.ToString();
 
             textSetter.SetText(s.IsEmpty() ? "No Information" : s);
+        }
+
+        protected override void InstanceDestroy()
+        {
+            base.InstanceDestroy();
+
+            Input_Shortcut_Manager.GetInstance().UnregisterAction(debugKey, action);
         }
 
         /// <summary>

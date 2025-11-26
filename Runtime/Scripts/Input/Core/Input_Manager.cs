@@ -25,9 +25,9 @@ namespace IbrahKit
         {
             InputType lastInputType = currentInputType;
 
-            for (int i = 0; i < InputSystem.devices.Count; i++)
+            foreach(InputDevice device in InputSystem.devices)
             {
-                foreach (InputControl control in InputSystem.devices[i].allControls)
+                foreach (InputControl control in device.allControls)
                 {
                     if (!(control is ButtonControl button && button.wasPressedThisFrame))
                     {
