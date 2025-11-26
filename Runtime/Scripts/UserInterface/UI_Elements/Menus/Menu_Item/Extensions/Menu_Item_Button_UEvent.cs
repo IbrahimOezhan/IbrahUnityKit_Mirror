@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class Menu_Item_Button_UEvent : Menu_Item_Button_Base
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class Menu_Transition_Cross : Menu_Transition_Time

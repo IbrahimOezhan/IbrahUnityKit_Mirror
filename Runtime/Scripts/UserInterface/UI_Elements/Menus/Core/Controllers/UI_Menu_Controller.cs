@@ -1,9 +1,10 @@
-using IbrahKit;
-
-public abstract class UI_Menu_Controller
+namespace IbrahKit.UI
 {
-    public abstract void Init(UI_Menu menu);
-    public abstract void OnMenuEnabled();
-    public abstract void Lifecycle();
-    public abstract void OnMenuDisabled();
+    public abstract class UI_Menu_Controller
+    {
+        public abstract void Init(UI_Menu menu);
+        public abstract void OnMenuEnabled();
+        public abstract void Lifecycle();
+        public abstract void OnMenuDisabled();
+    }
 }

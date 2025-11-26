@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class ScrollView_Content : MonoBehaviour
     {

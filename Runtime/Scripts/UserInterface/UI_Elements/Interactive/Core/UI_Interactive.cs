@@ -1,23 +1,24 @@
-using IbrahKit;
-
-public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate
+namespace IbrahKit.UI
 {
-    UI_Menu menu;
-
-    protected void OnDisable()
+    public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate
     {
-        Cleanup();
-    }
+        UI_Menu menu;
 
-    public void OnMenuInit(UI_Menu menu)
-    {
-        this.menu = menu;
-        InitExtensions();
-        RunExtensions();
-    }
+        protected void OnDisable()
+        {
+            Cleanup();
+        }
 
-    public UI_Menu GetMenu()
-    {
-        return menu;
+        public void OnMenuInit(UI_Menu menu)
+        {
+            this.menu = menu;
+            InitExtensions();
+            RunExtensions();
+        }
+
+        public UI_Menu GetMenu()
+        {
+            return menu;
+        }
     }
 }

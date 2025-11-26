@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public abstract class Menu_Item_Base
     {

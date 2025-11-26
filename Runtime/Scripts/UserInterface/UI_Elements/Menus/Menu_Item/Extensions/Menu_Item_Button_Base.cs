@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public abstract class Menu_Item_Button_Base : Menu_Item_Base

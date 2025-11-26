@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class S_Transition_Animator : UI_Selectable_Transition<Animator, S_Transition_Animator_SO>
     {

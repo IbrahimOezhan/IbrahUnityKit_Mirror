@@ -1,6 +1,6 @@
-using static IbrahKit.UI_Menu_Controller_State;
+using static IbrahKit.UI.UI_Menu_Controller_State;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public interface IMenuState
     {

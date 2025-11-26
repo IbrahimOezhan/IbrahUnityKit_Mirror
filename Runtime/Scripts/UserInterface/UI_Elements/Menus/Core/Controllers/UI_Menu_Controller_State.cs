@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class UI_Menu_Controller_State : UI_Menu_Controller, IMenuState

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public abstract class Menu_Transition_Time : Menu_Transition
     {

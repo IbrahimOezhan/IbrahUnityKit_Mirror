@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public abstract class Menu_Item<T> : Menu_Item_Base where T : Component

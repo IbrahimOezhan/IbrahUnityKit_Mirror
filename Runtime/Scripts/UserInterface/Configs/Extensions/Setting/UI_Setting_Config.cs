@@ -2,7 +2,7 @@ using IbrahKit.Settings;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Setting_Config : UI_Config
     {

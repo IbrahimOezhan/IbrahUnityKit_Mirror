@@ -39,14 +39,16 @@ namespace IbrahKit.Settings
 
         public void Validate(SelfValidationResult result)
         {
-            Setting_Base setting = new TSetting();
+            result.AddError("IMPLEMENT");
 
-            UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
+            //Setting_Base setting = new TSetting();
 
-            if (!settingTest.CanSpawn(setting))
-            {
-                result.AddError("UI is not compatible with the setting");
-            }
+            //UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
+
+            //if (!settingTest.CanSpawn(setting))
+            //{
+            //    result.AddError("UI is not compatible with the setting");
+            //}
         }
     }
 }

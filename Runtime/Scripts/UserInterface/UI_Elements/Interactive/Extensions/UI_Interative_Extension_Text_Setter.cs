@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class UI_Interative_Extension_Text_Setter : UI_Interative_Extension_Text_Modifier

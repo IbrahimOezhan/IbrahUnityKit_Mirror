@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using Application = UnityEngine.Application;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class UI_Interative_Extension_Fitter : UI_Interactive_Extension

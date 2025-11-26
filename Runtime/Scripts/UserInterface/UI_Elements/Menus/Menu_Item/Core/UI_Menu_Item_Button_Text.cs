@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Menu_Item_Button_Text : MonoBehaviour, ISelfValidator
     {

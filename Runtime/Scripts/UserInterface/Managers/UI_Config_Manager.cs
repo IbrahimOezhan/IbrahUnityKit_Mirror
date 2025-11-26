@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Config_Manager : Manager_DDOL<UI_Config_Manager>
     {

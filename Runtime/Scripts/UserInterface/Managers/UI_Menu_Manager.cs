@@ -1,7 +1,7 @@
 using IbrahKit.Debug;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
     public class UI_Menu_Manager : Manager_DDOL<UI_Menu_Manager>

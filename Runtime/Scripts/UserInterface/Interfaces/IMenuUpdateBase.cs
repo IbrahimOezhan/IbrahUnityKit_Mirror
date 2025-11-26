@@ -1,4 +1,7 @@
-public interface IMenuUpdateBase
+namespace IbrahKit.UI
 {
+    public interface IMenuUpdateBase
+    {
 
+    }
 }

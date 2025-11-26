@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public interface IMenuUpdate : IMenuUpdateBase
     {

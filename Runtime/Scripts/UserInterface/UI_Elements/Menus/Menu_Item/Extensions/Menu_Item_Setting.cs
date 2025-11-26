@@ -1,7 +1,7 @@
 ﻿using IbrahKit.Settings;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class Menu_Item_Setting : Menu_Item_Base

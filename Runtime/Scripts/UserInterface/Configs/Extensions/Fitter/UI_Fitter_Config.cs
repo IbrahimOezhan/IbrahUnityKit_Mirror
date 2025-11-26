@@ -2,7 +2,7 @@ using IbrahKit.Debug;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class UI_Fitter_Config : UI_Config

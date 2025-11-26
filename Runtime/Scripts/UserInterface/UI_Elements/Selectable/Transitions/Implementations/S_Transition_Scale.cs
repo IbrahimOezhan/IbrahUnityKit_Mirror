@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [Serializable]
     public class S_Transition_Scale : UI_Selectable_Transition<RectTransform, S_Transition_Scale_SO>

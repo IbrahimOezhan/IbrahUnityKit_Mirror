@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Selectable_Input_Cursor : IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {

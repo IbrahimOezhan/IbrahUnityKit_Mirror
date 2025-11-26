@@ -1,4 +1,5 @@
 using IbrahKit.Settings;
+using IbrahKit.UI;
 using UnityEngine;
 
 namespace IbrahKit

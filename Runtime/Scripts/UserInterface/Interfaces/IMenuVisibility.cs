@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public interface IMenuVisibility
     {

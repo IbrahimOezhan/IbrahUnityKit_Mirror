@@ -1,10 +1,9 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using IbrahKit.UI;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Menu : MonoBehaviour, IConfig
     {

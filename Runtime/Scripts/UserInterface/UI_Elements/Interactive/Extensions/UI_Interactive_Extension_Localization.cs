@@ -1,7 +1,7 @@
 using IbrahKit.Localization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class UI_Interactive_Extension_Localization : UI_Interative_Extension_Text_Modifier

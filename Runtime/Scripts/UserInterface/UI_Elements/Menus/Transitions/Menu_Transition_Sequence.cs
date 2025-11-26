@@ -2,7 +2,7 @@ using IbrahKit.Debug;
 using System.Collections;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class Menu_Transition_Sequence : Menu_Transition_Time
     {

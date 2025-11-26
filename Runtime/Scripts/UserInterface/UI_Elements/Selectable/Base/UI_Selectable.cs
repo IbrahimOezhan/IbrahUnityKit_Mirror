@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Selectable : UnityCallbacks, IMenuUpdate, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {

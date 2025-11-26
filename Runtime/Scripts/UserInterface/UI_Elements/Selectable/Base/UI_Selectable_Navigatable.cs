@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Selectable_Navigatable : UI_Selectable
     {

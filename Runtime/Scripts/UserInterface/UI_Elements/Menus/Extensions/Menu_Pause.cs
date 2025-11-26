@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class Menu_Pause : UI_Menu
     {

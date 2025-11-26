@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     public class UI_Selectable_Group : MonoBehaviour
     {

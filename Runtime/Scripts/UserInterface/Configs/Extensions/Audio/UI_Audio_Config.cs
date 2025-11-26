@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public abstract class UI_Audio_Config : UI_Config

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public abstract class UI_Interative_Extension_Text_Modifier : UI_Interactive_Extension

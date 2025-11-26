@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace IbrahKit
+namespace IbrahKit.UI
 {
     [System.Serializable]
     public class Menu_Transition_Instant : Menu_Transition
