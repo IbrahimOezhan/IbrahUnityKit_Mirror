@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Unlockables
 {
     [DefaultExecutionOrder(Execution_Order.unlock)]
     public class Unlockables_Manager : Manager_DDOL<Unlockables_Manager>

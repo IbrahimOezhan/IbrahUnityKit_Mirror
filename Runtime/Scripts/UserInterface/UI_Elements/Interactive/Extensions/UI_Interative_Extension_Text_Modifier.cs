@@ -1,4 +1,6 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace IbrahKit.UI
 {
@@ -25,6 +27,11 @@ namespace IbrahKit.UI
         protected override int GetOrderPro()
         {
             return 50;
+        }
+
+        public override void Validate(SelfValidationResult validationResult, GameObject content)
+        {
+            UI_Text_Wrapper.Validate(validationResult, content);
         }
     }
 }

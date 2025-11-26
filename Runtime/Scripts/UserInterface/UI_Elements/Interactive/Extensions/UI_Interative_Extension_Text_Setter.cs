@@ -15,6 +15,11 @@ namespace IbrahKit.UI
             text.SetText(value.ToString());
         }
 
+        public void AppendText(object value)
+        {
+            text.Append(value.ToString());
+        }
+
         protected override void CleanupPro()
         {
 

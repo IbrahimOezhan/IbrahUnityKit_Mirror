@@ -3,7 +3,7 @@ using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Unlockables
 {
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
     public class Unlockable : ScriptableObject

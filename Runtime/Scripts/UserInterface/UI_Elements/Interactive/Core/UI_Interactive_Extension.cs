@@ -1,3 +1,6 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
 namespace IbrahKit.UI
 {
     [System.Serializable]
@@ -8,6 +11,11 @@ namespace IbrahKit.UI
         protected UI_Interactive_Extension(UI_Interactive extension) : base(extension)
         {
             interactive = extension;
+        }
+
+        public virtual void Validate(SelfValidationResult validationResult, GameObject content)
+        {
+
         }
     }
 }

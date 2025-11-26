@@ -93,5 +93,7 @@ namespace IbrahKit
                 item.Cleanup();
             }
         }
+
+        protected List<Extension> GetExtensions() => extensions;
     }
 }

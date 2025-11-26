@@ -1,10 +1,12 @@
 using IbrahKit.Debug;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace IbrahKit.UI
 {
+    [System.Serializable]
     public class UI_Text_Wrapper
     {
         private readonly Text legacyText;
@@ -18,11 +20,6 @@ namespace IbrahKit.UI
             legacyText = target.GetComponent<Text>();
 
             tmpText = target.GetComponent<TextMeshProUGUI>();
-
-            if (legacyText && tmpText)
-            {
-                IbrahDebug.LogWarning("Error. Both Text Kinds Found. Selecting TMP");
-            }
 
             if (legacyText != null) mode = Mode.LEGACY;
             else if (tmpText != null) mode = Mode.TMP;
@@ -40,6 +37,22 @@ namespace IbrahKit.UI
                     tmpText.text = value;
                     break;
             }
+        }
+
+        public void Append(string value)
+        {
+            SetText(GetText() + value);
+        }
+
+        public string GetText()
+        {
+            switch (mode)
+            {
+                case Mode.LEGACY : return legacyText.text;
+                case Mode.TMP: return tmpText.text;
+            }
+
+            return string.Empty;
         }
 
         public void SetColor(Color c)
@@ -66,6 +79,23 @@ namespace IbrahKit.UI
         }
 
         public Mode GetMode() => mode;
+
+        public static void Validate(SelfValidationResult result, GameObject content)
+        {
+            Text legacyText = content.GetComponent<Text>();
+
+            TextMeshProUGUI tmpText = content.GetComponent<TextMeshProUGUI>();
+
+            if (legacyText && tmpText)
+            {
+                result.AddError("Error. Both Text Kinds Found");
+            }
+
+            if (!(legacyText || tmpText))
+            {
+                result.AddError("Error. No Text Kinds Found");
+            }
+        }
 
         public enum Mode
         {
