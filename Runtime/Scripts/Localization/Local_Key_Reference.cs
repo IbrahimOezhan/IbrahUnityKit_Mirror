@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.Localization
 {
     [System.Serializable]
     public class Local_Key_Reference : Key_Reference

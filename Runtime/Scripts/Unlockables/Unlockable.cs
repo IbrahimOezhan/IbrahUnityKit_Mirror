@@ -1,4 +1,5 @@
 using IbrahKit.Debug;
+using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

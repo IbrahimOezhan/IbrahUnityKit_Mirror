@@ -1,9 +1,10 @@
-using IbrahKit;
-
-public class Local_Key_Processor : Key_Reference_Processor<Local_Key_Reference>
+namespace IbrahKit.Localization
 {
-    public override string GetDBName()
+    public class Local_Key_Processor : Key_Reference_Processor<Local_Key_Reference>
     {
-        return "Local";
+        public override string GetDBName()
+        {
+            return "Local";
+        }
     }
 }

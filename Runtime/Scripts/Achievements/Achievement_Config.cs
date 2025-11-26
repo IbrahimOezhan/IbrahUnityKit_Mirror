@@ -1,4 +1,5 @@
 using IbrahKit;
+using IbrahKit.Localization;
 using System.Collections.Generic;
 using UnityEngine;
 

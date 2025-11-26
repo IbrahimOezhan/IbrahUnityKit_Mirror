@@ -27,7 +27,7 @@ namespace IbrahKit.UI
 
         private enum SKIP_REASON
         {
-            DONT, 
+            DONT,
             ALWAYS,
             ONLAYOUT,
         }

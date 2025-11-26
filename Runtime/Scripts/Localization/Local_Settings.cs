@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 namespace IbrahKit.Localization
 {
-
     public class Local_Settings : EditorWindow
     {
         private const string PrefKey = "local_config_asset_path";
