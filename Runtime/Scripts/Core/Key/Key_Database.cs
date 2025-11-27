@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "Key_Database")]
+    [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "IbrahKit/Key_Database")]
     public class Key_Database : ScriptableObject
     {
         [OdinSerialize] private Dictionary<string, List<string>> keyValuePairs = new();
