@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Editor
 {
     public class Image_Utilities_Editor
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Editor
 {
     public class FileWatcher : AssetPostprocessor
     {

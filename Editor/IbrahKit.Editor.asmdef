@@ -1,6 +1,6 @@
 {
-    "name": "IbrahKit-Editor",
-    "rootNamespace": "",
+    "name": "IbrahKit.Editor",
+    "rootNamespace": "IbrahKit.Editor",
     "references": [
         "GUID:401f0f9378216c747839245522ea5da4",
         "GUID:ad968d605628d06499b62cdc30f11cf8"

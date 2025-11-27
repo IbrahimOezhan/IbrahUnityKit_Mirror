@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEditor.UI;
 
-namespace IbrahKit
+namespace IbrahKit.Editor
 {
     [CustomEditor(typeof(UI_CursorHandler))]
     public class UI_CursorHandlerEditor : GraphicEditor
