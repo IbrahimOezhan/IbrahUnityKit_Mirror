@@ -2,6 +2,7 @@
 
 using IbrahKit.Debugging;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 
 namespace IbrahKit
@@ -23,17 +24,17 @@ namespace IbrahKit
             return new() { "Test" };
         }
 
-        public static bool TrySetKeys(string name, List<string> keys)
+        public static bool TrySetKeys(string name, IEnumerable<string> keys)
         {
             if (TryGetDatabase(out Key_Database db))
             {
                 if (db.GetPairs().ContainsKey(name))
                 {
-                    db.GetPairs()[name] = keys;
+                    db.GetPairs()[name] = keys.ToList();
                 }
                 else
                 {
-                    db.GetPairs().Add(name, keys);
+                    db.GetPairs().Add(name, keys.ToList());
                 }
 
                 EditorUtility.SetDirty(db);
