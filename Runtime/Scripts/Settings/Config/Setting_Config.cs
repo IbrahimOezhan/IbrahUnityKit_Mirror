@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit.Settings
 {
-    [CreateAssetMenu(fileName = "NewSettingConfig", menuName = "IbrahKit/SettingConfig")]
+    [CreateAssetMenu(fileName = "NewSettingConfig", menuName = "IbrahKit/Setting_Config")]
     public abstract class Setting_Config<TSetting> : ScriptableObject, ISettingConfig, ISelfValidator where TSetting : Setting_Base, new()
     {
         [SerializeField] private string key;

@@ -14,7 +14,7 @@ namespace IbrahKit
         {
             if (TryGetDatabase(out Key_Database db))
             {
-                if (db.Get().TryGetValue(name, out List<string> keys))
+                if (db.GetPairs().TryGetValue(name, out List<string> keys))
                 {
                     return keys;
                 }
@@ -27,13 +27,13 @@ namespace IbrahKit
         {
             if (TryGetDatabase(out Key_Database db))
             {
-                if (db.Get().ContainsKey(name))
+                if (db.GetPairs().ContainsKey(name))
                 {
-                    db.Get()[name] = keys;
+                    db.GetPairs()[name] = keys;
                 }
                 else
                 {
-                    db.Get().Add(name, keys);
+                    db.GetPairs().Add(name, keys);
                 }
 
                 EditorUtility.SetDirty(db);

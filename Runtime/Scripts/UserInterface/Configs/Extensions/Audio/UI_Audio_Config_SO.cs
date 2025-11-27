@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    [CreateAssetMenu(fileName = "NewAudioConfig", menuName = "IbrahKit/AudioConfig")]
+    [CreateAssetMenu(fileName = "NewUIAudioConfig", menuName = "IbrahKit/UI_Audio_Config")]
     public class UI_Audio_Config_SO : UI_Config_SO<UI_Audio_Config>
     {
 

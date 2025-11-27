@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace IbrahKit
 {
-    public abstract class Key_Reference_Processor<TValue> : OdinAttributeProcessor<TValue> where TValue : Key_Reference
+    public abstract class Key_Processor<TValue> : OdinAttributeProcessor<TValue> where TValue : Key_Reference
     {
         public override void ProcessChildMemberAttributes(InspectorProperty parentProperty, MemberInfo member, List<Attribute> attributes)
         {

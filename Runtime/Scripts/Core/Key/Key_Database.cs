@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [CreateAssetMenu(fileName = "Database", menuName = "Database")]
+    [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "Key_Database")]
     public class Key_Database : ScriptableObject
     {
         [OdinSerialize] private Dictionary<string, List<string>> keyValuePairs = new();
 
         public List<string> GetKeys() => keyValuePairs.Keys.ToList();
 
-        public Dictionary<string, List<string>> Get() => keyValuePairs;
+        public Dictionary<string, List<string>> GetPairs() => keyValuePairs;
     }
 }

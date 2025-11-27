@@ -9,7 +9,7 @@ using static IbrahKit.Localization.Local_Manager;
 
 namespace IbrahKit.Localization
 {
-    [CreateAssetMenu(fileName = "LocalConfig", menuName = "ScriptableObjects/LocalConfig")]
+    [CreateAssetMenu(fileName = "NewLocalConfig", menuName = "IbrahKit/Local_Config")]
     public class Local_Config : SerializedScriptableObject, IFileWatcher
     {
         private const string LANG = "Language";
