@@ -25,7 +25,7 @@ namespace IbrahKit
         {
             InputType lastInputType = currentInputType;
 
-            foreach(InputDevice device in InputSystem.devices)
+            foreach (InputDevice device in InputSystem.devices)
             {
                 foreach (InputControl control in device.allControls)
                 {

@@ -13,7 +13,7 @@ namespace IbrahKit.UI
 
         public void Validate(SelfValidationResult result)
         {
-            if(!(gameObject.GetComponent<Text>() || gameObject.GetComponent<TextMeshProUGUI>()))
+            if (!(gameObject.GetComponent<Text>() || gameObject.GetComponent<TextMeshProUGUI>()))
             {
                 result.AddError("The gameobject must contain either a legacy or tmp text component");
             }

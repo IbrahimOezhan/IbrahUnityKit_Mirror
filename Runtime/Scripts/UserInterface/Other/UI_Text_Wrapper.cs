@@ -1,4 +1,3 @@
-using IbrahKit.Debug;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -48,7 +47,7 @@ namespace IbrahKit.UI
         {
             switch (mode)
             {
-                case Mode.LEGACY : return legacyText.text;
+                case Mode.LEGACY: return legacyText.text;
                 case Mode.TMP: return tmpText.text;
             }
 
