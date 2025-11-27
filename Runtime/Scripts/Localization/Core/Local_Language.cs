@@ -15,7 +15,8 @@ namespace IbrahKit.Localization
             [JsonInclude, SerializeField]
             private string nativeLocal;
 
-            [SerializeField] private bool skip;
+            [SerializeField]
+            private bool skip;
 
             public bool IsValid(out SystemLanguage result)
             {

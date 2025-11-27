@@ -14,13 +14,13 @@ namespace IbrahKit.Localization
     {
         private const string LANG = "Language";
 
-        [SerializeField, OnValueChanged(nameof(Update))] private TextAsset localizationAssets;
+        [OdinSerialize, Required, OnValueChanged(nameof(Update))] private TextAsset localizationAssets;
 
-        [ShowInInspector, OdinSerialize] private Dictionary<string, string[]> keyValuePairs = new();
+        [OdinSerialize, Required] private char seperator;
 
-        [SerializeField, OdinSerialize, NonSerialized] private List<Local_Language> languages = new();
+        [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [SerializeField] private char seperator;
+        [OdinSerialize, ReadOnly] private List<Local_Language> languages = new();
 
         public Local_Language GetFirstLanguage() => languages[0];
 
@@ -60,7 +60,8 @@ namespace IbrahKit.Localization
         {
             keyValuePairs.Clear();
 
-            List<string> lines = localizationAssets.text.Split("\n").Where(x => String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), ""))).ToList();
+            List<string> lines = localizationAssets.text.Split("\n").Where(
+                x => !String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), ""))).ToList();
 
             if (lines.Count == 0)
             {
@@ -94,26 +95,21 @@ namespace IbrahKit.Localization
                     return false;
                 }
 
-                try
+                if (!Json_Utilities.TryDeserialize(line[i], out Local_Language result))
                 {
-                    if (!Json_Utilities.TryDeserialize(line[i], out Local_Language result))
-                    {
-                        return false;
-                    }
+                    IbrahDebug.LogWarning($"Local Language TryDeserialize Error");
 
-                    if (!result.IsValid(out _))
-                    {
-                        IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
-                        return false;
-                    }
-
-                    languages.Add(result);
-                }
-                catch (Exception e)
-                {
-                    IbrahDebug.LogException(e);
                     return false;
                 }
+
+                if (!result.IsValid(out _))
+                {
+                    IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
+
+                    return false;
+                }
+
+                languages.Add(result);
             }
 
             return true;

@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,9 @@ using UnityEngine;
 namespace IbrahKit
 {
     [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "IbrahKit/Key_Database")]
-    public class Key_Database : ScriptableObject
+    public class Key_Database : SerializedScriptableObject
     {
-        [OdinSerialize] private Dictionary<string, List<string>> keyValuePairs = new();
+        [OdinSerialize, ReadOnly] private Dictionary<string, List<string>> keyValuePairs = new();
 
         public List<string> GetKeys() => keyValuePairs.Keys.ToList();
 

@@ -38,7 +38,7 @@ namespace IbrahKit
                 }
 
                 EditorUtility.SetDirty(db);
-                AssetDatabase.SaveAssets();
+                //AssetDatabase.SaveAssets();
 
                 return true;
             }
@@ -54,7 +54,7 @@ namespace IbrahKit
                 return true;
             }
 
-            string[] guids = AssetDatabase.FindAssets("t:KeyDatabase");
+            string[] guids = AssetDatabase.FindAssets($"t:{nameof(Key_Database)}");
 
             switch (guids.Length)
             {
