@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 
-using IbrahKit.Debug;
+using IbrahKit.Debugging;
 using System.Collections.Generic;
 using UnityEditor;
 

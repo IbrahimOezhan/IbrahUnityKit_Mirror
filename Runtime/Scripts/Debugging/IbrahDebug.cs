@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace IbrahKit.Debug
+namespace IbrahKit.Debugging
 {
     /// <summary>
     /// A wrapper class for unitys standard debug class that adds additional functionality

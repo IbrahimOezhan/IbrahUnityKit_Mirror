@@ -1,4 +1,4 @@
-using IbrahKit.Debug;
+using IbrahKit.Debugging;
 using UnityEngine;
 
 namespace IbrahKit

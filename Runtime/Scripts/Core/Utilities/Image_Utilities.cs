@@ -1,4 +1,4 @@
-using IbrahKit.Debug;
+using IbrahKit.Debugging;
 using Sirenix.Utilities;
 using System;
 using System.IO;

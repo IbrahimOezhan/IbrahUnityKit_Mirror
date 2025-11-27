@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using UnityEngine;
 
-namespace IbrahKit.Debug
+namespace IbrahKit.Debugging
 {
     /// <summary>
     /// An interface that provides methods for the debugmanager to use

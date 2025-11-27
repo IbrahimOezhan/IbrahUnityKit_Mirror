@@ -1,4 +1,4 @@
-using IbrahKit.Debug;
+using IbrahKit.Debugging;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace IbrahKit.Debug
+namespace IbrahKit.Debugging
 {
     public class Debug_Manager : Manager_DDOL<Debug_Manager>, ISelfValidator
     {
