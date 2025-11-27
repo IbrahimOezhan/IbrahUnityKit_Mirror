@@ -10,7 +10,7 @@ using static IbrahKit.Localization.Local_Manager;
 namespace IbrahKit.Localization
 {
     [CreateAssetMenu(fileName = "NewLocalConfig", menuName = "IbrahKit/Local_Config")]
-    public class Local_Config : SerializedScriptableObject, IFileWatcher
+    public class Local_Config : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
         private const string LANG = "Language";
 
@@ -58,6 +58,8 @@ namespace IbrahKit.Localization
         [Button]
         public void Update()
         {
+            if (localizationAssets == null) return;
+
             keyValuePairs.Clear();
 
             List<string> lines = localizationAssets.text.Split("\n").Where(
@@ -140,6 +142,11 @@ namespace IbrahKit.Localization
 
                 keyValuePairs.TryAdd(key, row.ToArray());
             }
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
         }
     }
 }

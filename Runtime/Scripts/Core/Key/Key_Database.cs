@@ -9,7 +9,7 @@ namespace IbrahKit
     [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "IbrahKit/Key_Database")]
     public class Key_Database : SerializedScriptableObject
     {
-        [OdinSerialize, ReadOnly] private Dictionary<string, List<string>> keyValuePairs = new();
+        [OdinSerialize, ReadOnly, InlineProperty] private Dictionary<string, List<string>> keyValuePairs = new();
 
         public List<string> GetKeys() => keyValuePairs.Keys.ToList();
 
