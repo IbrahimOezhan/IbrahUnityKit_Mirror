@@ -10,7 +10,7 @@ namespace IbrahKit
 {
     public abstract class Key_Processor<TValue> : OdinAttributeProcessor<TValue> where TValue : Key_Reference
     {
-        public override void ProcessChildMemberAttributes(InspectorProperty parentProperty, MemberInfo member, List<Attribute> attributes)
+        public sealed override void ProcessChildMemberAttributes(InspectorProperty parentProperty, MemberInfo member, List<Attribute> attributes)
         {
             if (member.Name == "key")
             {

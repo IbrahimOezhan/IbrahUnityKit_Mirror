@@ -7,7 +7,7 @@ namespace IbrahKit.UI
     public class UI_Interactive_Extension_Localization : UI_Interative_Extension_Text_Modifier
     {
         [SerializeField]
-        protected Local_Key_Reference key;
+        protected Local_Key key;
 
         [SerializeField]
         protected string fallbackText;

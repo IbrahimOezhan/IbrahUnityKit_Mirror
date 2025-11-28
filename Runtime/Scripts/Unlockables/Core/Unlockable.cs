@@ -9,7 +9,7 @@ namespace IbrahKit.Unlockables
     public class Unlockable : ScriptableObject
     {
         [TabGroup("Base Data"), SerializeField]
-        protected Local_Key_Reference key;
+        protected Local_Key key;
 
         [TabGroup("Base Data"), SerializeField]
         private Unlockable[] unlockOnUnlock;

@@ -14,7 +14,7 @@ namespace IbrahKit.UI
 
         [SerializeField] private LocalType localType = LocalType.LOCALIZE;
 
-        [SerializeField, ShowIf(nameof(localType), LocalType.LOCALIZE)] private Local_Key_Reference localizationKey;
+        [SerializeField, ShowIf(nameof(localType), LocalType.LOCALIZE)] private Local_Key localizationKey;
 
         [SerializeField, ShowIf(nameof(localType), LocalType.STATIC)] private string staticText;
 
