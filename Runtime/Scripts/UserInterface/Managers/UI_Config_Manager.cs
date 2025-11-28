@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_Config_Manager : Manager_DDOL<UI_Config_Manager>
+    public class UI_Config_Manager : Manager_Global<UI_Config_Manager>
     {
         [SerializeField] private UI_Configs configs;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
-    public class UI_Menu_Manager : Manager_DDOL<UI_Menu_Manager>
+    public class UI_Menu_Manager : Manager_Global<UI_Menu_Manager>
     {
         public void Transition(Menu_Transition transition, UI_Menu _overrideBackMenu = null)
         {

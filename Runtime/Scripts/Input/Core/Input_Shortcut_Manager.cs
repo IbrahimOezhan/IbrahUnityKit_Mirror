@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Input_Shortcut_Manager : Manager_DDOL<Input_Shortcut_Manager>
+    public class Input_Shortcut_Manager : Manager_Global<Input_Shortcut_Manager>
     {
         private readonly Dictionary<Key, List<Action>> keyValuePairs = new();
 

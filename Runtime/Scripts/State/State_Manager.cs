@@ -7,7 +7,7 @@ using UnityEngine;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.state)]
-    public class State_Manager : Manager_DDOL<State_Manager>, IDebug
+    public class State_Manager : Manager_Global<State_Manager>, IDebug
     {
         public const string KEY = "States";
 

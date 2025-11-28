@@ -1,7 +1,6 @@
 using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +8,6 @@ using static IbrahKit.Localization.Local_Manager;
 
 namespace IbrahKit.Localization
 {
-    [CreateAssetMenu(fileName = "NewLocalConfig", menuName = "IbrahKit/Local_Config")]
     public class Local_Config : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
         private const string LANG = "Language";

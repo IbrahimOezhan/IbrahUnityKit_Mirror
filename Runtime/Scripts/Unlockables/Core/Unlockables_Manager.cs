@@ -7,7 +7,7 @@ using UnityEngine;
 namespace IbrahKit.Unlockables
 {
     [DefaultExecutionOrder(Execution_Order.unlock)]
-    public class Unlockables_Manager : Manager_DDOL<Unlockables_Manager>
+    public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
     {
         private const string SAVE_DATA_NAME = "Unlockables";
 

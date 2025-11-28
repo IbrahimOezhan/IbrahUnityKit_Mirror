@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.Controls;
 namespace IbrahKit
 {
     [DefaultExecutionOrder(Execution_Order.input)]
-    public class Input_Manager : Manager_DDOL<Input_Manager>, IDebug
+    public class Input_Manager : Manager_Global<Input_Manager>, IDebug
     {
         private ButtonControl lastPressed;
 

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Cursor_Input_Manager : Manager_DDOL<Cursor_Input_Manager>, IDebug
+    public class Cursor_Input_Manager : Manager_Global<Cursor_Input_Manager>, IDebug
     {
         private CursorInput input;
 

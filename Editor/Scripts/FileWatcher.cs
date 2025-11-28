@@ -25,9 +25,9 @@ namespace IbrahKit.Editor
             foreach (var guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                
+
                 var obj = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
-                
+
                 if (obj is T tObj) result.Add(tObj);
             }
 

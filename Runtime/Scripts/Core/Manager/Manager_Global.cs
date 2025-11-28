@@ -1,6 +1,6 @@
 namespace IbrahKit
 {
-    public abstract class Manager_DDOL<T> : Manager<T> where T : Manager_DDOL<T>
+    public abstract class Manager_Global<T> : Manager<T> where T : Manager_Global<T>
     {
         protected sealed override void Awake()
         {

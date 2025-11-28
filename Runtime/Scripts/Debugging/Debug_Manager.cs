@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.Debugging
 {
-    public class Debug_Manager : Manager_DDOL<Debug_Manager>, ISelfValidator
+    public class Debug_Manager : Manager_Global<Debug_Manager>, ISelfValidator
     {
         private readonly List<IDebug> debugs = new();
 

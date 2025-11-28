@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Game_Utilities : Manager_DDOL<Game_Utilities>
+    public class Game_Utilities : Manager_Global<Game_Utilities>
     {
         private bool hidden;
 

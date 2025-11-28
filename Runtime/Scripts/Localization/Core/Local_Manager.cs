@@ -8,7 +8,7 @@ using UnityEngine;
 namespace IbrahKit.Localization
 {
     [DefaultExecutionOrder(Execution_Order.local)]
-    public partial class Local_Manager : Manager_DDOL<Local_Manager>
+    public partial class Local_Manager : Manager_Global_Data<Local_Manager, Local_Config>
     {
         public const string DROP = "Localization";
 
@@ -23,8 +23,6 @@ namespace IbrahKit.Localization
         private SaveData saveData;
 
         private readonly List<Local_Processor> processors = new();
-
-        [SerializeField] private Local_Config config;
 
         [HideInInspector] public Action OnLanguageChanged;
 
@@ -71,13 +69,13 @@ namespace IbrahKit.Localization
 
         public void Set(int index)
         {
-            if (index < 0 || index >= config.GetLanguages().Count)
+            if (index < 0 || index >= GetManagerData().GetLanguages().Count)
             {
-                IbrahDebug.LogWarning($"Index with value {index} out of range for range 0-{config.GetLanguages().Count - 1}");
+                IbrahDebug.LogWarning($"Index with value {index} out of range for range 0-{GetManagerData().GetLanguages().Count - 1}");
                 return;
             }
 
-            SetLanguage(config.GetLanguages()[index]);
+            SetLanguage(GetManagerData().GetLanguages()[index]);
         }
 
         public void SetNextLanguage(int dir)
@@ -89,14 +87,14 @@ namespace IbrahKit.Localization
         {
             current = lang;
 
-            currentIndex = config.GetLanguages().IndexOf(lang);
+            currentIndex = GetManagerData().GetLanguages().IndexOf(lang);
 
             UpdateLanguage();
         }
 
         private Local_Language GetSystemLanguage(SystemLanguage systemLanguage)
         {
-            Local_Language found = config.GetLanguages().Find(x => x.GetSystemLanguage() == systemLanguage);
+            Local_Language found = GetManagerData().GetLanguages().Find(x => x.GetSystemLanguage() == systemLanguage);
 
             if (found == null)
             {
@@ -107,9 +105,9 @@ namespace IbrahKit.Localization
 
         private Local_Language GetNext(int dir)
         {
-            int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, config.GetLanguages().Count - 1);
+            int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, GetManagerData().GetLanguages().Count - 1);
 
-            return config.GetLanguages()[newIndex];
+            return GetManagerData().GetLanguages()[newIndex];
         }
 
         public Local_Language GetCurrent()
@@ -128,13 +126,13 @@ namespace IbrahKit.Localization
 
         public string GetString(string key, params string[] parameters)
         {
-            if (!config.TryGetString(key, current, out string result))
+            if (!GetManagerData().TryGetString(key, current, out string result))
             {
                 IbrahDebug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
-                if (!config.TryGetString(key, config.GetLanguages()[0], out result))
+                if (!GetManagerData().TryGetString(key,  GetManagerData().GetLanguages()[0], out result))
                 {
-                    IbrahDebug.LogWarning($"Localzation for key {key} does not exist in default language {config.GetLanguages()[0]}");
+                    IbrahDebug.LogWarning($"Localzation for key {key} does not exist in default language {GetManagerData().GetLanguages()[0]}");
                 }
             }
 
@@ -148,12 +146,12 @@ namespace IbrahKit.Localization
 
         public int IndexOf(Local_Language language)
         {
-            return config.GetLanguages().IndexOf(language);
+            return GetManagerData().GetLanguages().IndexOf(language);
         }
 
         public int LanguageCount()
         {
-            return config.GetLanguages().Count;
+            return GetManagerData().GetLanguages().Count;
         }
 
         [Serializable]
