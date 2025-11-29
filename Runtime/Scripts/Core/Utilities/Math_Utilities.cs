@@ -108,9 +108,9 @@ namespace IbrahKit
             return number;
         }
 
-        public static float LerpWithVector2(Vector2 vector,float t)
+        public static float LerpWithVector2(Vector2 vector, float t)
         {
-            return Mathf.Lerp(vector.x,vector.y,t);
+            return Mathf.Lerp(vector.x, vector.y, t);
         }
 
         public static bool IsInRange(int value, int min, int max)

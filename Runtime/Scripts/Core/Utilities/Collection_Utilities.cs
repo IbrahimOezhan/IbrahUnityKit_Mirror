@@ -1,3 +1,4 @@
+using Mono.CSharp;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,13 @@ namespace IbrahKit
 {
     public static class Collection_Utilities
     {
+        public static List<T> RemoveInvalid<T>(this List<T> list) where T : class
+        {
+            List<T> removed = new(list);
+            removed.RemoveAll(x => x == null);
+            return removed;
+        }
+
         /// <summary>
         /// Shuffels a list and returns it
         /// </summary>

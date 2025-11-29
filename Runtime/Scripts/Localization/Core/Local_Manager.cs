@@ -130,7 +130,7 @@ namespace IbrahKit.Localization
             {
                 IbrahDebug.LogWarning($"Localzation for key {key} does not exist in select language {current}");
 
-                if (!GetManagerData().TryGetString(key,  GetManagerData().GetLanguages()[0], out result))
+                if (!GetManagerData().TryGetString(key, GetManagerData().GetLanguages()[0], out result))
                 {
                     IbrahDebug.LogWarning($"Localzation for key {key} does not exist in default language {GetManagerData().GetLanguages()[0]}");
                 }

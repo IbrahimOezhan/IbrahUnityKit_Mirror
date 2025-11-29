@@ -4,12 +4,17 @@ using UnityEngine;
 namespace IbrahKit
 {
     [System.Serializable, InlineProperty, HideLabel]
-    public class Key_Reference
+    public class Key_Reference:IKey
     {
         [SerializeField]
         protected string key;
 
         public string Value => key;
+
+        public string GetKey()
+        {
+            return key;
+        }
 
         public override string ToString()
         {

@@ -13,7 +13,7 @@ namespace IbrahKit
 
         [SerializeField, ReadOnly] private string currentState;
 
-        [SerializeField] private List<string> statesList = new();
+        [SerializeField, OnValueChanged(nameof(OnValueChanged))] private List<string> statesList = new();
 
         public event Action<string> OnStateChange;
 
@@ -22,7 +22,7 @@ namespace IbrahKit
             Debug_Manager.GetInstance().Add(this);
         }
 
-        private void OnValidate()
+        private void OnValueChanged()
         {
             Key_Database_Finder.TrySetKeys(KEY, statesList);
         }

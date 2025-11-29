@@ -46,6 +46,11 @@ namespace IbrahKit
             return false;
         }
 
+        public static bool TrySetKeys<TKey>(string name, IEnumerable<TKey> keys) where TKey : IKey
+        {
+            return TrySetKeys(name, keys.Select(x => x.GetKey()));
+        }
+
         public static bool TryGetDatabase(out Key_Database db)
         {
             if (cached != null)

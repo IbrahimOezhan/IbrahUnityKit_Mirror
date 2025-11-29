@@ -6,7 +6,7 @@ using UnityEngine;
 namespace IbrahKit.Unlockables
 {
     [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
-    public class Unlockable : ScriptableObject
+    public class Unlockable : ScriptableObject,IKey
     {
         [TabGroup("Base Data"), SerializeField]
         protected Local_Key key;

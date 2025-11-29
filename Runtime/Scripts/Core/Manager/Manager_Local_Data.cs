@@ -2,7 +2,6 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System;
 using UnityEngine;
-using static UnityEngine.Analytics.IAnalytic;
 
 namespace IbrahKit
 {
@@ -15,7 +14,7 @@ namespace IbrahKit
         private bool ShowButton() => data != null;
 
 #if UNITY_EDITOR
-        [Button,HideIf(nameof(ShowButton))]
+        [Button, HideIf(nameof(ShowButton))]
         public void CreateData()
         {
             Type t = typeof(TData);
