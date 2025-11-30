@@ -1,10 +1,11 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace IbrahKit.Save
 {
     public class Savable
     {
-        public string fullName;
+        [JsonInclude] private string fullName;
 
         public Savable()
         {
@@ -15,6 +16,11 @@ namespace IbrahKit.Save
             string qualifiedName = $"{ty.FullName}, {assemblyName}";
 
             fullName = qualifiedName;
+        }
+
+        public Type GetSavableType()
+        {
+            return Type.GetType(fullName); 
         }
     }
 }

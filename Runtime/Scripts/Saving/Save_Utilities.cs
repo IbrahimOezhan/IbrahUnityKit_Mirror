@@ -36,7 +36,7 @@ namespace IbrahKit.Save
 
         public static Type GetSavableType(Savable type)
         {
-            return Type.GetType(type.fullName);
+            return type.GetSavableType();
         }
 
         public static Savable GetDerivedSavable(string json, Savable type)

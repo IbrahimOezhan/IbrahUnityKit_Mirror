@@ -1,5 +1,6 @@
 namespace IbrahKit
 {
+    [System.Serializable]
     public class State_Key : Key_Reference
     {
         private class State_Key_Processor : Key_Processor<State_Key>
