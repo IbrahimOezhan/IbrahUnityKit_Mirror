@@ -26,7 +26,7 @@ namespace IbrahKit
             return x + (y * width);
         }
 
-        public static byte[] ImageToByteArray(Sprite sprite)
+        public static byte[] ToByteArray(this Sprite sprite)
         {
             if (sprite == null)
             {
@@ -34,10 +34,10 @@ namespace IbrahKit
                 return new byte[0];
             }
 
-            return ImageToByteArray(sprite.texture);
+            return ToByteArray(sprite.texture);
         }
 
-        public static byte[] ImageToByteArray(Texture2D texture)
+        public static byte[] ToByteArray(this Texture2D texture)
         {
             if (texture == null)
             {
@@ -69,7 +69,7 @@ namespace IbrahKit
             return sprite;
         }
 
-        public static Sprite GrayscaleSprite(Sprite _sprite)
+        public static Sprite Grayscale(this Sprite _sprite)
         {
             if (_sprite == null)
             {
@@ -102,7 +102,7 @@ namespace IbrahKit
             return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
         }
 
-        public static Sprite Center(Sprite sprite)
+        public static Sprite Center(this Sprite sprite)
         {
             Texture2D tex = sprite.texture;
 
@@ -144,9 +144,9 @@ namespace IbrahKit
                 }
             }
 
-            int xOffset = ((tex.width / 2) - ((maxX - minX) / 2)) - minX;
+            int xOffset = (tex.width / 2) - ((maxX - minX) / 2) - minX;
 
-            int yOffset = ((tex.height / 2) - ((maxY - minY) / 2)) - minY;
+            int yOffset = (tex.height / 2) - ((maxY - minY) / 2) - minY;
 
             Color transparent = new(0, 0, 0, 0);
 
@@ -169,7 +169,7 @@ namespace IbrahKit
                 }
             }
 
-            Texture2D newTex = new Texture2D(tex.width, tex.height, TextureFormat.RGBA32, false);
+            Texture2D newTex = new(tex.width, tex.height, TextureFormat.RGBA32, false);
 
             newTex.SetPixels(newColors);
 

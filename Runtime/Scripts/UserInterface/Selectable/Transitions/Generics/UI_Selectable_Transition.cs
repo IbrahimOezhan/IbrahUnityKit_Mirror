@@ -1,4 +1,6 @@
+using FlyingWormConsole3.FullSerializer;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace IbrahKit.UI
@@ -22,6 +24,14 @@ namespace IbrahKit.UI
         [SerializeField] private TTarget target;
 
         [SerializeField] private SOTarget config;
+
+        private bool IsSoNull() => config == null;
+
+        [Button,ShowIf(nameof(IsSoNull))]
+        public void Create()
+        {
+            config = Asset_Utilities.CreateAsset<SOTarget>($"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");
+        }
 
         public override void Init(GameObject go)
         {
