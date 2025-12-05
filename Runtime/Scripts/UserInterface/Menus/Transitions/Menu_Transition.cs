@@ -22,12 +22,12 @@ namespace IbrahKit.UI
             bool outExists = menuOut != null;
 
             if (outExists) menuOut.gameObject.SetActive(true);
-            if (outExists) menuOut.GetVisbilityController().SetAlpha(1);
+            if (outExists) menuOut.GetVisbilityController().SetEnabledAlpha(1);
             if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
             if (outExists) menuOut.GetStateController().SetState(UI_Menu_Controller_State.State.ENABLED);
 
             if (inExists) menuIn.gameObject.SetActive(false);
-            if (inExists) menuIn.GetVisbilityController().SetAlpha(1);
+            if (inExists) menuIn.GetVisbilityController().SetEnabledAlpha(1);
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
             if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLED);
         }

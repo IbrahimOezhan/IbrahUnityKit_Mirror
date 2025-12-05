@@ -21,14 +21,14 @@ namespace IbrahKit.UI
 
             if (outExists) menuOut.GetStateController().SetState(UI_Menu_Controller_State.State.ENABLING);
             IbrahDebug.Log("0");
-            if (outExists) menuOut.GetVisbilityController().SetAlpha(0);
+            if (outExists) menuOut.GetVisbilityController().SetEnabledAlpha(0);
             IbrahDebug.Log("1");
             if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLING);
             IbrahDebug.Log("2");
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
             if (outExists) menuOut.GetVisbilityController().SetInteractable(false);
             IbrahDebug.Log("3");
-            if (inExists) menuIn.GetVisbilityController().SetAlpha(1);
+            if (inExists) menuIn.GetVisbilityController().SetEnabledAlpha(1);
 
             float t = 0;
             IbrahDebug.Log("4");
@@ -38,7 +38,7 @@ namespace IbrahKit.UI
 
                 yield return null;
 
-                menuIn.GetVisbilityController().SetAlpha(1 - t);
+                menuIn.GetVisbilityController().SetEnabledAlpha(1 - t);
             }
 
             t = 0;
@@ -49,7 +49,7 @@ namespace IbrahKit.UI
 
                 yield return null;
 
-                menuOut.GetVisbilityController().SetAlpha(t);
+                menuOut.GetVisbilityController().SetEnabledAlpha(t);
             }
             IbrahDebug.Log("6");
             if (inExists) menuIn.GetStateController().SetState(UI_Menu_Controller_State.State.DISABLED);

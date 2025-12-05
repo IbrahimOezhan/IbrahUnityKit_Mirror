@@ -2,7 +2,7 @@ namespace IbrahKit.UI
 {
     public interface IMenuVisibility
     {
-        public void SetAlpha(float value);
+        public void SetEnabledAlpha(float value);
 
         public void SetInteractable(bool value);
 

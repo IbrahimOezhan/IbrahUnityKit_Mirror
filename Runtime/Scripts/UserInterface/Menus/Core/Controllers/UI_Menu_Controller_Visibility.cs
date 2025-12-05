@@ -10,10 +10,7 @@ namespace IbrahKit.UI
         private UI_Menu menu;
 
         [TabGroup("Menu Settings", order: -1), SerializeField, Required]
-        private CanvasGroup enabledGroup;
-
-        [TabGroup("Menu Settings", order: -1), SerializeField, Required]
-        private CanvasGroup hiddenGroup;
+        private UI_Menu_Controller_Alpha alphaController;
 
         [TabGroup("Menu Settings", order: -1), SerializeField]
         protected bool preventHideOnPause;
@@ -23,21 +20,21 @@ namespace IbrahKit.UI
 
         public void SetInteractable(bool value)
         {
-            enabledGroup.blocksRaycasts = value;
+            alphaController.SetInteractable(value);
         }
 
-        public void SetAlpha(float value)
+        public void SetEnabledAlpha(float value)
         {
             value = Mathf.Clamp01(value);
 
-            enabledGroup.alpha = value;
+            alphaController.SetEnabledAlpha(value);
         }
 
         public void HideBy(string value)
         {
             if (hiddenBy.Add(value))
             {
-                hiddenGroup.alpha = 0;
+                alphaController.PassHiddenCount(hiddenBy.Count);
             }
         }
 
@@ -47,7 +44,7 @@ namespace IbrahKit.UI
             {
                 if (hiddenBy.Count == 0)
                 {
-                    hiddenGroup.alpha = 1;
+                    alphaController.PassHiddenCount(hiddenBy.Count);
                 }
             }
         }

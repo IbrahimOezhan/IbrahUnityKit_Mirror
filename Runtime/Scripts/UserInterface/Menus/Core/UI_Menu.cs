@@ -25,7 +25,7 @@ namespace IbrahKit.UI
 
         public Action<bool> OnStateChanged;
 
-        protected virtual void Awake()
+        private void Awake()
         {
             controllers.Add(content);
             controllers.Add(visiblity);
@@ -34,6 +34,8 @@ namespace IbrahKit.UI
             BeforeInit();
 
             controllers.ForEach(x => x.Init(this));
+
+            AfterInit();
         }
 
         protected virtual void BeforeInit()
@@ -41,19 +43,42 @@ namespace IbrahKit.UI
 
         }
 
-        protected virtual void OnEnable()
+        protected virtual void AfterInit()
         {
-            controllers.ForEach(x => x.OnMenuEnabled());
+
         }
 
-        protected virtual void Update()
+        private void OnEnable()
+        {
+            controllers.ForEach(x => x.OnMenuEnabled());
+
+            OnMenuEnabled();
+        }
+
+        protected virtual void OnMenuEnabled()
+        {
+
+        }
+
+       private void Update()
         {
             controllers.ForEach(x => x.Lifecycle());
+
+            MenuLifecycle();
         }
+
+        protected virtual void MenuLifecycle() { }
 
         protected virtual void OnDisable()
         {
             controllers.ForEach(x => x.OnMenuDisabled());
+
+            OnMenuDisabled();
+        }
+
+        protected virtual void OnMenuDisabled()
+        {
+
         }
 
         private void OnRectTransformDimensionsChange()

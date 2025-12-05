@@ -4,7 +4,7 @@ namespace IbrahKit.UI
 {
     public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate, ISelfValidator
     {
-        UI_Menu menu;
+        private UI_Menu menu;
 
         protected void OnDisable()
         {
@@ -15,6 +15,8 @@ namespace IbrahKit.UI
         {
             this.menu = menu;
             InitExtensions();
+
+
             RunExtensions();
         }
 

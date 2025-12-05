@@ -9,16 +9,13 @@ namespace IbrahKit.UI
         protected UI_Text_Wrapper text;
 
         [SerializeField]
-        private GameObject target;
+        private GameObject nonDefaultTarget;
 
-        protected UI_Interative_Extension_Text_Modifier(UI_Interactive extension) : base(extension)
-        {
-
-        }
+        protected UI_Interative_Extension_Text_Modifier(UI_Interactive extension) : base(extension) { }
 
         protected override bool InitPro()
         {
-            text = new(target == null ? extension.gameObject : target);
+            text = new(nonDefaultTarget == null ? extension.gameObject : nonDefaultTarget);
 
             return text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }
