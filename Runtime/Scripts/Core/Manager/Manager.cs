@@ -5,7 +5,7 @@ namespace IbrahKit
 {
     public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
     {
-        protected static T Instance;
+        private static T Instance;
 
         public static bool TryGet(out T result, bool throwWarnings = true)
         {
@@ -26,6 +26,11 @@ namespace IbrahKit
             }
 
             return result != null;
+        }
+
+        protected void SetInstanceThis()
+        {
+            Instance = (T) this;
         }
 
         public static T GetInstance()

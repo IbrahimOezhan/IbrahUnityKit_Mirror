@@ -4,7 +4,7 @@ namespace IbrahKit
     {
         protected sealed override void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (GetInstance() != null && GetInstance() != this)
             {
                 Destroy(gameObject);
 
@@ -12,7 +12,7 @@ namespace IbrahKit
             }
             else
             {
-                Instance = (T)this;
+                SetInstanceThis();
 
                 transform.parent = null;
 
