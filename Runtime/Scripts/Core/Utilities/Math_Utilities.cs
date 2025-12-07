@@ -12,6 +12,13 @@ namespace IbrahKit
             return degree;
         }
 
+        public static float ClampAngle(float angle, float min, float max)
+        {
+            if (angle < -360f) angle += 360f;
+            if (angle > 360f) angle -= 360f;
+            return Mathf.Clamp(angle, min, max);
+        }
+
         public static float DegreeDifference(float degree1, float degree2)
         {
             return Mathf.Abs(degree1 - degree2);
