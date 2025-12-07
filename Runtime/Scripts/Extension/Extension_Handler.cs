@@ -28,13 +28,13 @@ namespace IbrahKit
         {
             SortList();
 
-            Type[] types = Type_Utilities.GetAllTypes(typeof(TExtension));
+            IEnumerable<Type> types = Type_Utilities.GetSubTypes(typeof(TExtension));
 
-            for (int i = 0; i < types.Length; i++)
+            foreach (Type type in types)
             {
-                if (types[i].FullName == extension)
+                if (type.FullName == extension)
                 {
-                    extensions.Add((TExtension)Activator.CreateInstance(types[i], new object[] { this }));
+                    extensions.Add((TExtension)Activator.CreateInstance(type, new object[] { this }));
 
                     SortList();
 

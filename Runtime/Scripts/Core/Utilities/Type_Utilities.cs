@@ -20,7 +20,7 @@ namespace IbrahKit
             return types;
         }
 
-        public static Type[] GetAllTypes(Type baseType)
+        public static IEnumerable<Type> GetSubTypes(Type baseType)
         {
             if (baseType == null)
             {
@@ -29,13 +29,11 @@ namespace IbrahKit
                 return Array.Empty<Type>();
             }
 
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a =>
-                {
-                    try { return a.GetTypes(); }
-                    catch { return Array.Empty<Type>(); }
-                })
-                .Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType)).ToArray();
+            return AppDomain.
+                CurrentDomain.
+                GetAssemblies().
+                SelectMany(a => { try { return a.GetTypes(); } catch { return Array.Empty<Type>(); }}).
+                Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType)).ToArray();
         }
 
         private static bool InheritsFromGeneric(Type type, Type genericBase)
@@ -56,7 +54,7 @@ namespace IbrahKit
 
         public static IEnumerable GetAllTypesDropdownFormat(Type baseType, IEnumerable<Type> except = null)
         {
-            IEnumerable<Type> subtypes = GetAllTypes(baseType).ToList();
+            IEnumerable<Type> subtypes = GetSubTypes(baseType).ToList();
 
             if (except != null) subtypes = subtypes.Except(except);
 
