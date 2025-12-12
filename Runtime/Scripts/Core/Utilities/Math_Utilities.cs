@@ -12,6 +12,16 @@ namespace IbrahKit
             return degree;
         }
 
+        public static Vector3 WithY(this Vector3 vector, float value)
+        {
+            return new Vector3(vector.x,value,vector.z);
+        }
+
+        public static Vector3 Negate(this Vector3 vector)
+        {
+            return -vector;
+        }
+
         public static float ClampAngle(float angle, float min, float max)
         {
             if (angle < -360f) angle += 360f;
