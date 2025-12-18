@@ -1,24 +1,17 @@
-using IbrahKit.UI;
+using IbrahKit.Debugging;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Pause_Manager : Manager_Global<Pause_Manager>
+    public class Pause_Manager : Manager_Global_Data<Pause_Manager, Pause_Manager_Data>
     {
         private bool paused;
 
         private string stateBeforePause;
 
         private UI_Input input;
-
-        [SerializeField] private State_Key pausedState;
-
-        [SerializeField] private List<AllowPause> allowPause = new();
-
-        [SerializeField] private UI_Menu menu;
 
         public Action<bool> OnPause;
 
@@ -52,9 +45,21 @@ namespace IbrahKit
 
         public void Pause()
         {
-            string currentState = State_Manager.GetInstance().GetCurrentState();
+            if(!State_Manager.TryGet(out State_Manager result))
+            {
+                return;
+            }
 
-            AllowPause allow = allowPause.Find(x => x.IsState(currentState));
+            string currentState = result.GetCurrentState();
+
+            AllowPause allow = GetManagerData().GetAllowPauses().Find(x => x.IsState(currentState));
+
+            if(allow == null)
+            {
+                IbrahDebug.LogWarning("Allow is null");
+
+                return;
+            }
 
             if (!allow.Allow()) return;
 
@@ -62,19 +67,15 @@ namespace IbrahKit
 
             if (_paused)
             {
-                menu.GetStateController().Enable();
-
                 stateBeforePause = currentState;
 
-                State_Manager.GetInstance().SetCurrentState(pausedState);
+                result.SetCurrentState(GetManagerData().GetPausedKey());
 
                 paused = _paused;
             }
-            else if (!_paused && menu.GetStateController().GetCompactState() == UI_Menu_Controller_State.StateCompact.ENABLED)
+            else if (!_paused)
             {
-                menu.GetStateController().Disable();
-
-                State_Manager.GetInstance().SetCurrentState(stateBeforePause);
+                result.SetCurrentState(stateBeforePause);
 
                 paused = _paused;
             }
@@ -87,24 +88,6 @@ namespace IbrahKit
         public void UpdatePause()
         {
             OnPause.Invoke(paused);
-        }
-
-        [Serializable]
-        private class AllowPause
-        {
-            [SerializeField] private bool allow;
-
-            [SerializeField] private State_Key state;
-
-            public bool Allow()
-            {
-                return allow;
-            }
-
-            public bool IsState(string state)
-            {
-                return state.Equals(state);
-            }
         }
     }
 }

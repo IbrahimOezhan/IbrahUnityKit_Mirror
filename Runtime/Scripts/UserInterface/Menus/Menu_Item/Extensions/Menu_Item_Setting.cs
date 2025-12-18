@@ -6,7 +6,7 @@ namespace IbrahKit.UI
     [System.Serializable]
     public class Menu_Item_Setting : Menu_Item_Base
     {
-        [SerializeField] private Setting_Map_Element config;
+        [SerializeField] private UI_Setting_Map_Element config;
 
         protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
         {

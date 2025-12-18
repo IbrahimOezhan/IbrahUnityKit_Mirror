@@ -91,7 +91,7 @@ namespace IbrahKit.UI
             else
             {
 #if UNITY_EDITOR
-                Local_Config config = Local_Settings.Config();
+                Local_Manager_Data config = Local_Settings.Config();
 
                 if (config == null) return "Local Config couldnt be found";
 

@@ -7,6 +7,9 @@ namespace IbrahKit.UI
     [System.Serializable]
     public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuVisibility
     {
+        private const string DEBUG = "debug";
+        private const string PAUSED = "paused";
+
         private UI_Menu menu;
 
         [TabGroup("Menu Settings", order: -1), SerializeField, Required]
@@ -51,19 +54,19 @@ namespace IbrahKit.UI
 
         public void SetActive(bool value)
         {
-            menu.gameObject.SetActive(value);
+            alphaController.gameObject.SetActive(value);
         }
 
         private void GU_Hide(bool state)
         {
-            if (state) HideBy("Debug");
-            else ShowBy("Debug");
+            if (state) HideBy(DEBUG);
+            else ShowBy(DEBUG);
         }
 
         private void OnPause(bool state)
         {
-            if (state) HideBy("paused");
-            else ShowBy("paused");
+            if (state) HideBy(PAUSED);
+            else ShowBy(PAUSED);
         }
 
         public override void Init(UI_Menu menu)
@@ -73,16 +76,16 @@ namespace IbrahKit.UI
 
         public override void OnMenuEnabled()
         {
-            if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
+            if (!preventHideOnPause && Pause_Manager.TryGet(out Pause_Manager pause))
             {
-                Pause_Manager.GetInstance().OnPause += OnPause;
-                Pause_Manager.GetInstance().UpdatePause();
+                pause.OnPause += OnPause;
+                pause.UpdatePause();
             }
 
-            if (Game_Utilities.GetInstance() != null)
+            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
             {
-                Game_Utilities.GetInstance().OnHide += GU_Hide;
-                Game_Utilities.GetInstance().UpdateHide();
+                result.OnHide += GU_Hide;
+                result.InvokeHide();
             }
         }
 
@@ -93,14 +96,14 @@ namespace IbrahKit.UI
 
         public override void OnMenuDisabled()
         {
-            if (!preventHideOnPause && Pause_Manager.GetInstance() != null)
+            if (!preventHideOnPause && Pause_Manager.TryGet(out Pause_Manager result))
             {
-                Pause_Manager.GetInstance().OnPause -= OnPause;
+                result.OnPause -= OnPause;
             }
 
-            if (Game_Utilities.GetInstance() != null)
+            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager menu))
             {
-                Game_Utilities.GetInstance().OnHide -= GU_Hide;
+                menu.OnHide -= GU_Hide;
             }
         }
     }

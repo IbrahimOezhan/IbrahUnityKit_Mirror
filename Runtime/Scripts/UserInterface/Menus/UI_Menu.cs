@@ -28,7 +28,9 @@ namespace IbrahKit.UI
         private void Awake()
         {
             controllers.Add(content);
+
             controllers.Add(visiblity);
+
             controllers.Add(state);
 
             BeforeInit();
@@ -48,14 +50,12 @@ namespace IbrahKit.UI
 
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
-            controllers.ForEach(x => x.OnMenuEnabled());
 
-            OnMenuEnabled();
         }
 
-        protected virtual void OnMenuEnabled()
+        public virtual void OnMenuEnabled()
         {
 
         }
@@ -71,12 +71,10 @@ namespace IbrahKit.UI
 
         protected virtual void OnDisable()
         {
-            controllers.ForEach(x => x.OnMenuDisabled());
 
-            OnMenuDisabled();
         }
 
-        protected virtual void OnMenuDisabled()
+        public virtual void OnMenuDisabled()
         {
 
         }
@@ -106,6 +104,8 @@ namespace IbrahKit.UI
                 result.OnHover();
             }
         }
+
+        public List<UI_Menu_Controller> GetMenuControllers() => controllers;
 
         public IMenuVisibility GetVisbilityController()
         {

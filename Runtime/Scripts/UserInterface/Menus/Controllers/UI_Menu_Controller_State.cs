@@ -91,10 +91,26 @@ namespace IbrahKit.UI
             switch (GetCompactState())
             {
                 case StateCompact.ENABLED:
+
                     activeMenus.Add(menu);
+
+                    if(Application.isPlaying)
+                    {
+                        menu.OnMenuEnabled();
+                        menu.GetMenuControllers().ForEach(x => x.OnMenuEnabled());
+                    }
+
                     break;
                 case StateCompact.DISABLED:
+
                     activeMenus.Remove(menu);
+
+                    if (Application.isPlaying)
+                    {
+                        menu.OnMenuDisabled();
+                        menu.GetMenuControllers().ForEach(x => x.OnMenuDisabled());
+                    }
+
                     break;
             }
         }
