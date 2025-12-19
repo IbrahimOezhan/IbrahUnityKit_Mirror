@@ -30,7 +30,7 @@ namespace IbrahKit
 
         protected void SetInstanceThis()
         {
-            Instance = (T) this;
+            Instance = (T)this;
         }
 
         public static T GetInstance()

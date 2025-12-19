@@ -3,7 +3,7 @@ using System;
 namespace IbrahKit.Settings
 {
     [Serializable]
-    public abstract class Setting<TValue> : Setting_Base
+    public abstract class Setting<TValue> : Setting
     {
         protected TValue currentValue;
 

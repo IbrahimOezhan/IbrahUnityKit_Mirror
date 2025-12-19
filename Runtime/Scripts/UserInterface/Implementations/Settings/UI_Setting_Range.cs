@@ -17,7 +17,7 @@ namespace IbrahKit
         [SerializeField]
         private UI_Interactive value;
 
-        protected override bool CanSpawnPro(Setting_Base setting)
+        protected override bool CanSpawnPro(Setting setting)
         {
             if (setting is not ISettingNumber num)
             {
@@ -35,6 +35,7 @@ namespace IbrahKit
             }
 
             left.GetStateController().GetOnPressSuccess().AddListener(num.Increment);
+
             right.GetStateController().GetOnPressSuccess().AddListener(num.Decrement);
 
             if (!value.TryGet(out textSetter))

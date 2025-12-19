@@ -25,7 +25,6 @@ namespace IbrahKit
             input.Enable();
 
             input.Map.LMB.performed += LMB;
-
         }
 
         private void Update()
@@ -47,6 +46,7 @@ namespace IbrahKit
                 input.Map.LMB.performed -= LMB;
 
                 input.Disable();
+
                 input.Dispose();
             }
         }
@@ -59,14 +59,14 @@ namespace IbrahKit
         public Vector2 GetCanvasMousePos(Canvas canvas)
         {
             Vector2 screenPos = Mouse.current.position.ReadValue();
+
             RectTransform canvasRect = canvas.GetComponent<RectTransform>();
 
-            Vector2 localPoint;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRect,
                 screenPos,
                 canvas.worldCamera, // null if Screen Space - Overlay
-                out localPoint
+                out Vector2 localPoint
             );
 
             return localPoint;

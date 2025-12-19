@@ -10,7 +10,7 @@ namespace IbrahKit.UI
 
         private struct SettingsMap
         {
-            [SerializeField] private Setting_Base setting;
+            [SerializeField] private Setting setting;
             [SerializeField] private UI_Setting settingUI;
         }
     }

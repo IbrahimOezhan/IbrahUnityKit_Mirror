@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class Menu_Item_Setting : Menu_Item_Base
+    public class UI_Setting_Menu_Item : Menu_Item_Base
     {
         [SerializeField] private UI_Setting_Map_Element config;
 
@@ -13,6 +13,7 @@ namespace IbrahKit.UI
             if (config.TryCreateUserInterface(Vector3.zero, Quaternion.identity, parent, out UI_Setting res))
             {
                 go = res.gameObject;
+
                 return true;
             }
 

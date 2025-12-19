@@ -4,6 +4,10 @@ namespace IbrahKit.Settings
     {
         public string GetKey();
 
-        public bool TryGetInstance(out Setting_Base result);
+        public string GetDefaultValue();
+
+        public bool TryGetInstance(out Setting result);
+
+        public Setting GetDummy();
     }
 }

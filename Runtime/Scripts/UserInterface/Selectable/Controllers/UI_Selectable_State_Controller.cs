@@ -1,4 +1,3 @@
-using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,13 +5,8 @@ using UnityEngine.Events;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Selectable_StateController
+    public class UI_Selectable_State_Controller : UI_Selectable_Controller
     {
-#if ODIN_INSPECTOR
-        [SerializeField, ReadOnly]
-#endif
-        private UI_Selectable selectable;
-
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
 #endif
@@ -40,13 +34,21 @@ namespace IbrahKit.UI
 
         private readonly UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
 
-        public static UI_Selectable currentlySelected;
+        public static UI_Selectable_State_Controller currentlySelected;
 
-        public void Init(UI_Selectable selectable, UI_Selectable_Group group)
+        protected override void Init()
         {
-            this.selectable = selectable;
+            group = GetSelectable().GetGroup();
+        }
 
-            this.group = group;
+        public override void OnEnable()
+        {
+
+        }
+
+        public override void OnDisable()
+        {
+            PressedStop(false);
         }
 
         public void SetState(UI_SELECTABLE_STATE state, bool animate = true)
@@ -69,30 +71,32 @@ namespace IbrahKit.UI
 
             if (interactable && playAudioOnStateChange)
             {
-                selectable.GetMenu().OnHoverAudio();
+                GetSelectable().GetMenu().OnHoverAudio();
             }
         }
 
-        public void Pressed(bool skipOnPress = false)
+        /// <summary>
+        /// Presses the selectable
+        /// </summary>
+        /// <param name="skipActionsOnPress"></param> Prevents actions from being invoked on press
+        public void Pressed(bool skipActionsOnPress = false)
         {
             SetState(UI_SELECTABLE_STATE.PRESSED);
 
-            currentlySelected = selectable;
+            currentlySelected = this;
 
             if (group != null)
             {
-                group.OnSelect(selectable);
-
-                IbrahDebug.Log("Group On Select");
+                group.OnSelect(GetSelectable());
             }
 
-            if (skipOnPress) return;
+            if (skipActionsOnPress) return;
 
             if (interactable)
             {
                 OnPressedSuccess.Invoke();
 
-                if (playAudioOnStateChange) selectable.GetMenu().OnClickAudio();
+                if (playAudioOnStateChange) GetSelectable().GetMenu().OnClickAudio();
             }
             else
             {
@@ -100,11 +104,11 @@ namespace IbrahKit.UI
             }
         }
 
-        public void PressedStop()
+        public void PressedStop(bool animate = true)
         {
-            SetState(UI_SELECTABLE_STATE.NONE);
+            SetState(UI_SELECTABLE_STATE.NONE, animate);
 
-            if (currentlySelected == selectable)
+            if (currentlySelected == this)
             {
                 currentlySelected = null;
             }

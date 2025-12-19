@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Selectable_TransitionController : ISelfValidator
+    public class UI_Selectable_Transition_Controller : UI_Selectable_Controller, ISelfValidator
     {
         [SerializeReference]
         private List<UI_Selectable_Transition> transitions = new();
@@ -14,11 +14,22 @@ namespace IbrahKit.UI
         [SerializeReference]
         private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
-        public void Init(GameObject go)
+        protected override void Init()
         {
-            transitions.ForEach(x => x.Init(go));
-            transitionsInteractable.ForEach(x => x.Init(go));
-            transitionsNotInteractable.ForEach(x => x.Init(go));
+            GameObject selectableObject = GetSelectable().gameObject;
+            transitions.ForEach(x => x.Init(selectableObject));
+            transitionsInteractable.ForEach(x => x.Init(selectableObject));
+            transitionsNotInteractable.ForEach(x => x.Init(selectableObject));
+        }
+
+        public override void OnDisable()
+        {
+
+        }
+
+        public override void OnEnable()
+        {
+
         }
 
         public void Transition(UI_SELECTABLE_STATE state, bool interactable)

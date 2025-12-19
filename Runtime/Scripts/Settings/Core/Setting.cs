@@ -2,11 +2,11 @@ using System;
 
 namespace IbrahKit.Settings
 {
-    public abstract class Setting_Base
+    public abstract class Setting
     {
         public Action OnValueChanged;
 
-        public Setting_Base()
+        public Setting()
         {
 
         }

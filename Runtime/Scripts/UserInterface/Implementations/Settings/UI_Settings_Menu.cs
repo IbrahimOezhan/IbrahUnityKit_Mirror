@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class Menu_Settings : MonoBehaviour
+    public class UI_Settings_Menu : MonoBehaviour
     {
         [SerializeField, Required] private UI_Menu menu;
 

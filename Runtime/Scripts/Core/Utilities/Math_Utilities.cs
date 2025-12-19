@@ -14,7 +14,7 @@ namespace IbrahKit
 
         public static Vector3 WithY(this Vector3 vector, float value)
         {
-            return new Vector3(vector.x,value,vector.z);
+            return new Vector3(vector.x, value, vector.z);
         }
 
         public static Vector3 Negate(this Vector3 vector)

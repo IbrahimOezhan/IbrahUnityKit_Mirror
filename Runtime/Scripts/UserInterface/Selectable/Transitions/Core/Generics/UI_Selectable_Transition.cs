@@ -25,7 +25,7 @@ namespace IbrahKit.UI
 
         private bool IsSoNull() => config == null;
 
-        [Button,ShowIf(nameof(IsSoNull))]
+        [Button, ShowIf(nameof(IsSoNull))]
         public void Create()
         {
             config = Asset_Utilities.CreateAsset<SOTarget>($"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");

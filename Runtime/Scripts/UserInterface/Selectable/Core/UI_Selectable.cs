@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,16 +9,31 @@ namespace IbrahKit.UI
     {
         private UI_Menu menu;
 
-        private readonly UI_Selectable_Input_Cursor cursorInput = new();
+        private readonly UI_Selectable_Input_Cursor_Controller cursorInput = new();
+
+        private readonly UI_Selectable_Navigation_Controller navigationController = new();
 
         [SerializeField]
-        private UI_Selectable_StateController stateController;
+        private UI_Selectable_State_Controller stateController;
 
         [SerializeField]
-        private UI_Selectable_TransitionController transitionController;
+        private UI_Selectable_Transition_Controller transitionController;
 
         [ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
+
+        protected override void Enable()
+        {
+            base.Enable();
+
+            cursorInput.OnEnable();
+
+            navigationController.OnEnable();
+
+            transitionController.OnEnable();
+
+            stateController.OnEnable();
+        }
 
         protected override void Update()
         {
@@ -28,26 +44,32 @@ namespace IbrahKit.UI
 
         protected override void OnDisable()
         {
-            stateController.SetState(UI_SELECTABLE_STATE.NONE, false);
-
             if (selectableGroup != null) selectableGroup.Remove(this);
 
-            stateController.PressedStop();
+            cursorInput.OnDisable();
+
+            navigationController.OnDisable();
+
+            transitionController.OnDisable();
+
+            stateController.OnDisable();
         }
 
         public void OnMenuInit(UI_Menu menu)
         {
             this.menu = menu;
 
-            cursorInput.Init(stateController, this);
-
-            stateController.GetOnStateChangedEvent().AddListener(Visualize);
-
             transform.BetterTryGetComponentInParent(out selectableGroup);
 
-            transitionController.Init(gameObject);
+            cursorInput.Init(this);
 
-            stateController.Init(this, selectableGroup);
+            navigationController.Init(this);
+
+            transitionController.Init(this);
+
+            stateController.Init(this);
+
+            stateController.GetOnStateChangedEvent().AddListener(Visualize);
 
             Visualize(stateController.GetState());
         }
@@ -64,23 +86,36 @@ namespace IbrahKit.UI
             Visualize(stateController.GetState());
         }
 
-        public UI_Selectable_StateController GetStateController() => stateController;
+        public UI_Selectable_State_Controller GetStateController() => stateController;
 
-        public void OnPointerEnter(PointerEventData eventData) => cursorInput.OnPointerEnter(eventData);
+        public UI_Menu GetMenu() => menu;
 
-        public void OnPointerExit(PointerEventData eventData) => cursorInput.OnPointerExit(eventData);
+        public UI_Selectable_Group GetGroup() => selectableGroup;
 
-        public void OnPointerDown(PointerEventData eventData) => cursorInput.OnPointerDown(eventData);
-
-        public void OnPointerUp(PointerEventData eventData) => cursorInput.OnPointerUp(eventData);
+        public RectTransform GetRectTransform() => transform as RectTransform;
 
         public bool DisallowPress() => selectableGroup != null && stateController.GetState() == UI_SELECTABLE_STATE.PRESSED;
 
         public bool DisallowPressOnUp() => selectableGroup != null;
 
-        public UI_Menu GetMenu()
+        public void OnPointerEnter(PointerEventData eventData)
         {
-            return menu;
+            if(UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerExit(eventData);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerDown(eventData);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerUp(eventData);
         }
     }
 }

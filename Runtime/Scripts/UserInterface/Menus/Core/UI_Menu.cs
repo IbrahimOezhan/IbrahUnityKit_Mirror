@@ -60,7 +60,7 @@ namespace IbrahKit.UI
 
         }
 
-       private void Update()
+        private void Update()
         {
             controllers.ForEach(x => x.Lifecycle());
 

@@ -57,6 +57,7 @@ namespace IbrahKit
             cursorTransform.gameObject.SetActive(Cursor_Visibilty_Manager.GetInstance().IsVisible());
 
             Cursor.lockState = CursorLockMode.Confined;
+
             Cursor.visible = false;
 
             style.Set(cursorImage, state);

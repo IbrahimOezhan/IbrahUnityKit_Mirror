@@ -8,8 +8,11 @@ namespace IbrahKit.Settings
         }
 
         public abstract void Decrement();
+
         public abstract void Increment();
+
         public abstract bool IsMax();
+
         public abstract bool IsMin();
     }
 }

@@ -32,7 +32,7 @@ namespace IbrahKit
             return AppDomain.
                 CurrentDomain.
                 GetAssemblies().
-                SelectMany(a => { try { return a.GetTypes(); } catch { return Array.Empty<Type>(); }}).
+                SelectMany(a => { try { return a.GetTypes(); } catch { return Array.Empty<Type>(); } }).
                 Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType)).ToArray();
         }
 

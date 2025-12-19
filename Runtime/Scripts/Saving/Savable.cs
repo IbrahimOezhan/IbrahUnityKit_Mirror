@@ -20,7 +20,7 @@ namespace IbrahKit.Save
 
         public Type GetSavableType()
         {
-            return Type.GetType(fullName); 
+            return Type.GetType(fullName);
         }
     }
 }

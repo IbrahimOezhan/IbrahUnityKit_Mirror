@@ -5,25 +5,25 @@ namespace IbrahKit.Settings
 {
     public abstract class UI_Setting : MonoBehaviour, IMenuUpdate
     {
-        private Setting_Base setting;
+        private Setting setting;
 
-        public bool CanSpawn(Setting_Base setting)
+        public bool CanSpawn(Setting setting)
         {
             return CanSpawnPro(setting);
         }
 
-        public void Init(Setting_Base setting)
+        public void Init(Setting setting)
         {
             this.setting = setting;
 
             setting.OnValueChanged += UpdateUI;
         }
 
-        protected abstract bool CanSpawnPro(Setting_Base setting);
+        protected abstract bool CanSpawnPro(Setting setting);
 
         public abstract void UpdateUI();
 
-        public Setting_Base GetSetting() => setting;
+        public Setting GetSetting() => setting;
 
         public abstract void OnMenuInit(UI_Menu menu);
     }

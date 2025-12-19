@@ -1,3 +1,4 @@
+using IbrahKit.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,7 @@ namespace IbrahKit.UI
         {
             base.AfterInit();
 
-            if(Pause_Manager.TryGet(out Pause_Manager result))
+            if (Pause_Manager.TryGet(out Pause_Manager result))
             {
                 result.OnPause += OnPause;
             }
@@ -37,7 +38,7 @@ namespace IbrahKit.UI
                 case false:
                     GetStateController().Disable();
                     break;
-                    case true:
+                case true:
                     GetStateController().Enable();
                     break;
             }

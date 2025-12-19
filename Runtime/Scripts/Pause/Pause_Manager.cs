@@ -45,7 +45,7 @@ namespace IbrahKit
 
         public void Pause()
         {
-            if(!State_Manager.TryGet(out State_Manager result))
+            if (!State_Manager.TryGet(out State_Manager result))
             {
                 return;
             }
@@ -54,7 +54,7 @@ namespace IbrahKit
 
             AllowPause allow = GetManagerData().GetAllowPauses().Find(x => x.IsState(currentState));
 
-            if(allow == null)
+            if (allow == null)
             {
                 IbrahDebug.LogWarning("Allow is null");
 

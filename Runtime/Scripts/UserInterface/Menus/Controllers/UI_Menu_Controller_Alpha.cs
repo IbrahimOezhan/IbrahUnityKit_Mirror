@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit
@@ -13,7 +12,7 @@ namespace IbrahKit
 
         public void SetEnabledAlpha(float value)
         {
-            if(canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
+            if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
 
             enabledAlpha = value;
 

@@ -1,7 +1,6 @@
 using IbrahKit.Debugging;
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI
 {

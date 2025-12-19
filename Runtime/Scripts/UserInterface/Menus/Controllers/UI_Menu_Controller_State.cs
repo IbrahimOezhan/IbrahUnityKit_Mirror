@@ -94,7 +94,7 @@ namespace IbrahKit.UI
 
                     activeMenus.Add(menu);
 
-                    if(Application.isPlaying)
+                    if (Application.isPlaying)
                     {
                         menu.OnMenuEnabled();
                         menu.GetMenuControllers().ForEach(x => x.OnMenuEnabled());

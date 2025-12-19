@@ -21,6 +21,10 @@ namespace IbrahKit.UI
 
         private readonly Queue<IMenuUpdate> uninitialized = new();
 
+        [SerializeField, Required] private Canvas canvas;
+
+        public Canvas GetCanvas() => canvas;
+
         public override void Init(UI_Menu menu)
         {
             this.menu = menu;

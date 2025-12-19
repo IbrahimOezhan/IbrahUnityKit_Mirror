@@ -1,11 +1,10 @@
 using IbrahKit.Save;
-using IbrahKit.Settings;
 using IbrahKit.UI;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Settings
 {
     public class Settings_Manager : Manager_Global_Data<Settings_Manager, Settings_Manager_Data>
     {
@@ -13,11 +12,9 @@ namespace IbrahKit
 
         private SaveData saveData;
 
-        private Dictionary<string, Setting_Base> settingsInit = new();
+        private readonly Dictionary<string, Setting> settingsInit = new();
 
         [SerializeField] private UI_Menu menu;
-
-        [SerializeField] private Settings_Manager_Data settings;
 
         public void OpenSettings(UI_Menu menu)
         {
@@ -33,13 +30,13 @@ namespace IbrahKit
 
             }
 
-            settings.GetConfigs().ForEach(x =>
+            GetManagerData().GetConfigs().ForEach(config =>
             {
-                if (x.TryGetInstance(out Setting_Base res))
+                if (config.TryGetInstance(out Setting settingResult))
                 {
-                    if (settingsInit.TryAdd(x.GetKey(), res)) ;
+                    if (settingsInit.TryAdd(config.GetKey(), settingResult))
                     {
-
+                        settingResult.Init(config.GetDefaultValue());
                     }
                 }
             });
@@ -55,14 +52,15 @@ namespace IbrahKit
             return defaultValue;
         }
 
-        public bool TryGet(string key, out Setting_Base setting)
+        public bool TryGet(string key, out Setting setting)
         {
             return settingsInit.TryGetValue(key, out setting);
         }
 
         private class SaveData : Savable
         {
-            [JsonInclude] private Dictionary<string, string> settingValueMap = new();
+            [JsonInclude]
+            private Dictionary<string, string> settingValueMap = new();
 
             public Dictionary<string, string> GetKeyValues() => settingValueMap;
         }

@@ -4,20 +4,19 @@ using UnityEngine;
 
 namespace IbrahKit.Settings
 {
-    public abstract class Setting_Config<TSetting> : ScriptableObject, ISettingConfig, ISelfValidator where TSetting : Setting_Base, new()
+    /// <summary>
+    /// Contains information on the type of the setting and the key it uses
+    /// </summary>
+    /// <typeparam name="TSetting"></typeparam> The parent class of which the type can be
+    public abstract class Setting_Config<TSetting> : ScriptableObject, ISettingConfig where TSetting : Setting, new()
     {
-        [SerializeField] private string key;
+        [SerializeField]
+        private string key;
 
-        [SerializeField, ValueDropdown(nameof(GetDropdown))] private string type;
+        [SerializeField, ValueDropdown(nameof(GetDropdown))]
+        private string settingType;
 
-        public abstract string GetDefaultValue();
-
-        public IEnumerable GetDropdown()
-        {
-            return Type_Utilities.GetAllTypesDropdownFormat(typeof(TSetting));
-        }
-
-        public bool TryGetInstance(out Setting_Base result)
+        public bool TryGetInstance(out Setting result)
         {
             if (Settings_Manager.GetInstance().TryGet(GetKey(), out result)) return true;
 
@@ -26,27 +25,24 @@ namespace IbrahKit.Settings
             if (float.TryParse(value, out float _))
             {
                 result = new TSetting();
+
                 return true;
             }
 
             result = null;
+
             return false;
         }
 
+        public abstract string GetDefaultValue();
+
         public string GetKey() => key;
 
-        public void Validate(SelfValidationResult result)
+        public IEnumerable GetDropdown() => Type_Utilities.GetAllTypesDropdownFormat(typeof(TSetting));
+
+        public Setting GetDummy()
         {
-            result.AddError("IMPLEMENT");
-
-            //Setting_Base setting = new TSetting();
-
-            //UI_Setting settingTest = (UI_Setting)Activator.CreateInstance(setting.GetType());
-
-            //if (!settingTest.CanSpawn(setting))
-            //{
-            //    result.AddError("UI is not compatible with the setting");
-            //}
+            return new TSetting();
         }
     }
 }
