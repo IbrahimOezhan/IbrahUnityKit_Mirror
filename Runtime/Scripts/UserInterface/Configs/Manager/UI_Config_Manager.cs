@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_Config_Manager : Manager_Global_Data<UI_Config_Manager, UI_Config_Manager_Data>
+    public class UI_Config_Manager : Manager_Global<UI_Config_Manager, UI_Config_Manager_Data>
     {
         public UI_Configs GetConfigs() => GetManagerData().GetConfigs();
 

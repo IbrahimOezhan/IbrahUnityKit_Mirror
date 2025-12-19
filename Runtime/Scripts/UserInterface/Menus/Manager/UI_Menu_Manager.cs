@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
-    public class UI_Menu_Manager : Manager_Global_Data<UI_Menu_Manager, UI_Menu_Manager_Data>
+    public class UI_Menu_Manager : Manager_Global<UI_Menu_Manager, UI_Menu_Manager_Data>
     {
         private bool hidden;
 

@@ -1,11 +1,11 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System;
 using UnityEngine;
 
 namespace IbrahKit
 {
-    public abstract class Manager_Local_Data<TManager, TData> : Manager_Local<TManager> where TData : ScriptableObject where TManager : Manager_Local_Data<TManager, TData>
+    public abstract class Manager_Global<TManager, TData> : Manager_Global<TManager> where TData : ScriptableObject where TManager : Manager_Global<TManager, TData>
     {
         [SerializeField, Required] private TData data;
 

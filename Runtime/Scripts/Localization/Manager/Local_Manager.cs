@@ -8,7 +8,7 @@ using UnityEngine;
 namespace IbrahKit.Localization
 {
     [DefaultExecutionOrder(Execution_Order.local)]
-    public partial class Local_Manager : Manager_Global_Data<Local_Manager, Local_Manager_Data>
+    public partial class Local_Manager : Manager_Global<Local_Manager, Local_Manager_Data>
     {
         public const string DROP = "Localization";
 

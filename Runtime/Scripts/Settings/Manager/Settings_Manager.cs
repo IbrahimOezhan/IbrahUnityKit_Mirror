@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IbrahKit.Settings
 {
-    public class Settings_Manager : Manager_Global_Data<Settings_Manager, Settings_Manager_Data>
+    public class Settings_Manager : Manager_Global<Settings_Manager, Settings_Manager_Data>
     {
         private const string SAVE_DATA_SETTINGS = "Settings";
 

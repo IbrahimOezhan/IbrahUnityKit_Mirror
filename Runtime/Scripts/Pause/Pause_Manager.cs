@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Pause_Manager : Manager_Global_Data<Pause_Manager, Pause_Manager_Data>
+    public class Pause_Manager : Manager_Global<Pause_Manager, Pause_Manager_Data>
     {
         private bool paused;
 

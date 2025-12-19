@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_PlatformHide : MonoBehaviour
+    public class UI_Platform_Hide : MonoBehaviour
     {
         [SerializeField]
         private List<RuntimePlatform> hide = new();

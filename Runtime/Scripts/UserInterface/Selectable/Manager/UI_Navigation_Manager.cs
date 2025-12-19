@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class UI_Navigation_Manager : Manager_Global_Data<UI_Navigation_Manager, UI_Navigation_Manager_Data>
+    public class UI_Navigation_Manager : Manager_Global<UI_Navigation_Manager, UI_Navigation_Manager_Data>
     {
         private InputTypeNavigation currentType;
 
