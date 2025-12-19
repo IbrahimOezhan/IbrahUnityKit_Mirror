@@ -5,20 +5,25 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Selectable_Transition_Controller : UI_Selectable_Controller, ISelfValidator
+    public class UI_Selectable_Controller_Transition : UI_Selectable_Controller, ISelfValidator
     {
         [SerializeReference]
         private List<UI_Selectable_Transition> transitions = new();
+
         [SerializeReference]
         private List<UI_Selectable_Transition> transitionsInteractable = new();
+
         [SerializeReference]
         private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
         protected override void Init()
         {
             GameObject selectableObject = GetSelectable().gameObject;
+
             transitions.ForEach(x => x.Init(selectableObject));
+
             transitionsInteractable.ForEach(x => x.Init(selectableObject));
+
             transitionsNotInteractable.ForEach(x => x.Init(selectableObject));
         }
 

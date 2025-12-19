@@ -5,8 +5,10 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_Menu : MonoBehaviour, IConfig
+    public class UI_Menu : MonoBehaviour, IConfigHolder
     {
+        private bool firstOpen = true;
+
         private readonly List<UI_Menu_Controller> controllers = new();
 
         [SerializeField]
@@ -25,40 +27,9 @@ namespace IbrahKit.UI
 
         public Action<bool> OnStateChanged;
 
-        private void Awake()
-        {
-            controllers.Add(content);
+        protected virtual void Awake() { }
 
-            controllers.Add(visiblity);
-
-            controllers.Add(state);
-
-            BeforeInit();
-
-            controllers.ForEach(x => x.Init(this));
-
-            AfterInit();
-        }
-
-        protected virtual void BeforeInit()
-        {
-
-        }
-
-        protected virtual void AfterInit()
-        {
-
-        }
-
-        protected virtual void OnEnable()
-        {
-
-        }
-
-        public virtual void OnMenuEnabled()
-        {
-
-        }
+        protected virtual void OnEnable() { }
 
         private void Update()
         {
@@ -67,17 +38,7 @@ namespace IbrahKit.UI
             MenuLifecycle();
         }
 
-        protected virtual void MenuLifecycle() { }
-
-        protected virtual void OnDisable()
-        {
-
-        }
-
-        public virtual void OnMenuDisabled()
-        {
-
-        }
+        protected virtual void OnDisable() { }
 
         private void OnRectTransformDimensionsChange()
         {
@@ -88,6 +49,34 @@ namespace IbrahKit.UI
         {
             OnFocusOrResolutionChanged?.Invoke();
         }
+
+        public virtual void OnMenuEnabled()
+        {
+            if (firstOpen)
+            {
+                controllers.Add(content);
+
+                controllers.Add(visiblity);
+
+                controllers.Add(state);
+
+                BeforeInit();
+
+                controllers.ForEach(x => x.Init(this));
+
+                AfterInit();
+
+                firstOpen = false;
+            }
+        }
+
+        protected virtual void BeforeInit() { }
+
+        protected virtual void AfterInit() { }
+
+        protected virtual void MenuLifecycle() { }
+
+        public virtual void OnMenuDisabled() { }
 
         public void OnClickAudio()
         {
@@ -107,20 +96,11 @@ namespace IbrahKit.UI
 
         public List<UI_Menu_Controller> GetMenuControllers() => controllers;
 
-        public IMenuVisibility GetVisbilityController()
-        {
-            return visiblity;
-        }
+        public IMenuControllerVisibility GetVisbilityController() => visiblity;
 
-        public IMenuState GetStateController()
-        {
-            return state;
-        }
+        public IMenuControllerState GetStateController() => state;
 
-        public IMenuContent GetContentController()
-        {
-            return content;
-        }
+        public IMenuControllerContent GetContentController() => content;
 
         public UI_Configs GetConfigs() => configs;
 

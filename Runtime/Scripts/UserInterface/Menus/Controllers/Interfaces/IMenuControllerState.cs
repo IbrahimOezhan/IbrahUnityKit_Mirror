@@ -2,7 +2,7 @@ using static IbrahKit.UI.UI_Menu_Controller_State;
 
 namespace IbrahKit.UI
 {
-    public interface IMenuState
+    public interface IMenuControllerState
     {
         public void Enable();
 

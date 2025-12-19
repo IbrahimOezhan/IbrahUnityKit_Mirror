@@ -2,9 +2,9 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit.UI
 {
-    public class UI_Selectable_Input_Cursor_Controller : UI_Selectable_Controller, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    public class UI_Selectable_Controller_Input_Cursor : UI_Selectable_Controller
     {
-        private UI_Selectable_State_Controller stateController;
+        private UI_Selectable_Controller_State stateController;
 
         protected override void Init()
         {

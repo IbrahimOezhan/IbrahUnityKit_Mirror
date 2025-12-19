@@ -36,7 +36,7 @@ namespace IbrahKit.UI
 
         public static UI_Configs[] GetConfigs(Transform t)
         {
-            IConfig[] iConfigs = t.BetterGetComponentsInParents<IConfig>(true);
+            IConfigHolder[] iConfigs = t.BetterGetComponentsInParents<IConfigHolder>(true);
 
             bool found = UI_Config_Manager.TryGet(out UI_Config_Manager result);
 

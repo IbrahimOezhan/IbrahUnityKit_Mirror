@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Selectable_State_Controller : UI_Selectable_Controller
+    public class UI_Selectable_Controller_State : UI_Selectable_Controller
     {
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
@@ -34,7 +34,7 @@ namespace IbrahKit.UI
 
         private readonly UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
 
-        public static UI_Selectable_State_Controller currentlySelected;
+        public static UI_Selectable_Controller_State currentlySelected;
 
         protected override void Init()
         {

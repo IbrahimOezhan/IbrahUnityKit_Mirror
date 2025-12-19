@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuVisibility
+    public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuControllerVisibility
     {
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";

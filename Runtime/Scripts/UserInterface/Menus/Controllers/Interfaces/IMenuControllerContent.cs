@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public interface IMenuContent
+    public interface IMenuControllerContent
     {
         public void RegisterUI(IMenuUpdate value);
 

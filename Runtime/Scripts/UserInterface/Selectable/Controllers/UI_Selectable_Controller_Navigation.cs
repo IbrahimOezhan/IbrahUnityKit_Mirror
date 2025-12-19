@@ -5,13 +5,18 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI
 {
-    public class UI_Selectable_Navigation_Controller : UI_Selectable_Controller
+    public class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
     {
-        public static List<UI_Selectable_Navigation_Controller> activeSelectables;
+        [SerializeField] private bool firstSelectedCandidate;
+
+        public static List<UI_Selectable_Controller_Navigation> activeSelectables;
 
         protected override void Init()
         {
-
+            if (firstSelectedCandidate && UI_Selectable_Controller_State.currentlySelected == null)
+            {
+                GetSelectable().GetStateController().Select();
+            }
         }
 
         public override void OnEnable()
@@ -30,7 +35,7 @@ namespace IbrahKit.UI
                 activeSelectables.Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable()).ToList());
         }
 
-        public static UI_Selectable_Navigation_Controller Navigate(UI_Selectable_Navigation_Controller current, Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Navigation_Controller> activeSelectables)
+        public static UI_Selectable_Controller_Navigation Navigate(UI_Selectable_Controller_Navigation current, Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> activeSelectables)
         {
             if (inputVector.sqrMagnitude < 0.001f)
                 return null;
@@ -39,13 +44,13 @@ namespace IbrahKit.UI
 
             float bestScore = float.NegativeInfinity;
 
-            UI_Selectable_Navigation_Controller best = null;
+            UI_Selectable_Controller_Navigation best = null;
 
             RectTransform currentRT = current.GetSelectable().GetRectTransform();
 
             for (int i = 0; i < activeSelectables.Count; i++)
             {
-                UI_Selectable_Navigation_Controller candidate = activeSelectables[i];
+                UI_Selectable_Controller_Navigation candidate = activeSelectables[i];
 
                 if (candidate == current)
                     continue;
@@ -90,7 +95,7 @@ namespace IbrahKit.UI
                 Vector2 toCandidate = to - from;
 
                 float alignment = Vector2.Dot(toCandidate.normalized, inputVector);
-                
+
                 if (alignment <= 0f) continue;
 
                 float distance = toCandidate.magnitude;

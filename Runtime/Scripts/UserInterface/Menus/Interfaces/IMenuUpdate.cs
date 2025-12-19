@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public interface IMenuUpdate : IMenuUpdateBase
+    public interface IMenuUpdate
     {
         public Transform transform { get; }
 

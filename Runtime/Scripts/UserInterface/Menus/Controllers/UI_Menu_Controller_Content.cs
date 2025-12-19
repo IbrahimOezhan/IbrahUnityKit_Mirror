@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuContent
+    public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuControllerContent
     {
         private UI_Menu menu;
 
@@ -31,11 +31,18 @@ namespace IbrahKit.UI
 
             LoadMenuContent();
 
+            AfterMenuItems();
+
             List<IMenuUpdate> subtree = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(menu.transform, true, true);
 
             InitializeSubTree(subtree);
 
             state = State.AFTERINIT;
+        }
+
+        public virtual void AfterMenuItems()
+        {
+
         }
 
         public override void OnMenuEnabled()

@@ -9,15 +9,15 @@ namespace IbrahKit.UI
     {
         private UI_Menu menu;
 
-        private readonly UI_Selectable_Input_Cursor_Controller cursorInput = new();
+        private readonly UI_Selectable_Controller_Input_Cursor cursorInput = new();
 
-        private readonly UI_Selectable_Navigation_Controller navigationController = new();
-
-        [SerializeField]
-        private UI_Selectable_State_Controller stateController;
+        private readonly UI_Selectable_Controller_Navigation navigationController = new();
 
         [SerializeField]
-        private UI_Selectable_Transition_Controller transitionController;
+        private UI_Selectable_Controller_State stateController;
+
+        [SerializeField]
+        private UI_Selectable_Controller_Transition transitionController;
 
         [ReadOnly, SerializeField]
         private UI_Selectable_Group selectableGroup;
@@ -86,7 +86,9 @@ namespace IbrahKit.UI
             Visualize(stateController.GetState());
         }
 
-        public UI_Selectable_State_Controller GetStateController() => stateController;
+        public UI_Selectable_Controller_State GetStateController() => stateController;
+
+        public UI_Selectable_Controller_Navigation GetNavigationController() => navigationController;
 
         public UI_Menu GetMenu() => menu;
 
@@ -100,7 +102,7 @@ namespace IbrahKit.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if(UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
+            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods().Contains(InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)

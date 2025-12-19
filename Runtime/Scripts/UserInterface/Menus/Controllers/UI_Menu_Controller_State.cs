@@ -6,7 +6,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [System.Serializable]
-    public class UI_Menu_Controller_State : UI_Menu_Controller, IMenuState
+    public class UI_Menu_Controller_State : UI_Menu_Controller, IMenuControllerState
     {
         private UI_Menu menu;
 

@@ -1,6 +1,5 @@
 using IbrahKit.UI;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace IbrahKit
@@ -26,7 +25,7 @@ namespace IbrahKit
 
             input.Enable();
 
-            if(GetManagerData().GetSupportedNavigationMethods().Contains( InputType.KEYBOARD))
+            if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.KEYBOARD))
             {
                 input.Navigation.Move_Keyboard.performed += OnVectorInput;
                 input.Navigation.Confirm_Keyboard.performed += ComfirmPerformed;
@@ -74,24 +73,17 @@ namespace IbrahKit
 
         private void OnVectorInput(InputAction.CallbackContext context)
         {
-            Vector2 moveDir = context.ReadValue<Vector2>();
-
-            Navigate(moveDir);
+            UI_Selectable_Controller_State.currentlySelected?.GetSelectable().GetNavigationController().Navigate(context);
         }
 
         private void ComfirmPerformed(InputAction.CallbackContext context)
         {
-            UI_Selectable_State_Controller.currentlySelected?.Pressed();
+            UI_Selectable_Controller_State.currentlySelected?.Pressed();
         }
 
         private void ConfirmCanceled(InputAction.CallbackContext context)
         {
-            UI_Selectable_State_Controller.currentlySelected?.Select();
-        }
-
-        public void Navigate(Vector2 dir)
-        {
-            //UI_Selectable_State_Controller.currentlySelected?.Navigation(dir);
+            UI_Selectable_Controller_State.currentlySelected?.Select();
         }
 
         private void OnInputChanged(InputType type)
@@ -110,21 +102,23 @@ namespace IbrahKit
                 _ => InputTypeNavigation.POINT,
             };
 
-            if (currentType != newType)
+            if (currentType == newType)
             {
-                switch (newType)
-                {
-                    case InputTypeNavigation.BUTTONS:
+                return;
+            }
 
-                        //if (activeSelectables.Count > 0 && activeSelectables[0] != null) activeSelectables[0].Select();
+            switch (newType)
+            {
+                case InputTypeNavigation.BUTTONS:
 
-                        break;
-                    case InputTypeNavigation.POINT:
+                    //if (activeSelectables.Count > 0 && activeSelectables[0] != null) activeSelectables[0].Select();
 
-                        UI_Selectable_State_Controller.currentlySelected?.PressedStop();
+                    break;
+                case InputTypeNavigation.POINT:
 
-                        break;
-                }
+                    UI_Selectable_Controller_State.currentlySelected?.PressedStop();
+
+                    break;
             }
 
             currentType = newType;

@@ -1,6 +1,6 @@
 namespace IbrahKit.UI
 {
-    public interface IMenuVisibility
+    public interface IMenuControllerVisibility
     {
         public void SetEnabledAlpha(float value);
 
