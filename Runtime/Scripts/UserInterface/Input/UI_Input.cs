@@ -100,24 +100,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""4b427192-aca1-4bf0-bcee-59eb040175a5"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Back"",
-                    ""type"": ""Button"",
-                    ""id"": ""a41b0029-b4e6-4ae6-a8f3-6b691d78f332"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -129,39 +111,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Mouse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cfabbc8e-43bf-42ae-90ec-347235bdeca2"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8fcc30f4-6d62-4d6f-8bff-b87ce9c2ee4e"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d0dc414b-7759-4c3d-9a5a-9c7f7e5eebb9"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -211,6 +160,15 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
                     ""name"": ""Confirm_Gamepad"",
                     ""type"": ""Button"",
                     ""id"": ""cdd16553-c5d6-461c-b42c-e45b50a896b8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2e95e01-ffbc-4007-ae64-5f3572a0ba89"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -525,6 +483,17 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
                     ""action"": ""Confirm_Gamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6521f431-797f-4f44-a4c7-6e6bcb82ac00"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -534,8 +503,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         // Map
         m_Map = asset.FindActionMap("Map", throwIfNotFound: true);
         m_Map_Mouse = m_Map.FindAction("Mouse", throwIfNotFound: true);
-        m_Map_Pause = m_Map.FindAction("Pause", throwIfNotFound: true);
-        m_Map_Back = m_Map.FindAction("Back", throwIfNotFound: true);
         // Navigation
         m_Navigation = asset.FindActionMap("Navigation", throwIfNotFound: true);
         m_Navigation_Move_Gamepad = m_Navigation.FindAction("Move_Gamepad", throwIfNotFound: true);
@@ -543,6 +510,7 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         m_Navigation_Mouse = m_Navigation.FindAction("Mouse", throwIfNotFound: true);
         m_Navigation_Confirm_Keyboard = m_Navigation.FindAction("Confirm_Keyboard", throwIfNotFound: true);
         m_Navigation_Confirm_Gamepad = m_Navigation.FindAction("Confirm_Gamepad", throwIfNotFound: true);
+        m_Navigation_Back = m_Navigation.FindAction("Back", throwIfNotFound: true);
     }
 
     ~@UI_Input()
@@ -625,8 +593,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Map;
     private List<IMapActions> m_MapActionsCallbackInterfaces = new List<IMapActions>();
     private readonly InputAction m_Map_Mouse;
-    private readonly InputAction m_Map_Pause;
-    private readonly InputAction m_Map_Back;
     /// <summary>
     /// Provides access to input actions defined in input action map "Map".
     /// </summary>
@@ -642,14 +608,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Map/Mouse".
         /// </summary>
         public InputAction @Mouse => m_Wrapper.m_Map_Mouse;
-        /// <summary>
-        /// Provides access to the underlying input action "Map/Pause".
-        /// </summary>
-        public InputAction @Pause => m_Wrapper.m_Map_Pause;
-        /// <summary>
-        /// Provides access to the underlying input action "Map/Back".
-        /// </summary>
-        public InputAction @Back => m_Wrapper.m_Map_Back;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -679,12 +637,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
-            @Back.started += instance.OnBack;
-            @Back.performed += instance.OnBack;
-            @Back.canceled += instance.OnBack;
         }
 
         /// <summary>
@@ -699,12 +651,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
-            @Back.started -= instance.OnBack;
-            @Back.performed -= instance.OnBack;
-            @Back.canceled -= instance.OnBack;
         }
 
         /// <summary>
@@ -747,6 +693,7 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
     private readonly InputAction m_Navigation_Mouse;
     private readonly InputAction m_Navigation_Confirm_Keyboard;
     private readonly InputAction m_Navigation_Confirm_Gamepad;
+    private readonly InputAction m_Navigation_Back;
     /// <summary>
     /// Provides access to input actions defined in input action map "Navigation".
     /// </summary>
@@ -778,6 +725,10 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Navigation/Confirm_Gamepad".
         /// </summary>
         public InputAction @Confirm_Gamepad => m_Wrapper.m_Navigation_Confirm_Gamepad;
+        /// <summary>
+        /// Provides access to the underlying input action "Navigation/Back".
+        /// </summary>
+        public InputAction @Back => m_Wrapper.m_Navigation_Back;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -819,6 +770,9 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
             @Confirm_Gamepad.started += instance.OnConfirm_Gamepad;
             @Confirm_Gamepad.performed += instance.OnConfirm_Gamepad;
             @Confirm_Gamepad.canceled += instance.OnConfirm_Gamepad;
+            @Back.started += instance.OnBack;
+            @Back.performed += instance.OnBack;
+            @Back.canceled += instance.OnBack;
         }
 
         /// <summary>
@@ -845,6 +799,9 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
             @Confirm_Gamepad.started -= instance.OnConfirm_Gamepad;
             @Confirm_Gamepad.performed -= instance.OnConfirm_Gamepad;
             @Confirm_Gamepad.canceled -= instance.OnConfirm_Gamepad;
+            @Back.started -= instance.OnBack;
+            @Back.performed -= instance.OnBack;
+            @Back.canceled -= instance.OnBack;
         }
 
         /// <summary>
@@ -892,20 +849,6 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouse(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPause(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Back" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Navigation" which allows adding and removing callbacks.
@@ -949,5 +892,12 @@ public partial class @UI_Input: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnConfirm_Gamepad(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Back" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBack(InputAction.CallbackContext context);
     }
 }

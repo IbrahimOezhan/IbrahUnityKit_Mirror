@@ -71,7 +71,7 @@ namespace IbrahKit.UI
 
             if (interactable && playAudioOnStateChange)
             {
-                GetSelectable().GetMenu().OnHoverAudio();
+                GetSelectable().GetMenu().GetAudioController().OnHoverAudio();
             }
         }
 
@@ -96,7 +96,7 @@ namespace IbrahKit.UI
             {
                 OnPressedSuccess.Invoke();
 
-                if (playAudioOnStateChange) GetSelectable().GetMenu().OnClickAudio();
+                if (playAudioOnStateChange) GetSelectable().GetMenu().GetAudioController().OnClickAudio();
             }
             else
             {

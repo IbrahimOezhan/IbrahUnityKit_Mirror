@@ -11,6 +11,8 @@ namespace IbrahKit.UI
 
         private readonly List<UI_Menu_Controller> controllers = new();
 
+        private readonly UI_Menu_Controller_Audio audioController = new();
+
         [SerializeField]
         private UI_Configs configs;
 
@@ -22,8 +24,6 @@ namespace IbrahKit.UI
 
         [SerializeField]
         private UI_Menu_Controller_State state;
-
-        public Action OnFocusOrResolutionChanged;
 
         public Action<bool> OnStateChanged;
 
@@ -40,16 +40,6 @@ namespace IbrahKit.UI
 
         protected virtual void OnDisable() { }
 
-        private void OnRectTransformDimensionsChange()
-        {
-            OnFocusOrResolutionChanged?.Invoke();
-        }
-
-        private void OnApplicationFocus(bool _focus)
-        {
-            OnFocusOrResolutionChanged?.Invoke();
-        }
-
         public virtual void OnMenuEnabled()
         {
             if (firstOpen)
@@ -59,6 +49,8 @@ namespace IbrahKit.UI
                 controllers.Add(visiblity);
 
                 controllers.Add(state);
+
+                controllers.Add(audioController);
 
                 BeforeInit();
 
@@ -78,21 +70,7 @@ namespace IbrahKit.UI
 
         public virtual void OnMenuDisabled() { }
 
-        public void OnClickAudio()
-        {
-            if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(UI_Configs.GetConfigs(transform), out UI_Audio_Config result))
-            {
-                result.OnClick();
-            }
-        }
-
-        public void OnHoverAudio()
-        {
-            if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(UI_Configs.GetConfigs(transform), out UI_Audio_Config result))
-            {
-                result.OnHover();
-            }
-        }
+        public UI_Menu_Controller_Audio GetAudioController() => audioController;
 
         public List<UI_Menu_Controller> GetMenuControllers() => controllers;
 

@@ -38,7 +38,7 @@ namespace IbrahKit.Settings
 
         public string GetKey() => key;
 
-        public IEnumerable GetDropdown() => Type_Utilities.GetAllTypesDropdownFormat(typeof(TSetting));
+        public IEnumerable GetDropdown() => Type_Utilities.GetSubTypesAsDropdown(typeof(TSetting));
 
         public Setting GetDummy()
         {

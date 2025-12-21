@@ -21,7 +21,7 @@ namespace IbrahKit
 
         private IEnumerable GetDropdown()
         {
-            return Type_Utilities.GetAllTypesDropdownFormat(typeof(TExtension), extensions.Select(x => x.GetType()));
+            return Type_Utilities.GetSubTypesAsDropdown(typeof(TExtension), extensions.Select(x => x.GetType()));
         }
 
         public void AddExtension()
@@ -32,17 +32,21 @@ namespace IbrahKit
 
             foreach (Type type in types)
             {
-                if (type.FullName == extension)
-                {
-                    extensions.Add((TExtension)Activator.CreateInstance(type, new object[] { this }));
+                if (type.FullName != extension) continue;
 
-                    SortList();
+                AddExtension((TExtension)Activator.CreateInstance(type, new object[] { this }));
 
-                    break;
-                }
+                break;
             }
 
             extension = NONE;
+        }
+
+        public void AddExtension(TExtension extension)
+        {
+            extensions.Add(extension);
+
+            SortList();
         }
 
         private void SortList()

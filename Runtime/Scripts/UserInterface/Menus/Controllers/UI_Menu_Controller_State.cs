@@ -8,8 +8,6 @@ namespace IbrahKit.UI
     [System.Serializable]
     public class UI_Menu_Controller_State : UI_Menu_Controller, IMenuControllerState
     {
-        private UI_Menu menu;
-
         [SerializeField, ReadOnly] private State state = State.DISABLED;
 
         [SerializeField, ReadOnly] private UI_Menu previous;
@@ -30,7 +28,7 @@ namespace IbrahKit.UI
 
         public void Enable<T>(params object[] args) where T : Menu_Transition
         {
-            Menu_Transition tr = GenericToTransition<T>(null, menu, args);
+            Menu_Transition tr = GenericToTransition<T>(null, GetMenu(), args);
 
             Transition(tr);
         }
@@ -42,7 +40,7 @@ namespace IbrahKit.UI
 
         public void Disable<T>(params object[] args) where T : Menu_Transition
         {
-            Menu_Transition tr = GenericToTransition<T>(menu, null, args);
+            Menu_Transition tr = GenericToTransition<T>(GetMenu(), null, args);
 
             Transition(tr);
         }
@@ -56,19 +54,19 @@ namespace IbrahKit.UI
         {
             bool menuEnabled = GetCompactState() == StateCompact.ENABLED;
 
-            Menu_Transition tr = GenericToTransition<T>(menuEnabled ? menu : null, menuEnabled ? null : menu, args);
+            Menu_Transition tr = GenericToTransition<T>(menuEnabled ? GetMenu() : null, menuEnabled ? null : GetMenu(), args);
 
             Transition(tr);
         }
 
         public void Transition<T>(UI_Menu menuOut, UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
-            Transition(GenericToTransition<T>(menu, menuOut, args), backOverride);
+            Transition(GenericToTransition<T>(GetMenu(), menuOut, args), backOverride);
         }
 
         public void TransitionToPrevious<T>(UI_Menu backOverride = null, params object[] args) where T : Menu_Transition
         {
-            Transition(GenericToTransition<T>(menu, previous, args), backOverride);
+            Transition(GenericToTransition<T>(GetMenu(), previous, args), backOverride);
         }
 
         private void Transition(Menu_Transition tr, UI_Menu backOverride = null)
@@ -92,23 +90,23 @@ namespace IbrahKit.UI
             {
                 case StateCompact.ENABLED:
 
-                    activeMenus.Add(menu);
+                    activeMenus.Add(GetMenu());
 
                     if (Application.isPlaying)
                     {
-                        menu.OnMenuEnabled();
-                        menu.GetMenuControllers().ForEach(x => x.OnMenuEnabled());
+                        GetMenu().OnMenuEnabled();
+                        GetMenu().GetMenuControllers().ForEach(x => x.OnMenuEnabled());
                     }
 
                     break;
                 case StateCompact.DISABLED:
 
-                    activeMenus.Remove(menu);
+                    activeMenus.Remove(GetMenu());
 
                     if (Application.isPlaying)
                     {
-                        menu.OnMenuDisabled();
-                        menu.GetMenuControllers().ForEach(x => x.OnMenuDisabled());
+                        GetMenu().OnMenuDisabled();
+                        GetMenu().GetMenuControllers().ForEach(x => x.OnMenuDisabled());
                     }
 
                     break;
@@ -141,9 +139,9 @@ namespace IbrahKit.UI
             return (Menu_Transition)Activator.CreateInstance(typeof(T), array);
         }
 
-        public override void Init(UI_Menu menu)
+        protected override void OnInit()
         {
-            this.menu = menu;
+
         }
 
         public override void OnMenuEnabled()

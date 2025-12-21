@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Pause",
+    "maps": [
+        {
+            "name": "Map",
+            "id": "545952e3-3194-48cb-b7c4-a6f235fcc21f",
+            "actions": [
+                {
+                    "name": "Toggle",
+                    "type": "Button",
+                    "id": "8c472540-4c51-4afb-b86c-a57f27fbdad3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ff9b79ef-044e-4eef-8ac3-c4eefb8a6a21",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

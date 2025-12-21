@@ -20,7 +20,7 @@ namespace IbrahKit.Save
 
         private static Save currentSave;
 
-        private static Save_Data_Generic generic;
+        private static Save_Dictionary generic;
 
         protected override void InstanceAwake()
         {
@@ -35,7 +35,7 @@ namespace IbrahKit.Save
 
             currentSave ??= GetCurrentFolder(saveFolderPath, KEY);
 
-            generic ??= (Save_Data_Generic)currentSave.Load(GENERIC_KEY, new Save_Data_Generic());
+            generic ??= (Save_Dictionary)currentSave.Load(GENERIC_KEY, new Save_Dictionary());
 
         }
 
@@ -70,7 +70,7 @@ namespace IbrahKit.Save
             currentSave.Return(name, value, encrypt, stillInUse);
         }
 
-        public Save_Data_Generic GetGeneric()
+        public Save_Dictionary GetGeneric()
         {
             return generic;
         }

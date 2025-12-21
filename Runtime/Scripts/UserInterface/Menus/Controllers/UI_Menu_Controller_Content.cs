@@ -7,8 +7,6 @@ namespace IbrahKit.UI
     [System.Serializable]
     public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuControllerContent
     {
-        private UI_Menu menu;
-
         private State state = State.BEFOREINIT;
 
         [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items."), SerializeField]
@@ -17,23 +15,19 @@ namespace IbrahKit.UI
         [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeReference, ShowIf(nameof(ShowMenuItems))]
         private List<Menu_Item_Base> listMenuItems = new();
 
+        [SerializeField, Required] private UI_Menu_Controller_Canvas canvasController;
+
         private readonly List<GameObject> spawnedMenuItems = new();
 
         private readonly Queue<IMenuUpdate> uninitialized = new();
 
-        [SerializeField, Required] private Canvas canvas;
-
-        public Canvas GetCanvas() => canvas;
-
-        public override void Init(UI_Menu menu)
+        protected override void OnInit()
         {
-            this.menu = menu;
-
             LoadMenuContent();
 
             AfterMenuItems();
 
-            List<IMenuUpdate> subtree = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(menu.transform, true, true);
+            List<IMenuUpdate> subtree = Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(GetMenu().transform, true, true);
 
             InitializeSubTree(subtree);
 
@@ -82,7 +76,7 @@ namespace IbrahKit.UI
 
         public bool TrySpawnMenuItem(Menu_Item_Base menuItem, RectTransform parent, out GameObject result)
         {
-            if (!menuItem.TrySpawn(parent, menu, out result)) return false;
+            if (!menuItem.TrySpawn(parent, GetMenu(), out result)) return false;
 
             return result != null;
         }
@@ -98,16 +92,18 @@ namespace IbrahKit.UI
         {
             foreach (var item in elements)
             {
-                item.OnMenuInit(menu);
+                item.OnMenuInit(GetMenu());
             }
         }
 
         public UI_Menu_Config GetMenuConfig()
         {
-            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(UI_Configs.GetConfigs(menu.transform), out UI_Menu_Config result);
+            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(UI_Configs.GetConfigs(GetMenu().transform), out UI_Menu_Config result);
 
             return result;
         }
+
+        public UI_Menu_Controller_Canvas GetCanvasController() => canvasController;
 
         private bool ShowMenuItems() => list != null;
 

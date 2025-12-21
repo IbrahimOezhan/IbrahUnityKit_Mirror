@@ -31,7 +31,7 @@ namespace IbrahKit.UI
 
         public void Navigate(InputAction.CallbackContext context)
         {
-            Navigate(this, context.ReadValue<Vector2>(), GetSelectable().GetMenu().GetContentController().GetCanvas(),
+            Navigate(this, context.ReadValue<Vector2>(), GetSelectable().GetMenu().GetContentController().GetCanvasController().GetCanvas(),
                 activeSelectables.Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable()).ToList());
         }
 

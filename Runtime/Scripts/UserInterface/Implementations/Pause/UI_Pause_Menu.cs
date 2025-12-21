@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace IbrahKit.UI
 {
-    public class Pause_Menu : UI_Menu
+    public class UI_Pause_Menu : UI_Menu
     {
         protected override void AfterInit()
         {
@@ -47,6 +47,7 @@ namespace IbrahKit.UI
         public void MainMenu()
         {
             Pause_Manager.GetInstance().Pause();
+
             SceneManager.LoadScene(0);
         }
 

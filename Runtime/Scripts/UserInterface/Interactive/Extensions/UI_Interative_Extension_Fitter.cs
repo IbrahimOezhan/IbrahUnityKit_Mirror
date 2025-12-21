@@ -49,7 +49,7 @@ namespace IbrahKit.UI
                 return false;
             }
 
-            interactive.GetMenu().OnFocusOrResolutionChanged += extension.RunExtensions;
+            interactive.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged += extension.RunExtensions;
 
             return true;
         }
@@ -79,7 +79,7 @@ namespace IbrahKit.UI
 
         protected override void CleanupPro()
         {
-            interactive.GetMenu().OnFocusOrResolutionChanged -= extension.RunExtensions;
+            interactive.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged -= extension.RunExtensions;
         }
 
         protected override int GetOrderPro()

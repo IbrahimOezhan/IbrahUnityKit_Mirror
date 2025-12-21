@@ -13,7 +13,7 @@ namespace IbrahKit.UI
 
         private IEnumerable<Type> Filter()
         {
-            return Type_Utilities.GetSubTypes(typeof(Override_Config_SO_Base)).Except(Type_Utilities.GetTypesInCollection(overrides)).Where(x => !x.ContainsGenericParameters);
+            return Type_Utilities.GetSubTypes(typeof(Override_Config_SO_Base)).Except(Type_Utilities.CollectionToTypes(overrides)).Where(x => !x.ContainsGenericParameters);
         }
 
         public bool TryGet<TOverrideSO, TConfigSO, TConfig>(out TConfig result)

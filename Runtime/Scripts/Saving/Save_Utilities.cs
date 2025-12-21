@@ -44,12 +44,14 @@ namespace IbrahKit.Save
             if (String_Utilities.IsEmpty(json))
             {
                 IbrahDebug.LogWarning("Passed json is null or empty");
+
                 return null;
             }
 
             if (type == null)
             {
                 IbrahDebug.LogWarning("Passed type is null");
+
                 return null;
             }
 

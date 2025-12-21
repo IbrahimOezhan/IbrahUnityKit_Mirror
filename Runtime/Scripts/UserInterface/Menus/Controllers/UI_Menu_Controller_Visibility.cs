@@ -10,8 +10,6 @@ namespace IbrahKit.UI
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";
 
-        private UI_Menu menu;
-
         [TabGroup("Menu Settings", order: -1), SerializeField, Required]
         private UI_Menu_Controller_Alpha alphaController;
 
@@ -69,9 +67,9 @@ namespace IbrahKit.UI
             else ShowBy(PAUSED);
         }
 
-        public override void Init(UI_Menu menu)
+        protected override void OnInit()
         {
-            this.menu = menu;
+
         }
 
         public override void OnMenuEnabled()

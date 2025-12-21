@@ -11,7 +11,7 @@ namespace IbrahKit
 
         private string stateBeforePause;
 
-        private UI_Input input;
+        private Pause input;
 
         public Action<bool> OnPause;
 
@@ -23,7 +23,7 @@ namespace IbrahKit
 
             input.Enable();
 
-            input.Map.Pause.performed += Pause;
+            input.Map.Toggle.performed += Pause;
         }
 
         protected override void InstanceDestroy()
@@ -32,7 +32,7 @@ namespace IbrahKit
 
             if (input != null)
             {
-                input.Map.Pause.performed -= Pause;
+                input.Map.Toggle.performed -= Pause;
 
                 input.Disable();
             }
