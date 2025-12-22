@@ -1,8 +1,6 @@
 using IbrahKit.Save;
-using IbrahKit.UI;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using UnityEngine;
 
 namespace IbrahKit.Settings
 {
@@ -13,13 +11,6 @@ namespace IbrahKit.Settings
         private SaveData saveData;
 
         private readonly Dictionary<string, Setting> settingsInit = new();
-
-        [SerializeField] private UI_Menu menu;
-
-        public void OpenSettings(UI_Menu menu)
-        {
-            menu.GetStateController().Transition<Menu_Transition_Instant>(this.menu);
-        }
 
         protected override void InstanceAwake()
         {

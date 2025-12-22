@@ -18,7 +18,7 @@ namespace IbrahKit
 
         private void Start()
         {
-            Visual_Debug_Manager.GetInstance().Add(this);
+            Lifecycle_Diagnostics_Manager.GetInstance().Add(this);
         }
 
         private void Update()
