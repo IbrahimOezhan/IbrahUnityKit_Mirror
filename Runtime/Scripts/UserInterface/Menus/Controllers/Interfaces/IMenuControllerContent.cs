@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace IbrahKit.UI
 {
     public interface IMenuControllerContent

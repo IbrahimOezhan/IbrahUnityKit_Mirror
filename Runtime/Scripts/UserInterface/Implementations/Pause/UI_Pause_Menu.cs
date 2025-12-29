@@ -1,4 +1,3 @@
-using IbrahKit.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

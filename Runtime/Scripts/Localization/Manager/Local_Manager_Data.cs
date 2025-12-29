@@ -12,45 +12,48 @@ namespace IbrahKit.Localization
     {
         private const string LANG = "Language";
 
-        [OdinSerialize, Required, OnValueChanged(nameof(Update))] private TextAsset localizationAssets;
+        [OdinSerialize, Required, OnValueChanged(nameof(Update))]
+        private TextAsset localizationAssets;
 
-        [OdinSerialize, Required] private char seperator;
+        [OdinSerialize, Required]
+        private char seperator;
 
-        [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
+        [OdinSerialize, ReadOnly]
+        private Dictionary<string, string[]> keyValuePairs = new();
 
-        [OdinSerialize, ReadOnly] private List<Local_Language> languages = new();
-
-        public Local_Language GetFirstLanguage() => languages[0];
-
-        public List<Local_Language> GetLanguages() => languages;
+        [OdinSerialize, ReadOnly]
+        private List<Local_Language> languages = new();
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
-            result = "";
+            result = string.Empty;
 
             int index = languages.IndexOf(language);
 
-            if (keyValuePairs.TryGetValue(key, out var value))
+            if (!keyValuePairs.TryGetValue(key, out string[] localizedValues))
             {
-                if (index >= 0 && index < value.Length)
-                {
-                    result = value[index];
-                }
-                else
-                {
-                    IbrahDebug.LogWarning($"Index {index} out of range for length {value.Length} and key {key}");
-                    return false;
-                }
+                IbrahDebug.Log($"String with key{key} doesnt exist");
+
+                return false;
             }
 
-            bool empty = String_Utilities.IsEmpty(result);
+            if (!(index >= 0 && index < localizedValues.Length))
+            {
+                IbrahDebug.LogWarning($"Index {index} out of range for length {localizedValues.Length} and key {key}");
 
-            if (empty)
+                return false;
+            }
+
+            result = localizedValues[index];
+
+            if (String_Utilities.IsEmpty(result))
             {
                 IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
+
+                return false;
             }
 
-            return !empty;
+            return true;
         }
 
         [Button]
@@ -60,21 +63,21 @@ namespace IbrahKit.Localization
 
             keyValuePairs.Clear();
 
-            List<string> lines = localizationAssets.text.Split("\n").Where(
-                x => !String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), ""))).ToList();
+            List<string> lines = GetLines();
 
             if (lines.Count == 0)
             {
                 IbrahDebug.LogWarning("No elements after trimming");
+
                 return;
             }
 
-            if (!TryGetLanguages(out languages, lines[0].Split(seperator)))
+            if (!TryGetLanguages(out languages, lines.First().Split(seperator)))
             {
                 return;
             }
 
-            PopulateDictionary(lines, seperator);
+            PopulateDictionary(lines.Skip(0), seperator);
 
             Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
 
@@ -92,6 +95,7 @@ namespace IbrahKit.Localization
                 if (!Json_Utilities.IsValidJson(line[i]))
                 {
                     IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
+
                     return false;
                 }
 
@@ -115,11 +119,17 @@ namespace IbrahKit.Localization
             return true;
         }
 
-        private void PopulateDictionary(List<string> lines, char seperator)
+        private List<string> GetLines()
         {
-            for (int i = 1; i < lines.Count; i++)
+            return localizationAssets.text.Split("\n").Where(
+                x => !String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), string.Empty))).ToList();
+        }
+
+        private void PopulateDictionary(IEnumerable<string> lines, char seperator)
+        {
+            foreach (string line in lines)
             {
-                List<string> row = lines[i].Split(seperator).ToList();
+                List<string> row = line.Split(seperator).ToList();
 
                 int requiredCount = languages.Count + 1;
 
@@ -131,6 +141,7 @@ namespace IbrahKit.Localization
                 while (row.Count > requiredCount)
                 {
                     IbrahDebug.LogWarning($"Removed {row[^1]} from the back");
+
                     row.RemoveAt(row.Count - 1);
                 }
 
@@ -146,5 +157,9 @@ namespace IbrahKit.Localization
         {
             if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
         }
+
+        public Local_Language GetFirstLanguage() => languages.First();
+
+        public List<Local_Language> GetLanguages() => languages;
     }
 }

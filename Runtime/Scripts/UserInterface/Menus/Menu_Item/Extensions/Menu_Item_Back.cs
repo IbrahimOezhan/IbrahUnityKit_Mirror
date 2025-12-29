@@ -9,7 +9,7 @@ namespace IbrahKit.UI
         {
             spawnedButton.GetSelectable().GetStateController().GetOnPressSuccess().AddListener(() =>
             {
-                if(UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
+                if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
                 {
                     result.TransitionBack<Menu_Transition_Instant>();
                 }

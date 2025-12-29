@@ -9,7 +9,9 @@ namespace IbrahKit
         public static List<T> RemoveInvalid<T>(this List<T> list) where T : class
         {
             List<T> removed = new(list);
+
             removed.RemoveAll(x => x == null);
+
             return removed;
         }
 
@@ -27,6 +29,7 @@ namespace IbrahKit
 
                 (list[randomIndex], list[i]) = (list[i], list[randomIndex]);
             }
+
             return list;
         }
 

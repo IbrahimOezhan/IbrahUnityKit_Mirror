@@ -13,37 +13,38 @@ namespace IbrahKit
 
         public static List<string> GetKeys(string name)
         {
-            if (TryGetDatabase(out Key_Database db))
+            if (!TryGetDatabase(out Key_Database db))
             {
-                if (db.GetPairs().TryGetValue(name, out List<string> keys))
-                {
-                    return keys;
-                }
+                return new() { "NO_DB" };
             }
 
-            return new() { "Test" };
+            if (!db.GetTables().TryGetValue(name, out List<string> keys))
+            {
+                return new() { "NO_TABLE" };
+            }
+
+            return keys;
         }
 
         public static bool TrySetKeys(string name, IEnumerable<string> keys)
         {
-            if (TryGetDatabase(out Key_Database db))
+            if (!TryGetDatabase(out Key_Database db))
             {
-                if (db.GetPairs().ContainsKey(name))
-                {
-                    db.GetPairs()[name] = keys.ToList();
-                }
-                else
-                {
-                    db.GetPairs().Add(name, keys.ToList());
-                }
-
-                EditorUtility.SetDirty(db);
-                //AssetDatabase.SaveAssets();
-
-                return true;
+                return false;
             }
 
-            return false;
+            if (db.GetTables().ContainsKey(name))
+            {
+                db.GetTables()[name] = keys.ToList();
+            }
+            else
+            {
+                db.GetTables().Add(name, keys.ToList());
+            }
+
+            EditorUtility.SetDirty(db);
+
+            return true;
         }
 
         public static bool TrySetKeys<TKey>(string name, IEnumerable<TKey> keys) where TKey : IKey

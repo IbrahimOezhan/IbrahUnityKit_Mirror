@@ -7,7 +7,8 @@ namespace IbrahKit.Save
     [Serializable]
     public class Save_Dictionary : Savable
     {
-        [JsonInclude][System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
+        [JsonInclude]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
         private Dictionary<string, string> values = new();
 
         public void Set<T>(string key, T value)
@@ -23,7 +24,7 @@ namespace IbrahKit.Save
 
             try
             {
-                result = (T) Convert.ChangeType(tmpResult, typeof(T));
+                result = (T)Convert.ChangeType(tmpResult, typeof(T));
 
                 return true;
             }

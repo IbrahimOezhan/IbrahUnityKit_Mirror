@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IbrahKit.UI
@@ -64,7 +62,7 @@ namespace IbrahKit.UI
 
         public void Toggle<T>(params object[] args) where T : Menu_Transition
         {
-            MenuStateCompact menuState = GetCompactState() == MenuStateCompact.ENABLED? MenuStateCompact.DISABLED : MenuStateCompact.ENABLED;
+            MenuStateCompact menuState = GetCompactState() == MenuStateCompact.ENABLED ? MenuStateCompact.DISABLED : MenuStateCompact.ENABLED;
 
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
@@ -72,11 +70,11 @@ namespace IbrahKit.UI
             }
         }
 
-        public void Transition<T>(UI_Menu menuOut,bool allowBack = true, params object[] args) where T : Menu_Transition
+        public void Transition<T>(UI_Menu menuOut, bool allowBack = true, params object[] args) where T : Menu_Transition
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
-                result.Transition<T>(GetMenu(),menuOut, allowBack, args);
+                result.Transition<T>(GetMenu(), menuOut, allowBack, args);
             }
         }
 

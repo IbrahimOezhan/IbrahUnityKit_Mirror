@@ -19,7 +19,7 @@ namespace IbrahKit
         {
             Type t = typeof(TData);
 
-            data = Asset_Utilities.CreateAsset<TData>($"Assets/ScriptableObjects/Manager_Data/{t.GetNiceName()}.asset");
+            data = Asset_Utilities.CreateScriptableObject<TData>($"Assets/ScriptableObjects/Manager_Data/{t.GetNiceName()}.asset");
         }
 #endif
     }

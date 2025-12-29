@@ -28,7 +28,7 @@ namespace IbrahKit.UI
         [Button, ShowIf(nameof(IsSoNull))]
         public void Create()
         {
-            config = Asset_Utilities.CreateAsset<SOTarget>($"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");
+            config = Asset_Utilities.CreateScriptableObject<SOTarget>($"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");
         }
 
         public override void Init(GameObject go)

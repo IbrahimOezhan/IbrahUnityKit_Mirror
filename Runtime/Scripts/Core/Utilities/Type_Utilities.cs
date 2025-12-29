@@ -23,6 +23,20 @@ namespace IbrahKit
             return false;
         }
 
+        public static Type GetTypeFullName(string fullName)
+        {
+            Type getType = AppDomain.CurrentDomain
+    .GetAssemblies()
+    .SelectMany(a =>
+    {
+        try { return a.GetTypes(); }
+        catch { return Array.Empty<Type>(); }
+    })
+    .FirstOrDefault(t => t.FullName == fullName);
+
+            return getType;
+        }
+
         public static IEnumerable<Type> CollectionToTypes(IEnumerable<object> collection)
         {
             return collection.Select(x => x.GetType());
@@ -43,7 +57,7 @@ namespace IbrahKit
                 SelectMany(a => { try { return a.GetTypes(); } catch { return Array.Empty<Type>(); } }).
                 Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType));
 
-            if(except != null) types = types.Except(except);
+            if (except != null) types = types.Except(except);
 
             return types;
         }

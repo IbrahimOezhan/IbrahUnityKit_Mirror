@@ -6,7 +6,8 @@ namespace IbrahKit.Save
 {
     public class Savable
     {
-        [JsonInclude][System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "Cannot be used for attributes that get deserialized")]
+        [JsonInclude]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "Cannot be used for attributes that get deserialized")]
         private string fullName;
 
         public Savable()

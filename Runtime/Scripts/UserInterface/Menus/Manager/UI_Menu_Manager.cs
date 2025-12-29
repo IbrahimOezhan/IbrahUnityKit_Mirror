@@ -1,7 +1,6 @@
 using IbrahKit.Debugging;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace IbrahKit.UI
@@ -17,7 +16,7 @@ namespace IbrahKit.UI
 
         private UI_Menu currentMenu = null;
 
-        private readonly Stack<UI_Menu> menuNavigationStack = new(); 
+        private readonly Stack<UI_Menu> menuNavigationStack = new();
 
         private Action actionHide;
 
@@ -41,7 +40,7 @@ namespace IbrahKit.UI
 
         public void SimpleStateChange<T>(UI_Menu menu, MenuStateCompact targetState, params object[] args) where T : Menu_Transition
         {
-            Transition(GenericToTransition<T>(targetState == MenuStateCompact.ENABLED? null : menu, targetState == MenuStateCompact.ENABLED ? menu : null, args));
+            Transition(GenericToTransition<T>(targetState == MenuStateCompact.ENABLED ? null : menu, targetState == MenuStateCompact.ENABLED ? menu : null, args));
         }
 
         public void Transition<T>(UI_Menu transitionTo, bool allowBack = true, params object[] args) where T : Menu_Transition

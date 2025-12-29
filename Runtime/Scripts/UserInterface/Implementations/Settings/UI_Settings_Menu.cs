@@ -1,6 +1,3 @@
-using Sirenix.OdinInspector;
-using UnityEngine;
-
 namespace IbrahKit.UI
 {
     public class UI_Settings_Menu : UI_Menu

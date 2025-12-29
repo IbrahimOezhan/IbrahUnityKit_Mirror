@@ -3,6 +3,7 @@ using UnityEngine;
 public class Override_Class<T> : Override_Base<T> where T : class
 {
     [SerializeField] private T baseValue;
+
     [SerializeField] private T overrideValue = null;
 
     public Override_Class(T baseValue)
@@ -10,9 +11,9 @@ public class Override_Class<T> : Override_Base<T> where T : class
         this.baseValue = baseValue;
     }
 
-    public override void SetOverride(T value)
+    public override void SetOverride(T overrideValue)
     {
-        this.overrideValue = value;
+        this.overrideValue = overrideValue;
     }
 
     public override T GetValue()
@@ -32,6 +33,6 @@ public class Override_Class<T> : Override_Base<T> where T : class
 
     public override void ClearOverride()
     {
-        this.overrideValue = null;
+        overrideValue = null;
     }
 }

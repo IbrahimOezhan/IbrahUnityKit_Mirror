@@ -13,6 +13,6 @@ namespace IbrahKit
 
         public List<string> GetKeys() => keyValuePairs.Keys.ToList();
 
-        public Dictionary<string, List<string>> GetPairs() => keyValuePairs;
+        public Dictionary<string, List<string>> GetTables() => keyValuePairs;
     }
 }

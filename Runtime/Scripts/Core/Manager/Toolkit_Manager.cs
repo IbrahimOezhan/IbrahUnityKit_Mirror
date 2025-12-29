@@ -43,14 +43,14 @@ namespace IbrahKit
 
         private Type[] GetManagerTypes()
         {
-            return Type_Utilities.GetSubTypes(typeof(Manager<>)).Where(x => x.Namespace == nameof(IbrahKit)).ToArray();
+            return Type_Utilities.GetSubTypes(typeof(Manager<>)).ToArray();
         }
 
         public void OnValueChanged()
         {
             if (addManager == NONE) return;
 
-            Type getType = Type.GetType(addManager);
+            Type getType = Type_Utilities.GetTypeFullName(addManager);
 
             if (getType == null)
             {
