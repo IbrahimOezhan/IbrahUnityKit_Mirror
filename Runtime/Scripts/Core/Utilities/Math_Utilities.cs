@@ -130,6 +130,17 @@ namespace IbrahKit
             return Mathf.Lerp(vector.x, vector.y, t);
         }
 
+        public static float GetRandom(this Vector2 vector)
+        {
+            float f = Random.Range(vector.x, vector.y);
+            return f;
+        }
+        public static int GetRandom(this Vector2Int vector)
+        {
+            int f = Random.Range(vector.x, vector.y + 1);
+            return f;
+        }
+
         public static bool IsInRange(int value, int min, int max)
         {
             return value >= min && value <= max;
