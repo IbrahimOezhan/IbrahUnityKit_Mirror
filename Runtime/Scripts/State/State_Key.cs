@@ -1,4 +1,4 @@
-namespace IbrahKit
+namespace IbrahKit.State
 {
     [System.Serializable]
     public class State_Key : Key_Reference

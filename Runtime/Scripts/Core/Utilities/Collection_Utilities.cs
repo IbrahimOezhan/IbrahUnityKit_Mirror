@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace IbrahKit
 {
@@ -13,6 +14,30 @@ namespace IbrahKit
             removed.RemoveAll(x => x == null);
 
             return removed;
+        }
+
+        public static T GetRandom<T>(this List<T> list)
+        {
+            int rdm = Random.Range(0, list.Count);
+
+            return list[rdm];
+        }
+
+        public static T GetRemove<T>(this List<T> list, Func<T,bool> action)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (action.Invoke(list[i]))
+                {
+                    T item = list[i];
+
+                    list.RemoveAt(i);
+
+                    return item;
+                }
+            }
+
+            throw new ArgumentOutOfRangeException();
         }
 
         /// <summary>
@@ -83,31 +108,6 @@ namespace IbrahKit
             if (list.Count == 0) return default;
 
             return list[Mathf.Clamp(index, 0, list.Count - 1)];
-        }
-
-        public static string[,] GetAsMatrix(string _text)
-        {
-            List<string> lineSplit = _text.Split('\n').ToList();
-
-            lineSplit.RemoveAll(x => String_Utilities.IsEmpty(x.Trim()) || x.Trim() == "");
-
-            int rowAmount = lineSplit.Count;
-
-            int columnAmount = lineSplit[0].Split(';').Length;
-
-            string[,] table = new string[columnAmount, rowAmount];
-
-            for (int x = 0; x < columnAmount; x++)
-            {
-                for (int y = 0; y < rowAmount; y++)
-                {
-                    string[] rowSplit = lineSplit[y].Split(';');
-
-                    table[x, y] = rowSplit[x];
-                }
-            }
-
-            return table;
         }
     }
 }

@@ -26,16 +26,25 @@ namespace IbrahKit.UI
 
             for (int i = 0; i < marginOverride.Count; i++)
             {
-                if (marginOverride[i].IsPlatform()) return marginOverride[i].margin;
+                if (marginOverride[i].IsPlatform()) return marginOverride[i].GetMargin();
             }
 
             return margin;
         }
 
         [System.Serializable]
-        private class PlatformBasedMargin : PlatformBased
+        private class PlatformBasedMargin
         {
-            public float margin;
+            [SerializeField] private float margin;
+
+            [SerializeField] private RuntimePlatform platform;
+
+            public float GetMargin() => margin;
+
+            public bool IsPlatform()
+            {
+                return Application.platform == platform;
+            }
         }
     }
 }

@@ -26,13 +26,13 @@ namespace IbrahKit
         public static Type GetTypeFullName(string fullName)
         {
             Type getType = AppDomain.CurrentDomain
-    .GetAssemblies()
-    .SelectMany(a =>
-    {
-        try { return a.GetTypes(); }
-        catch { return Array.Empty<Type>(); }
-    })
-    .FirstOrDefault(t => t.FullName == fullName);
+            .GetAssemblies()
+            .SelectMany(a =>
+            {
+                try { return a.GetTypes(); }
+                catch { return Array.Empty<Type>(); }
+            })
+            .FirstOrDefault(t => t.FullName == fullName);
 
             return getType;
         }

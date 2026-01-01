@@ -1,10 +1,37 @@
+using IbrahKit;
+using System.Collections.Generic;
+using UnityEngine;
+
 public abstract class Override_Base<T>
 {
-    public abstract void SetOverride(T value);
+    private readonly IOverrideProcessor<T> processor;
 
-    public abstract T GetValue();
+    [SerializeField] private T baseValue;
+
+    [SerializeField] private Dictionary<object, T> overrideValue = new();
+
+    public Override_Base(T baseValue, IOverrideProcessor<T> processor)
+    {
+        this.baseValue = baseValue;
+        this.processor = processor;
+    }
+
+    public void SetOverride(object source, T value)
+    {
+        processor.Add(source, value, overrideValue);
+    }
+
+    public T GetValue()
+    {
+        return IsOverride() ? processor.Get(overrideValue) : baseValue;
+    }
 
     public abstract bool IsOverride();
 
-    public abstract void ClearOverride();
+    public void ClearOverride()
+    {
+        GetPairs().Clear();
+    }
+
+    protected Dictionary<object, T> GetPairs() => overrideValue;
 }

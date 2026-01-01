@@ -1,10 +1,11 @@
+using IbrahKit.State;
 using System;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.Pause
 {
     [Serializable]
-    public class AllowPause
+    internal class Pause_Allow
     {
         [SerializeField] private bool allow;
 

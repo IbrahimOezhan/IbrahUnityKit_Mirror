@@ -1,6 +1,8 @@
 using IbrahKit.Debugging;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace IbrahKit
 {
@@ -20,6 +22,14 @@ namespace IbrahKit
         public static Vector3 Negate(this Vector3 vector)
         {
             return -vector;
+        }
+
+        public static void ForEach(this int i, Action<int> action, bool inclusive = true)
+        {
+            for (int j = 0; j < (inclusive? i + 1:i); j++)
+            {
+                action.Invoke(i);
+            }
         }
 
         public static float ClampAngle(float angle, float min, float max)

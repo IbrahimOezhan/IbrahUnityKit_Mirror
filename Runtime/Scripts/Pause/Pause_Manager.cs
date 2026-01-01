@@ -1,9 +1,10 @@
 using IbrahKit.Debugging;
+using IbrahKit.State;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace IbrahKit
+namespace IbrahKit.Pause
 {
     public class Pause_Manager : Manager_Global<Pause_Manager, Pause_Manager_Data>
     {
@@ -11,7 +12,7 @@ namespace IbrahKit
 
         private string stateBeforePause;
 
-        private Pause input;
+        private Pause_Input input;
 
         public Action<bool> OnPause;
 
@@ -52,7 +53,7 @@ namespace IbrahKit
 
             string currentState = result.GetCurrentState();
 
-            AllowPause allow = GetManagerData().GetAllowPauses().Find(x => x.IsState(currentState));
+            Pause_Allow allow = GetManagerData().GetAllowPauses().Find(x => x.IsState(currentState));
 
             if (allow == null)
             {

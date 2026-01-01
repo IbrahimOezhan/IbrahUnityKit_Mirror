@@ -1,3 +1,4 @@
+using IbrahKit.Pause;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

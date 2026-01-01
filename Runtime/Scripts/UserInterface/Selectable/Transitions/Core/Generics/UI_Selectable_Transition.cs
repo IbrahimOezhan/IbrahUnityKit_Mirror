@@ -11,7 +11,7 @@ namespace IbrahKit.UI
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
 #endif
-        private Override_Component<TTarget> fTarget;
+        private Override_Class<TTarget> fTarget;
 
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
@@ -39,9 +39,9 @@ namespace IbrahKit.UI
 
             getComponentTarget = go.GetComponent<TTarget>();
 
-            fTarget = new(getComponentTarget);
+            fTarget = new(getComponentTarget, new OverrideReplace<TTarget>());
 
-            fTarget.SetOverride(target);
+            fTarget.SetOverride(this, target);
         }
 
         protected TTarget GetTarget()

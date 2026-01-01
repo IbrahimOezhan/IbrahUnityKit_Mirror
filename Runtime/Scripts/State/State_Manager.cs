@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IbrahKit
+namespace IbrahKit.State
 {
     [DefaultExecutionOrder(Execution_Order.state)]
     public class State_Manager : Manager_Global<State_Manager>, IDebug
