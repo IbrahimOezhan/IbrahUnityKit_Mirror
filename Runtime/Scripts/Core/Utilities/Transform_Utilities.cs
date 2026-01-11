@@ -1,4 +1,5 @@
 using IbrahKit.Debugging;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -59,6 +60,7 @@ namespace IbrahKit
             if (transform == null)
             {
                 IbrahDebug.LogWarning("Transform is null");
+
                 return new(0);
             }
 

@@ -23,6 +23,11 @@ namespace IbrahKit.Debugging
         /// <returns>The order in which the content must be displayed</returns>
         public int DebugOrder();
 
+        /// <summary>
+        /// Appends the DebugContent to the passed StringBuilder
+        /// </summary>
+        /// <param name="sb"></param> The StringBuilder to append to
+        /// <param name="catchExceptions"></param> Whether to catch exceptions and append them or not
         public void Run(StringBuilder sb, bool catchExceptions)
         {
             if (!catchExceptions)

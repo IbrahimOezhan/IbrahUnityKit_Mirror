@@ -23,6 +23,13 @@ namespace IbrahKit
             return list[rdm];
         }
 
+        public static T GetRandom<T>(this T[] array)
+        {
+            int rdm = Random.Range(0, array.Length);
+
+            return array[rdm];
+        }
+
         public static T GetRemove<T>(this List<T> list, Func<T,bool> action)
         {
             for (int i = 0; i < list.Count; i++)
