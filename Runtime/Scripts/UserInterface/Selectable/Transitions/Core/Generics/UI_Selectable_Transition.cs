@@ -31,6 +31,7 @@ namespace IbrahKit.UI
             config = Asset_Utilities.CreateScriptableObject<SOTarget>($"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public override void Init(GameObject go)
         {
             if (initialized) return;

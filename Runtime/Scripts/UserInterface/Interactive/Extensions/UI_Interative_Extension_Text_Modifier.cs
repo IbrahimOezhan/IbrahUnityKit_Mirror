@@ -1,3 +1,4 @@
+using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,11 +12,18 @@ namespace IbrahKit.UI
         [SerializeField]
         private GameObject nonDefaultTarget;
 
-        protected UI_Interative_Extension_Text_Modifier(UI_Interactive extension) : base(extension) { }
+        protected UI_Interative_Extension_Text_Modifier(UI_Interactive extension) : base(extension)
+        {
+            IbrahDebug.Log("Contrsuctor");
+        }
 
         protected override bool InitPro()
         {
-            text = new(nonDefaultTarget == null ? extension.gameObject : nonDefaultTarget);
+            Debug.Log(extension);
+
+            GameObject defaultTarget = extension.gameObject;
+
+            text = new(nonDefaultTarget == null ? defaultTarget : nonDefaultTarget);
 
             return text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }

@@ -7,8 +7,6 @@ namespace IbrahKit.UI
 {
     public class UI_Menu : MonoBehaviour, IConfigHolder
     {
-        private bool firstOpen = true;
-
         private readonly List<UI_Menu_Controller> controllers = new();
 
         private readonly UI_Menu_Controller_Audio audioController = new();
@@ -27,7 +25,22 @@ namespace IbrahKit.UI
 
         public Action<bool> OnStateChanged;
 
-        protected virtual void Awake() { }
+        protected virtual void Awake()
+        {
+            controllers.Add(content);
+
+            controllers.Add(visiblity);
+
+            controllers.Add(state);
+
+            controllers.Add(audioController);
+
+            BeforeInit();
+
+            controllers.ForEach(x => x.Init(this));
+
+            AfterInit();
+        }
 
         protected virtual void OnEnable() { }
 
@@ -54,24 +67,7 @@ namespace IbrahKit.UI
 
         public virtual void OnMenuEnabled()
         {
-            if (firstOpen)
-            {
-                controllers.Add(content);
 
-                controllers.Add(visiblity);
-
-                controllers.Add(state);
-
-                controllers.Add(audioController);
-
-                BeforeInit();
-
-                controllers.ForEach(x => x.Init(this));
-
-                AfterInit();
-
-                firstOpen = false;
-            }
         }
 
         protected virtual void BeforeInit() { }

@@ -40,7 +40,20 @@ namespace IbrahKit.UI
 
         public void SimpleStateChange<T>(UI_Menu menu, MenuStateCompact targetState, params object[] args) where T : Menu_Transition
         {
-            Transition(GenericToTransition<T>(targetState == MenuStateCompact.ENABLED ? null : menu, targetState == MenuStateCompact.ENABLED ? menu : null, args));
+            Debug.Log("Simple");
+
+            if(menu == null)
+            {
+                IbrahDebug.LogWarning("Menu passed is null");
+
+                return;
+            }
+
+            Menu_Transition transition = GenericToTransition<T>(
+                targetState == MenuStateCompact.ENABLED ? null : menu,
+                targetState == MenuStateCompact.ENABLED ? menu : null,
+                args);
+            Transition(transition);
         }
 
         public void Transition<T>(UI_Menu transitionTo, bool allowBack = true, params object[] args) where T : Menu_Transition
@@ -97,7 +110,7 @@ namespace IbrahKit.UI
 
         private void Transition(Menu_Transition transition)
         {
-            StartCoroutine(transition.Transition());
+            StartCoroutine(transition.Transition(this));
         }
 
         private Menu_Transition GenericToTransition<T>(UI_Menu menuIn, UI_Menu menuOut, params object[] args) where T : Menu_Transition

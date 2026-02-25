@@ -34,7 +34,7 @@ namespace IbrahKit
             {
                 if (type.FullName != extension) continue;
 
-                AddExtension((TExtension)Activator.CreateInstance(type, new object[] { this }));
+                AddExtension2((TExtension)Activator.CreateInstance(type, new object[] { this }));
 
                 break;
             }
@@ -42,7 +42,7 @@ namespace IbrahKit
             extension = NONE;
         }
 
-        public void AddExtension(TExtension extension)
+        public void AddExtension2(TExtension extension)
         {
             extensions.Add(extension);
 

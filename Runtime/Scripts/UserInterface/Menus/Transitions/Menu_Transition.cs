@@ -22,18 +22,30 @@ namespace IbrahKit.UI
             bool inExists = menuIn != null;
             bool outExists = menuOut != null;
 
-            if (outExists) menuOut.gameObject.SetActive(true);
+            if (outExists) menuOut.GetVisbilityController().SetActive(true);
             if (outExists) menuOut.GetVisbilityController().SetEnabledAlpha(1);
             if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
             if (outExists) menuOut.GetStateController().SetState(MenuState.ENABLED);
 
-            if (inExists) menuIn.gameObject.SetActive(false);
+            if (inExists) menuIn.GetVisbilityController().SetActive(false);
             if (inExists) menuIn.GetVisbilityController().SetEnabledAlpha(1);
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
             if (inExists) menuIn.GetStateController().SetState(MenuState.DISABLED);
         }
 
-        public abstract IEnumerator Transition();
+        public IEnumerator Transition(MonoBehaviour mono)
+        {
+            bool inExists = menuIn != null;
+            bool outExists = menuOut != null;
+
+            Debug.Log("Test");
+
+            Debug.Log("In Exists: " + inExists + ", Out Exists: " + outExists );
+
+            yield return mono.StartCoroutine(Transition(inExists, outExists));
+        }
+
+        protected abstract IEnumerator Transition(bool inExists, bool outExists);
 
         public UI_Menu GetIn() => menuIn;
         public UI_Menu GetOut() => menuOut;

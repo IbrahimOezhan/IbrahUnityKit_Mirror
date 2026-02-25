@@ -1,9 +1,11 @@
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace IbrahKit.UI
 {
     public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate, ISelfValidator
     {
+        [SerializeField, ReadOnly]
         private UI_Menu menu;
 
         protected void OnDisable()
@@ -14,9 +16,9 @@ namespace IbrahKit.UI
         public void OnMenuInit(UI_Menu menu)
         {
             this.menu = menu;
+            
             InitExtensions();
-
-
+            
             RunExtensions();
         }
 

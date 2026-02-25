@@ -10,12 +10,8 @@ namespace IbrahKit.UI
         {
         }
 
-        public override IEnumerator Transition()
+        protected override IEnumerator Transition(bool inExists, bool outExists)
         {
-            bool inExists = menuIn != null;
-
-            bool outExists = menuOut != null;
-
             float t = 0;
 
             if (outExists) menuOut.GetVisbilityController().SetActive(true);

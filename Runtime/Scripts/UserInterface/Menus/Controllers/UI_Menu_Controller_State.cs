@@ -64,7 +64,7 @@ namespace IbrahKit.UI
         {
             MenuStateCompact menuState = GetCompactState() == MenuStateCompact.ENABLED ? MenuStateCompact.DISABLED : MenuStateCompact.ENABLED;
 
-            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
+            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, true))
             {
                 result.SimpleStateChange<T>(GetMenu(), menuState, args);
             }

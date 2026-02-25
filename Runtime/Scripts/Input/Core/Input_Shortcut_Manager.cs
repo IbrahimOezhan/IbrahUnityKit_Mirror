@@ -1,6 +1,8 @@
+using IbrahKit.Debugging;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 namespace IbrahKit
 {
@@ -12,7 +14,9 @@ namespace IbrahKit
         {
             foreach (var item in keyValuePairs)
             {
-                if (Keyboard.current[item.Key].wasPressedThisFrame)
+                KeyControl key = Keyboard.current[item.Key];
+
+                if (key.wasPressedThisFrame)
                 {
                     item.Value.ForEach(x => x.Invoke());
                 }
@@ -21,21 +25,29 @@ namespace IbrahKit
 
         public void RegisterAction(Key key, Action ac)
         {
-            if (keyValuePairs.ContainsKey(key))
+            if(key == Key.None)
             {
-                keyValuePairs[key].Add(ac);
+                IbrahDebug.LogWarning("Cannot add key None");
+                return;
             }
-            else
+
+            if (!keyValuePairs.ContainsKey(key))
             {
-                keyValuePairs[key] = new List<Action>
-                {
-                    ac
-                };
+                keyValuePairs.Add(key, new List<Action>());
             }
+
+            keyValuePairs[key].Add(ac);
         }
 
         public void UnregisterAction(Key key, Action ac)
         {
+            if(!keyValuePairs.ContainsKey(key))
+            {
+                IbrahDebug.LogWarning($"Key {key} not registered. Therefore removal of action not possible");
+
+                return;
+            }
+
             keyValuePairs[key].Remove(ac);
 
             if (keyValuePairs[key].Count == 0) keyValuePairs.Remove(key);

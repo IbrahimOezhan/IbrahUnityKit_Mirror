@@ -7,29 +7,26 @@ namespace IbrahKit.UI
     {
         public Menu_Transition_Instant(UI_Menu menuIn, UI_Menu menuOut) : base(menuIn, menuOut) { }
 
-        public override IEnumerator Transition()
+        protected override IEnumerator Transition(bool inExists, bool outExists)
         {
-            bool inExists = menuIn != null;
 
-            bool outExists = menuOut != null;
-
-            if (outExists) menuOut.GetVisbilityController().SetInteractable(true);
-
-            if (outExists) menuOut.GetVisbilityController().SetEnabledAlpha(1);
-
-            if (outExists) menuOut.GetVisbilityController().SetActive(true);
-
-            if (outExists) menuOut.GetStateController().SetState(MenuState.ENABLED);
+            if (outExists)
+            {
+                menuOut.GetVisbilityController().SetInteractable(true);
+                menuOut.GetVisbilityController().SetEnabledAlpha(1);
+                menuOut.GetVisbilityController().SetActive(true);
+                menuOut.GetStateController().SetState(MenuState.ENABLED);
+            } 
 
             yield return null;
 
-            if (inExists) menuIn.GetStateController().SetState(MenuState.DISABLED);
-
-            if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
-
-            if (inExists) menuIn.GetVisbilityController().SetEnabledAlpha(0);
-
-            if (inExists) menuIn.GetVisbilityController().SetActive(false);
+            if (inExists)
+            {
+                menuIn.GetStateController().SetState(MenuState.DISABLED);
+                menuIn.GetVisbilityController().SetInteractable(false);
+                menuIn.GetVisbilityController().SetEnabledAlpha(0);
+                menuIn.GetVisbilityController().SetActive(false);
+            }
         }
     }
 }

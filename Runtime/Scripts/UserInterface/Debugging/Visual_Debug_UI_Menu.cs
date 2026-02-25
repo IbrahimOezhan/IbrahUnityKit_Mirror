@@ -21,7 +21,15 @@ namespace IbrahKit
         {
             base.Awake();
 
-            action = () => GetStateController().Toggle();
+            debugContent.TryGet(out textSetter);
+
+            action = () =>
+            {
+                IbrahDebug.Log("Toggle");
+                GetStateController().Toggle();
+            };
+
+            Debug.Log(debugKey);
 
             Input_Shortcut_Manager.GetInstance().RegisterAction(debugKey, action);
         }

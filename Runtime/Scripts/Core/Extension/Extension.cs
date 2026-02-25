@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -11,12 +12,19 @@ namespace IbrahKit
     {
         protected bool init;
 
+        [SerializeField, ReadOnly]
         protected Extension_Handler_Base extension;
 
         public Action runAllActions;
 
         public Extension(Extension_Handler_Base extension)
         {
+            if (extension == null)
+            {
+                Debug.Log("Extension handler attempted to set to null");
+                return;
+            }
+
             this.extension = extension;
         }
 
@@ -24,7 +32,7 @@ namespace IbrahKit
         {
             if (init) return true;
 
-            if (Application.isPlaying) return true;
+            if (!Application.isPlaying) return true;
 
             init = InitPro();
 

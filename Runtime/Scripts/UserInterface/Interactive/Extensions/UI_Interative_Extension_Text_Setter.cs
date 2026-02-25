@@ -1,3 +1,5 @@
+using IbrahKit.Debugging;
+
 namespace IbrahKit.UI
 {
     [System.Serializable]
@@ -5,7 +7,7 @@ namespace IbrahKit.UI
     {
         public UI_Interative_Extension_Text_Setter(UI_Interactive extension) : base(extension)
         {
-
+            IbrahDebug.Log("Contrsuctor");
         }
 
         public void SetText(object value)
