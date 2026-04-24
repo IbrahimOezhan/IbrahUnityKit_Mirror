@@ -1,0 +1,72 @@
+#region
+
+using System;
+using System.Diagnostics;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+#endregion
+
+namespace IbrahKit.Utilities
+{
+    public static class FileSystem_Utilities
+    {
+        private const string myGames = "My Games";
+
+#if UNITY_EDITOR
+        [MenuItem("IbrahKit/OpenPath")]
+#endif
+        public static void OpenPath()
+        {
+            Process.Start(GetGamePath());
+        }
+
+        public static string GetGamePath()
+        {
+            string gamePath;
+
+            if (!Application.isMobilePlatform)
+            {
+                gamePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), myGames);
+            }
+            else
+            {
+                gamePath = Application.persistentDataPath;
+            }
+
+            gamePath = Path.Combine(gamePath, Application.productName);
+
+            if (!Directory.Exists(gamePath)) Directory.CreateDirectory(gamePath);
+
+            return gamePath;
+        }
+
+        public static void WriteToFile(string filePath, string fileContent, bool ifDoesntExist = false)
+        {
+            if (File.Exists(filePath) && ifDoesntExist) return;
+
+            using StreamWriter writer = new(filePath);
+
+            writer.Write(fileContent);
+        }
+
+        public static bool TryReadFromFile(string filePath, out string result)
+        {
+            result = string.Empty;
+
+            bool fileExists = File.Exists(filePath);
+
+            if (fileExists)
+            {
+                using StreamReader reader = new(filePath);
+
+                result = reader.ReadToEnd();
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+}
