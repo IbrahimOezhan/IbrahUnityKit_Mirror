@@ -1,7 +1,12 @@
-﻿using IbrahKit.Debugging;
+﻿#region
+
 using System.IO;
+using IbrahKit.Debugging;
+using IbrahKit.Utilities;
 using UnityEditor;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Editor
 {
@@ -72,7 +77,8 @@ namespace IbrahKit.Editor
 
                 while (File.Exists(newPath))
                 {
-                    newPath = Path.Combine(dirName, fileNameNoExtension + "_grayscale_" + Random.Range(0, 9999) + ".png");
+                    newPath = Path.Combine(dirName,
+                        fileNameNoExtension + "_grayscale_" + Random.Range(0, 9999) + ".png");
                 }
 
                 File.WriteAllBytes(newPath, bytes);
