@@ -1,19 +1,26 @@
 {
-  "name": "IbrahKit.Editor",
-  "rootNamespace": "IbrahKit.Editor",
-  "references": [
-    "GUID:401f0f9378216c747839245522ea5da4",
-    "GUID:ad968d605628d06499b62cdc30f11cf8"
-  ],
-  "includePlatforms": [
-    "Editor"
-  ],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "IbrahKit.Editor",
+    "rootNamespace": "IbrahKit.Editor",
+    "references": [
+        "GUID:ad968d605628d06499b62cdc30f11cf8",
+        "GUID:401f0f9378216c747839245522ea5da4",
+        "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
+        "GUID:86f712bf8e418b658aad63c2014f23b8",
+        "GUID:4d88629919d1077aeb037631ffbf46dd",
+        "GUID:cafc4b47098bb849dbff8bb407dd8e92",
+        "GUID:de6e0d4e60d769d13864523896373a12",
+        "GUID:ae662e8c9fa77194096bfff84d06a4dd",
+        "GUID:0a61b2846d1ce6104aac11b8c60e9dba"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

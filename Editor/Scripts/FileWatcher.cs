@@ -1,7 +1,11 @@
+#region
+
 using System.Collections.Generic;
 using IbrahKit.Core;
 using UnityEditor;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Editor
 {

@@ -1,6 +1,10 @@
+#region
+
 using IbrahKit.Input;
 using UnityEditor;
 using UnityEditor.UI;
+
+#endregion
 
 namespace IbrahKit.Editor
 {
