@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using IbrahKit.Pause;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -79,12 +78,6 @@ namespace IbrahKit.UI
 
         public override void OnMenuEnabled()
         {
-            if (!preventHideOnPause && Pause_Manager.TryGet(out Pause_Manager pause))
-            {
-                pause.OnPause += OnPause;
-                pause.UpdatePause();
-            }
-
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
             {
                 result.OnHide += GU_Hide;
@@ -98,11 +91,6 @@ namespace IbrahKit.UI
 
         public override void OnMenuDisabled()
         {
-            if (!preventHideOnPause && Pause_Manager.TryGet(out Pause_Manager result))
-            {
-                result.OnPause -= OnPause;
-            }
-
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager menu))
             {
                 menu.OnHide -= GU_Hide;

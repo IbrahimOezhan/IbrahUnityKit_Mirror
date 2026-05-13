@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
-using IbrahKit.Pause;
 using IbrahKit.ThreeDPlayer;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -56,12 +55,6 @@ namespace IbrahKit.Interaction
         private void Start()
         {
             SceneManager.sceneLoaded += OnSceneChanged;
-
-            if (Pause_Manager.TryGet(out Pause_Manager result))
-            {
-                result.OnPause += OnPause;
-            }
-
             Lifecycle_Diagnostics_Manager.GetInstance().Add(this);
         }
 
@@ -78,12 +71,7 @@ namespace IbrahKit.Interaction
             }
 
             SceneManager.sceneLoaded -= OnSceneChanged;
-
-            if (Pause_Manager.TryGet(out Pause_Manager result))
-            {
-                result.OnPause -= OnPause;
-            }
-
+            
             if (Lifecycle_Diagnostics_Manager.TryGet(out Lifecycle_Diagnostics_Manager resultD))
             {
                 resultD.Remove(this);
@@ -157,12 +145,6 @@ namespace IbrahKit.Interaction
         private void OnSceneChanged(Scene scene, LoadSceneMode sceneLoad)
         {
             cameraTr = Camera.main.transform;
-        }
-
-        private void OnPause(bool pause)
-        {
-            if (pause) input.Disable();
-            else input.Enable();
         }
 
         public string DebugContent()

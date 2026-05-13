@@ -33,9 +33,11 @@ namespace IbrahKit.UI
             manager.GetStateMachine().stateChanged -= OnInteractionStateChanged;
         }
 
-        private void OnInteractionStateChanged(Interaction_Manager.InteractionMachineState state)
+        private void OnInteractionStateChanged(Interaction_Manager.InteractionMachineState oldState,
+            
+            Interaction_Manager.InteractionMachineState newState)
         {
-            this.state = state;
+            this.state = newState;
             UpdateUI();
         }
 

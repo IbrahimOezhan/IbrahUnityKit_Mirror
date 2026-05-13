@@ -18,8 +18,6 @@ namespace IbrahKit.Input
 
         private InputType inputType;
 
-        [SerializeField] private List<CursorVisibilty> cursorVisibility;
-
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
@@ -39,15 +37,12 @@ namespace IbrahKit.Input
             {
                 case InputType.KEYBOARD:
                 case InputType.MOUSE:
-
-                    string state = string.Empty;
-
-                    if (State_Manager.GetInstance() != null)
+                    
+                    if (Game_State_Manager.GetInstance() != null
+                        && Game_State_Manager.GetInstance().GetStateMachine().GetState() is ICursorState cursorState)
                     {
-                        state = State_Manager.GetInstance().GetCurrentState();
+                        isVisible = cursorState.ShowCursor();
                     }
-
-                    isVisible = IsVisible(state);
 
                     break;
 
@@ -69,19 +64,6 @@ namespace IbrahKit.Input
             }
         }
 
-        private bool IsVisible(string state)
-        {
-            for (int i = 0; i < cursorVisibility.Count; i++)
-            {
-                if (cursorVisibility[i].Match(state, out bool res))
-                {
-                    return res;
-                }
-            }
-
-            return true;
-        }
-
         public bool IsVisible()
         {
             return isVisible;
@@ -100,20 +82,6 @@ namespace IbrahKit.Input
         public int DebugOrder()
         {
             return -70;
-        }
-
-        [Serializable]
-        private class CursorVisibilty
-        {
-            [SerializeField] private State_Key state;
-            [SerializeField] private bool visible;
-
-            public bool Match(string state, out bool result)
-            {
-                result = visible;
-
-                return this.state.Equals(state);
-            }
         }
     }
 }

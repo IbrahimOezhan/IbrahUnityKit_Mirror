@@ -78,6 +78,11 @@ namespace IbrahKit.Input
             return localPoint;
         }
 
+        private void OnMouseDown()
+        {
+            throw new NotImplementedException();
+        }
+
         public void LMB(InputAction.CallbackContext context)
         {
             OnLMB?.Invoke();
