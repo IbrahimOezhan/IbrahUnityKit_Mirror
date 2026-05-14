@@ -13,8 +13,29 @@ using Random = UnityEngine.Random;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing utility methods related to strings
+    /// </summary>
     public static class String_Utilities
     {
+        public static float Parse(this string input, float defaultValue = 0)
+        {
+            if (float.TryParse(input, out float result)) return result;
+            else return defaultValue;
+        }
+
+        public static int Parse(this string input, int defaultValue = 0)
+        {
+            if (int.TryParse(input, out int result)) return result;
+            else return defaultValue;
+        }
+
+        public static bool Parse(this string input, bool defaultValue = false)
+        {
+            if (bool.TryParse(input, out bool result)) return result;
+            else return defaultValue;
+        }
+        
         private static readonly string[] zalgoChars =
         {
             "\u0300", "\u0301", "\u0302", "\u0303", "\u0304", "\u0305", "\u0306", "\u0307", "\u0308",

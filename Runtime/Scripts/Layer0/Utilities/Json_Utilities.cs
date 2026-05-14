@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing json related utility methods
+    /// </summary>
     public static class Json_Utilities
     {
         public static string Serialize<T>(T obj, Type type)

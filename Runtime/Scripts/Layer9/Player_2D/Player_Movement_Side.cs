@@ -1,6 +1,10 @@
+#region
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+#endregion
 
 namespace IbrahKit
 {

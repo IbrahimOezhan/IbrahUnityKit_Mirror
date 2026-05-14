@@ -7,37 +7,24 @@ using UnityEngine;
 
 namespace IbrahKit.Override
 {
-    public abstract class Override_Base<T>
+    /// <summary>
+    /// Generic class to provide functionality to override data
+    /// </summary>
+    /// <typeparam name="TType">The type to provide overrides for</typeparam>
+    public abstract class Override_Base<TType>
     {
-        private readonly IOverrideProcessor<T> processor;
+        private readonly IOverrideProcessor<TType> processor;
 
-        [SerializeField] private T baseValue;
+        [SerializeField] private TType baseValue;
 
-        [SerializeField] private Dictionary<object, T> overrideValue = new();
-
-        public Override_Base(T baseValue, IOverrideProcessor<T> processor)
+        protected Override_Base(TType baseValue, IOverrideProcessor<TType> processor)
         {
             this.baseValue = baseValue;
             this.processor = processor;
         }
 
-        public void SetOverride(object source, T value)
-        {
-            processor.Add(source, value, overrideValue);
-        }
+        public TType GetValue() => processor.GetOverride(baseValue);
 
-        public T GetValue()
-        {
-            return IsOverride() ? processor.Get(overrideValue) : baseValue;
-        }
-
-        public abstract bool IsOverride();
-
-        public void ClearOverride()
-        {
-            GetPairs().Clear();
-        }
-
-        protected Dictionary<object, T> GetPairs() => overrideValue;
-    }
+        public IOverrideProcessor<TType> GetProcessor() => processor;
+    } 
 }

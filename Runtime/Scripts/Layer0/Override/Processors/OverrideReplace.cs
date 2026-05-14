@@ -7,17 +7,29 @@ using System.Linq;
 
 namespace IbrahKit.Override
 {
+    /// <summary>
+    /// Implements IOverrideProcessor and always returns the newest override
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class OverrideReplace<T> : IOverrideProcessor<T>
     {
-        public T Get(Dictionary<object, T> keys)
+        private T overrideValue;
+        private bool overriden;
+
+        public void AddOverride(T value)
         {
-            return keys.First().Value;
+            overrideValue = value;
+            overriden = true;
         }
 
-        public void Add(object source, T value, Dictionary<object, T> keys)
+        public T GetOverride(T defaultValue)
         {
-            keys.Clear();
-            keys.Add(source, value);
+            return overriden? overrideValue : defaultValue;
+        }
+
+        public void RemoveOverride()
+        {
+            overriden = false;
         }
     }
 }

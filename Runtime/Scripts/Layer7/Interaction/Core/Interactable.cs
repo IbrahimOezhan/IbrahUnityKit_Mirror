@@ -50,7 +50,7 @@ namespace IbrahKit.Interaction
         {
             Interaction interaction = new(manager, this, iEvents);
             interactions.Add(interaction);
-            manager.StartCoroutine(interaction.SelectInteraction(manager));
+            manager.StartCoroutine(interaction.SelectInteraction());
             return interaction;
         }
 

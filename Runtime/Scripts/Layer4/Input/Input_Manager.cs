@@ -2,7 +2,6 @@
 
 using System;
 using IbrahKit.Core;
-using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
 using IbrahKit.Manager;
 using Sirenix.OdinInspector;
@@ -15,7 +14,7 @@ using UnityEngine.InputSystem.Controls;
 namespace IbrahKit.Input
 {
     [DefaultExecutionOrder(Execution_Order.input)]
-    public class Input_Manager : Manager_Global<Input_Manager>, IDebug
+    public class Input_Manager : Manager_Global<Input_Manager>, IInfoCollector
     {
         private ButtonControl lastPressed;
 
@@ -25,7 +24,7 @@ namespace IbrahKit.Input
 
         private void Start()
         {
-            Lifecycle_Diagnostics_Manager.GetInstance().Add(this);
+            Info_Collection_Manager.GetInstance().RegisterInfoCollector(this);
         }
 
         private void Update()
@@ -78,12 +77,12 @@ namespace IbrahKit.Input
             OnInputChanged?.Invoke(currentInputType);
         }
 
-        public string DebugContent()
+        public string GetDebugContent()
         {
             return "Current Input Type: " + currentInputType + " Last Pressed: " + lastPressed.displayName;
         }
 
-        public int DebugOrder()
+        public int GetDebugOrder()
         {
             return -90;
         }

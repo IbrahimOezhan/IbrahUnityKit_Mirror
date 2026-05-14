@@ -7,16 +7,30 @@ using System.Linq;
 
 namespace IbrahKit.Override
 {
-    public class OverridePriority<T> : IOverrideProcessor<(T, int)>
+    /// <summary>
+    /// Implements IOverrideProcessor and returns the override with the highest priority
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class OverridePriority<T> : IOverrideProcessor<T>
     {
-        public void Add(object source, (T, int) value, Dictionary<object, (T, int)> keys)
+        private T last;
+        private readonly Dictionary<T, int> dict = new();
+        
+        public void AddOverride(int priority, T value)
         {
-            keys.Add(source, value);
+            dict.Add(value, priority);
+            last = dict.OrderBy(x => x.Value).Last().Key;
         }
 
-        public (T, int) Get(Dictionary<object, (T, int)> keys)
+        public T GetOverride(T defaultValue)
         {
-            return keys.Values.OrderBy(x => x.Item2).First();
+            return dict.Count > 0? last: defaultValue;
+        }
+
+        public void RemoveOverride(T key)
+        {
+            dict.Remove(key);
+            last = dict.Count == 0? default : dict.OrderBy(x => x.Value).Last().Key;
         }
     }
 }

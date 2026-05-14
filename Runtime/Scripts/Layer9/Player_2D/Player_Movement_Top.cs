@@ -1,5 +1,9 @@
+#region
+
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+#endregion
 
 namespace IbrahKit
 {

@@ -9,9 +9,12 @@ using Random = UnityEngine.Random;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing collection related utility methods
+    /// </summary>
     public static class Collection_Utilities
     {
-        public static List<T> RemoveInvalid<T>(this List<T> list) where T : class
+        public static IEnumerable<T> RemoveInvalid<T>(this IEnumerable<T> list) where T : class
         {
             List<T> removed = new(list);
 

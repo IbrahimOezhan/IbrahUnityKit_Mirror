@@ -8,7 +8,10 @@ using System.Linq;
 
 namespace IbrahKit.Utilities
 {
-    public class Type_Utilities
+    /// <summary>
+    /// Static class providing utility methods related to Type
+    /// </summary>
+    public static class Type_Utilities
     {
         private static bool InheritsFromGeneric(Type type, Type genericBase)
         {
@@ -27,7 +30,7 @@ namespace IbrahKit.Utilities
             return false;
         }
 
-        public static Type GetTypeFullName(string fullName)
+        public static Type GetTypeByFullName(string fullName)
         {
             Type getType = AppDomain.CurrentDomain
                 .GetAssemblies()
@@ -60,37 +63,30 @@ namespace IbrahKit.Utilities
             }
 
             IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
-            {
-                try
                 {
-                    return a.GetTypes();
-                }
-                catch
-                {
-                    return Array.Empty<Type>();
-                }
-            }).Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType));
-
-            if (except != null) types = types.Except(except);
+                    try
+                    {
+                        return a.GetTypes();
+                    }
+                    catch
+                    {
+                        return Array.Empty<Type>();
+                    }
+                }).Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType))
+                .Except(except ?? Type.EmptyTypes);
 
             return types;
         }
 
-        public static IEnumerable<string> GetSubTypesAsDropdown(Type baseType, IEnumerable<Type> except = null)
+        public static IEnumerable<string> GetSubTypesAsString(Type baseType, IEnumerable<Type> except = null)
         {
             List<string> subtypes = GetSubTypes(baseType, except).Select(x => x.FullName).ToList();
 
-            subtypes.Sort((a, b) => { return a.CompareTo(b); });
+            subtypes.Sort((a, b) => string.Compare(a, b, StringComparison.Ordinal));
 
-            if (subtypes.Count > 0)
-            {
-                subtypes.Insert(0, "None");
-            }
-            else
-            {
-                subtypes.Add("None");
-            }
-
+            if (subtypes.Count > 0) subtypes.Insert(0, "None");
+            else subtypes.Add("None");
+            
             return subtypes;
         }
     }

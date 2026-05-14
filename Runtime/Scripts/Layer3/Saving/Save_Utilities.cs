@@ -46,7 +46,7 @@ namespace IbrahKit.Save
 
         public static Savable GetDerivedSavable(string json, Savable type)
         {
-            if (String_Utilities.IsEmpty(json))
+            if (json.IsEmpty())
             {
                 IbrahDebug.LogWarning("Passed json is null or empty");
 

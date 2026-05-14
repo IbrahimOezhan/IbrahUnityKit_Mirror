@@ -1,7 +1,5 @@
 #region
 
-using IbrahKit.Interaction;
-
 #endregion
 
 namespace IbrahKit.Interaction

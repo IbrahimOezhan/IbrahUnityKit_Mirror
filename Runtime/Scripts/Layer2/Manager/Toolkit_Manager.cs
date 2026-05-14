@@ -53,7 +53,7 @@ namespace IbrahKit.Manager
         {
             if (addManager == NONE) return;
 
-            Type getType = Type_Utilities.GetTypeFullName(addManager);
+            Type getType = Type_Utilities.GetTypeByFullName(addManager);
 
             if (getType == null)
             {

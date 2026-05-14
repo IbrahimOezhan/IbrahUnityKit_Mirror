@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing color related utility methods
+    /// </summary>
     public static class Color_Utilities
     {
         /// <summary>

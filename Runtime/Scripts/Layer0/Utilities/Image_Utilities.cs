@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing image related utility methods
+    /// </summary>
     public static class Image_Utilities
     {
         private const string FORMAT = "yyyy-MM-dd HH-mm-ss";
@@ -34,10 +37,9 @@ namespace IbrahKit.Utilities
             if (sprite == null)
             {
                 throw new NullReferenceException("Sprite is null");
-                return new byte[0];
             }
 
-            return ToByteArray(sprite.texture);
+            return sprite.texture.ToByteArray();
         }
 
         public static byte[] ToByteArray(this Texture2D texture)
@@ -45,7 +47,6 @@ namespace IbrahKit.Utilities
             if (texture == null)
             { 
                 throw new NullReferenceException("Texture is null");
-                return new byte[0];
             }
 
             return texture.EncodeToPNG();
@@ -106,54 +107,49 @@ namespace IbrahKit.Utilities
             return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
         }
 
+        
+        
         public static Sprite Center(this Sprite sprite)
         {
             Texture2D tex = sprite.texture;
 
             Color[] colors = tex.GetPixels();
 
-            int minX = int.MaxValue;
-
-            int maxX = int.MinValue;
-
-            int minY = int.MaxValue;
-
-            int maxY = int.MinValue;
-
+            Vector4Int minMax = new Vector4Int(int.MaxValue, int.MinValue, int.MaxValue, int.MinValue);
+            
             for (int y = 0; y < tex.height; y++)
             {
                 for (int x = 0; x < tex.width; x++)
                 {
                     Color c = colors[GetPixelIndex(x, y, tex.width)];
 
-                    if (c.a != 0)
+                    if (c.a == 0) continue;
+                    
+                    if (x < minMax[0])
                     {
-                        if (x < minX)
-                        {
-                            minX = x;
-                        }
+                        minMax[0] = x;
+                    }
 
-                        if (x > maxX)
-                        {
-                            maxX = x;
-                        }
+                    if (x > minMax[1])
+                    {
+                        minMax[1] = x;
+                    }
 
-                        if (y < minY)
-                        {
-                            minY = y;
-                        }
+                    if (y < minMax[2])
+                    {
+                        minMax[2] = y;
+                    }
 
-                        if (y > maxY)
-                        {
-                            maxY = y;
-                        }
+                    if (y > minMax[3])
+                    {
+                        minMax[3] = y;
                     }
                 }
             }
 
-            int xOffset = (tex.width / 2) - ((maxX - minX) / 2) - minX;
+            int xOffset = (tex.width / 2) - ((minMax[1] - minMax[0]) / 2) - minMax[0];
 
-            int yOffset = (tex.height / 2) - ((maxY - minY) / 2) - minY;
+            int yOffset = (tex.height / 2) - ((minMax[3] - minMax[2]) / 2) - minMax[2];
 
             Color transparent = new(0, 0, 0, 0);
 

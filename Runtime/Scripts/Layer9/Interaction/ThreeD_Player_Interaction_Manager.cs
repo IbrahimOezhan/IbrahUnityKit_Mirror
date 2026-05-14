@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 namespace IbrahKit.Interaction
 {
     [DefaultExecutionOrder(-1)]
-    public class ThreeD_Player_Interaction_Manager : Interaction_Manager, IDebug
+    public class ThreeD_Player_Interaction_Manager : Interaction_Manager, IInfoCollector
     {
         private const string INTERACTABLE_TAG = "Interactable";
 
@@ -55,7 +55,7 @@ namespace IbrahKit.Interaction
         private void Start()
         {
             SceneManager.sceneLoaded += OnSceneChanged;
-            Lifecycle_Diagnostics_Manager.GetInstance().Add(this);
+            Info_Collection_Manager.GetInstance().RegisterInfoCollector(this);
         }
 
         private void FixedUpdate()
@@ -72,9 +72,9 @@ namespace IbrahKit.Interaction
 
             SceneManager.sceneLoaded -= OnSceneChanged;
             
-            if (Lifecycle_Diagnostics_Manager.TryGet(out Lifecycle_Diagnostics_Manager resultD))
+            if (Info_Collection_Manager.TryGet(out Info_Collection_Manager resultD))
             {
-                resultD.Remove(this);
+                resultD.UnregisterInfoCollector(this);
             }
         }
 
@@ -147,7 +147,7 @@ namespace IbrahKit.Interaction
             cameraTr = Camera.main.transform;
         }
 
-        public string DebugContent()
+        public string GetDebugContent()
         {
             if (hit.transform != null)
             {
@@ -157,7 +157,7 @@ namespace IbrahKit.Interaction
             return "Not looking at anything";
         }
 
-        public int DebugOrder() => -100;
+        public int GetDebugOrder() => -100;
 
 
     }

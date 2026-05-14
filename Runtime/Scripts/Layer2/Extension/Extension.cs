@@ -9,7 +9,8 @@ using UnityEngine;
 namespace IbrahKit.Extension
 {
     /// <summary>
-    /// A base class that aids in adding extensions of every kind. To use it one must create a class that inherits from this and then add the Extension_Handler and close its generic type with the newly created class
+    /// A base class that aids in adding extensions of every kind.
+    /// To use it one must create a class that inherits from this, then add the Extension_Handler and close its generic type with the newly created class
     /// </summary>
     [Serializable]
     public abstract class Extension
@@ -18,9 +19,7 @@ namespace IbrahKit.Extension
 
         [SerializeField, ReadOnly] protected Extension_Handler_Base extension;
 
-        public Action runAllActions;
-
-        public Extension(Extension_Handler_Base extension)
+        protected Extension(Extension_Handler_Base extension)
         {
             if (extension == null)
             {
@@ -42,27 +41,16 @@ namespace IbrahKit.Extension
             return init;
         }
 
-        protected abstract bool InitPro();
-
         public void Cleanup()
         {
             CleanupPro();
         }
 
-        protected abstract void CleanupPro();
-
         public void ResetInit()
         {
             init = false;
         }
-
-        public int GetOrder()
-        {
-            return GetOrderPro();
-        }
-
-        protected abstract int GetOrderPro();
-
+        
         public void Run()
         {
             if (Init())
@@ -70,7 +58,12 @@ namespace IbrahKit.Extension
                 RunPro();
             }
         }
-
+        
+        public int GetOrder() =>  GetOrderPro();
+        
+        protected abstract bool InitPro();
+        protected abstract int GetOrderPro();
+        protected abstract void CleanupPro();
         protected abstract void RunPro();
     }
 }

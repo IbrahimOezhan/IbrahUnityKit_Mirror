@@ -87,9 +87,7 @@ namespace IbrahKit.Save
 
             Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
 
-            if (bestSave.GetState() == Save_State.Valid) return bestSave;
-
-            return new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
+            return bestSave.GetState() == Save_State.Valid ? bestSave : new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
         }
 
         private Save GetBestFolder(string thisVersionFolder, string saveFolderPath, string key)
@@ -106,11 +104,11 @@ namespace IbrahKit.Save
 
             List<Save> saves = new();
 
-            for (int i = 0; i < folders.Count; i++)
+            foreach (string folder in folders)
             {
-                Save save = new(folders[i], key);
+                Save save = new(folder, key);
 
-                if (Path.GetFileName(folders[i]) == Path.GetFileName(thisVersionFolder) &&
+                if (Path.GetFileName(folder) == Path.GetFileName(thisVersionFolder) &&
                     save.GetState() == Save_State.Valid)
                 {
                     IbrahDebug.Log("Returned save folder with same version");

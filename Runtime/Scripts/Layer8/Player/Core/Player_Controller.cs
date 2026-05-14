@@ -27,18 +27,34 @@ namespace IbrahKit.ThreeDPlayer
         [SerializeField, InlineProperty, FoldoutGroup("Handlers")]
         private Player_Gravity_Handler gravityHandler = new();
 
-        [SerializeField, InlineProperty, FoldoutGroup("Handlers"), SerializeReference,
-         TypeFilter(nameof(GetFilteredTypeList)), HideLabel]
+        [SerializeField,
+         InlineProperty,
+         FoldoutGroup("Handlers"),
+         SerializeReference,
+         TypeFilter(nameof(GetFilteredTypeList)),
+         HideLabel]
         private List<Player_Input_Handler> inputHandler = new();
 
         [SerializeField, ReadOnly] private Player_State currentState;
 
         private IEnumerable<Type> GetFilteredTypeList()
         {
-            var q = Type_Utilities.GetSubTypes(typeof(Player_Input_Handler))
-                .Except(inputHandler.Select(x => x.GetType())).Except(new[] { typeof(Player_Gravity_Handler) });
+            if (inputHandler == null)
+            {
+                IbrahDebug.LogError("Input Handler List is null");
+                return new Type[]{};
+            }
+            
+            int removed = inputHandler.RemoveAll(x => x == null);
+            
+            if(removed > 0) IbrahDebug.Log($"Removed {removed} null elements from Input Handler List");
+            
+            IEnumerable<Type> alreadyAddedInputHandlers = inputHandler.Select(x => x.GetType());
+            
+            IEnumerable<Type> inputHandlers = Type_Utilities.GetSubTypes(typeof(Player_Input_Handler))
+                .Except(alreadyAddedInputHandlers).Except(new[] { typeof(Player_Gravity_Handler) });
 
-            return q;
+            return inputHandlers;
         }
 
         protected override void InstanceAwake()

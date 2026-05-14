@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Interaction;
 using UnityEngine.InputSystem;
 
 #endregion

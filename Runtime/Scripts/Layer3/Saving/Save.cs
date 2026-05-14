@@ -21,10 +21,6 @@ namespace IbrahKit.Save
 
         private readonly Save_State state = Save_State.Valid;
 
-        private readonly string[] filePaths = new string[0];
-
-        private readonly bool[] encrypionSuccess = new bool[0];
-
         private readonly Save_State[] fileState = new Save_State[0];
 
         private readonly HashSet<Savable> inUse = new();
@@ -61,6 +57,8 @@ namespace IbrahKit.Save
 
         public Save(string folderPath, string key)
         {
+            string[] filePaths;
+            
             Init(folderPath, key);
 
             try
@@ -80,7 +78,7 @@ namespace IbrahKit.Save
 
             fileState = new Save_State[LENGTH];
 
-            encrypionSuccess = new bool[LENGTH];
+            var encryptionSuccess = new bool[LENGTH];
 
             for (int i = 0; i < LENGTH; i++)
             {
@@ -93,9 +91,9 @@ namespace IbrahKit.Save
                     continue;
                 }
 
-                encrypionSuccess[i] = Save_Utilities.Decrypt(fileContents, key, out fileContents);
+                encryptionSuccess[i] = Save_Utilities.Decrypt(fileContents, key, out fileContents);
 
-                if (!encrypionSuccess[i])
+                if (!encryptionSuccess[i])
                 {
                     fileState[i] = Save_State.Corrupted;
 

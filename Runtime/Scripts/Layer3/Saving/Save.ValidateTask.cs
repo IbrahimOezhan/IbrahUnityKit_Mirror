@@ -18,7 +18,7 @@ namespace IbrahKit.Save
 
             public ValidateTask(string filePath, string fileContent, bool instantFail)
             {
-                // File couldnt be parsed and therefor the type cannot be read and file is useless
+                // File couldn't be parsed and therefor the type cannot be read and file is useless
                 if (instantFail)
                 {
                     fileState = Save_State.Corrupted;

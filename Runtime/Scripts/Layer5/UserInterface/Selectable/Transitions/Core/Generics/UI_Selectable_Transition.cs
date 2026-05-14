@@ -49,9 +49,11 @@ namespace IbrahKit.UI
 
             getComponentTarget = go.GetComponent<TTarget>();
 
-            fTarget = new(getComponentTarget, new OverrideReplace<TTarget>());
+            OverrideReplace<TTarget> replace = new OverrideReplace<TTarget>();
+            
+            fTarget = new(getComponentTarget, replace);
 
-            fTarget.SetOverride(this, target);
+            replace.AddOverride(target);
         }
 
         protected TTarget GetTarget()

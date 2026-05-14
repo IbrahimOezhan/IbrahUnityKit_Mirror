@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace IbrahKit.Keys
 {
+    /// <summary>
+    /// Base class that holds the key
+    /// </summary>
     [Serializable, InlineProperty, HideLabel]
     public partial class Key_Reference : IKey
     {

@@ -1,6 +1,11 @@
+#region
+
+using System;
 using IbrahKit.Interaction;
 using Sirenix.OdinInspector;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.UI
 {
@@ -20,7 +25,7 @@ namespace IbrahKit.UI
 
             if (!textInteract.TryGetExtension(out localization))
             {
-                throw new System.NullReferenceException("UI_Interactive doesnt contain Localization Component");
+                throw new NullReferenceException("UI_Interactive doesnt contain Localization Component");
             }
 
             manager.GetStateMachine().stateChanged += OnInteractionStateChanged;

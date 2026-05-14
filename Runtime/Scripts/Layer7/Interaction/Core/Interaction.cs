@@ -10,18 +10,18 @@ namespace IbrahKit.Interaction
     public class Interaction
     {
         private bool isDone;
-        private Interaction_Manager manager;
-        private Interactable interactable;
-        private List<Interaction_Event_Extension> events;
+        private readonly Interaction_Manager manager;
+        private readonly Interactable interactable;
+        private readonly List<Interaction_Event_Extension> events;
     
-        public Interaction(Interaction_Manager manager,Interactable interactable,List<Interaction_Event_Extension> iEvents )
+        public Interaction(Interaction_Manager manager,Interactable interactable,List<Interaction_Event_Extension> events)
         {
             this.interactable = interactable;
-            this.events = iEvents;
+            this.events = events;
             this.manager = manager;
         }
         
-        public IEnumerator SelectInteraction(Interaction_Manager manager)
+        public IEnumerator SelectInteraction()
         {
             manager.Register(interactable);
 

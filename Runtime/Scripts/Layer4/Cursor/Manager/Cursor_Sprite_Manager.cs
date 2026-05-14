@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.Manager;
@@ -24,18 +23,31 @@ namespace IbrahKit.Input
 
         [SerializeField] private RectTransform canvas;
 
-        [SerializeField] private CursorStyle style;
+        [SerializeField] private Cursor_Sprite_Style spriteStyle;
 
         [SerializeField] private Image cursorImage;
 
         private void Update()
         {
-            if (main == null) main = Camera.main;
+            if (!main) main = Camera.main;
+            
+            SetCursorState();
 
+            SetCursorPos();
+
+            Cursor.lockState = CursorLockMode.Confined;
+
+            Cursor.visible = false;
+
+            spriteStyle.Set(cursorImage, state);
+        }
+
+        private void SetCursorState()
+        {
             Cursor_Input_Manager cim = Cursor_Input_Manager.GetInstance();
 
-            if (cim == null) return;
-
+            if (!cim) return;
+            
             bool hovering = IsHovering(main, EventSystem.current, cim.GetMousePos());
 
             if (hovering)
@@ -43,30 +55,17 @@ namespace IbrahKit.Input
                 ButtonControl leftButton = Mouse.current.leftButton;
 
                 if (leftButton.wasPressedThisFrame || (state == CursorState.Down && leftButton.isPressed))
-                {
                     SetState(CursorState.Down);
-                }
-                else
-                {
-                    SetState(CursorState.Hovering);
-                }
+                else SetState(CursorState.Hovering);
             }
-            else
-            {
-                SetState(CursorState.None);
-            }
+            else SetState(CursorState.None);
+        }
 
+        private void SetCursorPos()
+        {
             Vector2 pos = GetCursorPos(main, canvas, Cursor_Input_Manager.GetInstance().GetMousePos());
 
             cursorTransform.localPosition = pos;
-
-            cursorTransform.gameObject.SetActive(Cursor_Visibilty_Manager.GetInstance().IsVisible());
-
-            Cursor.lockState = CursorLockMode.Confined;
-
-            Cursor.visible = false;
-
-            style.Set(cursorImage, state);
         }
 
         private void SetState(CursorState state)
@@ -76,8 +75,7 @@ namespace IbrahKit.Input
 
         private Vector2 GetCursorPos(Camera mainCamera, RectTransform canvas, Vector2 mousePos)
         {
-            if (mainCamera == null) return Vector2.zero;
-            if (canvas == null) return Vector2.zero;
+            if (!mainCamera || !canvas) return Vector2.zero;
 
             Rect mainCameraRect = mainCamera.rect;
 
@@ -105,23 +103,22 @@ namespace IbrahKit.Input
             return new(mappedX, mappedY);
         }
 
-        private bool IsHovering(Camera mainCamera, EventSystem syetem, Vector2 mousePos)
+        private bool IsHovering(Camera mainCamera, EventSystem system, Vector2 mousePos)
         {
-            if (mainCamera == null) return false;
-            if (syetem == null) return false;
+            if (!mainCamera || !system) return false;
 
             List<GameObject> gameObjectsResult = new();
 
-            if (syetem.IsPointerOverGameObject())
+            if (system.IsPointerOverGameObject())
             {
-                PointerEventData pointerData = new(syetem)
+                PointerEventData pointerData = new(system)
                 {
                     position = mousePos
                 };
 
                 List<RaycastResult> results = new();
 
-                syetem.RaycastAll(pointerData, results);
+                system.RaycastAll(pointerData, results);
 
                 gameObjectsResult.AddRange(results.Select(x => x.gameObject));
             }
@@ -145,35 +142,11 @@ namespace IbrahKit.Input
             return false;
         }
 
-        private enum CursorState
+        public enum CursorState
         {
             None,
             Hovering,
             Down,
-        }
-
-        [Serializable]
-        private class CursorStyle
-        {
-            [SerializeField] private Sprite none;
-            [SerializeField] private Sprite hovering;
-            [SerializeField] private Sprite pressing;
-
-            public void Set(Image renderer, CursorState state)
-            {
-                switch (state)
-                {
-                    case CursorState.None:
-                        renderer.sprite = none;
-                        break;
-                    case CursorState.Hovering:
-                        renderer.sprite = hovering;
-                        break;
-                    case CursorState.Down:
-                        renderer.sprite = pressing;
-                        break;
-                }
-            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace IbrahKit.UI
         {
             if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
             {
-                result.OnLMB += OnLMB;
+                result.onLeftMouseButton += OnLMB;
             }
         }
 
@@ -28,7 +28,7 @@ namespace IbrahKit.UI
         {
             if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
             {
-                result.OnLMB -= OnLMB;
+                result.onLeftMouseButton -= OnLMB;
             }
         }
 

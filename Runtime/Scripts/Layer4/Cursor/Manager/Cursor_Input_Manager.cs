@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
 using IbrahKit.Manager;
 using UnityEngine;
@@ -14,13 +13,13 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.Input
 {
-    public class Cursor_Input_Manager : Manager_Global<Cursor_Input_Manager>, IDebug
+    public class Cursor_Input_Manager : Manager_Global<Cursor_Input_Manager>, IInfoCollector
     {
         private CursorInput input;
 
         private Vector2 mousePos;
 
-        public Action OnLMB;
+        public Action onLeftMouseButton;
 
         protected override void InstanceAwake()
         {
@@ -30,7 +29,7 @@ namespace IbrahKit.Input
 
             input.Enable();
 
-            input.Map.LMB.performed += LMB;
+            input.Map.LMB.performed += LeftMouseButton;
         }
 
         private void Update()
@@ -49,7 +48,7 @@ namespace IbrahKit.Input
 
             if (input != null)
             {
-                input.Map.LMB.performed -= LMB;
+                input.Map.LMB.performed -= LeftMouseButton;
 
                 input.Disable();
 
@@ -57,10 +56,7 @@ namespace IbrahKit.Input
             }
         }
 
-        public Vector2 GetMousePos()
-        {
-            return mousePos;
-        }
+        public Vector2 GetMousePos() => mousePos;
 
         public Vector2 GetCanvasMousePos(Canvas canvas)
         {
@@ -78,14 +74,9 @@ namespace IbrahKit.Input
             return localPoint;
         }
 
-        private void OnMouseDown()
+        public void LeftMouseButton(InputAction.CallbackContext context)
         {
-            throw new NotImplementedException();
-        }
-
-        public void LMB(InputAction.CallbackContext context)
-        {
-            OnLMB?.Invoke();
+            onLeftMouseButton?.Invoke();
         }
 
         public bool CursorOverUI(EventSystem system)
@@ -99,15 +90,15 @@ namespace IbrahKit.Input
 
             system.RaycastAll(pointerData, results);
 
-            return results.Where(x => x.gameObject.GetComponent<ICursorHandler>() != null).Count() > 0;
+            return results.Count(x => x.gameObject.GetComponent<ICursorHandler>() != null) > 0;
         }
 
-        public string DebugContent()
+        public string GetDebugContent()
         {
             return "Is Over UI: " + CursorOverUI(EventSystem.current);
         }
 
-        public int DebugOrder()
+        public int GetDebugOrder()
         {
             return -80;
         }

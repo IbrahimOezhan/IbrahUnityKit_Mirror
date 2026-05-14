@@ -148,7 +148,7 @@ namespace IbrahKit.Localization
 
         private Local_Language GetNext(int dir)
         {
-            int newIndex = Math_Utilities.LoopNumber(currentIndex + dir, 0, GetManagerData().GetLanguages().Count - 1);
+            int newIndex = Math_Utilities.Loop(currentIndex + dir, 0, GetManagerData().GetLanguages().Count - 1);
 
             return GetManagerData().GetLanguages()[newIndex];
         }

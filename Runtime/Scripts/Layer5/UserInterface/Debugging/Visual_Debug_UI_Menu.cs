@@ -55,7 +55,7 @@ namespace IbrahKit
         {
             base.MenuLifecycle();
 
-            textSetter.SetText(Lifecycle_Diagnostics_Manager.GetInstance().GetLifecycleContent());
+            textSetter.SetText(Info_Collection_Manager.GetInstance().GetInfoString());
         }
 
         public override void OnMenuEnabled()

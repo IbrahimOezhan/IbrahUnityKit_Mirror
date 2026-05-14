@@ -14,6 +14,7 @@ using UnityEngine;
 
 namespace IbrahKit.Extension
 {
+    /// <inheritdoc />
     [Serializable]
     public class Extension_Handler<TExtension> : Extension_Handler_Base where TExtension : Extension
     {
@@ -27,7 +28,7 @@ namespace IbrahKit.Extension
 
         private IEnumerable GetDropdown()
         {
-            return Type_Utilities.GetSubTypesAsDropdown(typeof(TExtension), extensions.Where(x => x != null).Select(x => x.GetType()));
+            return Type_Utilities.GetSubTypesAsString(typeof(TExtension), extensions.Where(x => x != null).Select(x => x.GetType()));
         }
 
         public void AddExtension()
@@ -49,7 +50,7 @@ namespace IbrahKit.Extension
                     continue;
                 }
 
-                if (!(extensionObject is TExtension extensionCasted))
+                if (extensionObject is not TExtension extensionCasted)
                 {
                     IbrahDebug.LogError("Object is not of correct type");
 

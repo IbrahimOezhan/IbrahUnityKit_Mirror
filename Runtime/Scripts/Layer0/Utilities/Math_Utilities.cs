@@ -9,6 +9,9 @@ using Random = UnityEngine.Random;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing math related utility methods
+    /// </summary>
     public static class Math_Utilities
     {
         public static float DegreeFormat(float degree)
@@ -72,9 +75,14 @@ namespace IbrahKit.Utilities
             return (degree1, degree2Inv);
         }
 
-        public static float Map(float _x, float _in_min, float _in_max, float _out_min, float _out_max)
+        public static float Map(float x, Vector4 ranges)
         {
-            return (_x - _in_min) * (_out_max - _out_min) / (_in_max - _in_min) + _out_min;
+            return Map(x, ranges.x, ranges.y, ranges.z, ranges.w);
+        }
+        
+        public static float Map(float x, float inMin, float inMax, float outMin, float outMax)
+        {
+            return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
         }
 
         public static int GetRandomEvent(List<int> chances)
@@ -118,18 +126,19 @@ namespace IbrahKit.Utilities
             return Random.Range(0, chances.Count);
         }
 
-        public static int LoopNumber(int number, int min, int max)
+        public static int Loop(this int number, int min, int max)
         {
-            return (int)LoopNumber((float)number, (float)min, (float)max);
+            return (int)((float)number).Loop(min, max);
         }
 
-        public static float LoopNumber(float number, float min, float max)
+        public static float Loop(this float number, float min, float max)
         {
             if (number < min)
             {
                 return max;
             }
-            else if (number > max)
+           
+            if (number > max)
             {
                 return min;
             }
@@ -144,22 +153,20 @@ namespace IbrahKit.Utilities
 
         public static float GetRandom(this Vector2 vector)
         {
-            float f = Random.Range(vector.x, vector.y);
-            return f;
+            return  Random.Range(vector.x, vector.y);
         }
 
         public static int GetRandom(this Vector2Int vector)
         {
-            int f = Random.Range(vector.x, vector.y + 1);
-            return f;
+            return Random.Range(vector.x, vector.y + 1);
         }
 
-        public static bool IsInRange(int value, int min, int max)
+        public static bool IsInRange(this int value, int min, int max)
         {
             return value >= min && value <= max;
         }
 
-        public static float Normalize(float value, float min, float max)
+        public static float Normalize(this float value, float min = 0, float max = 1)
         {
             return (value - min) / (max - min);
         }

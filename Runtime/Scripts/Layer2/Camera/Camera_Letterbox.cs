@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace IbrahKit
 {
-    [ExecuteAlways]
-    [RequireComponent(typeof(Camera))]
+    /// <summary>
+    /// Class for adding a letterbox to the camera
+    /// </summary>
+    [RequireComponent(typeof(Camera)),ExecuteAlways]
     public class Camera_Letterbox : MonoBehaviour
     {
         [Tooltip("Target aspect ratio, e.g. 16:9 => 1.7777")]

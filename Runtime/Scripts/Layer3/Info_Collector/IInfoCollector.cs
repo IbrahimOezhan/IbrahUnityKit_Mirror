@@ -11,7 +11,7 @@ namespace IbrahKit.InfoCollector
     /// <summary>
     /// An interface that provides methods for the debugmanager to use
     /// </summary>
-    public interface IDebug
+    public interface IInfoCollector
     {
         GameObject gameObject { get; }
 
@@ -19,13 +19,13 @@ namespace IbrahKit.InfoCollector
         /// Returns the content to display in the debug menu
         /// </summary>
         /// <returns>The content to display in the debug menu</returns>
-        public string DebugContent();
+        public string GetDebugContent();
 
         /// <summary>
         /// Returns the order in which the content must be displayed
         /// </summary>
         /// <returns>The order in which the content must be displayed</returns>
-        public int DebugOrder();
+        public int GetDebugOrder();
 
         /// <summary>
         /// Appends the DebugContent to the passed StringBuilder
@@ -36,13 +36,13 @@ namespace IbrahKit.InfoCollector
         {
             if (!catchExceptions)
             {
-                sb.AppendLine(DebugContent());
+                sb.AppendLine(GetDebugContent());
                 return;
             }
 
             try
             {
-                sb.AppendLine(DebugContent());
+                sb.AppendLine(GetDebugContent());
             }
             catch (Exception ex)
             {

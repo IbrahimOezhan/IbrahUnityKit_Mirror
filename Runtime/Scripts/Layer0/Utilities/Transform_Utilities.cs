@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Static Utility Class providing utility methods related to transforms
+    /// </summary>
     public static class Transform_Utilities
     {
         public static string GetTransformPath(this Transform transform)
