@@ -13,6 +13,10 @@ using UnityEngine;
 
 namespace IbrahKit.Unlockables
 {
+    /// <summary>
+    /// Wrapper on top of the save system for saving persistent unlocks.
+    /// Can be used for things such as collectables
+    /// </summary>
     [DefaultExecutionOrder(Execution_Order.unlock)]
     public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
     {

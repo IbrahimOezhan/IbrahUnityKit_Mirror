@@ -8,14 +8,17 @@ using IbrahKit.Debugging;
 
 namespace IbrahKit.Interaction
 {
+    /// <summary>
+    /// Interaction Event that calls a Coroutine from an IInteractable interface on this gameObject
+    /// </summary>
     [Serializable]
-    public class Interaction_Event_Interface_Routine : Interaction_Event_Extension
+    internal class Interaction_Event_Interface_Routine : Interaction_Event
     {
         public override IEnumerator InteractionEventRoutine(Interactable interactable)
         {
-            if (interactable.TryGetComponent(out IInteractable iface))
+            if (interactable.TryGetComponent(out IInteractable i))
             {
-                yield return interactable.StartCoroutine(iface.OnInteractRoutine(interactable));
+                yield return interactable.StartCoroutine(i.OnInteractRoutine(interactable));
             }
             else
             {

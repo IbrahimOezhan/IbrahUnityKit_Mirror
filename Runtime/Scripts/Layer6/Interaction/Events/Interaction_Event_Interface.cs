@@ -8,14 +8,17 @@ using IbrahKit.Debugging;
 
 namespace IbrahKit.Interaction
 {
+    /// <summary>
+    /// Interaction Event that calls a standard method from an IInteractable interface on this gameObject
+    /// </summary>
     [Serializable]
-    public class Interaction_Event_Interface : Interaction_Event_Extension
+    internal class Interaction_Event_Interface : Interaction_Event
     {
         public override IEnumerator InteractionEventRoutine(Interactable interactable)
         {
-            if (interactable.TryGetComponent(out IInteractable iface))
+            if (interactable.TryGetComponent(out IInteractable i))
             {
-                iface.OnInteract(interactable);
+                i.OnInteract(interactable);
             }
             else
             {

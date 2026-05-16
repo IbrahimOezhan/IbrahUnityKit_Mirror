@@ -11,46 +11,24 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.Interaction
 {
+    /// <summary>
+    /// Holds the State Machine for Interacting and the information on what the player.
+    /// Is not a Singleton Manager to allow adding 2 of them for local multiplayer games
+    /// </summary>
     public abstract partial class Interaction_Manager : MonoBehaviour
     {
         private StateMachine<InteractionMachineState> stateMachine;
-
-        private readonly List<Interactable> interacting = new();
 
         [SerializeField] private Local_Key interactionKey;
 
         protected void RunStateMachine()
         {
-            if (stateMachine == null) stateMachine = new(new InteractionStateNone(5, this));
+            stateMachine ??= new(new InteractionStateNone(5, this));
 
             stateMachine.RunMachine();
         }
-
-        public void Register(Interactable i)
-        {
-            if (i == null)
-            {
-                IbrahDebug.LogError("Interactable is null");
-                return;
-            }
-            
-            interacting.Add(i);
-        }
-
-        public void Unregister(Interactable i)
-        {
-            if (i == null)
-            {
-                IbrahDebug.LogError("Interactable is null");
-                return;
-            }
-            
-            interacting.Remove(i);
-        }
-
+        
         public StateMachine<InteractionMachineState> GetStateMachine() => stateMachine;
-
-        public bool IsInteracting() => interacting.Count != 0;
 
         public Local_Key GetLocalKey() => interactionKey;
         

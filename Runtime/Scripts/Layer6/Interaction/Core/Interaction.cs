@@ -7,14 +7,17 @@ using System.Collections.Generic;
 
 namespace IbrahKit.Interaction
 {
+    /// <summary>
+    /// An Interaction between a specific player and an object. 
+    /// </summary>
     public class Interaction
     {
         private bool isDone;
         private readonly Interaction_Manager manager;
         private readonly Interactable interactable;
-        private readonly List<Interaction_Event_Extension> events;
+        private readonly List<Interaction_Event> events;
     
-        public Interaction(Interaction_Manager manager,Interactable interactable,List<Interaction_Event_Extension> events)
+        public Interaction(Interaction_Manager manager,Interactable interactable,List<Interaction_Event> events)
         {
             this.interactable = interactable;
             this.events = events;
@@ -23,8 +26,6 @@ namespace IbrahKit.Interaction
         
         public IEnumerator SelectInteraction()
         {
-            manager.Register(interactable);
-
             for (int i = 0; i < events.Count; i++)
             {
                 yield return manager.StartCoroutine(events[i].InteractionEventRoutine(interactable));
@@ -35,8 +36,6 @@ namespace IbrahKit.Interaction
     
         public void EndInteraction()
         {
-            manager.Unregister(interactable);
-            
             isDone = true;
         }
 

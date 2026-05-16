@@ -9,14 +9,17 @@ using UnityEngine;
 
 namespace IbrahKit.Interaction
 {
+    /// <summary>
+    /// Mono Behavior that holds a list of Events to be called on Interaction
+    /// </summary>
     public class Interactable : MonoBehaviour
     {
         private bool canInteract = true;
 
-        private List<Interaction> interactions = new();
+        private readonly List<Interaction> interactions = new();
 
         [SerializeField, SerializeReference]
-        private List<Interaction_Event_Extension> iEvents = new();
+        private List<Interaction_Event> iEvents = new();
 
         [SerializeField]
         private bool overrideKey;
