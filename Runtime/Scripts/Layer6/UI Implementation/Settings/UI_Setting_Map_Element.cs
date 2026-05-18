@@ -12,7 +12,7 @@ public class UI_Setting_Map_Element
 {
     [SerializeField] private UI_Setting settingsPrefab;
 
-    [SerializeField] private ISettingConfig config;
+    [SerializeField] private Setting_Config_Base config;
 
     /// <summary>
     /// Creates a dummy setting and dummy ui to check if they are compatible

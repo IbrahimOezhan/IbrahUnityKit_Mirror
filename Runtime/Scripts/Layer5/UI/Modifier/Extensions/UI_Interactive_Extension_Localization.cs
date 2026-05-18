@@ -28,14 +28,14 @@ namespace IbrahKit.UI
 
             if (!result) return false;
 
-            if (Local_Manager.TryGet(out Local_Manager lm)) lm.OnLanguageChanged += extension.RunExtensions;
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged += extension.RunExtensions;
 
             return result;
         }
 
         protected override void CleanupPro()
         {
-            if (Local_Manager.TryGet(out Local_Manager lm)) lm.OnLanguageChanged -= extension.RunExtensions;
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged -= extension.RunExtensions;
         }
 
         protected override void RunPro()
@@ -93,7 +93,7 @@ namespace IbrahKit.UI
             else
             {
 #if UNITY_EDITOR
-                Local_Manager_Data config = Local_Settings.Config();
+                Local_Manager_Data config = Local_Editor_Settings.Config();
 
                 if (config == null) return "Local Config couldnt be found";
 

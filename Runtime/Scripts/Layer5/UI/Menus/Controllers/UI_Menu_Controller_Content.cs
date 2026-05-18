@@ -58,8 +58,7 @@ namespace IbrahKit.UI
             {
                 IMenuUpdate up = uninitialized.Dequeue();
 
-                List<IMenuUpdate> subtree =
-                    Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(up.transform, true, true);
+                List<IMenuUpdate> subtree = up.transform.GetComponentsByLevel<IMenuUpdate>(true, true);
 
                 InitializeSubTree(subtree);
             }

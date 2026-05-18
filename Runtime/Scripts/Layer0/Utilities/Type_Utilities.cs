@@ -13,23 +13,6 @@ namespace IbrahKit.Utilities
     /// </summary>
     public static class Type_Utilities
     {
-        private static bool InheritsFromGeneric(Type type, Type genericBase)
-        {
-            if (genericBase.IsInterface)
-                return type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericBase);
-
-            while (type != null && type != typeof(object))
-            {
-                Type cur = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-
-                if (cur == genericBase) return true;
-
-                type = type.BaseType;
-            }
-
-            return false;
-        }
-
         public static Type GetTypeByFullName(string fullName)
         {
             Type getType = AppDomain.CurrentDomain
@@ -62,7 +45,7 @@ namespace IbrahKit.Utilities
                 throw new NullReferenceException("Base type is null");
             }
 
-            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
+            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => 
                 {
                     try
                     {
@@ -72,12 +55,38 @@ namespace IbrahKit.Utilities
                     {
                         return Array.Empty<Type>();
                     }
-                }).Where(t => t.IsClass && !t.IsAbstract && InheritsFromGeneric(t, baseType))
-                .Except(except ?? Type.EmptyTypes);
+                }
+            ).Where(t =>
+            {
+                if (t.IsAbstract) return false;
+                
+                if (!baseType.IsGenericType)
+                {
+                    return baseType.IsAssignableFrom(t);
+                }
+                else
+                {
+                    if (baseType.IsInterface) return t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
+                    
+                    Type ty = t;
+                    
+                    while (ty != null && ty != typeof(object))
+                    {
+                        Type cur = ty.IsGenericType ? ty.GetGenericTypeDefinition() : ty;
+
+                        if (cur == baseType) return true;
+
+                        ty = ty.BaseType;
+                    }
+
+                    return false;
+                }
+                
+            }) .Except(except ?? Type.EmptyTypes);
 
             return types;
         }
-
+        
         public static IEnumerable<string> GetSubTypesAsString(Type baseType, IEnumerable<Type> except = null)
         {
             List<string> subtypes = GetSubTypes(baseType, except).Select(x => x.FullName).ToList();

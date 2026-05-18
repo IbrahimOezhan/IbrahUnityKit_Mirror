@@ -1,5 +1,5 @@
-#if ODIN_INSPECTOR && IBRAHKIT_CORE
 
+using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,11 +31,9 @@ namespace IbrahKit.Unlockables.Achievements
 
             Sprite sprite = secret ? secretSprite : this.sprite;
 
-            sprite = IsUnlocked() ? sprite : Image_Utilities.GrayscaleSprite(sprite);
+            sprite = IsUnlocked() ? sprite : sprite.Grayscale();
 
             return (sprite, jsonData.Title(), jsonData.Description());
         }
     }
 }
-
-#endif

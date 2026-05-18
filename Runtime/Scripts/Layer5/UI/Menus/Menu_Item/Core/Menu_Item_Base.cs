@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using System.Linq;
 using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace IbrahKit.UI
                 case SKIP_REASON.ONLAYOUT:
                     return UI_Configs.TryGet<UI_Layout_Config_Override, UI_Layout_Config_SO, UI_Layout_Config>(
                                UI_Configs.GetConfigs(parent), out UI_Layout_Config result)
-                           && !UI_Config_Manager.GetInstance().ShowLayout(result, showOnLayouts);
+                           && !ShowLayout(result, showOnLayouts);
                 case SKIP_REASON.ALWAYS:
                     return true;
             }
@@ -38,6 +39,11 @@ namespace IbrahKit.UI
             ONLAYOUT,
         }
 
+        public static bool ShowLayout(UI_Layout_Config layoutConfig, List<string> layouts)
+        {
+            return layoutConfig.GetActiveLayouts().Intersect(layouts).Any();
+        }
+        
         public bool TrySpawn(RectTransform parent, UI_Menu menu, out GameObject go)
         {
             go = null;

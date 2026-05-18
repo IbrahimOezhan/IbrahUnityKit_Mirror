@@ -70,7 +70,11 @@ namespace IbrahKit.UI
 
             if (interactable && playAudioOnStateChange)
             {
-                GetSelectable().GetMenu().GetAudioController().OnHoverAudio();
+                if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
+                        UI_Configs.GetConfigs(GetSelectable().transform), out UI_Audio_Config result))
+                {
+                    result.OnHover();
+                }
             }
         }
 
@@ -95,7 +99,14 @@ namespace IbrahKit.UI
             {
                 OnPressedSuccess.Invoke();
 
-                if (playAudioOnStateChange) GetSelectable().GetMenu().GetAudioController().OnClickAudio();
+                if (playAudioOnStateChange)
+                {
+                    if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
+                            UI_Configs.GetConfigs(GetSelectable().transform), out UI_Audio_Config result))
+                    {
+                        result.OnClick();
+                    }
+                }
             }
             else
             {

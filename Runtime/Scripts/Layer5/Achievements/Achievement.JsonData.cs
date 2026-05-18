@@ -1,5 +1,3 @@
-#if ODIN_INSPECTOR && IBRAHKIT_CORE
-
 using System.Text.Json.Serialization;
 
 namespace IbrahKit.Unlockables.Achievements
@@ -26,5 +24,3 @@ namespace IbrahKit.Unlockables.Achievements
         }
     }
 }
-
-#endif

@@ -13,14 +13,12 @@ namespace IbrahKit.Settings
     /// Contains information on the type of the setting and the key it uses
     /// </summary>
     /// <typeparam name="TSetting"></typeparam> The parent class of which the type can be
-    public abstract class Setting_Config<TSetting> : ScriptableObject, ISettingConfig where TSetting : Setting, new()
+    public abstract class Setting_Config<TSetting> : Setting_Config_Base, ISettingConfig where TSetting : Setting, new()
     {
-        [SerializeField] private string key;
-
         [SerializeField, ValueDropdown(nameof(GetDropdown))]
         private string settingType;
 
-        public bool TryGetInstance(out Setting result)
+        public override bool TryGetInstance(out Setting result)
         {
             if (Settings_Manager.GetInstance().TryGet(GetKey(), out result)) return true;
 
@@ -38,13 +36,9 @@ namespace IbrahKit.Settings
             return false;
         }
 
-        public abstract string GetDefaultValue();
-
-        public string GetKey() => key;
-
         public IEnumerable GetDropdown() => Type_Utilities.GetSubTypesAsString(typeof(TSetting));
 
-        public Setting GetDummy()
+        public override Setting GetDummy()
         {
             return new TSetting();
         }

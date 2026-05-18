@@ -8,46 +8,46 @@ using UnityEngine;
 
 namespace IbrahKit.Localization
 {
-    public partial class Local_Manager
+    /// <summary>
+    /// Holds the data of a language
+    /// </summary>
+    [Serializable]
+    public class Local_Language
     {
-        [Serializable]
-        public class Local_Language
+        [JsonInclude, SerializeField] private string sysLang;
+
+        [JsonInclude, SerializeField] private string nativeLocal;
+
+        [SerializeField] private bool skip;
+
+        public bool IsValid(out SystemLanguage result)
         {
-            [JsonInclude, SerializeField] private string sysLang;
+            return Enum.TryParse(sysLang, out result);
+        }
 
-            [JsonInclude, SerializeField] private string nativeLocal;
+        public SystemLanguage GetSystemLanguage()
+        {
+            return Enum.Parse<SystemLanguage>(sysLang);
+        }
 
-            [SerializeField] private bool skip;
+        public string GetSys()
+        {
+            return sysLang;
+        }
 
-            public bool IsValid(out SystemLanguage result)
-            {
-                return Enum.TryParse(sysLang, out result);
-            }
+        public string GetNative()
+        {
+            return nativeLocal;
+        }
 
-            public SystemLanguage GetSystemLanguage()
-            {
-                return Enum.Parse<SystemLanguage>(sysLang);
-            }
+        public bool GetSkip()
+        {
+            return skip;
+        }
 
-            public string GetSys()
-            {
-                return sysLang;
-            }
-
-            public string GetNative()
-            {
-                return nativeLocal;
-            }
-
-            public bool GetSkip()
-            {
-                return skip;
-            }
-
-            public override string ToString()
-            {
-                return sysLang;
-            }
+        public override string ToString()
+        {
+            return sysLang;
         }
     }
 }

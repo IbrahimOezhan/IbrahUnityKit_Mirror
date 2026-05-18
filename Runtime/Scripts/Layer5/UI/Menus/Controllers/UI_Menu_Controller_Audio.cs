@@ -23,23 +23,5 @@ namespace IbrahKit
         public override void OnMenuEnabled()
         {
         }
-
-        public void OnClickAudio()
-        {
-            if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
-                    UI_Configs.GetConfigs(GetMenu().transform), out UI_Audio_Config result))
-            {
-                result.OnClick();
-            }
-        }
-
-        public void OnHoverAudio()
-        {
-            if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
-                    UI_Configs.GetConfigs(GetMenu().transform), out UI_Audio_Config result))
-            {
-                result.OnHover();
-            }
-        }
     }
 }

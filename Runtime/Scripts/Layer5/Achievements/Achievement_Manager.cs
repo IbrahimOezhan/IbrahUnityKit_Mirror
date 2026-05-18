@@ -1,12 +1,12 @@
-#if ODIN_INSPECTOR && IBRAHKIT_CORE
 
-using IbrahKit.Debug;
 using System;
+using IbrahKit.Debugging;
+using IbrahKit.Manager;
 using UnityEngine;
 
 namespace IbrahKit.Unlockables.Achievements
 {
-    public class Achievement_Manager : Manager_DDOL<Achievement_Manager>
+    public class Achievement_Manager : Manager_Global<Achievement_Manager>
     {
         private const string PREFIX = "achievement_";
 
@@ -37,5 +37,3 @@ namespace IbrahKit.Unlockables.Achievements
         }
     }
 }
-
-#endif

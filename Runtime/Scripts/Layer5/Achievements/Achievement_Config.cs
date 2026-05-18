@@ -1,5 +1,3 @@
-#if ODIN_INSPECTOR && IBRAHKIT_CORE
-
 using IbrahKit.Localization;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +8,7 @@ namespace IbrahKit.Unlockables.Achievements
     public class Achievement_Config : ScriptableObject
     {
         [SerializeField]
-        private Local_Key_Reference secretString;
+        private Local_Key secretString;
 
         [SerializeField]
         private Sprite secretSprite;
@@ -43,5 +41,3 @@ namespace IbrahKit.Unlockables.Achievements
         }
     }
 }
-
-#endif

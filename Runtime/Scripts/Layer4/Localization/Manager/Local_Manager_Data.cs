@@ -15,6 +15,10 @@ using static IbrahKit.Localization.Local_Manager;
 
 namespace IbrahKit.Localization
 {
+    
+    /// <summary>
+    /// Holds the localization data
+    /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
         private const string LANG = "Language";
@@ -26,13 +30,13 @@ namespace IbrahKit.Localization
 
         [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [OdinSerialize, ReadOnly] private List<Local_Language> languages = new();
+        [OdinSerialize, ReadOnly] private SortedList<SystemLanguage,Local_Language> languages = new();
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
             result = string.Empty;
 
-            int index = languages.IndexOf(language);
+            int index = languages.IndexOfKey(language.GetSystemLanguage());
 
             if (!keyValuePairs.TryGetValue(key, out string[] localizedValues))
             {
@@ -50,14 +54,12 @@ namespace IbrahKit.Localization
 
             result = localizedValues[index];
 
-            if (String_Utilities.IsEmpty(result))
-            {
-                IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
+            if (!result.IsEmpty()) return true;
+            
+            IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
 
-                return false;
-            }
+            return false;
 
-            return true;
         }
 
         [Button]
@@ -67,7 +69,7 @@ namespace IbrahKit.Localization
 
             keyValuePairs.Clear();
 
-            List<string> lines = GetLines();
+            List<string> lines = localizationAssets.text.Split("\n").Where(x => !x.Trim().Replace(seperator.ToString(), string.Empty).IsEmpty()).ToList();
 
             if (lines.Count == 0)
             {
@@ -85,12 +87,12 @@ namespace IbrahKit.Localization
 
             Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
 
-            Key_Database_Finder.TrySetKeys(LANG, languages.Select(x => x.GetNative()).ToList());
+            Key_Database_Finder.TrySetKeys(LANG, languages.Values.Select(x => x.GetNative()).ToList());
 
-            Key_Database_Finder.TrySetKeys(SYS, languages.Select(x => x.GetSys()).ToList());
+            Key_Database_Finder.TrySetKeys(SYS, languages.Values.Select(x => x.GetSys()).ToList());
         }
 
-        private bool TryGetLanguages(out List<Local_Language> languages, string[] line)
+        private bool TryGetLanguages(out SortedList<SystemLanguage,Local_Language> languages, string[] line)
         {
             languages = new();
 
@@ -117,16 +119,10 @@ namespace IbrahKit.Localization
                     return false;
                 }
 
-                languages.Add(result);
+                languages.Add(result.GetSystemLanguage(),result);
             }
 
             return true;
-        }
-
-        private List<string> GetLines()
-        {
-            return localizationAssets.text.Split("\n").Where(x =>
-                !String_Utilities.IsEmpty(x.Trim().Replace(seperator.ToString(), string.Empty))).ToList();
         }
 
         private void PopulateDictionary(IEnumerable<string> lines, char seperator)
@@ -162,8 +158,8 @@ namespace IbrahKit.Localization
             if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
         }
 
-        public Local_Language GetFirstLanguage() => languages.First();
+        public Local_Language GetFirstLanguage() => languages.First().Value;
 
-        public List<Local_Language> GetLanguages() => languages;
+        public SortedList<SystemLanguage,Local_Language> GetLanguages() => languages;
     }
 }

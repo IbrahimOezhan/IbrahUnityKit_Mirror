@@ -30,7 +30,14 @@ namespace IbrahKit.Settings
 
         public override bool TrySetValue(string value)
         {
-            throw new NotImplementedException();
+            if (!float.TryParse(value, out float f))
+            {
+                return false;
+            }
+
+            currentValue = f;
+
+            return true;
         }
 
         public override bool TrySetValue(float value)
