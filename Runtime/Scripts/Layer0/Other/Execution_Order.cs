@@ -1,5 +1,8 @@
 namespace IbrahKit.Core
 {
+    /// <summary>
+    /// Provides Constants for the Execution Order of Managers
+    /// </summary>
     public static class Execution_Order
     {
         public const int input = -10;

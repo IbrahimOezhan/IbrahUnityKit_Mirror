@@ -63,13 +63,11 @@ namespace IbrahKit.Utilities
             if (colors == null)
             {
                 throw new NullReferenceException("Color list is null");
-                return Color.white;
             }
 
             if (colors.Length == 0)
             {
                 throw new ArgumentOutOfRangeException("Color list is empty");
-                return Color.white;
             }
 
             if (colors.Length == 1) return colors[0];
@@ -95,8 +93,6 @@ namespace IbrahKit.Utilities
             if (alpha < 0 || alpha > 1)
             {
                 throw new ArgumentOutOfRangeException($"Alpha with value {alpha} out of bounds for min 0 and max 1");
-
-                alpha = Mathf.Clamp01(alpha);
             }
 
             return new(c.r, c.g, c.b, alpha);

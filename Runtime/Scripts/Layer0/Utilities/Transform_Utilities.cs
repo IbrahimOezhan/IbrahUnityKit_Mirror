@@ -67,8 +67,6 @@ namespace IbrahKit.Utilities
             if (transform == null)
             {
                 throw new NullReferenceException("Transform is null");
-
-                return new(0);
             }
 
             List<T> elements = new();
@@ -82,10 +80,7 @@ namespace IbrahKit.Utilities
             {
                 T[] compArray = child.GetComponents<T>();
 
-                foreach (T comp in compArray)
-                {
-                    elements.Add(comp);
-                }
+                elements.AddRange(compArray);
 
                 if (child.childCount > 0)
                 {
@@ -178,15 +173,11 @@ namespace IbrahKit.Utilities
             if (children == null)
             {
                 throw new NullReferenceException("List is null");
-
-                return;
             }
 
             if (children.Count == 0)
             {
-                throw new ArgumentOutOfRangeException("List is empty");
-
-                return;
+                throw new Exception("List is empty");
             }
 
             children.Sort((GameObject one, GameObject two) => { return one.name.CompareTo(two.name); });

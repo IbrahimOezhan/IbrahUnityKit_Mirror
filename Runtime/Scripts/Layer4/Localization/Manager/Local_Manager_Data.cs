@@ -23,7 +23,7 @@ namespace IbrahKit.Localization
     {
         private const string LANG = "Language";
 
-        [OdinSerialize, Required, OnValueChanged(nameof(Update))]
+        [OdinSerialize, Required, OnValueChanged(nameof(OnFileUpdaate))]
         private TextAsset localizationAssets;
 
         [OdinSerialize, Required] private char seperator;
@@ -63,7 +63,7 @@ namespace IbrahKit.Localization
         }
 
         [Button]
-        public void Update()
+        public void OnFileUpdaate()
         {
             if (localizationAssets == null) return;
 

@@ -57,13 +57,11 @@ namespace IbrahKit.Utilities
             if (bytes == null)
             {
                 throw new NullReferenceException("Bytes array is null");
-                return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
 
             if (bytes.Length == 0)
             {
-                throw new ArgumentOutOfRangeException("Bytes array is empty");
-                return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
+                throw new Exception("Bytes array is empty");
             }
 
             Texture2D texture = ByteArrayToTexture(bytes, size);
@@ -74,24 +72,22 @@ namespace IbrahKit.Utilities
             return sprite;
         }
 
-        public static Sprite Grayscale(this Sprite _sprite)
+        public static Sprite Grayscale(this Sprite sprite)
         {
-            if (_sprite == null)
+            if (sprite == null)
             {
                 throw new NullReferenceException("Sprite is null");
-
-                return Sprite.Create(new(0, 0), new(0, 0, 0, 0), new(0, 0));
             }
 
-            Texture2D texture2D = _sprite.texture;
+            Texture2D texture2D = sprite.texture;
 
             Color[] pixels = texture2D.GetPixels();
 
             for (int i = 0; i < pixels.Length; i++)
             {
-                float lumincance = pixels[i].Luminance();
+                float luminance = pixels[i].Luminance();
 
-                float range = Mathf.Lerp(0, 1, lumincance);
+                float range = Mathf.Lerp(0, 1, luminance);
 
                 pixels[i] = new(range, range, range, pixels[i].a);
             }
@@ -190,13 +186,11 @@ namespace IbrahKit.Utilities
             if (bytes == null)
             {
                 throw new NullReferenceException("Bytes array is null");
-                return new(0, 0);
             }
 
             if (bytes.Length == 0)
             {
-                throw new ArgumentOutOfRangeException("Bytes array is empty");
-                return new(0, 0);
+                throw new Exception("Bytes array is empty");
             }
 
             Texture2D texture = new(size.x, size.y, TextureFormat.RGBA32, false);
@@ -213,7 +207,6 @@ namespace IbrahKit.Utilities
             if (from.width != to.width || from.height != to.height)
             {
                 throw new ArgumentOutOfRangeException($"Textures must be the same size: from: {from.width}x{from.height} to: {to.width}x{to.height}");
-                return from;
             }
 
             Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);

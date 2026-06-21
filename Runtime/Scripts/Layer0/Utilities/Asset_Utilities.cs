@@ -9,6 +9,9 @@ using UnityEngine;
 
 namespace IbrahKit.Utilities
 {
+    /// <summary>
+    /// Contains asset related utilities
+    /// </summary>
     public static class Asset_Utilities
     {
 #if UNITY_EDITOR
