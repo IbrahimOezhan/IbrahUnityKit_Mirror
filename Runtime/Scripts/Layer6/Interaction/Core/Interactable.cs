@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using IbrahKit.Localization;
 using Sirenix.OdinInspector;
@@ -18,7 +19,7 @@ namespace IbrahKit.Interaction
 
         private readonly List<Interaction> interactions = new();
 
-        [SerializeField, SerializeReference]
+        [SerializeField, SerializeReference, ValidateInput(nameof(ListValidate))]
         private List<Interaction_Event> iEvents = new();
 
         [SerializeField]
@@ -48,7 +49,6 @@ namespace IbrahKit.Interaction
         }
 
         // Interaction manager is passed instead of using the singleton due to the possibility of being able to use two managers for a split screen game
-        [Button]
         public Interaction Interact(Interaction_Manager manager)
         {
             Interaction interaction = new(manager, this, iEvents);
@@ -60,6 +60,16 @@ namespace IbrahKit.Interaction
         public string OverrideKey(string key)
         {
             return overrideKey? interactionKey : key;
+        }
+
+        public bool ListValidate(List<Interaction_Event> events)
+        {
+            foreach (Interaction_Event interactionEvent in events)
+            {
+                if (interactionEvent == null) return false;
+            }
+
+            return true;
         }
     }
 }

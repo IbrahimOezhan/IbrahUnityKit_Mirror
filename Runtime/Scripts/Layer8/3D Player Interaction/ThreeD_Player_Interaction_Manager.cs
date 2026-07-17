@@ -18,8 +18,6 @@ namespace IbrahKit.Interaction
     {
         private const string INTERACTABLE_TAG = "Interactable";
 
-        private readonly float cooldownTimer = 0.1f;
-
         private bool canInteract;
 
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
@@ -80,7 +78,7 @@ namespace IbrahKit.Interaction
 
         private void StateMachine()
         {
-            if (cameraTr == null)
+            if (!cameraTr)
             {
                 IbrahDebug.LogWarning("Camera transform reference not set");
 
@@ -106,7 +104,7 @@ namespace IbrahKit.Interaction
             Interactable i = collisionInteractable;
 
             //If detected return immediately
-            if (i != null)
+            if (i)
             {
                 return i;
             }
@@ -149,7 +147,7 @@ namespace IbrahKit.Interaction
 
         public string GetDebugContent()
         {
-            if (hit.transform != null)
+            if (hit.transform)
             {
                 return "Looking at: " + hit.transform.gameObject.name;
             }

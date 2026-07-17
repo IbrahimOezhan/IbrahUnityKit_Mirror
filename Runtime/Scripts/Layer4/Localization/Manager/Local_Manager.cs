@@ -154,9 +154,7 @@ namespace IbrahKit.Localization
 
         private Local_Language GetSystemLanguage(SystemLanguage systemLanguage)
         {
-            Local_Language found = GetManagerData().GetLanguages()[systemLanguage];
-
-            return found ?? currentLanguage;
+            return GetManagerData().GetLanguages().GetValueOrDefault(systemLanguage, currentLanguage);
         }
 
         private Local_Language GetNext(int dir)
