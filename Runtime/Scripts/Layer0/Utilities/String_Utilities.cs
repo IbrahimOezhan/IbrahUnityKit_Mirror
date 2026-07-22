@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Sirenix.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,20 +19,17 @@ namespace IbrahKit.Utilities
     {
         public static float Parse(this string input, float defaultValue = 0)
         {
-            if (float.TryParse(input, out float result)) return result;
-            else return defaultValue;
+            return float.TryParse(input, out float result) ? result : defaultValue;
         }
 
         public static int Parse(this string input, int defaultValue = 0)
         {
-            if (int.TryParse(input, out int result)) return result;
-            else return defaultValue;
+            return int.TryParse(input, out int result) ? result : defaultValue;
         }
 
         public static bool Parse(this string input, bool defaultValue = false)
         {
-            if (bool.TryParse(input, out bool result)) return result;
-            else return defaultValue;
+            return bool.TryParse(input, out bool result) ? result : defaultValue;
         }
         
         private static readonly string[] zalgoChars =
@@ -71,11 +67,6 @@ namespace IbrahKit.Utilities
             return _zalgoText.ToString();
         }
 
-        public static string GenerateZalgoText(char _inputChar, int _intensity)
-        {
-            return GenerateZalgoText(_inputChar.ToString(), _intensity);
-        }
-
         public static string StringListToString(List<string> list, char delimiter)
         {
             StringBuilder sb = new();
@@ -108,13 +99,13 @@ namespace IbrahKit.Utilities
 
             string[] lines = text.Split("\n");
 
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var line in lines)
             {
-                if (IsEmpty(lines[i])) continue;
+                if (IsEmpty(line)) continue;
 
-                if (IsEmpty(lines[i].Replace(delimiter.ToString(), ""))) continue;
+                if (IsEmpty(line.Replace(delimiter.ToString(), ""))) continue;
 
-                string[] columns = lines[i].Split(delimiter);
+                string[] columns = line.Split(delimiter);
 
                 if (columns.Length == 0) continue;
 
@@ -171,7 +162,7 @@ namespace IbrahKit.Utilities
             return _result;
         }
 
-        public static string SafeFormat(this string value, params string[] parameters)
+        public static string SafeFormat(this string value, params object[] parameters)
         {
             if (parameters == null || parameters.Length == 0) return value;
 
@@ -190,7 +181,12 @@ namespace IbrahKit.Utilities
         {
             string[] split = value.Split("\n",StringSplitOptions.RemoveEmptyEntries);
             StringBuilder builder = new();
-            split.ForEach(x => builder.AppendLine(x.Trim()));
+            
+            foreach (string s in split)
+            {
+                builder.AppendLine(s.Trim());
+            }
+            
             return builder.ToString();
         }
     }

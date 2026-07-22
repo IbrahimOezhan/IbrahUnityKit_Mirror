@@ -2,7 +2,6 @@
 
 using System;
 using System.IO;
-using Sirenix.Utilities;
 using UnityEngine;
 
 #endregion
@@ -151,7 +150,10 @@ namespace IbrahKit.Utilities
 
             Color[] newColors = new Color[colors.Length];
 
-            newColors.ForEach(a => a = transparent);
+            for (var i = 0; i < colors.Length; i++)
+            {
+                colors[i] = transparent;
+            }
 
             for (int y = 0; y < tex.height; y++)
             {
