@@ -8,7 +8,7 @@ using IbrahKit.Keys;
 namespace IbrahKit.Localization
 {
     /// <summary>
-    /// Subclass for Localization Keys
+    ///     Subclass for Localization Keys
     /// </summary>
     [Serializable]
     public class Local_Key : Key_Reference

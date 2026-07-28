@@ -14,7 +14,7 @@ using UnityEngine;
 namespace IbrahKit.Save
 {
     /// <summary>
-    /// A script that manages loading data on game start and saving it when you close the game
+    ///     A script that manages loading data on game start and saving it when you close the game
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.save)]
     public partial class Save_Manager : Manager_Global<Save_Manager>
@@ -23,11 +23,11 @@ namespace IbrahKit.Save
 
         private const string KEY = "a3c9e7r3gf3d5e7";
 
-        [SerializeField] private bool encrypt;
-
         private static Save currentSave;
 
         private static Save_Dictionary generic;
+
+        [SerializeField] private bool encrypt;
 
         protected override void InstanceAwake()
         {
@@ -87,7 +87,9 @@ namespace IbrahKit.Save
 
             Save bestSave = GetBestFolder(thisVersionPath, saveFolderPath, key);
 
-            return bestSave.GetState() == Save_State.Valid ? bestSave : new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
+            return bestSave.GetState() == Save_State.Valid
+                ? bestSave
+                : new(bestSave.GetKeys(), bestSave.GetSavables(), thisVersionPath, key, encrypt);
         }
 
         private Save GetBestFolder(string thisVersionFolder, string saveFolderPath, string key)

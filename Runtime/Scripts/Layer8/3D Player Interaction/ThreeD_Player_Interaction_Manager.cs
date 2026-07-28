@@ -18,29 +18,34 @@ namespace IbrahKit.Interaction
     {
         private const string INTERACTABLE_TAG = "Interactable";
 
-        private bool canInteract;
+        private static List<ThreeD_Player_Interaction_Manager> manager;
 
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
         private Transform hitObject;
+
+        [FoldoutGroup("Raycast"), SerializeField]
+        private float distance;
+
+        [FoldoutGroup("Raycast"), SerializeField]
+        private LayerMask mask;
+
+        [FoldoutGroup("Debug"), ReadOnly, SerializeField]
+        private Interactable i;
+
+        [FoldoutGroup("Debug"), ReadOnly, SerializeField]
+        private Interactable collisionInteractable;
+
+        [FoldoutGroup("Debug"), SerializeField]
+        private bool preventInteraction;
+
+        private Transform cameraTr;
+
+        private bool canInteract;
 
         private RaycastHit hit;
 
         private Player3D_Input input;
 
-        private Transform cameraTr;
-
-        [FoldoutGroup("Raycast"), SerializeField] private float distance;
-
-        [FoldoutGroup("Raycast"), SerializeField] private LayerMask mask;
-
-        [FoldoutGroup("Debug"), ReadOnly, SerializeField] private Interactable i;
-
-        [FoldoutGroup("Debug"), ReadOnly, SerializeField] private Interactable collisionInteractable;
-
-        [FoldoutGroup("Debug"), SerializeField] private bool preventInteraction;
-
-        private static List<ThreeD_Player_Interaction_Manager> manager;
-        
         protected void Awake()
         {
             cameraTr = Camera.main.transform;
@@ -69,12 +74,24 @@ namespace IbrahKit.Interaction
             }
 
             SceneManager.sceneLoaded -= OnSceneChanged;
-            
+
             if (Info_Collection_Manager.TryGet(out Info_Collection_Manager resultD))
             {
                 resultD.UnregisterInfoCollector(this);
             }
         }
+
+        public string GetDebugContent()
+        {
+            if (hit.transform)
+            {
+                return "Looking at: " + hit.transform.gameObject.name;
+            }
+
+            return "Not looking at anything";
+        }
+
+        public int GetDebugOrder() => -100;
 
         private void StateMachine()
         {
@@ -127,12 +144,12 @@ namespace IbrahKit.Interaction
 
             return i;
         }
-        
+
         public void SetCollInteratable(Interactable coll)
         {
             collisionInteractable = coll;
         }
-        
+
         private bool IsValidInteratable(Interactable i)
         {
             return i != null && i.CanInteract() && i.enabled && i.gameObject.activeInHierarchy;
@@ -144,19 +161,5 @@ namespace IbrahKit.Interaction
         {
             cameraTr = Camera.main.transform;
         }
-
-        public string GetDebugContent()
-        {
-            if (hit.transform)
-            {
-                return "Looking at: " + hit.transform.gameObject.name;
-            }
-
-            return "Not looking at anything";
-        }
-
-        public int GetDebugOrder() => -100;
-
-
     }
 }

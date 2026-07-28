@@ -12,7 +12,8 @@ namespace IbrahKit.UI
     [Serializable]
     public abstract class UI_Modifier_Extension : Extension.Extension
     {
-        [FormerlySerializedAs("interactive")] [SerializeField, ReadOnly] protected UI_Modifier modifier;
+        [FormerlySerializedAs("interactive")] [SerializeField, ReadOnly]
+        protected UI_Modifier modifier;
 
         protected UI_Modifier_Extension(UI_Modifier extension) : base(extension)
         {

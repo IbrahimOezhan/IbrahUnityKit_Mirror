@@ -9,16 +9,15 @@ namespace IbrahKit.ThreeDPlayer
 {
     public abstract class Player_Footsteps : MonoBehaviour
     {
-        private float totalDistanceTraveled = 0f;
-        private float lastStepTime = 0f;
-        private Vector3 lastPosition;
-
-        private bool isGrounded;
-        private Vector2 movementVector;
-
         [SerializeField] private CharacterController con;
         [SerializeField] private float stepsTriggerDistance = 1.25f;
         [SerializeField] private float timeBetweenSteps;
+
+        private bool isGrounded;
+        private Vector3 lastPosition;
+        private float lastStepTime = 0f;
+        private Vector2 movementVector;
+        private float totalDistanceTraveled = 0f;
 
         private void Start()
         {
@@ -27,7 +26,7 @@ namespace IbrahKit.ThreeDPlayer
 
         private void FixedUpdate()
         {
-            if (true)//fps.active)
+            if (true) //fps.active)
             {
                 Vector3 _currentPos = transform.position;
 
@@ -50,6 +49,7 @@ namespace IbrahKit.ThreeDPlayer
                         totalDistanceTraveled = 0f;
                         lastStepTime = _time;
                     }
+
                     lastPosition = _currentPos;
                 }
             }

@@ -16,14 +16,11 @@ namespace IbrahKit.UI
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";
 
-        [SerializeField, Required]
-        private UI_Menu_Controller_Alpha alphaController;
+        [SerializeField, Required] private UI_Menu_Controller_Alpha alphaController;
 
-        [SerializeField]
-        protected bool preventHideOnPause;
+        [SerializeField] protected bool preventHideOnPause;
 
-        [OdinSerialize, ReadOnly]
-        private HashSet<string> hiddenBy = new();
+        [OdinSerialize, ReadOnly] private HashSet<string> hiddenBy = new();
 
         public void SetInteractable(bool value)
         {

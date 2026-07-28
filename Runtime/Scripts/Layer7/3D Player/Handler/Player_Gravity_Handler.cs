@@ -10,12 +10,6 @@ namespace IbrahKit.ThreeDPlayer
     [Serializable]
     public class Player_Gravity_Handler : Player_Input_Handler
     {
-        private Collider[] colliders;
-
-        private bool grounded = false;
-
-        private float verticalVelocity;
-
         [SerializeField] private float terminalVelocity;
 
         [SerializeField] private float gravity;
@@ -25,6 +19,11 @@ namespace IbrahKit.ThreeDPlayer
         [SerializeField] private float sphereRadiusOffset = -0.05f;
 
         [SerializeField] private LayerMask groundCheckMask;
+        private Collider[] colliders;
+
+        private bool grounded = false;
+
+        private float verticalVelocity;
 
         public void Update(Player_Controller controller, float deltaTime)
         {

@@ -9,7 +9,7 @@ using IbrahKit.Debugging;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// Interaction Event that calls a standard method from an IInteractable interface on this gameObject
+    ///     Interaction Event that calls a standard method from an IInteractable interface on this gameObject
     /// </summary>
     [Serializable]
     internal class Interaction_Event_Interface : Interaction_Event

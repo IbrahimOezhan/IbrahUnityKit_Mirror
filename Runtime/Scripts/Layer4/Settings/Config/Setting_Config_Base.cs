@@ -1,5 +1,8 @@
-using IbrahKit.Settings;
+#region
+
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Settings
 {
@@ -15,5 +18,4 @@ namespace IbrahKit.Settings
 
         public abstract Setting GetDummy();
     }
-
 }

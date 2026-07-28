@@ -13,9 +13,9 @@ namespace IbrahKit.Settings
     {
         private const string SAVE_DATA_SETTINGS = "Settings";
 
-        private SaveData saveData;
-
         private readonly Dictionary<string, Setting> settingsInit = new();
+
+        private SaveData saveData;
 
         protected override void InstanceAwake()
         {

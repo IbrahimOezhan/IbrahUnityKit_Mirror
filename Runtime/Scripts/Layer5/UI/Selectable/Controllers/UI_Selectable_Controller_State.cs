@@ -12,6 +12,7 @@ namespace IbrahKit.UI
     [Serializable]
     public class UI_Selectable_Controller_State : UI_Selectable_Controller
     {
+        public static UI_Selectable_Controller_State currentlySelected;
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
 #endif
@@ -33,8 +34,6 @@ namespace IbrahKit.UI
         [SerializeField] private UnityEvent OnPressedStop;
 
         private readonly UnityEvent<UI_SELECTABLE_STATE, bool> OnStateChanged = new();
-
-        public static UI_Selectable_Controller_State currentlySelected;
 
         protected override void Init()
         {
@@ -79,9 +78,10 @@ namespace IbrahKit.UI
         }
 
         /// <summary>
-        /// Presses the selectable
+        ///     Presses the selectable
         /// </summary>
-        /// <param name="skipActionsOnPress"></param> Prevents actions from being invoked on press
+        /// <param name="skipActionsOnPress"></param>
+        /// Prevents actions from being invoked on press
         public void Pressed(bool skipActionsOnPress = false)
         {
             SetState(UI_SELECTABLE_STATE.PRESSED);

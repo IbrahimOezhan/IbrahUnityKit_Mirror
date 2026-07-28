@@ -16,10 +16,6 @@ namespace IbrahKit.ThreeDPlayer
 {
     public class Player_Controller : Manager_Local<Player_Controller>
     {
-        private MonoStateMachine<Player_State> machine;
-
-        private Player3D_Input input;
-
         [SerializeField, Required] private CharacterController cc;
 
         [SerializeField, Required] private Player_State firstState;
@@ -37,38 +33,8 @@ namespace IbrahKit.ThreeDPlayer
 
         [SerializeField, ReadOnly] private Player_State currentState;
 
-        private IEnumerable<Type> GetFilteredTypeList()
-        {
-            if (inputHandler == null)
-            {
-                IbrahDebug.LogError("Input Handler List is null");
-                return new Type[]{};
-            }
-            
-            int removed = inputHandler.RemoveAll(x => x == null);
-            
-            if(removed > 0) IbrahDebug.Log($"Removed {removed} null elements from Input Handler List");
-            
-            IEnumerable<Type> alreadyAddedInputHandlers = inputHandler.Select(x => x.GetType());
-            
-            IEnumerable<Type> inputHandlers = Type_Utilities.GetSubTypes(typeof(Player_Input_Handler))
-                .Except(alreadyAddedInputHandlers).Except(new[] { typeof(Player_Gravity_Handler) });
-
-            return inputHandlers;
-        }
-
-        protected override void InstanceAwake()
-        {
-            base.InstanceAwake();
-
-            input = new();
-
-            input.Enable();
-
-            inputHandler.Add(gravityHandler);
-
-            inputHandler.ForEach(x => x.Init(input));
-        }
+        private Player3D_Input input;
+        private MonoStateMachine<Player_State> machine;
 
         private void Start()
         {
@@ -90,6 +56,39 @@ namespace IbrahKit.ThreeDPlayer
             {
                 IbrahDebug.LogError("PlayerControllers state machine is null");
             }
+        }
+
+        private IEnumerable<Type> GetFilteredTypeList()
+        {
+            if (inputHandler == null)
+            {
+                IbrahDebug.LogError("Input Handler List is null");
+                return new Type[] { };
+            }
+
+            int removed = inputHandler.RemoveAll(x => x == null);
+
+            if (removed > 0) IbrahDebug.Log($"Removed {removed} null elements from Input Handler List");
+
+            IEnumerable<Type> alreadyAddedInputHandlers = inputHandler.Select(x => x.GetType());
+
+            IEnumerable<Type> inputHandlers = Type_Utilities.GetSubTypes(typeof(Player_Input_Handler))
+                .Except(alreadyAddedInputHandlers).Except(new[] { typeof(Player_Gravity_Handler) });
+
+            return inputHandlers;
+        }
+
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            input = new();
+
+            input.Enable();
+
+            inputHandler.Add(gravityHandler);
+
+            inputHandler.ForEach(x => x.Init(input));
         }
 
         public T GetHandler<T>() where T : Player_Input_Handler, new()

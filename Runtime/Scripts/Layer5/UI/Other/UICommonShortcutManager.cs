@@ -11,9 +11,8 @@ using UnityEngine.InputSystem;
 
 public class UICommonShortcutManager : CommonShortcut_Manager
 {
-    private Action actionScreenshotNoUI;
-
     [SerializeField] private Key screenshotNoUI;
+    private Action actionScreenshotNoUI;
 
     protected override void InstanceAwake()
     {

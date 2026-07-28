@@ -11,8 +11,7 @@ namespace IbrahKit.Effects
     [Serializable]
     public abstract class Effect_BaseC
     {
-        [SerializeField]
-        protected string key;
+        [SerializeField] protected string key;
 
         private UnityEvent OnAddEvent = new();
         private UnityEvent OnRemoveEvent = new();

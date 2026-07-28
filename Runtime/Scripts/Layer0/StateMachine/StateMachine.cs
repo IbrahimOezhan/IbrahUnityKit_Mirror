@@ -10,11 +10,11 @@ namespace IbrahKit.StateMachine
     public class StateMachine<TState> where TState : MachineState<TState>
     {
         private TState currentState;
-        
+
         private Stack<TState> stack;
 
         public Action<TState, TState> stateChanged;
-        
+
         public StateMachine(TState state)
         {
             stack = new();
@@ -27,7 +27,7 @@ namespace IbrahKit.StateMachine
             {
                 return;
             }
-            
+
             stack.Push(state);
         }
 
@@ -37,18 +37,18 @@ namespace IbrahKit.StateMachine
             {
                 return;
             }
-            
+
             TState currentState = stack.Peek();
-            
+
             // Letzter state wurde gepopped
             if (currentState != this.currentState)
             {
                 this.currentState?.StateExit();
-                stateChanged?.Invoke(this.currentState,currentState);
+                stateChanged?.Invoke(this.currentState, currentState);
                 this.currentState = currentState;
                 this.currentState?.StateEnter();
             }
-            
+
             TState nextState = currentState.StateRun();
 
             // Entferne vom Stack wenn State Null zurückgibt. Der State entfernt sich selber vom stack

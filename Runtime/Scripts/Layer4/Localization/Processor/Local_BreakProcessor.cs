@@ -1,7 +1,7 @@
 namespace IbrahKit.Localization
 {
     /// <summary>
-    /// Replaces [Break] with a new line
+    ///     Replaces [Break] with a new line
     /// </summary>
     public class Local_BreakProcessor : Local_Processor
     {

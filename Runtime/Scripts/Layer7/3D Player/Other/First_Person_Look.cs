@@ -10,13 +10,9 @@ using UnityEngine;
 [Serializable]
 public class First_Person_Look
 {
-    private float _cinemachineTargetPitch;
-
     //private float _rotationVelocity;
 
     private const float lookThreshold = 0.01f;
-
-    private Override_Struct<float> rotationSpeed;
 
     [SerializeField] private float leftClamp;
 
@@ -31,8 +27,11 @@ public class First_Person_Look
     [SerializeField] private Transform cinemachineCameraTarget;
 
     [SerializeField] private bool clampX;
+    private float _cinemachineTargetPitch;
 
     private float _cinemachineTargetYaw;
+
+    private Override_Struct<float> rotationSpeed;
 
     public void Init()
     {

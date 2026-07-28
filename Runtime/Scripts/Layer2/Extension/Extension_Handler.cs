@@ -28,7 +28,8 @@ namespace IbrahKit.Extension
 
         private IEnumerable GetDropdown()
         {
-            return Type_Utilities.GetSubTypesAsString(typeof(TExtension), extensions.Where(x => x != null).Select(x => x.GetType()));
+            return Type_Utilities.GetSubTypesAsString(typeof(TExtension),
+                extensions.Where(x => x != null).Select(x => x.GetType()));
         }
 
         public void AddExtension()
@@ -46,7 +47,7 @@ namespace IbrahKit.Extension
                 if (extensionObject == null)
                 {
                     IbrahDebug.LogError("Created instance is null");
-                    
+
                     continue;
                 }
 
@@ -56,7 +57,7 @@ namespace IbrahKit.Extension
 
                     continue;
                 }
-                
+
                 AddExtension2(extensionCasted);
 
                 break;

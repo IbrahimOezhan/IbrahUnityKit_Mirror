@@ -7,7 +7,7 @@ using UnityEngine;
 namespace IbrahKit.Extension
 {
     /// <summary>
-    /// Class that holds extensions and provides methods to interact with them
+    ///     Class that holds extensions and provides methods to interact with them
     /// </summary>
     public abstract class Extension_Handler_Base : MonoBehaviour
     {

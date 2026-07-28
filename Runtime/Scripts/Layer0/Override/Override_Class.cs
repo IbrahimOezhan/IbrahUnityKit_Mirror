@@ -1,8 +1,15 @@
+#region
+
 using System;
+
+#endregion
 
 namespace IbrahKit.Override
 {
-    /// Override Class for Classes <br/> <inheritdoc/
+    /// Override Class for Classes
+    /// <br />
+    /// <inheritdoc
+    /// /
     [Serializable]
     public class Override_Class<T> : Override_Base<T> where T : class
     {

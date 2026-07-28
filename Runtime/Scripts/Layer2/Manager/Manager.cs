@@ -12,10 +12,34 @@ namespace IbrahKit.Manager
     {
         private static T Instance;
 
+        protected virtual void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+
+                return;
+            }
+            else
+            {
+                Instance = (T)this;
+
+                InstanceAwake();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                InstanceDestroy();
+            }
+        }
+
         public static bool TryGet(out T result, bool throwWarnings = true)
         {
             StringBuilder builder = new($"Could not find an Instance of the Manager {typeof(T)}\n");
-            
+
             result = Instance;
 
             if (result != null)
@@ -63,30 +87,6 @@ namespace IbrahKit.Manager
             }
 
             return result;
-        }
-
-        protected virtual void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-
-                return;
-            }
-            else
-            {
-                Instance = (T)this;
-
-                InstanceAwake();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (Instance == this)
-            {
-                InstanceDestroy();
-            }
         }
 
         protected virtual void InstanceAwake()

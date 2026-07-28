@@ -7,9 +7,9 @@ using UnityEngine;
 namespace IbrahKit
 {
     /// <summary>
-    /// Class for adding a letterbox to the camera
+    ///     Class for adding a letterbox to the camera
     /// </summary>
-    [RequireComponent(typeof(Camera)),ExecuteAlways]
+    [RequireComponent(typeof(Camera)), ExecuteAlways]
     public class Camera_Letterbox : MonoBehaviour
     {
         [Tooltip("Target aspect ratio, e.g. 16:9 => 1.7777")]
@@ -17,11 +17,21 @@ namespace IbrahKit
 
         private Camera _camera;
 
-        private int _lastScreenWidth;
-
         private int _lastScreenHeight;
 
+        private int _lastScreenWidth;
+
         private float _lastTargetAspect;
+
+        private void LateUpdate()
+        {
+            if (Screen.width != _lastScreenWidth ||
+                Screen.height != _lastScreenHeight ||
+                targetAspect != _lastTargetAspect)
+            {
+                ApplyLetterbox();
+            }
+        }
 
         private void OnEnable()
         {
@@ -35,16 +45,6 @@ namespace IbrahKit
             if (_camera == null) _camera = GetComponent<Camera>();
 
             ApplyLetterbox();
-        }
-
-        private void LateUpdate()
-        {
-            if (Screen.width != _lastScreenWidth ||
-                Screen.height != _lastScreenHeight ||
-                targetAspect != _lastTargetAspect)
-            {
-                ApplyLetterbox();
-            }
         }
 
         private void ApplyLetterbox()

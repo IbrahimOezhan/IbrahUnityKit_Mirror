@@ -14,9 +14,8 @@ using UnityEngine;
 
 namespace IbrahKit.Localization
 {
-    
     /// <summary>
-    /// Communicates with various classes to provide the correct localization
+    ///     Communicates with various classes to provide the correct localization
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.local)]
     public partial class Local_Manager : Manager_Global<Local_Manager, Local_Manager_Data>
@@ -27,23 +26,24 @@ namespace IbrahKit.Localization
 
         private const string SAVE = "LocalizationManager";
 
+        private readonly List<Local_Processor> processors = new();
+
         private int currentIndex;
 
         private Local_Language currentLanguage;
 
-        private SaveData saveData;
-
-        private readonly List<Local_Processor> processors = new();
-
         public Action onLanguageChanged;
+
+        private SaveData saveData;
 
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
 
             if (!Save_Manager.GetInstance().TryLoad(SAVE, out saveData)) return;
-            
-            Local_Language language = GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage());
+
+            Local_Language language =
+                GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage());
 
             if (language != null) SetLanguage(language);
 
@@ -65,7 +65,7 @@ namespace IbrahKit.Localization
                 IbrahDebug.LogError("Processor is null");
                 return;
             }
-            
+
             processors.Add(processor);
         }
 
@@ -76,7 +76,7 @@ namespace IbrahKit.Localization
                 IbrahDebug.LogError("Processor is null");
                 return;
             }
-            
+
             processors.Remove(processor);
         }
 
@@ -96,7 +96,7 @@ namespace IbrahKit.Localization
         {
             SetLanguage(GetNext(dir));
         }
-        
+
         public void SetLanguage(int index)
         {
             if (index < 0 || index >= GetManagerData().GetLanguages().Count)
@@ -109,7 +109,7 @@ namespace IbrahKit.Localization
 
             SetLanguage(GetManagerData().GetLanguages().ElementAt(index).Value);
         }
-        
+
         public void SetLanguage(Local_Language lang)
         {
             currentLanguage = lang;
@@ -147,7 +147,8 @@ namespace IbrahKit.Localization
                 return ProcessText(result.SafeFormat(parameters));
             }
 
-            IbrahDebug.LogWarning($"Localization for key {key} does not exist in default language {GetManagerData().GetLanguages().First()}");
+            IbrahDebug.LogWarning(
+                $"Localization for key {key} does not exist in default language {GetManagerData().GetLanguages().First()}");
 
             return $"Error: {key}";
         }
@@ -166,7 +167,8 @@ namespace IbrahKit.Localization
 
         public Local_Language GetCurrent() => currentLanguage;
 
-        public int IndexOf(Local_Language language) => GetManagerData().GetLanguages().IndexOfKey(language.GetSystemLanguage());
+        public int IndexOf(Local_Language language) =>
+            GetManagerData().GetLanguages().IndexOfKey(language.GetSystemLanguage());
 
         public int LanguageCount() => GetManagerData().GetLanguages().Count;
     }

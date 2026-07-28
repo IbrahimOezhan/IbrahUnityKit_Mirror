@@ -11,7 +11,7 @@ using UnityEngine;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing file system related utility methods
+    ///     Static Utility Class providing file system related utility methods
     /// </summary>
     public static class FileSystem_Utilities
     {

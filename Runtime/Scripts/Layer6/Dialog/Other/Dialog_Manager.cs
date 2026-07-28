@@ -18,13 +18,7 @@ namespace IbrahKit.Dialog
     {
         private const float cooldown = 0.25f;
 
-        private Coroutine routine;
-        
-        private UI_Modifier_Extension_Text_Setter contentTextSetter;
-
-        private UI_Modifier_Extension_Text_Setter nameTextSetter;
-
-        private UI_Modifier_Extension_Text_Setter dismissTextSetter;
+        public static Dialog_Element dialog;
 
         [SerializeField] private float defaultCharDelay;
 
@@ -36,18 +30,26 @@ namespace IbrahKit.Dialog
 
         [SerializeField] private UI_Menu menu;
 
-        public static Dialog_Element dialog;
+        private UI_Modifier_Extension_Text_Setter contentTextSetter;
+
+        private UI_Modifier_Extension_Text_Setter dismissTextSetter;
+
+        private UI_Modifier_Extension_Text_Setter nameTextSetter;
+
+        private Action onContinue;
+
+        private Coroutine routine;
+
+        private void OnDestroy()
+        {
+            if (GetInstance() == this) SceneManager.activeSceneChanged -= OnSceneChanged;
+        }
 
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
 
             SceneManager.activeSceneChanged += OnSceneChanged;
-        }
-
-        private void OnDestroy()
-        {
-            if (GetInstance() == this) SceneManager.activeSceneChanged -= OnSceneChanged;
         }
 
         private void OnSceneChanged(Scene _previousScene, Scene _newScene)
@@ -110,7 +112,7 @@ namespace IbrahKit.Dialog
                 bool skip = false;
 
                 onContinue += Skip;
-                
+
                 foreach (var character in rawText)
                 {
                     string processed = sub.Process(character.ToString());
@@ -122,41 +124,39 @@ namespace IbrahKit.Dialog
                     float time = sub.GetTime(character);
 
                     float timer = 0;
-                    
-                    while(timer < time && !skip)
+
+                    while (timer < time && !skip)
                     {
                         timer += UnityEngine.Time.deltaTime;
 
                         yield return null;
                     }
                 }
-                
+
                 onContinue -= Skip;
-                
+
                 skip = false;
-                
+
                 dismissTextSetter.SetText("Dismiss");
 
                 yield return new WaitForSeconds(cooldown);
 
                 onContinue += Skip;
-                
+
                 yield return new WaitUntil(() => skip || sub.GetMode() == Dialog_Sub_Element.Mode.NOTSKIPABLE);
 
                 yield return new WaitForSeconds(cooldown);
-                
+
                 onContinue -= Skip;
                 continue;
 
                 void Skip()
                 {
-                    if(sub.GetMode() == Dialog_Sub_Element.Mode.SKIPABLE) skip = true;
+                    if (sub.GetMode() == Dialog_Sub_Element.Mode.SKIPABLE) skip = true;
                 }
             }
         }
 
-        private Action onContinue;
-        
         public void InvokeContinue()
         {
             onContinue?.Invoke();

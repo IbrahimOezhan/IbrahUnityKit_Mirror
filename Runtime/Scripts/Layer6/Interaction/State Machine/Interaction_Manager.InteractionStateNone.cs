@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.Interaction
 {
-
     public abstract partial class Interaction_Manager
     {
         public class InteractionStateNone : InteractionMachineState
@@ -14,10 +13,9 @@ namespace IbrahKit.Interaction
             private InputAction action;
 
             private Interactable i;
-            
+
             public InteractionStateNone(float cooldown, Interaction_Manager manager) : base(cooldown, manager)
             {
-
             }
 
             public override void StateEnter()
@@ -26,7 +24,7 @@ namespace IbrahKit.Interaction
             }
 
             public override InteractionMachineState StateRun()
-            { 
+            {
                 i = manager.FindInteractable();
 
                 if (manager.CanInteract(i) && action.WasPressedThisFrame())
@@ -37,11 +35,9 @@ namespace IbrahKit.Interaction
 
             public override void StateExit()
             {
-
             }
 
             public Interactable GetInteractable() => i;
         }
     }
-
 }

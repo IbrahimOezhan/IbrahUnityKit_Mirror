@@ -4,5 +4,4 @@ namespace IbrahKit.Interaction
     {
         public bool Block();
     }
-
 }

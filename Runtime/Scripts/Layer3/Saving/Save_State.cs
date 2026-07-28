@@ -1,7 +1,7 @@
 namespace IbrahKit.Save
 {
     /// <summary>
-    /// The state of the save/savable
+    ///     The state of the save/savable
     /// </summary>
     internal enum Save_State
     {

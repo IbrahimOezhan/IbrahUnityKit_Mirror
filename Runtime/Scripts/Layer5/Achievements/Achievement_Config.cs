@@ -1,20 +1,21 @@
-using IbrahKit.Localization;
+#region
+
 using System.Collections.Generic;
+using IbrahKit.Localization;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Unlockables.Achievements
 {
     [CreateAssetMenu(fileName = "AchievementConfig", menuName = "IbrahKit/AchievemntConfig")]
     public class Achievement_Config : ScriptableObject
     {
-        [SerializeField]
-        private Local_Key secretString;
+        [SerializeField] private Local_Key secretString;
 
-        [SerializeField]
-        private Sprite secretSprite;
+        [SerializeField] private Sprite secretSprite;
 
-        [SerializeField]
-        private List<Achievement> achievements = new();
+        [SerializeField] private List<Achievement> achievements = new();
 
         public List<Achievement> Get()
         {

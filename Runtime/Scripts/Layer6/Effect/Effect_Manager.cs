@@ -10,13 +10,12 @@ namespace IbrahKit.Effects
 {
     public class Effect_Manager : MonoBehaviour
     {
-        protected Dictionary<string, List<Effect_BaseC>> effects = new();
+        public static Effect_Manager Instance;
 
         public Action<Effect_BaseC> OnEffectAdded;
 
         public Action<Effect_BaseC> OnEffectRemoved;
-
-        public static Effect_Manager Instance;
+        protected Dictionary<string, List<Effect_BaseC>> effects = new();
 
         private void Awake()
         {

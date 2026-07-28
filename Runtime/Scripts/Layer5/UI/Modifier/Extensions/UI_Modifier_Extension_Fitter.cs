@@ -13,12 +13,6 @@ namespace IbrahKit.UI
     [Serializable]
     public class UI_Modifier_Extension_Fitter : UI_Modifier_Extension
     {
-        private Nullable<Vector2> lastPreferredSize = null;
-
-        private UI_Text_Wrapper text;
-
-        protected RectTransform rect;
-
         [SerializeField] private GameObject target;
 
         [SerializeField, HorizontalGroup("Width")]
@@ -35,6 +29,12 @@ namespace IbrahKit.UI
 
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
         protected int heightOffset;
+
+        private Nullable<Vector2> lastPreferredSize = null;
+
+        protected RectTransform rect;
+
+        private UI_Text_Wrapper text;
 
         public UI_Modifier_Extension_Fitter(UI_Modifier extension) : base(extension)
         {

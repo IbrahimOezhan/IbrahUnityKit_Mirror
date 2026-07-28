@@ -13,10 +13,6 @@ namespace IbrahKit.ThreeDPlayer
     [Serializable]
     public class Player_Move_Handler : Player_Input_Handler
     {
-        private Vector2 inputVector;
-
-        private Override_Struct<float> speed;
-
         const float speedOffset = 0.1f;
 
         [SerializeField] private float speedChangeRate = 10.0f;
@@ -26,6 +22,9 @@ namespace IbrahKit.ThreeDPlayer
         [SerializeField] private float moveSpeedMultiplier = 1;
 
         [SerializeField] private bool analogMovement;
+        private Vector2 inputVector;
+
+        private Override_Struct<float> speed;
 
         public override bool Init(Player3D_Input input)
         {

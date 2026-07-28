@@ -12,14 +12,13 @@ using UnityEngine.SceneManagement;
 namespace IbrahKit
 {
     /// <summary>
-    /// Auto assigns the camera on the same game object as overlay to the Camera.main
+    ///     Auto assigns the camera on the same game object as overlay to the Camera.main
     /// </summary>
     [RequireComponent(typeof(Camera))]
     public class Camera_Overlay_Assign : MonoBehaviour
     {
-        private Camera overlayCam;
-
         [SerializeField] private int priority;
+        private Camera overlayCam;
 
         private void Awake()
         {

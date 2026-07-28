@@ -8,11 +8,10 @@ namespace IbrahKit.ThreeDPlayer
 {
     public class Player_Basic_Movement_State : Player_State
     {
-        private Player_Move_Handler moveHandler;
+        private Player_Gravity_Handler gravityHandler;
 
         private Player_Look_Handler lookHandler;
-
-        private Player_Gravity_Handler gravityHandler;
+        private Player_Move_Handler moveHandler;
 
         private void Start()
         {

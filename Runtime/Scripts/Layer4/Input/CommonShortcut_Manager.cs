@@ -12,9 +12,8 @@ namespace IbrahKit.Input
 {
     public class CommonShortcut_Manager : Manager_Global<CommonShortcut_Manager>
     {
-        private Action actionScreenshot;
-
         [SerializeField] private Key screenshot;
+        private Action actionScreenshot;
 
         protected override void InstanceAwake()
         {

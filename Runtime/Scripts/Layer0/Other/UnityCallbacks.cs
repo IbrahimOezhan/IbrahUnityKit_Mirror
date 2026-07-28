@@ -12,10 +12,6 @@ namespace IbrahKit.Core
         {
         }
 
-        protected virtual void Enable()
-        {
-        }
-
         protected virtual void Start()
         {
         }
@@ -29,6 +25,10 @@ namespace IbrahKit.Core
         }
 
         protected virtual void OnDestroy()
+        {
+        }
+
+        protected virtual void Enable()
         {
         }
     }

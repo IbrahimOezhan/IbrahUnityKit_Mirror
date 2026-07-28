@@ -10,9 +10,10 @@ using UnityEngine;
 namespace IbrahKit.Settings
 {
     /// <summary>
-    /// Contains information on the type of the setting and the key it uses
+    ///     Contains information on the type of the setting and the key it uses
     /// </summary>
-    /// <typeparam name="TSetting"></typeparam> The parent class of which the type can be
+    /// <typeparam name="TSetting"></typeparam>
+    /// The parent class of which the type can be
     public abstract class Setting_Config<TSetting> : Setting_Config_Base, ISettingConfig where TSetting : Setting, new()
     {
         [SerializeField, ValueDropdown(nameof(GetDropdown))]

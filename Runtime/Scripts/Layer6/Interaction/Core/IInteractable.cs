@@ -7,7 +7,7 @@ using System.Collections;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// Interface for defining a method to call on interaction
+    ///     Interface for defining a method to call on interaction
     /// </summary>
     public interface IInteractable
     {

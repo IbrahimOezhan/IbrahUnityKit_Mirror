@@ -13,7 +13,10 @@ namespace IbrahKit.UI
     {
         private UI_Text_Wrapper text;
 
-        public UI_Text_Wrapper GetText() => text;
+        private void Awake()
+        {
+            text = new(gameObject);
+        }
 
         public void Validate(SelfValidationResult result)
         {
@@ -23,9 +26,6 @@ namespace IbrahKit.UI
             }
         }
 
-        private void Awake()
-        {
-            text = new(gameObject);
-        }
+        public UI_Text_Wrapper GetText() => text;
     }
 }

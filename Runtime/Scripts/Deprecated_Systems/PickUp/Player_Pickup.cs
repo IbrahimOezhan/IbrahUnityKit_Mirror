@@ -15,17 +15,7 @@ namespace IbrahKit.Interaction
 {
     public class Player_Pickup : MonoBehaviour
     {
-        private bool impulse;
-
-        private float strenght;
-        private float posLerp;
-
-        private Vector3 force;
-        private Vector3 startPos;
-        private Quaternion startRot;
-
-        private Transform cameraTr;
-        private Player3D_Input input;
+        public static Player_Pickup Instance;
 
         [SerializeField] private bool showLine;
         [SerializeField] private int pointsCount = 100;
@@ -44,10 +34,16 @@ namespace IbrahKit.Interaction
         [SerializeField] private Interactable_Pickup currentObject;
         [SerializeField] private CharacterController cc;
 
-        public event Action<Interactable_Pickup> OnPickedUp;
-        public event Action<Interactable_Pickup> OnDropped;
+        private Transform cameraTr;
 
-        public static Player_Pickup Instance;
+        private Vector3 force;
+        private bool impulse;
+        private Player3D_Input input;
+        private float posLerp;
+        private Vector3 startPos;
+        private Quaternion startRot;
+
+        private float strenght;
 
         private void Awake()
         {
@@ -59,23 +55,6 @@ namespace IbrahKit.Interaction
                 input = new();
 
                 cameraTr = Camera.main.transform;
-            }
-        }
-
-        private void OnEnable()
-        {
-            input.Enable();
-
-            Application.onBeforeRender += UpdateTrajectory;
-        }
-
-        private void OnDisable()
-        {
-            if (input != null)
-            {
-                input.Disable();
-
-                Application.onBeforeRender -= UpdateTrajectory;
             }
         }
 
@@ -145,6 +124,26 @@ namespace IbrahKit.Interaction
                     break;
             }
         }
+
+        private void OnEnable()
+        {
+            input.Enable();
+
+            Application.onBeforeRender += UpdateTrajectory;
+        }
+
+        private void OnDisable()
+        {
+            if (input != null)
+            {
+                input.Disable();
+
+                Application.onBeforeRender -= UpdateTrajectory;
+            }
+        }
+
+        public event Action<Interactable_Pickup> OnPickedUp;
+        public event Action<Interactable_Pickup> OnDropped;
 
         public void ChangeState(Pickup_State newState)
         {

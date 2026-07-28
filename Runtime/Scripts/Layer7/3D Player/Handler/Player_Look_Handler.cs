@@ -14,11 +14,12 @@ namespace IbrahKit.ThreeDPlayer
     {
         private const string MOUSE = "Mouse";
 
-        private Vector2 lookVector;
-
         [SerializeField, ReadOnly] private bool isUsingMouse;
 
-        [SerializeField, HideLabel, InlineProperty] private First_Person_Look fpLook;
+        [SerializeField, HideLabel, InlineProperty]
+        private First_Person_Look fpLook;
+
+        private Vector2 lookVector;
 
         public override bool Init(Player3D_Input input)
         {

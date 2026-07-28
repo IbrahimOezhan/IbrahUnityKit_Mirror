@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 namespace IbrahKit.Debugging
 {
     /// <summary>
-    /// A wrapper class for unitys standard debug class that adds additional functionality
+    ///     A wrapper class for unitys standard debug class that adds additional functionality
     /// </summary>
     public static class IbrahDebug
     {
@@ -27,7 +27,8 @@ namespace IbrahKit.Debugging
 
         public static void LogWarning(object message, Object context = null, [CallerMemberName] string caller = null)
         {
-            string formattedMsg = Color_Utilities.UseOnString(Color.yellow, $"[Warning] {message}\n(Caller: {caller})").SpecialTrim();
+            string formattedMsg = Color_Utilities.UseOnString(Color.yellow, $"[Warning] {message}\n(Caller: {caller})")
+                .SpecialTrim();
 
             if (context != null) Debug.LogWarning(formattedMsg, context);
             else Debug.LogWarning(formattedMsg);
@@ -35,7 +36,8 @@ namespace IbrahKit.Debugging
 
         public static void LogError(object message, Object context = null, [CallerMemberName] string caller = null)
         {
-            string formattedMsg = Color_Utilities.UseOnString(Color.red, $"[Error] {message}\n(Caller: {caller})").SpecialTrim();
+            string formattedMsg = Color_Utilities.UseOnString(Color.red, $"[Error] {message}\n(Caller: {caller})")
+                .SpecialTrim();
 
             if (context != null) Debug.LogError(formattedMsg, context);
             else Debug.LogError(formattedMsg);

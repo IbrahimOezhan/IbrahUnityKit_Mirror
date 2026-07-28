@@ -9,7 +9,7 @@ using UnityEngine;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing image related utility methods
+    ///     Static Utility Class providing image related utility methods
     /// </summary>
     public static class Image_Utilities
     {
@@ -44,7 +44,7 @@ namespace IbrahKit.Utilities
         public static byte[] ToByteArray(this Texture2D texture)
         {
             if (texture == null)
-            { 
+            {
                 throw new NullReferenceException("Texture is null");
             }
 
@@ -102,8 +102,7 @@ namespace IbrahKit.Utilities
             return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
         }
 
-        
-        
+
         public static Sprite Center(this Sprite sprite)
         {
             Texture2D tex = sprite.texture;
@@ -111,7 +110,7 @@ namespace IbrahKit.Utilities
             Color[] colors = tex.GetPixels();
 
             Vector4Int minMax = new Vector4Int(int.MaxValue, int.MinValue, int.MaxValue, int.MinValue);
-            
+
             for (int y = 0; y < tex.height; y++)
             {
                 for (int x = 0; x < tex.width; x++)
@@ -119,7 +118,7 @@ namespace IbrahKit.Utilities
                     Color c = colors[GetPixelIndex(x, y, tex.width)];
 
                     if (c.a == 0) continue;
-                    
+
                     if (x < minMax[0])
                     {
                         minMax[0] = x;
@@ -208,7 +207,8 @@ namespace IbrahKit.Utilities
         {
             if (from.width != to.width || from.height != to.height)
             {
-                throw new ArgumentOutOfRangeException($"Textures must be the same size: from: {from.width}x{from.height} to: {to.width}x{to.height}");
+                throw new ArgumentOutOfRangeException(
+                    $"Textures must be the same size: from: {from.width}x{from.height} to: {to.width}x{to.height}");
             }
 
             Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);

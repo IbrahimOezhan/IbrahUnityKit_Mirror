@@ -18,6 +18,14 @@ namespace IbrahKit.UI
 
         [SerializeReference] private List<UI_Selectable_Transition> transitionsNotInteractable = new();
 
+        public void Validate(SelfValidationResult result)
+        {
+            if (transitions.Count == 0 && transitionsInteractable.Count == 0 && transitionsNotInteractable.Count == 0)
+            {
+                result.AddWarning("The selectable has no transitions");
+            }
+        }
+
         protected override void Init()
         {
             GameObject selectableObject = GetSelectable().gameObject;
@@ -48,14 +56,6 @@ namespace IbrahKit.UI
             else
             {
                 transitionsNotInteractable.ForEach(i => i.Apply(state));
-            }
-        }
-
-        public void Validate(SelfValidationResult result)
-        {
-            if (transitions.Count == 0 && transitionsInteractable.Count == 0 && transitionsNotInteractable.Count == 0)
-            {
-                result.AddWarning("The selectable has no transitions");
             }
         }
     }

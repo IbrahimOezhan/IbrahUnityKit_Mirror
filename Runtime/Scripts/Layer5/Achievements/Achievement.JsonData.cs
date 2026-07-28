@@ -1,4 +1,8 @@
+#region
+
 using System.Text.Json.Serialization;
+
+#endregion
 
 namespace IbrahKit.Unlockables.Achievements
 {
@@ -6,11 +10,9 @@ namespace IbrahKit.Unlockables.Achievements
     {
         private class JsonData
         {
-            [JsonInclude]
-            private string title;
+            [JsonInclude] private string description;
 
-            [JsonInclude]
-            private string description;
+            [JsonInclude] private string title;
 
             public string Title()
             {

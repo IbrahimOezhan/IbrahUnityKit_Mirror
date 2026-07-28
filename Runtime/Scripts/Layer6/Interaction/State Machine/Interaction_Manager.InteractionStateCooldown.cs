@@ -1,13 +1,11 @@
 #region
 
-using System;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.Interaction
 {
-
     public abstract partial class Interaction_Manager
     {
         public class InteractionStateCooldown : InteractionMachineState
@@ -18,7 +16,6 @@ namespace IbrahKit.Interaction
 
             public override void StateEnter()
             {
-
             }
 
             public override InteractionMachineState StateRun()
@@ -35,7 +32,6 @@ namespace IbrahKit.Interaction
 
             public override void StateExit()
             {
-
             }
         }
     }

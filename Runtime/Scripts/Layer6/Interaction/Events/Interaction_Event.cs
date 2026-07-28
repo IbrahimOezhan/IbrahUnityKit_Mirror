@@ -8,7 +8,7 @@ using System.Collections;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// Base class for interaction events providing an abstract method to execute the interaction
+    ///     Base class for interaction events providing an abstract method to execute the interaction
     /// </summary>
     [Serializable]
     public abstract class Interaction_Event

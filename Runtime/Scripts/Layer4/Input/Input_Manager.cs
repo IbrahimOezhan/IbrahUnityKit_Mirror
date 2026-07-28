@@ -16,11 +16,10 @@ namespace IbrahKit.Input
     [DefaultExecutionOrder(Execution_Order.input)]
     public class Input_Manager : Manager_Global<Input_Manager>, IInfoCollector
     {
-        private ButtonControl lastPressed;
-
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
+        private ButtonControl lastPressed;
 
         private void Start()
         {
@@ -67,16 +66,6 @@ namespace IbrahKit.Input
             if (currentInputType != lastInputType) InputUpdate();
         }
 
-        public InputType GetInputType()
-        {
-            return currentInputType;
-        }
-
-        public void InputUpdate()
-        {
-            OnInputChanged?.Invoke(currentInputType);
-        }
-
         public string GetDebugContent()
         {
             return "Current Input Type: " + currentInputType + " Last Pressed: " + lastPressed.displayName;
@@ -85,6 +74,16 @@ namespace IbrahKit.Input
         public int GetDebugOrder()
         {
             return -90;
+        }
+
+        public InputType GetInputType()
+        {
+            return currentInputType;
+        }
+
+        public void InputUpdate()
+        {
+            OnInputChanged?.Invoke(currentInputType);
         }
     }
 }

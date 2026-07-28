@@ -26,17 +26,17 @@ namespace IbrahKit.UI
             RunExtensions();
         }
 
-        public UI_Menu GetMenu()
-        {
-            return menu;
-        }
-
         public void Validate(SelfValidationResult result)
         {
             foreach (UI_Modifier_Extension extension in GetExtensions())
             {
                 extension.Validate(result, gameObject);
             }
+        }
+
+        public UI_Menu GetMenu()
+        {
+            return menu;
         }
     }
 }

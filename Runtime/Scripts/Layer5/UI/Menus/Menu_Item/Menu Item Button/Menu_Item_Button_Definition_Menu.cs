@@ -15,11 +15,6 @@ namespace IbrahKit.UI
 
         [ShowIf(nameof(changeType), Menu_Change_Type.REFERENCE), SerializeField]
         private UI_Menu menuReference;
-        
-        private enum Menu_Change_Type
-        {
-            REFERENCE,
-        }
 
         protected override bool AfterSpawn(RectTransform parent, UI_Menu menu, Menu_Item_Button spawnedButton)
         {
@@ -30,6 +25,11 @@ namespace IbrahKit.UI
                 });
 
             return true;
+        }
+
+        private enum Menu_Change_Type
+        {
+            REFERENCE,
         }
     }
 }

@@ -10,14 +10,6 @@ namespace IbrahKit.UI
 {
     public class UI_PageView : MonoBehaviour, IMenuInit
     {
-        private int currentPageIndex;
-
-        private int amountPerPage;
-
-        private int maxPageIndex;
-
-        private List<Transform> content = new();
-
         [SerializeField] private UI_Selectable left;
 
         [SerializeField] private UI_Selectable right;
@@ -25,6 +17,13 @@ namespace IbrahKit.UI
         [SerializeField] private UI_Modifier_Extension_Localization pageText;
 
         [SerializeField] private Transform pageContent;
+
+        private int amountPerPage;
+
+        private List<Transform> content = new();
+        private int currentPageIndex;
+
+        private int maxPageIndex;
 
         public Action<int> onPageChanged;
 

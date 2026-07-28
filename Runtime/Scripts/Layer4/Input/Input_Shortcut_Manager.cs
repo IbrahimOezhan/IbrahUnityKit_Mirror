@@ -41,7 +41,7 @@ namespace IbrahKit.Input
             {
                 keyValuePairs.Add(key, new List<Action>());
             }
-            
+
             Debug.Log($"Registered an action to the {key} key");
 
             keyValuePairs[key].Add(ac);

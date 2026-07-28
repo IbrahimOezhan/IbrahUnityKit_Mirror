@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing collection related utility methods
+    ///     Static Utility Class providing collection related utility methods
     /// </summary>
     public static class Collection_Utilities
     {
@@ -55,7 +55,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Shuffels a list and returns it
+        ///     Shuffels a list and returns it
         /// </summary>
         /// <typeparam name="T">The type of the list</typeparam>
         /// <param name="list">The list to shuffle</param>
@@ -73,7 +73,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Shuffels an array and returns it
+        ///     Shuffels an array and returns it
         /// </summary>
         /// <typeparam name="T">The type of Array Elements</typeparam>
         /// <param name="list">The array to shuffle</param>
@@ -97,12 +97,15 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Returns an element from an aray but clamps it at its max index to prevent outofbounds exceptions
+        ///     Returns an element from an aray but clamps it at its max index to prevent outofbounds exceptions
         /// </summary>
         /// <typeparam name="T">The type of the array</typeparam>
         /// <param name="array">The array to be used</param>
         /// <param name="index">The index to be used</param>
-        /// <returns>An element from the array preferably at the specified index but if its outofbounds its the next closest element</returns>
+        /// <returns>
+        ///     An element from the array preferably at the specified index but if its outofbounds its the next closest
+        ///     element
+        /// </returns>
         public static T GetClampedElement<T>(this T[] array, int index)
         {
             if (array.Length == 0) return default;
@@ -111,7 +114,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Returns an element from a list but clamps it at its max index to prevent outofbounds exceptions
+        ///     Returns an element from a list but clamps it at its max index to prevent outofbounds exceptions
         /// </summary>
         /// <typeparam name="T">The type of the list</typeparam>
         /// <param name="list">The list to be used</param>

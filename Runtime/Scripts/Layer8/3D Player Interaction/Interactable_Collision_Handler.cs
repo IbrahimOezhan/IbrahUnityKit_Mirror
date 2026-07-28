@@ -21,5 +21,4 @@ namespace IbrahKit.Interaction
             manager.SetCollInteratable(null);
         }
     }
-
 }

@@ -1,8 +1,11 @@
+#region
 
 using System;
 using IbrahKit.Debugging;
 using IbrahKit.Manager;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Unlockables.Achievements
 {
@@ -10,10 +13,9 @@ namespace IbrahKit.Unlockables.Achievements
     {
         private const string PREFIX = "achievement_";
 
-        [SerializeField]
-        private Achievement_Config achievementConfig;
-
         public static Action<string, bool> OnAchievementUnlocked;
+
+        [SerializeField] private Achievement_Config achievementConfig;
 
         public void Unlock(Achievement achievement)
         {

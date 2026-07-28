@@ -12,9 +12,8 @@ namespace IbrahKit.UI
 {
     public class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
     {
-        [SerializeField] private bool firstSelectedCandidate;
-
         public static List<UI_Selectable_Controller_Navigation> activeSelectables;
+        [SerializeField] private bool firstSelectedCandidate;
 
         protected override void Init()
         {

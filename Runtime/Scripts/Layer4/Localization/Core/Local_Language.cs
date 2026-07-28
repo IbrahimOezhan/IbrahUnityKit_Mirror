@@ -9,7 +9,7 @@ using UnityEngine;
 namespace IbrahKit.Localization
 {
     /// <summary>
-    /// Holds the data of a language
+    ///     Holds the data of a language
     /// </summary>
     [Serializable]
     public class Local_Language

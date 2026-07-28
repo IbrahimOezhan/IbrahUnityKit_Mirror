@@ -11,13 +11,12 @@ namespace IbrahKit
 {
     public class UI_Setting_Range : UI_Setting
     {
-        private UI_Modifier_Extension_Text_Setter textSetter;
-
         [SerializeField] private UI_Selectable left;
 
         [SerializeField] private UI_Selectable right;
 
         [SerializeField] private UI_Modifier value;
+        private UI_Modifier_Extension_Text_Setter textSetter;
 
         protected override bool CanSpawnPro(Setting setting)
         {

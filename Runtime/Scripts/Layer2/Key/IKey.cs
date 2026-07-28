@@ -1,7 +1,7 @@
 namespace IbrahKit.Keys
 {
     /// <summary>
-    /// Interface used as a base for the key system
+    ///     Interface used as a base for the key system
     /// </summary>
     public interface IKey
     {

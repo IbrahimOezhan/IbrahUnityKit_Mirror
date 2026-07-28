@@ -12,17 +12,16 @@ namespace IbrahKit.Interaction
 {
     public class Interactable_Pickup : Interactable, IInteractable
     {
-        private int handLayer;
-        private Rigidbody rb;
-        private Collider coll;
-        private List<Transform> children = new();
-
-        private int pickedUpCounter;
-
         [SerializeField] private bool isColliding;
         [SerializeField] private bool preventDrop;
         [SerializeField] private Vector3 rotOffset;
         [SerializeField] private Vector3 posOffset;
+        private List<Transform> children = new();
+        private Collider coll;
+        private int handLayer;
+
+        private int pickedUpCounter;
+        private Rigidbody rb;
 
         private void Awake()
         {
@@ -56,14 +55,19 @@ namespace IbrahKit.Interaction
             if (!other.isTrigger) isColliding = false;
         }
 
-        public override bool CanInteract()
-        {
-            return !Player_Pickup.Instance.IsHandFull();
-        }
-
         public void OnInteract(Interactable _interactable)
         {
             Pickup();
+        }
+
+        public IEnumerator OnInteractRoutine(Interactable _interactable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool CanInteract()
+        {
+            return !Player_Pickup.Instance.IsHandFull();
         }
 
         public void Pickup(float lerpProgress = 0)
@@ -84,7 +88,6 @@ namespace IbrahKit.Interaction
 
         public virtual void OnPickup()
         {
-
         }
 
         public void Drop()
@@ -107,11 +110,6 @@ namespace IbrahKit.Interaction
             transform.parent = null;
             gameObject.layer = 0;
             for (int i = 0; i < children.Count; i++) children[i].gameObject.layer = 0;
-        }
-
-        public IEnumerator OnInteractRoutine(Interactable _interactable)
-        {
-            throw new NotImplementedException();
         }
 
         public bool IsColliding()

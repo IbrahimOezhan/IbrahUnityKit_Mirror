@@ -13,11 +13,18 @@ namespace IbrahKit.UI
     [Serializable]
     public class UI_Text_Wrapper
     {
+        public enum Mode
+        {
+            NONE,
+            LEGACY,
+            TMP,
+        }
+
         private readonly Text legacyText;
 
-        private readonly TextMeshProUGUI tmpText;
-
         private readonly Mode mode;
+
+        private readonly TextMeshProUGUI tmpText;
 
         public UI_Text_Wrapper(GameObject target)
         {
@@ -99,13 +106,6 @@ namespace IbrahKit.UI
             {
                 result.AddError("Error. No Text Kinds Found");
             }
-        }
-
-        public enum Mode
-        {
-            NONE,
-            LEGACY,
-            TMP,
         }
     }
 }

@@ -21,6 +21,26 @@ namespace IbrahKit.Input
 
         public Action onLeftMouseButton;
 
+        private void Update()
+        {
+            if (input == null)
+            {
+                return;
+            }
+
+            mousePos = input.Map.MousePos.ReadValue<Vector2>();
+        }
+
+        public string GetDebugContent()
+        {
+            return "Is Over UI: " + CursorOverUI(EventSystem.current);
+        }
+
+        public int GetDebugOrder()
+        {
+            return -80;
+        }
+
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
@@ -30,16 +50,6 @@ namespace IbrahKit.Input
             input.Enable();
 
             input.Map.LMB.performed += LeftMouseButton;
-        }
-
-        private void Update()
-        {
-            if (input == null)
-            {
-                return;
-            }
-
-            mousePos = input.Map.MousePos.ReadValue<Vector2>();
         }
 
         protected override void InstanceDestroy()
@@ -91,16 +101,6 @@ namespace IbrahKit.Input
             system.RaycastAll(pointerData, results);
 
             return results.Count(x => x.gameObject.GetComponent<ICursorHandler>() != null) > 0;
-        }
-
-        public string GetDebugContent()
-        {
-            return "Is Over UI: " + CursorOverUI(EventSystem.current);
-        }
-
-        public int GetDebugOrder()
-        {
-            return -80;
         }
     }
 }

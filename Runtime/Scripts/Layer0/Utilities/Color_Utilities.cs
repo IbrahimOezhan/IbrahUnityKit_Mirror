@@ -8,12 +8,12 @@ using UnityEngine;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing color related utility methods
+    ///     Static Utility Class providing color related utility methods
     /// </summary>
     public static class Color_Utilities
     {
         /// <summary>
-        /// Compares one color to another and returns whether they are the same or not
+        ///     Compares one color to another and returns whether they are the same or not
         /// </summary>
         /// <param name="color1">The first color</param>
         /// <param name="color2">The second color</param>
@@ -31,7 +31,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Formats a string to use a color
+        ///     Formats a string to use a color
         /// </summary>
         /// <param name="color">The color to use</param>
         /// <param name="value">The string to format</param>
@@ -42,7 +42,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Converts a color to its hex value
+        ///     Converts a color to its hex value
         /// </summary>
         /// <param name="color">The color to convert</param>
         /// <param name="includeAlpha">Whether to include alpha</param>
@@ -54,7 +54,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Blends multiple colors together
+        ///     Blends multiple colors together
         /// </summary>
         /// <param name="colors">The colors to blend</param>
         /// <returns>The blended color</returns>
@@ -83,7 +83,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Applies a certain alpha to a color
+        ///     Applies a certain alpha to a color
         /// </summary>
         /// <param name="c">The color</param>
         /// <param name="alpha">The alpha value to apply</param>
@@ -99,7 +99,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Gets the luminance of a color
+        ///     Gets the luminance of a color
         /// </summary>
         /// <param name="color">The color to use</param>
         /// <returns>The colors luminance</returns>
@@ -109,7 +109,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Inverts a color
+        ///     Inverts a color
         /// </summary>
         /// <param name="color">The color to invert</param>
         /// <returns>The inverted color</returns>
@@ -119,7 +119,7 @@ namespace IbrahKit.Utilities
         }
 
         /// <summary>
-        /// Averages the individual RGB values of a color
+        ///     Averages the individual RGB values of a color
         /// </summary>
         /// <param name="color">The color to use</param>
         /// <returns>The averge of R, G and B</returns>

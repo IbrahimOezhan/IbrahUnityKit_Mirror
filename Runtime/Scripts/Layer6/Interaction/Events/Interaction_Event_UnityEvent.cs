@@ -10,7 +10,7 @@ using UnityEngine.Events;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// Interaction Event that executes a unity event
+    ///     Interaction Event that executes a unity event
     /// </summary>
     [Serializable]
     internal class Interaction_Event_UnityEvent : Interaction_Event

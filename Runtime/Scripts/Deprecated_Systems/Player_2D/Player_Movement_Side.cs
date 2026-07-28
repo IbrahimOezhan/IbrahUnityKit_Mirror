@@ -10,45 +10,26 @@ namespace IbrahKit
 {
     public class Player_Movement_Side : MonoBehaviour
     {
-        private Input2D input2d;
-
-        private float input;
-        private bool isFacingRight = true;
-        private bool isJumping;
-
-        private float coyoteTime = 0.2f;
-        private float coyoteTimeTimer;
-
-        private float jumpBufferTime = 0.2f;
-        private float jumpBufferTimer;
-
         [SerializeField] private float speed = 8f;
         [SerializeField] private float jumpingPower = 16f;
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Transform groundCheck;
         [SerializeField] private LayerMask groundLayer;
 
+        private float coyoteTime = 0.2f;
+        private float coyoteTimeTimer;
+
+        private float input;
+        private Input2D input2d;
+        private bool isFacingRight = true;
+        private bool isJumping;
+
+        private float jumpBufferTime = 0.2f;
+        private float jumpBufferTimer;
+
         private void Awake()
         {
             input2d = new();
-        }
-
-        private void OnEnable()
-        {
-            input2d.PlayerSide.Move.canceled += Move;
-            input2d.PlayerSide.Move.performed += Move;
-            input2d.PlayerSide.Move.started += Move;
-            input2d.PlayerSide.Jump.canceled += JumpUp;
-            input2d.PlayerSide.Jump.performed += JumpDown;
-        }
-
-        private void OnDisable()
-        {
-            input2d.PlayerSide.Move.canceled -= Move;
-            input2d.PlayerSide.Move.performed -= Move;
-            input2d.PlayerSide.Move.started -= Move;
-            input2d.PlayerSide.Jump.canceled -= JumpUp;
-            input2d.PlayerSide.Jump.performed -= JumpDown;
         }
 
         private void Update()
@@ -68,6 +49,24 @@ namespace IbrahKit
             else rb.gravityScale = 1;
 
             Flip();
+        }
+
+        private void OnEnable()
+        {
+            input2d.PlayerSide.Move.canceled += Move;
+            input2d.PlayerSide.Move.performed += Move;
+            input2d.PlayerSide.Move.started += Move;
+            input2d.PlayerSide.Jump.canceled += JumpUp;
+            input2d.PlayerSide.Jump.performed += JumpDown;
+        }
+
+        private void OnDisable()
+        {
+            input2d.PlayerSide.Move.canceled -= Move;
+            input2d.PlayerSide.Move.performed -= Move;
+            input2d.PlayerSide.Move.started -= Move;
+            input2d.PlayerSide.Jump.canceled -= JumpUp;
+            input2d.PlayerSide.Jump.performed -= JumpDown;
         }
 
         private void Move(InputAction.CallbackContext _context)

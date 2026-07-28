@@ -11,7 +11,7 @@ using UnityEngine;
 namespace IbrahKit.Keys
 {
     /// <summary>
-    /// Class that holds a dictionary that consists of key value pairs with the value being a string list
+    ///     Class that holds a dictionary that consists of key value pairs with the value being a string list
     /// </summary>
     [CreateAssetMenu(fileName = "NewKeyDatabase", menuName = "IbrahKit/Key_Database")]
     public class Key_Database : SerializedScriptableObject

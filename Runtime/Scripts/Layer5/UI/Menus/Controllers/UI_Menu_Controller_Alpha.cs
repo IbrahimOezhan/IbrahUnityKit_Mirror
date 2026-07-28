@@ -9,10 +9,9 @@ namespace IbrahKit
     [RequireComponent(typeof(CanvasGroup))]
     public class UI_Menu_Controller_Alpha : MonoBehaviour
     {
-        private CanvasGroup canvasGroup;
-
         [SerializeField, HideInInspector] private int hiddenCount = 0;
         [SerializeField, HideInInspector] private float enabledAlpha;
+        private CanvasGroup canvasGroup;
 
         public void SetEnabledAlpha(float value)
         {

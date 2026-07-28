@@ -10,7 +10,7 @@ using System.Net.Sockets;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing network related utility methods
+    ///     Static Utility Class providing network related utility methods
     /// </summary>
     public static class Network_Utilities
     {

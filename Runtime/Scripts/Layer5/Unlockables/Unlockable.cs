@@ -19,6 +19,11 @@ namespace IbrahKit.Unlockables
         [TabGroup("Base Data"), SerializeField]
         private Unlockable[] unlockOnUnlock;
 
+        public string GetKey()
+        {
+            return key;
+        }
+
         public virtual void Unlock()
         {
             if (IsUnlocked()) return;
@@ -56,11 +61,6 @@ namespace IbrahKit.Unlockables
             }
 
             return false;
-        }
-
-        public string GetKey()
-        {
-            return key;
         }
     }
 }

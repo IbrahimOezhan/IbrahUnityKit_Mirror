@@ -9,9 +9,8 @@ namespace IbrahKit.ThreeDPlayer
     [Serializable]
     public abstract class Player_Input_Handler
     {
-        protected bool locked = false;
-
         protected Player3D_Input input;
+        protected bool locked = false;
 
         public virtual bool Init(Player3D_Input input)
         {

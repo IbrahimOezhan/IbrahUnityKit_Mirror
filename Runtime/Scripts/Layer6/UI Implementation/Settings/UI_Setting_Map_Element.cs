@@ -15,14 +15,19 @@ public class UI_Setting_Map_Element
     [SerializeField] private Setting_Config_Base config;
 
     /// <summary>
-    /// Creates a dummy setting and dummy ui to check if they are compatible
-    /// and if so creates the real setting and ui and connects them
+    ///     Creates a dummy setting and dummy ui to check if they are compatible
+    ///     and if so creates the real setting and ui and connects them
     /// </summary>
-    /// <param name="positon"></param> The pos at which to spawn
-    /// <param name="rotation"></param> The rot at which to spawn
-    /// <param name="parent"></param> The parent at which to spawn
-    /// <param name="result"></param> The resulting ui setting instance
-    /// <returns></returns> Whether the UI was created
+    /// <param name="positon"></param>
+    /// The pos at which to spawn
+    /// <param name="rotation"></param>
+    /// The rot at which to spawn
+    /// <param name="parent"></param>
+    /// The parent at which to spawn
+    /// <param name="result"></param>
+    /// The resulting ui setting instance
+    /// <returns></returns>
+    /// Whether the UI was created
     public bool TryCreateUserInterface(Vector3 positon, Quaternion rotation, Transform parent, out UI_Setting result)
     {
         Setting setting = config.GetDummy();

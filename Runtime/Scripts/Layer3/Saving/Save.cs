@@ -13,28 +13,18 @@ namespace IbrahKit.Save
 {
     internal partial class Save
     {
-        private string key;
-
-        private string folderPath;
-
-        private string version;
-
-        private readonly Save_State state = Save_State.Valid;
-
         private readonly Save_State[] fileState = new Save_State[0];
 
         private readonly HashSet<Savable> inUse = new();
 
         private readonly Dictionary<string, Savable> loadable = new();
 
-        public void Init(string folderPath, string key)
-        {
-            this.folderPath = folderPath;
+        private readonly Save_State state = Save_State.Valid;
 
-            this.key = key;
+        private string folderPath;
+        private string key;
 
-            version = Path.GetFileName(folderPath);
-        }
+        private string version;
 
         public Save(List<string> names, List<Savable> savables, string folderPath, string key, bool encrypt)
         {
@@ -58,7 +48,7 @@ namespace IbrahKit.Save
         public Save(string folderPath, string key)
         {
             string[] filePaths;
-            
+
             Init(folderPath, key);
 
             try
@@ -111,8 +101,17 @@ namespace IbrahKit.Save
             }
         }
 
+        public void Init(string folderPath, string key)
+        {
+            this.folderPath = folderPath;
+
+            this.key = key;
+
+            version = Path.GetFileName(folderPath);
+        }
+
         /// <summary>
-        /// Gets the amount of valid files in this save
+        ///     Gets the amount of valid files in this save
         /// </summary>
         /// <returns>The amount of valid files</returns>
         public int GetValidFileCount()
@@ -128,25 +127,25 @@ namespace IbrahKit.Save
         }
 
         /// <summary>
-        /// Gets the total state of the this save
+        ///     Gets the total state of the this save
         /// </summary>
         /// <returns>Gets the total state of this save</returns>
         internal Save_State GetState() => state;
 
         /// <summary>
-        /// Gets the keys of this save
+        ///     Gets the keys of this save
         /// </summary>
         /// <returns>The keys of this save</returns>
         public List<string> GetKeys() => loadable.Keys.ToList();
 
         /// <summary>
-        /// Gets the savables of this save
+        ///     Gets the savables of this save
         /// </summary>
         /// <returns>Gets the savables</returns>
         public List<Savable> GetSavables() => loadable.Values.ToList();
 
         /// <summary>
-        /// Deletes this save
+        ///     Deletes this save
         /// </summary>
         public void Delete()
         {
@@ -154,7 +153,7 @@ namespace IbrahKit.Save
         }
 
         /// <summary>
-        /// Loads a savable from this save
+        ///     Loads a savable from this save
         /// </summary>
         /// <param name="name">The name of the savable to load</param>
         /// <param name="defaultValue">The default value of the savable to load incase the savable doesnt exist</param>
@@ -182,12 +181,15 @@ namespace IbrahKit.Save
         }
 
         /// <summary>
-        /// Returns a savable
+        ///     Returns a savable
         /// </summary>
         /// <param name="name">The name of the savable to return</param>
         /// <param name="value">The value of the saveable to return</param>
         /// <param name="encrypt">Whether to encrypt the returned savable</param>
-        /// <param name="stillInUse">Whether its still in use. In that case don't remove it from the inUse list. This can be used for saving the game without quitting</param>
+        /// <param name="stillInUse">
+        ///     Whether its still in use. In that case don't remove it from the inUse list. This can be used
+        ///     for saving the game without quitting
+        /// </param>
         public void Return(string name, Savable value, bool encrypt, bool stillInUse = false)
         {
             try
@@ -211,10 +213,13 @@ namespace IbrahKit.Save
         }
 
         /// <summary>
-        /// Returns all loaded savables
+        ///     Returns all loaded savables
         /// </summary>
         /// <param name="encrypt">Whether to encrypt the savables</param>
-        /// <param name="stillInuse">Whether they are still in use. In that case don't remove them from the inUse list. This can be used for saving the game without quitting</param>
+        /// <param name="stillInuse">
+        ///     Whether they are still in use. In that case don't remove them from the inUse list. This can be
+        ///     used for saving the game without quitting
+        /// </param>
         public void FlushAll(bool encrypt, bool stillInuse = true)
         {
             foreach (var item in loadable)
@@ -227,7 +232,7 @@ namespace IbrahKit.Save
         }
 
         /// <summary>
-        /// Compare this save's version to another save
+        ///     Compare this save's version to another save
         /// </summary>
         /// <param name="otherSave">The second save to compare to</param>
         /// <returns>An integer representing what save has the lower version</returns>

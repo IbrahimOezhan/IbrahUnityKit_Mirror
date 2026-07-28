@@ -1,7 +1,10 @@
+#region
 
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Unlockables.Achievements
 {
@@ -17,7 +20,7 @@ namespace IbrahKit.Unlockables.Achievements
         private Sprite sprite;
 
         /// <summary>
-        /// Returns the data to be displayed. A sprite, a name and a description
+        ///     Returns the data to be displayed. A sprite, a name and a description
         /// </summary>
         /// <param name="secretLoca">The local key incase the achievement is secret</param>
         /// <param name="secretSprite">The sprite incase the achievement is secret</param>

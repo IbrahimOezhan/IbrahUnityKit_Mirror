@@ -11,20 +11,19 @@ namespace IbrahKit
     [RequireComponent(typeof(Canvas))]
     public class UI_Menu_Controller_Canvas : MonoBehaviour
     {
+        [SerializeField, Required] private Canvas canvas;
         public Action OnFocusOrResolutionChanged;
 
-        [SerializeField, Required] private Canvas canvas;
-
-        public Canvas GetCanvas() => canvas;
+        private void OnApplicationFocus(bool _focus)
+        {
+            OnFocusOrResolutionChanged?.Invoke();
+        }
 
         private void OnRectTransformDimensionsChange()
         {
             OnFocusOrResolutionChanged?.Invoke();
         }
 
-        private void OnApplicationFocus(bool _focus)
-        {
-            OnFocusOrResolutionChanged?.Invoke();
-        }
+        public Canvas GetCanvas() => canvas;
     }
 }

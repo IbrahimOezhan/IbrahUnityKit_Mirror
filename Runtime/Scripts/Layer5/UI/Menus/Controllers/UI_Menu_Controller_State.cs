@@ -13,37 +13,11 @@ namespace IbrahKit.UI
     {
         [SerializeField, ReadOnly] private MenuState state = MenuState.DISABLED;
 
-        protected override void OnInit()
-        {
-        }
-
-        public override void OnMenuEnabled()
-        {
-        }
-
-        public override void Lifecycle()
-        {
-        }
-
-        public override void OnMenuDisabled()
-        {
-        }
-
         public void Enable() => Enable<Menu_Transition_Instant>();
 
         public void Disable() => Disable<Menu_Transition_Instant>();
 
         public void Toggle() => Toggle<Menu_Transition_Instant>();
-
-        public void ToggleEditor(UI_Menu menu)
-        {
-            if (Application.isPlaying)
-                return;
-
-            bool menuEnabled = GetCompactState() == MenuStateCompact.ENABLED;
-
-            Menu_Transition.Transition(menuEnabled ? menu : null, menuEnabled ? null : menu);
-        }
 
         public void Enable<T>(params object[] args) where T : Menu_Transition
         {
@@ -114,5 +88,31 @@ namespace IbrahKit.UI
         public MenuStateCompact GetCompactState() => state == MenuState.ENABLED || state == MenuState.ENABLING
             ? MenuStateCompact.ENABLED
             : MenuStateCompact.DISABLED;
+
+        protected override void OnInit()
+        {
+        }
+
+        public override void OnMenuEnabled()
+        {
+        }
+
+        public override void Lifecycle()
+        {
+        }
+
+        public override void OnMenuDisabled()
+        {
+        }
+
+        public void ToggleEditor(UI_Menu menu)
+        {
+            if (Application.isPlaying)
+                return;
+
+            bool menuEnabled = GetCompactState() == MenuStateCompact.ENABLED;
+
+            Menu_Transition.Transition(menuEnabled ? menu : null, menuEnabled ? null : menu);
+        }
     }
 }

@@ -11,9 +11,8 @@ namespace IbrahKit.UI
     [Serializable]
     public abstract class Menu_Transition
     {
-        protected UI_Menu menuIn;
-
         [SerializeField] protected UI_Menu menuOut;
+        protected UI_Menu menuIn;
 
         public Menu_Transition(UI_Menu menuIn, UI_Menu menuOut)
         {

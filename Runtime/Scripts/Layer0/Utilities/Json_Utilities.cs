@@ -10,7 +10,7 @@ using UnityEngine;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing json related utility methods
+    ///     Static Utility Class providing json related utility methods
     /// </summary>
     public static class Json_Utilities
     {
@@ -52,7 +52,7 @@ namespace IbrahKit.Utilities
                 return true;
             }
             catch (Exception e)
-            {  
+            {
                 Debug.LogWarning(e.Message);
 
                 result = default;

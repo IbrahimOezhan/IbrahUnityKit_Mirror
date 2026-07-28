@@ -9,9 +9,9 @@ namespace IbrahKit.ThreeDPlayer
     public class PlayerRbPush : MonoBehaviour
     {
         [SerializeField] private LayerMask pushLayers;
-        
+
         [SerializeField] private bool canPush;
-        
+
         [Range(0.5f, 5f)] [SerializeField] private float strength = 1.1f;
 
         private void OnControllerColliderHit(ControllerColliderHit hit)

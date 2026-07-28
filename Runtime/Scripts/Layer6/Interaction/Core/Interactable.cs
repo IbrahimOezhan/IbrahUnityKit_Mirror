@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using IbrahKit.Localization;
 using Sirenix.OdinInspector;
@@ -11,29 +10,27 @@ using UnityEngine;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// Mono Behavior that holds a list of Events to be called on Interaction
+    ///     Mono Behavior that holds a list of Events to be called on Interaction
     /// </summary>
     public class Interactable : MonoBehaviour
     {
-        private bool canInteract = true;
-
-        private readonly List<Interaction> interactions = new();
-
         [SerializeField, SerializeReference, ValidateInput(nameof(ListValidate))]
         private List<Interaction_Event> iEvents = new();
 
-        [SerializeField]
-        private bool overrideKey;
+        [SerializeField] private bool overrideKey;
 
         [ShowIf(nameof(overrideKey)), SerializeField]
         private Local_Key interactionKey;
 
-        private void OnDestroy()
+        private readonly List<Interaction> interactions = new();
+        private bool canInteract = true;
+
+        private void OnDisable()
         {
             interactions.ForEach(x => x.EndInteraction());
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             interactions.ForEach(x => x.EndInteraction());
         }
@@ -59,7 +56,7 @@ namespace IbrahKit.Interaction
 
         public string OverrideKey(string key)
         {
-            return overrideKey? interactionKey : key;
+            return overrideKey ? interactionKey : key;
         }
 
         public bool ListValidate(List<Interaction_Event> events)

@@ -11,8 +11,8 @@ namespace IbrahKit.Interaction
             private readonly Interactable interactable;
             private Interaction interaction;
 
-            public InteractionStateInteracting(float cooldown, Interaction_Manager manager, Interactable interactable) : 
-                base( cooldown, manager)
+            public InteractionStateInteracting(float cooldown, Interaction_Manager manager, Interactable interactable) :
+                base(cooldown, manager)
             {
                 this.interactable = interactable;
             }
@@ -31,7 +31,6 @@ namespace IbrahKit.Interaction
 
             public override void StateExit()
             {
-
             }
 
             public Interactable GetInteractable() => interactable;

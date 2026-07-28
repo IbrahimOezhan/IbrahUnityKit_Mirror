@@ -1,12 +1,24 @@
+#region
+
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Utilities
 {
     public class Vector4Int
     {
         private int x, y, z, w;
-        
-        public int this [int index]
+
+        public Vector4Int(int x, int y, int z, int w)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
+        }
+
+        public int this[int index]
         {
             get
             {
@@ -46,14 +58,6 @@ namespace IbrahKit.Utilities
                         break;
                 }
             }
-        }
-
-        public Vector4Int(int x, int y, int z, int w)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
         }
     }
 }

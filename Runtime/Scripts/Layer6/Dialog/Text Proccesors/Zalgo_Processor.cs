@@ -13,7 +13,6 @@ namespace IbrahKit.Dialog
 
         public override string Process(string text)
         {
-
             return String_Utilities.GenerateZalgoText(text, intensity);
         }
     }

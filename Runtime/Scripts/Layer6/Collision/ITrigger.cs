@@ -6,6 +6,5 @@ namespace IbrahKit.Collision
 {
     public interface ITrigger
     {
-
     }
 }

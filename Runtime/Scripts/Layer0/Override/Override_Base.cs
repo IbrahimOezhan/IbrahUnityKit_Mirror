@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
@@ -9,15 +8,14 @@ using UnityEngine;
 namespace IbrahKit.Override
 {
     /// <summary>
-    /// Generic class to provide functionality to override data
+    ///     Generic class to provide functionality to override data
     /// </summary>
     /// <typeparam name="TType">The type to provide overrides for</typeparam>
     [Serializable]
     public abstract class Override_Base<TType>
     {
-        private readonly IOverrideProcessor<TType> processor;
-
         [SerializeField] private TType baseValue;
+        private readonly IOverrideProcessor<TType> processor;
 
         protected Override_Base(TType baseValue, IOverrideProcessor<TType> processor)
         {
@@ -28,5 +26,5 @@ namespace IbrahKit.Override
         public TType GetValue() => processor.GetOverride(baseValue);
 
         public IOverrideProcessor<TType> GetProcessor() => processor;
-    } 
+    }
 }

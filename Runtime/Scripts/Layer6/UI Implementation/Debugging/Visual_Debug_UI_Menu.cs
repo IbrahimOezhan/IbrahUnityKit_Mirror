@@ -15,13 +15,12 @@ namespace IbrahKit
 {
     public class Visual_Debug_UI_Menu : UI_Menu, ISelfValidator
     {
-        private UI_Modifier_Extension_Text_Setter textSetter;
-
-        private Action action;
-
         [SerializeField] private UI_Modifier debugContent;
 
         [SerializeField, Required] private Key debugKey;
+
+        private Action action;
+        private UI_Modifier_Extension_Text_Setter textSetter;
 
         protected override void Awake()
         {
@@ -35,7 +34,7 @@ namespace IbrahKit
                 GetStateController().Toggle();
             };
 
-            if(Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
+            if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.RegisterAction(debugKey, action);
             }
@@ -45,9 +44,23 @@ namespace IbrahKit
         {
             base.OnDisable();
 
-            if(Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
+            if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.UnregisterAction(debugKey, action);
+            }
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if (debugContent == null)
+            {
+                result.AddError("Debug Content is null");
+                return;
+            }
+
+            if (!debugContent.TryGetExtension(out textSetter))
+            {
+                result.AddError("UI Interactive doesnt contain Text Setter");
             }
         }
 
@@ -63,20 +76,6 @@ namespace IbrahKit
             base.OnMenuEnabled();
 
             debugContent.TryGetExtension(out textSetter);
-        }
-
-        public void Validate(SelfValidationResult result)
-        {
-            if (debugContent == null)
-            {
-                result.AddError("Debug Content is null");
-                return;
-            }
-
-            if (!debugContent.TryGetExtension(out textSetter))
-            {
-                result.AddError("UI Interactive doesnt contain Text Setter");
-            }
         }
     }
 }

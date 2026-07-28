@@ -15,9 +15,8 @@ using static IbrahKit.Localization.Local_Manager;
 
 namespace IbrahKit.Localization
 {
-    
     /// <summary>
-    /// Holds the localization data
+    ///     Holds the localization data
     /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
@@ -30,7 +29,43 @@ namespace IbrahKit.Localization
 
         [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
 
-        [OdinSerialize, ReadOnly] private SortedList<SystemLanguage,Local_Language> languages = new();
+        [OdinSerialize, ReadOnly] private SortedList<SystemLanguage, Local_Language> languages = new();
+
+        [Button]
+        public void OnFileUpdaate()
+        {
+            if (localizationAssets == null) return;
+
+            keyValuePairs.Clear();
+
+            List<string> lines = localizationAssets.text.Split("\n")
+                .Where(x => !x.Trim().Replace(seperator.ToString(), string.Empty).IsEmpty()).ToList();
+
+            if (lines.Count == 0)
+            {
+                IbrahDebug.LogWarning("No elements after trimming");
+
+                return;
+            }
+
+            if (!TryGetLanguages(out languages, lines.First().Split(seperator)))
+            {
+                return;
+            }
+
+            PopulateDictionary(lines.Skip(0), seperator);
+
+            Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
+
+            Key_Database_Finder.TrySetKeys(LANG, languages.Values.Select(x => x.GetNative()).ToList());
+
+            Key_Database_Finder.TrySetKeys(SYS, languages.Values.Select(x => x.GetSys()).ToList());
+        }
+
+        public void Validate(SelfValidationResult result)
+        {
+            if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
+        }
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
@@ -55,44 +90,13 @@ namespace IbrahKit.Localization
             result = localizedValues[index];
 
             if (!result.IsEmpty()) return true;
-            
+
             IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
 
             return false;
-
         }
 
-        [Button]
-        public void OnFileUpdaate()
-        {
-            if (localizationAssets == null) return;
-
-            keyValuePairs.Clear();
-
-            List<string> lines = localizationAssets.text.Split("\n").Where(x => !x.Trim().Replace(seperator.ToString(), string.Empty).IsEmpty()).ToList();
-
-            if (lines.Count == 0)
-            {
-                IbrahDebug.LogWarning("No elements after trimming");
-
-                return;
-            }
-
-            if (!TryGetLanguages(out languages, lines.First().Split(seperator)))
-            {
-                return;
-            }
-
-            PopulateDictionary(lines.Skip(0), seperator);
-
-            Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
-
-            Key_Database_Finder.TrySetKeys(LANG, languages.Values.Select(x => x.GetNative()).ToList());
-
-            Key_Database_Finder.TrySetKeys(SYS, languages.Values.Select(x => x.GetSys()).ToList());
-        }
-
-        private bool TryGetLanguages(out SortedList<SystemLanguage,Local_Language> languages, string[] line)
+        private bool TryGetLanguages(out SortedList<SystemLanguage, Local_Language> languages, string[] line)
         {
             languages = new();
 
@@ -119,7 +123,7 @@ namespace IbrahKit.Localization
                     return false;
                 }
 
-                languages.Add(result.GetSystemLanguage(),result);
+                languages.Add(result.GetSystemLanguage(), result);
             }
 
             return true;
@@ -153,13 +157,8 @@ namespace IbrahKit.Localization
             }
         }
 
-        public void Validate(SelfValidationResult result)
-        {
-            if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
-        }
-
         public Local_Language GetFirstLanguage() => languages.First().Value;
 
-        public SortedList<SystemLanguage,Local_Language> GetLanguages() => languages;
+        public SortedList<SystemLanguage, Local_Language> GetLanguages() => languages;
     }
 }

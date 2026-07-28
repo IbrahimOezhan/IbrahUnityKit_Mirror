@@ -11,13 +11,12 @@ namespace IbrahKit
 {
     public class ScrollView_Controller_Handle : MonoBehaviour
     {
-        private bool holding;
-
-        private Vector2 lastMousePos;
-
         [SerializeField] private ScrollView scrollView;
 
         [SerializeField] private UI_Selectable selectable;
+        private bool holding;
+
+        private Vector2 lastMousePos;
 
         private void Awake()
         {

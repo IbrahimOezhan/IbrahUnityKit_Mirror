@@ -8,22 +8,22 @@ using System.Collections.Generic;
 namespace IbrahKit.Interaction
 {
     /// <summary>
-    /// An Interaction between a specific player and an object. 
+    ///     An Interaction between a specific player and an object.
     /// </summary>
     public class Interaction
     {
-        private bool isDone;
-        private readonly Interaction_Manager manager;
-        private readonly Interactable interactable;
         private readonly List<Interaction_Event> events;
-    
-        public Interaction(Interaction_Manager manager,Interactable interactable,List<Interaction_Event> events)
+        private readonly Interactable interactable;
+        private readonly Interaction_Manager manager;
+        private bool isDone;
+
+        public Interaction(Interaction_Manager manager, Interactable interactable, List<Interaction_Event> events)
         {
             this.interactable = interactable;
             this.events = events;
             this.manager = manager;
         }
-        
+
         public IEnumerator SelectInteraction()
         {
             for (int i = 0; i < events.Count; i++)
@@ -33,7 +33,7 @@ namespace IbrahKit.Interaction
 
             EndInteraction();
         }
-    
+
         public void EndInteraction()
         {
             isDone = true;

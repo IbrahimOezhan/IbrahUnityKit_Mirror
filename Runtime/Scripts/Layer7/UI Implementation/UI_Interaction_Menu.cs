@@ -11,11 +11,10 @@ namespace IbrahKit.UI
 {
     public class UI_Interaction_Menu : UI_Menu
     {
-        private UI_Modifier_Extension_Localization localization;
-
         [FoldoutGroup("UI"), SerializeField] private UI_Modifier textInteract;
 
         [SerializeField] private Interaction_Manager manager;
+        private UI_Modifier_Extension_Localization localization;
 
         private Interaction_Manager.InteractionMachineState state;
 
@@ -39,7 +38,6 @@ namespace IbrahKit.UI
         }
 
         private void OnInteractionStateChanged(Interaction_Manager.InteractionMachineState oldState,
-            
             Interaction_Manager.InteractionMachineState newState)
         {
             this.state = newState;

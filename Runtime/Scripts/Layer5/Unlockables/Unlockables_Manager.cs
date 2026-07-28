@@ -14,8 +14,8 @@ using UnityEngine;
 namespace IbrahKit.Unlockables
 {
     /// <summary>
-    /// Wrapper on top of the save system for saving persistent unlocks.
-    /// Can be used for things such as collectables
+    ///     Wrapper on top of the save system for saving persistent unlocks.
+    ///     Can be used for things such as collectables
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.unlock)]
     public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
@@ -23,13 +23,6 @@ namespace IbrahKit.Unlockables
         private const string SAVE_DATA_NAME = "Unlockables";
 
         [SerializeField] private SaveData saveData = new();
-
-        protected override void InstanceAwake()
-        {
-            base.InstanceAwake();
-
-            Save_Manager.GetInstance().TryLoad(SAVE_DATA_NAME, out saveData);
-        }
 
         private void OnDestroy()
         {
@@ -40,6 +33,13 @@ namespace IbrahKit.Unlockables
                     result.Return(SAVE_DATA_NAME, saveData);
                 }
             }
+        }
+
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            Save_Manager.GetInstance().TryLoad(SAVE_DATA_NAME, out saveData);
         }
 
         public void Unlock(IEnumerable<Unlockable> unlockable)

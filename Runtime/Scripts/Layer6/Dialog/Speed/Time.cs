@@ -10,6 +10,14 @@ namespace IbrahKit.Dialog
     [Serializable]
     public abstract class Time
     {
+        private readonly Dictionary<char, int> delayChars = new()
+        {
+            { ',', 3 },
+            { '.', 4 },
+            { '!', 4 },
+            { '?', 4 }
+        };
+
         public float GetDelay(char text)
         {
             return GetDelayPro(text) * SpecialCharDelay(text);
@@ -22,13 +30,5 @@ namespace IbrahKit.Dialog
             if (delayChars.TryGetValue(_char, out int _delay)) return _delay;
             return 1;
         }
-
-        private readonly Dictionary<char, int> delayChars = new()
-        {
-        {',' , 3},
-        {'.' , 4},
-        {'!' , 4},
-        {'?' , 4}
-        };
     }
 }

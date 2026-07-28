@@ -7,7 +7,5 @@ namespace IbrahKit.UI
         public UI_Menu_Config GetMenuConfig();
 
         public UI_Menu_Controller_Canvas GetCanvasController();
-        
-  
     }
 }

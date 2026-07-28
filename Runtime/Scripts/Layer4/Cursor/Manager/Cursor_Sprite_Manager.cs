@@ -15,9 +15,12 @@ namespace IbrahKit.Input
 {
     public class Cursor_Sprite_Manager : Manager_Global<Cursor_Sprite_Manager>
     {
-        private CursorState state;
-
-        private Camera main;
+        public enum CursorState
+        {
+            None,
+            Hovering,
+            Down,
+        }
 
         [SerializeField] private Transform cursorTransform;
 
@@ -27,10 +30,13 @@ namespace IbrahKit.Input
 
         [SerializeField] private Image cursorImage;
 
+        private Camera main;
+        private CursorState state;
+
         private void Update()
         {
             if (!main) main = Camera.main;
-            
+
             SetCursorState();
 
             SetCursorPos();
@@ -47,7 +53,7 @@ namespace IbrahKit.Input
             Cursor_Input_Manager cim = Cursor_Input_Manager.GetInstance();
 
             if (!cim) return;
-            
+
             bool hovering = IsHovering(main, EventSystem.current, cim.GetMousePos());
 
             if (hovering)
@@ -140,13 +146,6 @@ namespace IbrahKit.Input
             }
 
             return false;
-        }
-
-        public enum CursorState
-        {
-            None,
-            Hovering,
-            Down,
         }
     }
 }

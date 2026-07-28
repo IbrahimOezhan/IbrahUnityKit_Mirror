@@ -8,7 +8,8 @@ using UnityEngine.UI;
 namespace IbrahKit.Input
 {
     /// <summary>
-    /// A component which allows the custom cursor to change states when hovering over this rect transform even without a graphic
+    ///     A component which allows the custom cursor to change states when hovering over this rect transform even without a
+    ///     graphic
     /// </summary>
     [RequireComponent(typeof(CanvasRenderer))]
     public class UI_CursorHandler : Graphic, ICursorHandler

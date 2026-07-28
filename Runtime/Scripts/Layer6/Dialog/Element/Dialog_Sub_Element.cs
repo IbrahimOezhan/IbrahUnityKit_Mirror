@@ -14,19 +14,21 @@ namespace IbrahKit.Dialog
     [Serializable]
     public class Dialog_Sub_Element
     {
+        public enum Mode
+        {
+            SKIPABLE,
+            NOTSKIPABLE
+        }
+
         public bool useName = true;
 
-        [SerializeField, ShowIf("useName")]
-        private Local_Key nameKey;
+        [SerializeField, ShowIf("useName")] private Local_Key nameKey;
 
-        [SerializeReference]
-        private List<TextProcessor> processors = new();
+        [SerializeReference] private List<TextProcessor> processors = new();
 
-        [SerializeReference]
-        private Time time;
+        [SerializeReference] private Time time;
 
-        [SerializeField]
-        private KeyMode keyMode;
+        [SerializeField] private KeyMode keyMode;
 
         [SerializeField, ShowIf("keyMode", KeyMode.NORMAL)]
         private Local_Key contentKey;
@@ -34,8 +36,7 @@ namespace IbrahKit.Dialog
         [SerializeField, ShowIf("keyMode", KeyMode.RANDOM)]
         private Local_Key[] randomKeys;
 
-        [SerializeField]
-        private Mode mode;
+        [SerializeField] private Mode mode;
 
         public Mode GetMode() => mode;
 
@@ -76,12 +77,6 @@ namespace IbrahKit.Dialog
         {
             NORMAL,
             RANDOM
-        }
-
-        public enum Mode
-        {
-            SKIPABLE,
-            NOTSKIPABLE
         }
     }
 }

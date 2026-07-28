@@ -9,7 +9,7 @@ using System.Linq;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static class providing utility methods related to Type
+    ///     Static class providing utility methods related to Type
     /// </summary>
     public static class Type_Utilities
     {
@@ -45,7 +45,7 @@ namespace IbrahKit.Utilities
                 throw new NullReferenceException("Base type is null");
             }
 
-            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => 
+            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
                 {
                     try
                     {
@@ -59,17 +59,18 @@ namespace IbrahKit.Utilities
             ).Where(t =>
             {
                 if (t.IsAbstract) return false;
-                
+
                 if (!baseType.IsGenericType)
                 {
                     return baseType.IsAssignableFrom(t);
                 }
                 else
                 {
-                    if (baseType.IsInterface) return t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
-                    
+                    if (baseType.IsInterface)
+                        return t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
+
                     Type ty = t;
-                    
+
                     while (ty != null && ty != typeof(object))
                     {
                         Type cur = ty.IsGenericType ? ty.GetGenericTypeDefinition() : ty;
@@ -81,12 +82,11 @@ namespace IbrahKit.Utilities
 
                     return false;
                 }
-                
-            }) .Except(except ?? Type.EmptyTypes);
+            }).Except(except ?? Type.EmptyTypes);
 
             return types;
         }
-        
+
         public static IEnumerable<string> GetSubTypesAsString(Type baseType, IEnumerable<Type> except = null)
         {
             List<string> subtypes = GetSubTypes(baseType, except).Select(x => x.FullName).ToList();
@@ -95,7 +95,7 @@ namespace IbrahKit.Utilities
 
             if (subtypes.Count > 0) subtypes.Insert(0, "None");
             else subtypes.Add("None");
-            
+
             return subtypes;
         }
     }

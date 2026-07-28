@@ -1,7 +1,7 @@
 namespace IbrahKit.Localization
 {
     /// <summary>
-    /// Takes a localized string and modifies it
+    ///     Takes a localized string and modifies it
     /// </summary>
     public abstract class Local_Processor
     {

@@ -14,8 +14,6 @@ namespace IbrahKit.UI
     public abstract class UI_Selectable_Transition<TTarget, SOTarget> : UI_Selectable_Transition
         where TTarget : Component where SOTarget : Selectable_Transition_SO
     {
-        private bool initialized;
-
 #if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
 #endif
@@ -30,6 +28,7 @@ namespace IbrahKit.UI
         [SerializeField] private TTarget target;
 
         [SerializeField] private SOTarget config;
+        private bool initialized;
 
         private bool IsSoNull() => config == null;
 
@@ -50,7 +49,7 @@ namespace IbrahKit.UI
             getComponentTarget = go.GetComponent<TTarget>();
 
             OverrideReplace<TTarget> replace = new OverrideReplace<TTarget>();
-            
+
             fTarget = new(getComponentTarget, replace);
 
             replace.AddOverride(target);

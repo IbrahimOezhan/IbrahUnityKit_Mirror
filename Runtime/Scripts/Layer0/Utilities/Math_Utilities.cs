@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace IbrahKit.Utilities
 {
     /// <summary>
-    /// Static Utility Class providing math related utility methods
+    ///     Static Utility Class providing math related utility methods
     /// </summary>
     public static class Math_Utilities
     {
@@ -79,7 +79,7 @@ namespace IbrahKit.Utilities
         {
             return Map(x, ranges.x, ranges.y, ranges.z, ranges.w);
         }
-        
+
         public static float Map(float x, float inMin, float inMax, float outMin, float outMax)
         {
             return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
@@ -137,7 +137,7 @@ namespace IbrahKit.Utilities
             {
                 return max;
             }
-           
+
             if (number > max)
             {
                 return min;
@@ -153,7 +153,7 @@ namespace IbrahKit.Utilities
 
         public static float GetRandom(this Vector2 vector)
         {
-            return  Random.Range(vector.x, vector.y);
+            return Random.Range(vector.x, vector.y);
         }
 
         public static int GetRandom(this Vector2Int vector)

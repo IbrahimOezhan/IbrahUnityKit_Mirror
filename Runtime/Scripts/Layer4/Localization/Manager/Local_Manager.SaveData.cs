@@ -12,7 +12,7 @@ namespace IbrahKit.Localization
     public partial class Local_Manager
     {
         /// <summary>
-        /// Holds the save data for the localization manager
+        ///     Holds the save data for the localization manager
         /// </summary>
         [Serializable]
         private class SaveData : Savable

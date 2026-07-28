@@ -11,6 +11,8 @@ namespace IbrahKit.Settings
     {
         private Setting setting;
 
+        public abstract void OnMenuInit(UI_Menu menu);
+
         public bool CanSpawn(Setting setting)
         {
             return CanSpawnPro(setting);
@@ -28,7 +30,5 @@ namespace IbrahKit.Settings
         public abstract void UpdateUI();
 
         public Setting GetSetting() => setting;
-
-        public abstract void OnMenuInit(UI_Menu menu);
     }
 }
