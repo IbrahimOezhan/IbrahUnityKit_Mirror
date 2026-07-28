@@ -13,7 +13,7 @@ namespace IbrahKit.UI
     {
         [SerializeField] private UI_Setting_Map_Element config;
 
-        protected override bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go)
+        protected override bool Spawn(RectTransform parent, UI_Menu menu, out GameObject go)
         {
             if (config.TryCreateUserInterface(Vector3.zero, Quaternion.identity, parent, out UI_Setting res))
             {

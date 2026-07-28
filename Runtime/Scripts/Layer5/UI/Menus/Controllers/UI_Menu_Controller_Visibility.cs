@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 #endregion
@@ -15,13 +16,13 @@ namespace IbrahKit.UI
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";
 
-        [TabGroup("Menu Settings", order: -1), SerializeField, Required]
+        [SerializeField, Required]
         private UI_Menu_Controller_Alpha alphaController;
 
-        [TabGroup("Menu Settings", order: -1), SerializeField]
+        [SerializeField]
         protected bool preventHideOnPause;
 
-        [TabGroup("Runtime", order: -1), SerializeField, ReadOnly]
+        [OdinSerialize, ReadOnly]
         private HashSet<string> hiddenBy = new();
 
         public void SetInteractable(bool value)
@@ -78,11 +79,9 @@ namespace IbrahKit.UI
 
         public override void OnMenuEnabled()
         {
-            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
-            {
-                result.OnHide += GU_Hide;
-                result.InvokeHide();
-            }
+            if (!UI_Menu_Manager.TryGet(out UI_Menu_Manager result)) return;
+            result.OnHide += GU_Hide;
+            result.InvokeHide();
         }
 
         public override void Lifecycle()

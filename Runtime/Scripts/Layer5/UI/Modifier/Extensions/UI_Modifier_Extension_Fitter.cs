@@ -11,7 +11,7 @@ using Application = UnityEngine.Application;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class UI_Interactive_Extension_Fitter : UI_Interactive_Extension
+    public class UI_Modifier_Extension_Fitter : UI_Modifier_Extension
     {
         private Nullable<Vector2> lastPreferredSize = null;
 
@@ -36,7 +36,7 @@ namespace IbrahKit.UI
         [SerializeField, HorizontalGroup("Height"), ShowIf(nameof(scaleHeight))]
         protected int heightOffset;
 
-        public UI_Interactive_Extension_Fitter(UI_Interactive extension) : base(extension)
+        public UI_Modifier_Extension_Fitter(UI_Modifier extension) : base(extension)
         {
         }
 
@@ -53,7 +53,7 @@ namespace IbrahKit.UI
                 return false;
             }
 
-            interactive.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged +=
+            modifier.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged +=
                 extension.RunExtensions;
 
             return true;
@@ -85,7 +85,7 @@ namespace IbrahKit.UI
 
         protected override void CleanupPro()
         {
-            interactive.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged -=
+            modifier.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged -=
                 extension.RunExtensions;
         }
 

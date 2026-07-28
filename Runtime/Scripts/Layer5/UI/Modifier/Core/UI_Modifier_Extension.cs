@@ -3,17 +3,18 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #endregion
 
 namespace IbrahKit.UI
 {
     [Serializable]
-    public abstract class UI_Interactive_Extension : Extension.Extension
+    public abstract class UI_Modifier_Extension : Extension.Extension
     {
-        [SerializeField, ReadOnly] protected UI_Interactive interactive;
+        [FormerlySerializedAs("interactive")] [SerializeField, ReadOnly] protected UI_Modifier modifier;
 
-        protected UI_Interactive_Extension(UI_Interactive extension) : base(extension)
+        protected UI_Modifier_Extension(UI_Modifier extension) : base(extension)
         {
             if (extension == null)
             {
@@ -21,7 +22,7 @@ namespace IbrahKit.UI
                 return;
             }
 
-            interactive = extension;
+            modifier = extension;
         }
 
         public virtual void Validate(SelfValidationResult validationResult, GameObject content)

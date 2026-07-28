@@ -8,10 +8,9 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class Menu_Item_Back : Menu_Item_Button_Base
+    public class Menu_Item_Button_Definition_Back : Menu_Item_Button_Definition
     {
-        protected override bool TrySpawnProPro(RectTransform parent, UI_Menu menu,
-            UI_Menu_Item_Button_Text spawnedButton)
+        protected override bool AfterSpawn(RectTransform parent, UI_Menu menu, Menu_Item_Button spawnedButton)
         {
             spawnedButton.GetSelectable().GetStateController().GetOnPressSuccess().AddListener(() =>
             {

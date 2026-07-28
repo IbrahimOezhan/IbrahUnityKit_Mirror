@@ -1,11 +1,13 @@
 #region
 
+using System;
 using IbrahKit.UI;
 
 #endregion
 
 namespace IbrahKit
 {
+    [Serializable]
     public abstract class UI_Selectable_Controller
     {
         private UI_Selectable selectable;

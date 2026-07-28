@@ -11,9 +11,9 @@ namespace IbrahKit.UI
 {
     public class UI_Interaction_Menu : UI_Menu
     {
-        private UI_Interactive_Extension_Localization localization;
+        private UI_Modifier_Extension_Localization localization;
 
-        [FoldoutGroup("UI"), SerializeField] private UI_Interactive textInteract;
+        [FoldoutGroup("UI"), SerializeField] private UI_Modifier textInteract;
 
         [SerializeField] private Interaction_Manager manager;
 

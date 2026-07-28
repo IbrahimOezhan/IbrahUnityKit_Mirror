@@ -8,11 +8,11 @@ using System.Text.Json.Serialization;
 
 namespace IbrahKit.Save
 {
+    [Serializable]
     public class Savable
     {
-        [JsonInclude]
-        [SuppressMessage("Style", "IDE0044:Add readonly modifier",
-            Justification = "Cannot be used for attributes that get deserialized")]
+        [JsonInclude,SuppressMessage("Style", "IDE0044:Add readonly modifier",
+             Justification = "Cannot be used for attributes that get deserialized")]
         private string fullName;
 
         public Savable()

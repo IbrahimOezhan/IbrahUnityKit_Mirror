@@ -10,7 +10,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class UI_Interactive_Extension_Localization : UI_Interactive_Extension_Text_Modifier
+    public class UI_Modifier_Extension_Localization : UI_Modifier_Extension_Text_Modifier
     {
         [SerializeField] protected Local_Key key;
 
@@ -18,7 +18,7 @@ namespace IbrahKit.UI
 
         [SerializeField] protected string[] parameters;
 
-        public UI_Interactive_Extension_Localization(UI_Interactive extension) : base(extension)
+        public UI_Modifier_Extension_Localization(UI_Modifier extension) : base(extension)
         {
         }
 

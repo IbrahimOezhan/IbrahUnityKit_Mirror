@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public interface IMenuUpdate
+    public interface IMenuInit
     {
         public Transform transform { get; }
 

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IbrahKit.Settings
 {
-    public abstract class UI_Setting : MonoBehaviour, IMenuUpdate
+    public abstract class UI_Setting : MonoBehaviour, IMenuInit
     {
         private Setting setting;
 

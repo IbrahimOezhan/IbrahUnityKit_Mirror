@@ -32,7 +32,7 @@ namespace IbrahKit.UI
         {
             base.InstanceAwake();
 
-            actionHide = () => Hide();
+            actionHide = Hide;
 
             if(Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {

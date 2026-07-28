@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit.UI
 {
-    public class UI_Selectable : UnityCallbacks, IMenuUpdate, IPointerEnterHandler, IPointerExitHandler,
+    public class UI_Selectable : UnityCallbacks, IMenuInit, IPointerEnterHandler, IPointerExitHandler,
         IPointerDownHandler, IPointerUpHandler, ICursorHandler
     {
         private UI_Menu menu;

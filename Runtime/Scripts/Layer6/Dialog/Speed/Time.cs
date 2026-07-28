@@ -1,11 +1,13 @@
 #region
 
+using System;
 using System.Collections.Generic;
 
 #endregion
 
 namespace IbrahKit.Dialog
 {
+    [Serializable]
     public abstract class Time
     {
         public float GetDelay(char text)

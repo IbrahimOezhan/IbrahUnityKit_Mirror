@@ -15,27 +15,18 @@ namespace IbrahKit.UI
     {
         private State state = State.BEFOREINIT;
 
-        [TabGroup("Menu Items", order: -1), Tooltip("Parent transform for list menu items."), SerializeField]
-        private Transform list;
-
-        [TabGroup("Menu Items", order: -1), Tooltip("List of predefined menu items."), SerializeReference,
-         ShowIf(nameof(ShowMenuItems))]
-        private List<Menu_Item_Base> listMenuItems = new();
-
         [SerializeField, Required] private UI_Menu_Controller_Canvas canvasController;
 
         private readonly List<GameObject> spawnedMenuItems = new();
 
-        private readonly Queue<IMenuUpdate> uninitialized = new();
+        private readonly Queue<IMenuInit> uninitialized = new();
 
         protected override void OnInit()
         {
-            LoadMenuContent();
-
             AfterMenuItems();
 
-            List<IMenuUpdate> subtree =
-                Transform_Utilities.GetComponentsByLevel<IMenuUpdate>(GetMenu().transform, true, true);
+            List<IMenuInit> subtree =
+                Transform_Utilities.GetComponentsByLevel<IMenuInit>(GetMenu().transform, true, true);
 
             InitializeSubTree(subtree);
 
@@ -56,9 +47,9 @@ namespace IbrahKit.UI
 
             while (uninitialized.Count > 0)
             {
-                IMenuUpdate up = uninitialized.Dequeue();
+                IMenuInit up = uninitialized.Dequeue();
 
-                List<IMenuUpdate> subtree = up.transform.GetComponentsByLevel<IMenuUpdate>(true, true);
+                List<IMenuInit> subtree = up.transform.GetComponentsByLevel<IMenuInit>(true, true);
 
                 InitializeSubTree(subtree);
             }
@@ -68,32 +59,18 @@ namespace IbrahKit.UI
         {
         }
 
-        private void LoadMenuContent()
-        {
-            foreach (Menu_Item_Base menuItem in listMenuItems)
-            {
-                if (TrySpawnMenuItem(menuItem, list as RectTransform, out GameObject _instance))
-                {
-                    spawnedMenuItems.Add(_instance);
-                }
-            }
-        }
 
-        public bool TrySpawnMenuItem(Menu_Item_Base menuItem, RectTransform parent, out GameObject result)
-        {
-            if (!menuItem.TrySpawn(parent, GetMenu(), out result)) return false;
 
-            return result != null;
-        }
 
-        public void RegisterUI(IMenuUpdate element)
+
+        public void RegisterUI(IMenuInit element)
         {
             if (state == State.BEFOREINIT) return;
 
             uninitialized.Enqueue(element);
         }
 
-        private void InitializeSubTree(List<IMenuUpdate> elements)
+        private void InitializeSubTree(List<IMenuInit> elements)
         {
             foreach (var item in elements)
             {
@@ -110,8 +87,6 @@ namespace IbrahKit.UI
         }
 
         public UI_Menu_Controller_Canvas GetCanvasController() => canvasController;
-
-        private bool ShowMenuItems() => list != null;
 
         private enum State
         {

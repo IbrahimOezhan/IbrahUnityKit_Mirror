@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_PageView : MonoBehaviour, IMenuUpdate
+    public class UI_PageView : MonoBehaviour, IMenuInit
     {
         private int currentPageIndex;
 
@@ -22,7 +22,7 @@ namespace IbrahKit.UI
 
         [SerializeField] private UI_Selectable right;
 
-        [SerializeField] private UI_Interactive_Extension_Localization pageText;
+        [SerializeField] private UI_Modifier_Extension_Localization pageText;
 
         [SerializeField] private Transform pageContent;
 

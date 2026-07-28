@@ -15,11 +15,11 @@ namespace IbrahKit
 {
     public class Visual_Debug_UI_Menu : UI_Menu, ISelfValidator
     {
-        private UI_Interactive_Extension_Text_Setter textSetter;
+        private UI_Modifier_Extension_Text_Setter textSetter;
 
         private Action action;
 
-        [SerializeField] private UI_Interactive debugContent;
+        [SerializeField] private UI_Modifier debugContent;
 
         [SerializeField, Required] private Key debugKey;
 

@@ -8,9 +8,9 @@ using IbrahKit.Debugging;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class UI_Interactive_Extension_Text_Setter : UI_Interactive_Extension_Text_Modifier
+    public class UI_Modifier_Extension_Text_Setter : UI_Modifier_Extension_Text_Modifier
     {
-        public UI_Interactive_Extension_Text_Setter(UI_Interactive extension) : base(extension)
+        public UI_Modifier_Extension_Text_Setter(UI_Modifier extension) : base(extension)
         {
             IbrahDebug.Log("Contrsuctor");
         }

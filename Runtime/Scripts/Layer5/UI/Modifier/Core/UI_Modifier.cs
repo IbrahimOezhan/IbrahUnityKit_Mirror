@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_Interactive : Extension_Handler<UI_Interactive_Extension>, IMenuUpdate, ISelfValidator
+    public class UI_Modifier : Extension_Handler<UI_Modifier_Extension>, IMenuInit, ISelfValidator
     {
         [SerializeField, ReadOnly] private UI_Menu menu;
 
@@ -33,7 +33,7 @@ namespace IbrahKit.UI
 
         public void Validate(SelfValidationResult result)
         {
-            foreach (UI_Interactive_Extension extension in GetExtensions())
+            foreach (UI_Modifier_Extension extension in GetExtensions())
             {
                 extension.Validate(result, gameObject);
             }

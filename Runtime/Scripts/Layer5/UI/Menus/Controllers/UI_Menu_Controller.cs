@@ -1,5 +1,8 @@
+using System;
+
 namespace IbrahKit.UI
 {
+    [Serializable]
     public abstract class UI_Menu_Controller
     {
         private UI_Menu menu;

@@ -20,19 +20,19 @@ namespace IbrahKit.Dialog
 
         private Coroutine routine;
         
-        private UI_Interactive_Extension_Text_Setter contentTextSetter;
+        private UI_Modifier_Extension_Text_Setter contentTextSetter;
 
-        private UI_Interactive_Extension_Text_Setter nameTextSetter;
+        private UI_Modifier_Extension_Text_Setter nameTextSetter;
 
-        private UI_Interactive_Extension_Text_Setter dismissTextSetter;
+        private UI_Modifier_Extension_Text_Setter dismissTextSetter;
 
         [SerializeField] private float defaultCharDelay;
 
-        [SerializeField] private UI_Interactive contentText;
+        [SerializeField] private UI_Modifier contentText;
 
-        [SerializeField] private UI_Interactive nameText;
+        [SerializeField] private UI_Modifier nameText;
 
-        [SerializeField] private UI_Interactive dismissText;
+        [SerializeField] private UI_Modifier dismissText;
 
         [SerializeField] private UI_Menu menu;
 

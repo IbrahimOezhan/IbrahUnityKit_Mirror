@@ -9,13 +9,13 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public abstract class UI_Interactive_Extension_Text_Modifier : UI_Interactive_Extension
+    public abstract class UI_Modifier_Extension_Text_Modifier : UI_Modifier_Extension
     {
         protected UI_Text_Wrapper text;
 
         [SerializeField] private GameObject nonDefaultTarget;
 
-        protected UI_Interactive_Extension_Text_Modifier(UI_Interactive extension) : base(extension)
+        protected UI_Modifier_Extension_Text_Modifier(UI_Modifier extension) : base(extension)
         {
 
         }

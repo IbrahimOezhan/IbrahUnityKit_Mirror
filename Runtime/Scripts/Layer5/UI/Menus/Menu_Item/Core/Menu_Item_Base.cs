@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.Debugging;
@@ -10,26 +11,25 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
+    [Serializable]
     public abstract class Menu_Item_Base
     {
         [SerializeField] private SKIP_REASON skipReason;
 
-        [ShowIf("skipreason", SKIP_REASON.ONLAYOUT), SerializeField]
+        [ShowIf(nameof(skipReason), SKIP_REASON.ONLAYOUT), SerializeField]
         private List<string> showOnLayouts;
 
         private bool Skip(RectTransform parent)
         {
-            switch (skipReason)
+            return skipReason switch
             {
-                case SKIP_REASON.ONLAYOUT:
-                    return UI_Configs.TryGet<UI_Layout_Config_Override, UI_Layout_Config_SO, UI_Layout_Config>(
-                               UI_Configs.GetConfigs(parent), out UI_Layout_Config result)
-                           && !ShowLayout(result, showOnLayouts);
-                case SKIP_REASON.ALWAYS:
-                    return true;
-            }
-
-            return false;
+                SKIP_REASON.ONLAYOUT => UI_Configs
+                                            .TryGet<UI_Layout_Config_Override, UI_Layout_Config_SO, UI_Layout_Config>(
+                                                UI_Configs.GetConfigs(parent), out UI_Layout_Config result) &&
+                                        !ShowLayout(result, showOnLayouts),
+                SKIP_REASON.ALWAYS => true,
+                _ => false
+            };
         }
 
         private enum SKIP_REASON
@@ -54,11 +54,11 @@ namespace IbrahKit.UI
                 return false;
             }
 
-            if (TrySpawnPro(parent, menu, out go)) return true;
+            if (Spawn(parent, menu, out go)) return true;
 
             return false;
         }
 
-        protected abstract bool TrySpawnPro(RectTransform parent, UI_Menu menu, out GameObject go);
+        protected abstract bool Spawn(RectTransform parent, UI_Menu menu, out GameObject go);
     }
 }

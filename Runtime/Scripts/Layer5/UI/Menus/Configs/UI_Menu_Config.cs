@@ -10,12 +10,12 @@ namespace IbrahKit.UI
     [Serializable]
     public class UI_Menu_Config : UI_Config
     {
-        [SerializeField] private UI_Menu_Item_Button_Text menuButtonPrefab;
+        [SerializeField] private Menu_Item_Button menuButtonPrefab;
 
-        [SerializeField] private UI_Menu_Item_Button_Text staticMenuButtonPrefab;
+        [SerializeField] private Menu_Item_Button staticMenuButtonPrefab;
 
-        public UI_Menu_Item_Button_Text GetMenuButton() => menuButtonPrefab;
+        public Menu_Item_Button GetMenuButton() => menuButtonPrefab;
 
-        public UI_Menu_Item_Button_Text GetMenuButtonStatic() => staticMenuButtonPrefab;
+        public Menu_Item_Button GetMenuButtonStatic() => staticMenuButtonPrefab;
     }
 }

@@ -21,7 +21,7 @@ namespace IbrahKit.Manager
         [ValueDropdown(nameof(Dropdown)), SerializeField, OnValueChanged(nameof(OnValueChanged))]
         private string addManager;
 
-        [SerializeField] private bool excludeInScene;
+        [SerializeField] private bool excludeInScene = true;
 
         private void Awake()
         {
