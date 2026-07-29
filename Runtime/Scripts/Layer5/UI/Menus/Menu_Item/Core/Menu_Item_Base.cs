@@ -32,18 +32,11 @@ namespace IbrahKit.UI
             };
         }
 
-        private enum SKIP_REASON
-        {
-            DONT,
-            ALWAYS,
-            ONLAYOUT,
-        }
-
         public static bool ShowLayout(UI_Layout_Config layoutConfig, List<string> layouts)
         {
             return layoutConfig.GetActiveLayouts().Intersect(layouts).Any();
         }
-        
+
         public bool TrySpawn(RectTransform parent, UI_Menu menu, out GameObject go)
         {
             go = null;
@@ -60,5 +53,12 @@ namespace IbrahKit.UI
         }
 
         protected abstract bool Spawn(RectTransform parent, UI_Menu menu, out GameObject go);
+
+        private enum SKIP_REASON
+        {
+            DONT,
+            ALWAYS,
+            ONLAYOUT,
+        }
     }
 }

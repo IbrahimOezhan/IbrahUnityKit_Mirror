@@ -11,8 +11,6 @@ namespace IbrahKit.Settings
 {
     public class Settings_Manager : Manager_Global<Settings_Manager, Settings_Manager_Data>
     {
-        private const string SAVE_DATA_SETTINGS = "Settings";
-
         private readonly Dictionary<string, Setting> settingsInit = new();
 
         private SaveData saveData;
@@ -21,9 +19,7 @@ namespace IbrahKit.Settings
         {
             base.InstanceAwake();
 
-            if (Save_Manager.GetInstance().TryLoad(SAVE_DATA_SETTINGS, out saveData))
-            {
-            }
+            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
 
             GetManagerData().GetConfigs().ForEach(config =>
             {

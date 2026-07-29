@@ -81,7 +81,7 @@ namespace IbrahKit.Interaction
             }
         }
 
-        public string GetDebugContent()
+        public string GetInformation()
         {
             if (hit.transform)
             {

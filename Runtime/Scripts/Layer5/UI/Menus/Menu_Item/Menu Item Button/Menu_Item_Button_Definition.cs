@@ -26,7 +26,7 @@ namespace IbrahKit.UI
         {
             return localType is LocalType.LOCALIZE;
         }
-        
+
         protected sealed override bool Spawn(RectTransform parent, UI_Menu menu, out GameObject go)
         {
             go = null;
@@ -36,7 +36,7 @@ namespace IbrahKit.UI
             if (menuConfig == null) return false;
 
             Menu_Item_Button button;
-            
+
             switch (IsLoc())
             {
                 case true:
@@ -54,7 +54,7 @@ namespace IbrahKit.UI
                 IbrahDebug.LogWarning("Button could not be spawned");
                 return false;
             }
-            
+
 
             go = button.gameObject;
 

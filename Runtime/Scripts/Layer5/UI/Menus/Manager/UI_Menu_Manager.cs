@@ -15,18 +15,18 @@ namespace IbrahKit.UI
     [DefaultExecutionOrder(Execution_Order.ui)]
     public class UI_Menu_Manager : Manager_Global<UI_Menu_Manager, UI_Menu_Manager_Data>
     {
-        /// <summary>
-        /// TODO: PREVENT ENABLE DISABLE COUNTING TO NAV STACK. TO ACHIEVE THIS SAVE THE CURRENT MENU IN THE MANAGER
-        /// </summary>
-        private bool hidden;
-
-        private UI_Menu currentMenu = null;
-
         private readonly Stack<UI_Menu> menuNavigationStack = new();
+
+        public Action<bool> OnHide;
 
         private Action actionHide;
 
-        public Action<bool> OnHide;
+        private UI_Menu currentMenu = null;
+
+        /// <summary>
+        ///     TODO: PREVENT ENABLE DISABLE COUNTING TO NAV STACK. TO ACHIEVE THIS SAVE THE CURRENT MENU IN THE MANAGER
+        /// </summary>
+        private bool hidden;
 
         protected override void InstanceAwake()
         {
@@ -34,7 +34,7 @@ namespace IbrahKit.UI
 
             actionHide = Hide;
 
-            if(Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
+            if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.RegisterAction(GetManagerData().GetKey(), actionHide);
             }
@@ -44,7 +44,7 @@ namespace IbrahKit.UI
         {
             base.InstanceDestroy();
 
-            if(Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
+            if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.UnregisterAction(GetManagerData().GetKey(), actionHide);
             }

@@ -1,0 +1,28 @@
+using System;
+using IbrahKit.Save;
+using UnityEngine;
+
+public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
+{
+    private Save_Dictionary dict;
+    
+    private SaveObject saveObject;
+    
+    protected override void InstanceAwake()
+    {
+        base.InstanceAwake();
+
+        saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
+
+        dict = saveObject.Get(new Save_Dictionary());
+    }
+
+    protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
+    {
+        return (new SimpleSaveVersionParser(),new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
+    }
+
+    public SaveObject GetSave() => saveObject;
+    
+    public Save_Dictionary GetDict() => dict;
+}

@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 
 namespace IbrahKit.Save
 {
+    /***
+     * Pre-build savable that stores key value pairs
+     */
     [Serializable]
     public class Save_Dictionary : Savable
     {

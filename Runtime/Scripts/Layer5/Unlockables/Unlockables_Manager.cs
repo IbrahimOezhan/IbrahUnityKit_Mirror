@@ -20,26 +20,14 @@ namespace IbrahKit.Unlockables
     [DefaultExecutionOrder(Execution_Order.unlock)]
     public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
     {
-        private const string SAVE_DATA_NAME = "Unlockables";
-
         [SerializeField] private SaveData saveData = new();
-
-        private void OnDestroy()
-        {
-            if (GetInstance() == this)
-            {
-                if (Save_Manager.TryGet(out Save_Manager result))
-                {
-                    result.Return(SAVE_DATA_NAME, saveData);
-                }
-            }
-        }
+        
 
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
 
-            Save_Manager.GetInstance().TryLoad(SAVE_DATA_NAME, out saveData);
+            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
         }
 
         public void Unlock(IEnumerable<Unlockable> unlockable)

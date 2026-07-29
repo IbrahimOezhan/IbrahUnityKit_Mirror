@@ -1,13 +1,18 @@
+#region
+
 using IbrahKit.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+#endregion
+
 public abstract class Menu_Item_Button : MonoBehaviour
 {
     [SerializeField, Required] private UI_Selectable selectable;
 
-    [FormerlySerializedAs("interactive")] [SerializeField] private UI_Modifier modifier;
+    [FormerlySerializedAs("interactive")] [SerializeField]
+    private UI_Modifier modifier;
 
     public void Initialize(string value)
     {

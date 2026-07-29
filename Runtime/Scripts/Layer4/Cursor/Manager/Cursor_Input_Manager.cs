@@ -31,7 +31,7 @@ namespace IbrahKit.Input
             mousePos = input.Map.MousePos.ReadValue<Vector2>();
         }
 
-        public string GetDebugContent()
+        public string GetInformation()
         {
             return "Is Over UI: " + CursorOverUI(EventSystem.current);
         }

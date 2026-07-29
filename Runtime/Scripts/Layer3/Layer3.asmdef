@@ -1,18 +1,18 @@
 {
-    "name": "Layer3",
-    "rootNamespace": "",
-    "references": [
-        "GUID:ae662e8c9fa77194096bfff84d06a4dd",
-        "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
-        "GUID:86f712bf8e418b658aad63c2014f23b8"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Layer3",
+  "rootNamespace": "",
+  "references": [
+    "GUID:ae662e8c9fa77194096bfff84d06a4dd",
+    "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
+    "GUID:86f712bf8e418b658aad63c2014f23b8"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

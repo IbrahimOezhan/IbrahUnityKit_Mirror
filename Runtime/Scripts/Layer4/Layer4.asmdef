@@ -1,20 +1,20 @@
 {
-    "name": "Layer4",
-    "rootNamespace": "",
-    "references": [
-        "GUID:ae662e8c9fa77194096bfff84d06a4dd",
-        "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
-        "GUID:86f712bf8e418b658aad63c2014f23b8",
-        "GUID:0a61b2846d1ce6104aac11b8c60e9dba",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Layer4",
+  "rootNamespace": "",
+  "references": [
+    "GUID:ae662e8c9fa77194096bfff84d06a4dd",
+    "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
+    "GUID:86f712bf8e418b658aad63c2014f23b8",
+    "GUID:0a61b2846d1ce6104aac11b8c60e9dba",
+    "GUID:75469ad4d38634e559750d17036d5f7c"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

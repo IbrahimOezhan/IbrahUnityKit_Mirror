@@ -1,18 +1,15 @@
+#region
+
 using System.Collections.Generic;
 using IbrahKit.UI;
 using UnityEngine;
+
+#endregion
 
 public class Menu_Item_Tree : MonoBehaviour, IMenuInit
 {
     [Tooltip("List of predefined menu items."), SerializeReference]
     private List<Menu_Item_Base> listMenuItems = new();
-    
-    public bool TrySpawnMenuItem(Menu_Item_Base menuItem, UI_Menu menu, out GameObject result)
-    {
-        if (!menuItem.TrySpawn(transform as RectTransform, menu, out result)) return false;
-
-        return result;
-    }
 
     public void OnMenuInit(UI_Menu menu)
     {
@@ -23,5 +20,12 @@ public class Menu_Item_Tree : MonoBehaviour, IMenuInit
                 menu.GetContentController().RegisterUI(null);
             }
         }
+    }
+
+    public bool TrySpawnMenuItem(Menu_Item_Base menuItem, UI_Menu menu, out GameObject result)
+    {
+        if (!menuItem.TrySpawn(transform as RectTransform, menu, out result)) return false;
+
+        return result;
     }
 }

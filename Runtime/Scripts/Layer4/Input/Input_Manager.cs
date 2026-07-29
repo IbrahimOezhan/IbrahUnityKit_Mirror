@@ -66,7 +66,7 @@ namespace IbrahKit.Input
             if (currentInputType != lastInputType) InputUpdate();
         }
 
-        public string GetDebugContent()
+        public string GetInformation()
         {
             return "Current Input Type: " + currentInputType + " Last Pressed: " + lastPressed.displayName;
         }

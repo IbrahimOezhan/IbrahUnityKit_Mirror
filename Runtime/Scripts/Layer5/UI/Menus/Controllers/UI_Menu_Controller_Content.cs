@@ -13,13 +13,30 @@ namespace IbrahKit.UI
     [Serializable]
     public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuControllerContent
     {
-        private State state = State.BEFOREINIT;
-
         [SerializeField, Required] private UI_Menu_Controller_Canvas canvasController;
 
         private readonly List<GameObject> spawnedMenuItems = new();
 
         private readonly Queue<IMenuInit> uninitialized = new();
+        private State state = State.BEFOREINIT;
+
+
+        public void RegisterUI(IMenuInit element)
+        {
+            if (state == State.BEFOREINIT) return;
+
+            uninitialized.Enqueue(element);
+        }
+
+        public UI_Menu_Config GetMenuConfig()
+        {
+            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(
+                UI_Configs.GetConfigs(GetMenu().transform), out UI_Menu_Config result);
+
+            return result;
+        }
+
+        public UI_Menu_Controller_Canvas GetCanvasController() => canvasController;
 
         protected override void OnInit()
         {
@@ -59,17 +76,6 @@ namespace IbrahKit.UI
         {
         }
 
-
-
-
-
-        public void RegisterUI(IMenuInit element)
-        {
-            if (state == State.BEFOREINIT) return;
-
-            uninitialized.Enqueue(element);
-        }
-
         private void InitializeSubTree(List<IMenuInit> elements)
         {
             foreach (var item in elements)
@@ -77,16 +83,6 @@ namespace IbrahKit.UI
                 item.OnMenuInit(GetMenu());
             }
         }
-
-        public UI_Menu_Config GetMenuConfig()
-        {
-            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(
-                UI_Configs.GetConfigs(GetMenu().transform), out UI_Menu_Config result);
-
-            return result;
-        }
-
-        public UI_Menu_Controller_Canvas GetCanvasController() => canvasController;
 
         private enum State
         {

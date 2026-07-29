@@ -1,16 +1,16 @@
 {
-    "name": "Layer1",
-    "rootNamespace": "",
-    "references": [
-        "GUID:ae662e8c9fa77194096bfff84d06a4dd"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Layer1",
+  "rootNamespace": "",
+  "references": [
+    "GUID:ae662e8c9fa77194096bfff84d06a4dd"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

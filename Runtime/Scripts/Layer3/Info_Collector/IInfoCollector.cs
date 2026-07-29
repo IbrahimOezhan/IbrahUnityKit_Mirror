@@ -9,26 +9,26 @@ using UnityEngine;
 namespace IbrahKit.InfoCollector
 {
     /// <summary>
-    ///     An interface that provides methods for the debugmanager to use
+    ///     An interface that provides methods for the Info_Collection_Manager to use
     /// </summary>
     public interface IInfoCollector
     {
         GameObject gameObject { get; }
 
         /// <summary>
-        ///     Returns the content to display in the debug menu
+        ///     Returns information
         /// </summary>
-        /// <returns>The content to display in the debug menu</returns>
-        public string GetDebugContent();
+        /// <returns>Information</returns>
+        public string GetInformation();
 
         /// <summary>
-        ///     Returns the order in which the content must be displayed
+        ///     Returns the order in which the content must be aggregated
         /// </summary>
-        /// <returns>The order in which the content must be displayed</returns>
+        /// <returns>The order in which the content must be aggregated</returns>
         public int GetDebugOrder();
 
         /// <summary>
-        ///     Appends the DebugContent to the passed StringBuilder
+        ///     Appends the Information to the passed StringBuilder
         /// </summary>
         /// <param name="sb"></param>
         /// The StringBuilder to append to
@@ -38,13 +38,13 @@ namespace IbrahKit.InfoCollector
         {
             if (!catchExceptions)
             {
-                sb.AppendLine(GetDebugContent());
+                sb.AppendLine(GetInformation());
                 return;
             }
 
             try
             {
-                sb.AppendLine(GetDebugContent());
+                sb.AppendLine(GetInformation());
             }
             catch (Exception ex)
             {

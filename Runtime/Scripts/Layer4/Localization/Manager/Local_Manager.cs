@@ -23,9 +23,7 @@ namespace IbrahKit.Localization
         public const string DROP = "Localization";
 
         public const string SYS = "SysLanguage";
-
-        private const string SAVE = "LocalizationManager";
-
+        
         private readonly List<Local_Processor> processors = new();
 
         private int currentIndex;
@@ -40,7 +38,7 @@ namespace IbrahKit.Localization
         {
             base.InstanceAwake();
 
-            if (!Save_Manager.GetInstance().TryLoad(SAVE, out saveData)) return;
+            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
 
             Local_Language language =
                 GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage());
@@ -48,14 +46,6 @@ namespace IbrahKit.Localization
             if (language != null) SetLanguage(language);
 
             AddProcessor(new Local_BreakProcessor());
-        }
-
-        protected override void InstanceDestroy()
-        {
-            if (Save_Manager.TryGet(out Save_Manager result))
-            {
-                result.Return(SAVE, saveData);
-            }
         }
 
         public void AddProcessor(Local_Processor processor)

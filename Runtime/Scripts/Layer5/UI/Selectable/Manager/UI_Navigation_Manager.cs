@@ -34,14 +34,14 @@ namespace IbrahKit
             if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.KEYBOARD))
             {
                 input.Navigation.Move_Keyboard.performed += OnVectorInput;
-                input.Navigation.Confirm_Keyboard.performed += ComfirmPerformed;
+                input.Navigation.Confirm_Keyboard.performed += ConfirmPerformed;
                 input.Navigation.Confirm_Keyboard.canceled += ConfirmCanceled;
             }
 
             if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.GAMEPAD))
             {
                 input.Navigation.Move_Gamepad.performed += OnVectorInput;
-                input.Navigation.Confirm_Gamepad.performed += ComfirmPerformed;
+                input.Navigation.Confirm_Gamepad.performed += ConfirmPerformed;
                 input.Navigation.Confirm_Gamepad.canceled += ConfirmCanceled;
             }
         }
@@ -55,14 +55,14 @@ namespace IbrahKit
                 if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.KEYBOARD))
                 {
                     input.Navigation.Move_Keyboard.performed -= OnVectorInput;
-                    input.Navigation.Confirm_Keyboard.performed -= ComfirmPerformed;
+                    input.Navigation.Confirm_Keyboard.performed -= ConfirmPerformed;
                     input.Navigation.Confirm_Keyboard.canceled -= ConfirmCanceled;
                 }
 
                 if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.GAMEPAD))
                 {
                     input.Navigation.Move_Gamepad.performed -= OnVectorInput;
-                    input.Navigation.Confirm_Gamepad.performed -= ComfirmPerformed;
+                    input.Navigation.Confirm_Gamepad.performed -= ConfirmPerformed;
                     input.Navigation.Confirm_Gamepad.canceled -= ConfirmCanceled;
                 }
 
@@ -83,7 +83,7 @@ namespace IbrahKit
                 .Navigate(context);
         }
 
-        private void ComfirmPerformed(InputAction.CallbackContext context)
+        private void ConfirmPerformed(InputAction.CallbackContext context)
         {
             UI_Selectable_Controller_State.currentlySelected?.Pressed();
         }

@@ -1,25 +1,25 @@
 {
-    "name": "Layer9",
-    "rootNamespace": "",
-    "references": [
-        "GUID:88b3b5a7ec9c11ae9b74c6e01eb7fbd4",
-        "GUID:33956a813579f3a80a3cf7fa27a35065",
-        "GUID:86f712bf8e418b658aad63c2014f23b8",
-        "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
-        "GUID:ae662e8c9fa77194096bfff84d06a4dd",
-        "GUID:4d88629919d1077aeb037631ffbf46dd",
-        "GUID:0a61b2846d1ce6104aac11b8c60e9dba",
-        "GUID:cafc4b47098bb849dbff8bb407dd8e92",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:de6e0d4e60d769d13864523896373a12"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Layer9",
+  "rootNamespace": "",
+  "references": [
+    "GUID:88b3b5a7ec9c11ae9b74c6e01eb7fbd4",
+    "GUID:33956a813579f3a80a3cf7fa27a35065",
+    "GUID:86f712bf8e418b658aad63c2014f23b8",
+    "GUID:5f186c63204a1b2629bbf8b8bb7b6b5c",
+    "GUID:ae662e8c9fa77194096bfff84d06a4dd",
+    "GUID:4d88629919d1077aeb037631ffbf46dd",
+    "GUID:0a61b2846d1ce6104aac11b8c60e9dba",
+    "GUID:cafc4b47098bb849dbff8bb407dd8e92",
+    "GUID:75469ad4d38634e559750d17036d5f7c",
+    "GUID:de6e0d4e60d769d13864523896373a12"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

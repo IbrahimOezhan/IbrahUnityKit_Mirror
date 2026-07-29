@@ -11,10 +11,6 @@ namespace IbrahKit.UI
 {
     public class UI_Menu : MonoBehaviour, IConfigHolder
     {
-        private readonly List<UI_Menu_Controller> controllers = new();
-
-        private readonly UI_Menu_Controller_Audio audioController = new();
-
         [SerializeField] private UI_Configs configs;
 
         [SerializeField] private UI_Menu_Controller_Content content;
@@ -22,6 +18,9 @@ namespace IbrahKit.UI
         [SerializeField] private UI_Menu_Controller_Visibility visiblity;
 
         [SerializeField] private UI_Menu_Controller_State state;
+
+        private readonly UI_Menu_Controller_Audio audioController = new();
+        private readonly List<UI_Menu_Controller> controllers = new();
 
         public Action<bool> OnStateChanged;
 
@@ -42,10 +41,6 @@ namespace IbrahKit.UI
             AfterInit();
         }
 
-        protected virtual void OnEnable()
-        {
-        }
-
         private void Update()
         {
             ObjectLifecycle();
@@ -58,6 +53,10 @@ namespace IbrahKit.UI
             }
         }
 
+        protected virtual void OnEnable()
+        {
+        }
+
         protected virtual void OnDisable()
         {
         }
@@ -65,6 +64,8 @@ namespace IbrahKit.UI
         protected virtual void OnDestroy()
         {
         }
+
+        public UI_Configs GetConfigs() => configs;
 
         protected virtual void ObjectLifecycle()
         {
@@ -99,8 +100,6 @@ namespace IbrahKit.UI
         public IMenuControllerState GetStateController() => state;
 
         public IMenuControllerContent GetContentController() => content;
-
-        public UI_Configs GetConfigs() => configs;
 
         [Button("Toggle")]
         public void ToggleEditor()
