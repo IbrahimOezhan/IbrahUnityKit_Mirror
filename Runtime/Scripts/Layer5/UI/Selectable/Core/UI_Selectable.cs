@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 namespace IbrahKit.UI
 {
     public class UI_Selectable : UnityCallbacks, IMenuInit, IPointerEnterHandler, IPointerExitHandler,
-        IPointerDownHandler, IPointerUpHandler, ICursorHandler
+        IPointerDownHandler, IPointerUpHandler, IRaycast_Receiver
     {
         [SerializeField] private UI_Selectable_Controller_State stateController;
 

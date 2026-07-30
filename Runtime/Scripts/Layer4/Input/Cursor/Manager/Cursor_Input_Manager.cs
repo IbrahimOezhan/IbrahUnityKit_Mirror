@@ -21,26 +21,6 @@ namespace IbrahKit.Input
 
         public Action onLeftMouseButton;
 
-        private void Update()
-        {
-            if (input == null)
-            {
-                return;
-            }
-
-            mousePos = input.Map.MousePos.ReadValue<Vector2>();
-        }
-
-        public string GetInformation()
-        {
-            return "Is Over UI: " + CursorOverUI(EventSystem.current);
-        }
-
-        public int GetDebugOrder()
-        {
-            return -80;
-        }
-
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
@@ -64,6 +44,26 @@ namespace IbrahKit.Input
 
                 input.Dispose();
             }
+        }
+        
+        private void Update()
+        {
+            if (input == null)
+            {
+                return;
+            }
+
+            mousePos = input.Map.MousePos.ReadValue<Vector2>();
+        }
+
+        public string GetInformation()
+        {
+            return "Is Over UI: " + CursorOverUI(EventSystem.current);
+        }
+
+        public int GetDebugOrder()
+        {
+            return -80;
         }
 
         public Vector2 GetMousePos() => mousePos;
@@ -89,6 +89,19 @@ namespace IbrahKit.Input
             onLeftMouseButton?.Invoke();
         }
 
+        public bool CursorOverGameUI(Camera camera)
+        {
+            List<GameObject> results = new();
+            
+            Vector2 mousePosWorld = camera.ScreenToWorldPoint(mousePos);
+
+            RaycastHit2D hit2D = Physics2D.Raycast(mousePosWorld, Vector2.zero);
+
+            if (hit2D.transform) results.Add(hit2D.transform.gameObject);
+            
+            return results.Any(x => x.GetComponent<IRaycast_Receiver>() != null);
+        }
+
         public bool CursorOverUI(EventSystem system)
         {
             PointerEventData pointerData = new(system)
@@ -100,7 +113,7 @@ namespace IbrahKit.Input
 
             system.RaycastAll(pointerData, results);
 
-            return results.Count(x => x.gameObject.GetComponent<ICursorHandler>() != null) > 0;
+            return results.Any(x => x.gameObject.GetComponent<IRaycast_Receiver>() != null);
         }
     }
 }

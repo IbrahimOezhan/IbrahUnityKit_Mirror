@@ -7,12 +7,15 @@ using UnityEngine.UI;
 
 namespace IbrahKit.Input
 {
-    /// <summary>
+# if UNITY_6000_5_OR_NEWER 
+
+# else // Not required in 6.5 or Newer. Use the native Raycast_Receiver instead 
+        /// <summary>
     ///     A component which allows the custom cursor to change states when hovering over this rect transform even without a
     ///     graphic
     /// </summary>
     [RequireComponent(typeof(CanvasRenderer))]
-    public class UI_CursorHandler : Graphic, ICursorHandler
+    public class UI_Raycast_Receiver : Graphic, ICursorHandler
     {
         protected override void OnPopulateMesh(VertexHelper vh)
         {
@@ -27,4 +30,5 @@ namespace IbrahKit.Input
         {
         }
     }
+# endif
 }
