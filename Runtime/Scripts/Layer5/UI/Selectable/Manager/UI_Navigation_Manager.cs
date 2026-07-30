@@ -31,14 +31,14 @@ namespace IbrahKit
 
             input.Enable();
 
-            if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.KEYBOARD))
+            if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.KEYBOARD))
             {
                 input.Navigation.Move_Keyboard.performed += OnVectorInput;
                 input.Navigation.Confirm_Keyboard.performed += ConfirmPerformed;
                 input.Navigation.Confirm_Keyboard.canceled += ConfirmCanceled;
             }
 
-            if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.GAMEPAD))
+            if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.GAMEPAD))
             {
                 input.Navigation.Move_Gamepad.performed += OnVectorInput;
                 input.Navigation.Confirm_Gamepad.performed += ConfirmPerformed;
@@ -52,14 +52,14 @@ namespace IbrahKit
 
             if (input != null)
             {
-                if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.KEYBOARD))
+                if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.KEYBOARD))
                 {
                     input.Navigation.Move_Keyboard.performed -= OnVectorInput;
                     input.Navigation.Confirm_Keyboard.performed -= ConfirmPerformed;
                     input.Navigation.Confirm_Keyboard.canceled -= ConfirmCanceled;
                 }
 
-                if (GetManagerData().GetSupportedNavigationMethods().Contains(InputType.GAMEPAD))
+                if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.GAMEPAD))
                 {
                     input.Navigation.Move_Gamepad.performed -= OnVectorInput;
                     input.Navigation.Confirm_Gamepad.performed -= ConfirmPerformed;
@@ -93,7 +93,7 @@ namespace IbrahKit
             UI_Selectable_Controller_State.currentlySelected?.Select();
         }
 
-        private void OnInputChanged(InputType type)
+        private void OnInputChanged(Input_Manager.InputType type)
         {
             if (!IsSupported(type))
             {
@@ -102,10 +102,10 @@ namespace IbrahKit
 
             InputTypeNavigation newType = type switch
             {
-                InputType.GAMEPAD => InputTypeNavigation.BUTTONS,
-                InputType.KEYBOARD => InputTypeNavigation.BUTTONS,
-                InputType.MOUSE => InputTypeNavigation.POINT,
-                InputType.TOUCHSCREEN => InputTypeNavigation.POINT,
+                Input_Manager.InputType.GAMEPAD => InputTypeNavigation.BUTTONS,
+                Input_Manager.InputType.KEYBOARD => InputTypeNavigation.BUTTONS,
+                Input_Manager.InputType.MOUSE => InputTypeNavigation.POINT,
+                Input_Manager.InputType.TOUCHSCREEN => InputTypeNavigation.POINT,
                 _ => InputTypeNavigation.POINT,
             };
 
@@ -131,7 +131,7 @@ namespace IbrahKit
             currentType = newType;
         }
 
-        public bool IsSupported(InputType type)
+        public bool IsSupported(Input_Manager.InputType type)
         {
             return GetManagerData().GetSupportedNavigationMethods().Contains(type);
         }

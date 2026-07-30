@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 #endregion
 
-public class UICommonShortcutManager : CommonShortcut_Manager
+public class UIInputCommonShortcuts : Input_Common_Shortcuts
 {
     [SerializeField] private Key screenshotNoUI;
     private Action actionScreenshotNoUI;

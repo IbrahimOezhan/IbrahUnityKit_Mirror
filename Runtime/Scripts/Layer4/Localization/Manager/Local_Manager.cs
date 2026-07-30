@@ -6,7 +6,6 @@ using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Debugging;
 using IbrahKit.Manager;
-using IbrahKit.Save;
 using IbrahKit.Utilities;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace IbrahKit.Localization
         public const string DROP = "Localization";
 
         public const string SYS = "SysLanguage";
-        
+
         private readonly List<Local_Processor> processors = new();
 
         private int currentIndex;

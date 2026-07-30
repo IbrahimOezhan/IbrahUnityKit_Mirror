@@ -1,16 +1,14 @@
-
-
 {
-    "name": "com.ibrahimoezhan.ibrahunitykit",
-    "displayName": "IbrahUnityKit",
-    "version": "1.0.0",
-    "unity": "6000.0",
-    "description": "Toolkit containing many different Components",
-    "author": {
-        "name": "Ibrahim Oezhan",
-        "url": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit"
-    },
-    "licensesUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/blob/main/LICENSE",
-    "documentationUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/blob/main/README.md",
-    "changelogUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/releases"
+  "name": "com.ibrahimoezhan.ibrahunitykit",
+  "displayName": "IbrahUnityKit",
+  "version": "1.0.0",
+  "unity": "6000.0",
+  "description": "Toolkit containing many different Components",
+  "author": {
+    "name": "Ibrahim Oezhan",
+    "url": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit"
+  },
+  "licensesUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/blob/main/LICENSE",
+  "documentationUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/blob/main/README.md",
+  "changelogUrl": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit/-/releases"
 }

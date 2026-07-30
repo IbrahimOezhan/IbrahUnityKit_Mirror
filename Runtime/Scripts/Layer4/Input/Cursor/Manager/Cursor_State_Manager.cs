@@ -1,10 +1,12 @@
-using System;
-using UnityEngine;
+#region
 
-public class Cursor_State_Manager : MonoBehaviour
+using System;
+using IbrahKit.Manager;
+
+#endregion
+
+public abstract class Cursor_State_Manager : Manager_Global<Cursor_State_Manager>
 {
-    private CursorState cursorState;
-    
     public enum CursorState
     {
         HIDDEN,
@@ -12,26 +14,31 @@ public class Cursor_State_Manager : MonoBehaviour
         UNCLAMPED,
     }
 
-    private void Update()
+    private CursorState cursorState;
+
+    public void Run()
     {
         switch (cursorState)
         {
             case CursorState.HIDDEN:
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
+                Disabled();
                 break;
             case CursorState.CLAMPED:
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.Confined;
+                Clamped();
                 break;
             case CursorState.UNCLAMPED:
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
+                Unclamped();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    public abstract void Disabled();
+
+    public abstract void Clamped();
+
+    public abstract void Unclamped();
 
     public void SetCursorState(CursorState state)
     {

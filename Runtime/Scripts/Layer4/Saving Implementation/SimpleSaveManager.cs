@@ -1,13 +1,16 @@
+#region
+
 using System;
 using IbrahKit.Save;
-using UnityEngine;
+
+#endregion
 
 public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
 {
     private Save_Dictionary dict;
-    
+
     private SaveObject saveObject;
-    
+
     protected override void InstanceAwake()
     {
         base.InstanceAwake();
@@ -19,10 +22,10 @@ public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
 
     protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
     {
-        return (new SimpleSaveVersionParser(),new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
+        return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
     }
 
     public SaveObject GetSave() => saveObject;
-    
+
     public Save_Dictionary GetDict() => dict;
 }

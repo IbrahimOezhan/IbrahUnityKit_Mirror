@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using IbrahKit.Core;
-using IbrahKit.Debugging;
 using IbrahKit.Manager;
 using IbrahKit.Utilities;
-using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 
@@ -21,12 +19,12 @@ namespace IbrahKit.Save
     [DefaultExecutionOrder(Execution_Order.save)]
     public abstract class Save_Manager<T> : Manager_Global<T> where T : Manager_Global<T>
     {
-        private string saveFolderPath;
-        
-        private ISaveVersionParser parser;
         private ISaveChooser chooser;
+
+        private ISaveVersionParser parser;
         private ISavePipeline[] pipelines;
-        
+        private string saveFolderPath;
+
         protected abstract (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init();
 
         protected override void InstanceAwake()
@@ -34,9 +32,9 @@ namespace IbrahKit.Save
             base.InstanceAwake();
 
             (parser, chooser, pipelines) = Init();
-            
+
             string saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
-            
+
             if (!Directory.Exists(saveFolderPath))
             {
                 Directory.CreateDirectory(saveFolderPath);
@@ -45,7 +43,7 @@ namespace IbrahKit.Save
 
         public string[] GetRawSaveFiles()
         {
-            string[] files =  Directory.GetFiles(saveFolderPath);
+            string[] files = Directory.GetFiles(saveFolderPath);
 
             return files.Select(File.ReadAllText).ToArray();
         }
@@ -53,25 +51,21 @@ namespace IbrahKit.Save
         public List<SaveFile> GetSaveFiles()
         {
             List<SaveFile> saves = new List<SaveFile>();
-            
+
             foreach (string f in GetRawSaveFiles())
             {
                 string file = f;
-                
+
                 try
                 {
-                    pipelines.ForEach(x =>
-                    {
-                        file = x.OnDeserialize(f);
-                    });
-                    
+                    pipelines.ForEach(x => { file = x.OnDeserialize(f); });
+
                     SaveFile saveFile = Json_Utilities.Deserialize<SaveFile>(file);
-                    
+
                     saves.Add(saveFile);
                 }
                 catch
                 {
-                    
                 }
             }
 
@@ -97,11 +91,8 @@ namespace IbrahKit.Save
         {
             string json = Json_Utilities.Serialize(saveFile);
 
-            pipelines.ForEach(x =>
-            {
-                json = x.OnSerialize(json);
-            });
-            
+            pipelines.ForEach(x => { json = x.OnSerialize(json); });
+
             File.WriteAllText(fileName, json);
         }
     }

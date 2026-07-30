@@ -28,16 +28,16 @@ namespace IbrahKit.Save
                 return null;
             }
 
-            if(!throwIfUnmapped) return (Savable)Json_Utilities.Deserialize(json, type);
-            
+            if (!throwIfUnmapped) return (Savable)Json_Utilities.Deserialize(json, type);
+
             return (Savable)Json_Utilities.Deserialize(json, type, JsonUnmappedMemberHandling.Disallow);
         }
-        
-        public static (Savable, Save_State) DeserializeAndEvaluate (string content, Type t)
+
+        public static (Savable, Save_State) DeserializeAndEvaluate(string content, Type t)
         {
             try
             {
-                Savable savable = Save_Utilities.Deserialize(content, t, true);
+                Savable savable = Deserialize(content, t, true);
 
                 return (savable, Save_State.Valid);
             }
@@ -45,7 +45,7 @@ namespace IbrahKit.Save
             {
                 try
                 {
-                    Savable savable = Save_Utilities.Deserialize(content, t, false);
+                    Savable savable = Deserialize(content, t, false);
 
                     return (savable, Save_State.Valid);
                 }
@@ -56,14 +56,14 @@ namespace IbrahKit.Save
             }
             catch
             {
-                return (null,Save_State.Corrupted);
+                return (null, Save_State.Corrupted);
             }
         }
 
         public static string GetQualifiedName(Type t)
         {
             string assemblyName = t.Assembly.GetName().Name;
-        
+
             return $"{t.FullName}, {assemblyName}";
         }
     }

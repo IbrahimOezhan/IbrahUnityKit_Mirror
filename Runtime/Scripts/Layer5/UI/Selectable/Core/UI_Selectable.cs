@@ -68,25 +68,25 @@ namespace IbrahKit.UI
         public void OnPointerDown(PointerEventData eventData)
         {
             if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
-                .Contains(InputType.MOUSE)) cursorInput.OnPointerDown(eventData);
+                .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerDown(eventData);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
-                .Contains(InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
+                .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
-                .Contains(InputType.MOUSE)) cursorInput.OnPointerExit(eventData);
+                .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerExit(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
-                .Contains(InputType.MOUSE)) cursorInput.OnPointerUp(eventData);
+                .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerUp(eventData);
         }
 
         protected override void Enable()

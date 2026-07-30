@@ -21,6 +21,7 @@ namespace IbrahKit.Input
 
         public Action onLeftMouseButton;
 
+
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
@@ -36,35 +37,27 @@ namespace IbrahKit.Input
         {
             base.InstanceDestroy();
 
-            if (input != null)
-            {
-                input.Map.LMB.performed -= LeftMouseButton;
+            if (input == null) return;
+            
+            input.Map.LMB.performed -= LeftMouseButton;
 
-                input.Disable();
+            input.Disable();
 
-                input.Dispose();
-            }
+            input.Dispose();
         }
         
         private void Update()
         {
-            if (input == null)
-            {
-                return;
-            }
+            if (input == null) return;
 
             mousePos = input.Map.MousePos.ReadValue<Vector2>();
+
+            Cursor_State_Manager.GetInstance().Run();
         }
 
-        public string GetInformation()
-        {
-            return "Is Over UI: " + CursorOverUI(EventSystem.current);
-        }
+        public string GetInformation() =>  "Is Over UI: " + CursorOverUI(EventSystem.current);
 
-        public int GetDebugOrder()
-        {
-            return -80;
-        }
+        public int GetDebugOrder() => -80;
 
         public Vector2 GetMousePos() => mousePos;
 
@@ -92,13 +85,13 @@ namespace IbrahKit.Input
         public bool CursorOverGameUI(Camera camera)
         {
             List<GameObject> results = new();
-            
+
             Vector2 mousePosWorld = camera.ScreenToWorldPoint(mousePos);
 
             RaycastHit2D hit2D = Physics2D.Raycast(mousePosWorld, Vector2.zero);
 
             if (hit2D.transform) results.Add(hit2D.transform.gameObject);
-            
+
             return results.Any(x => x.GetComponent<IRaycast_Receiver>() != null);
         }
 

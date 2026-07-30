@@ -1,23 +1,23 @@
+#region
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Nodes;
-using IbrahKit.Save;
 using IbrahKit.Utilities;
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Save
 {
     public class SaveFile
     {
-        private LinkedList<int> version = null;
         private List<(string type, string json)> objects = new();
+        private LinkedList<int> version = null;
 
         public SaveFile()
         {
-            
         }
-        
+
         public SaveFile(ISaveVersionParser parser)
         {
             version = parser.Parse(Application.version);
@@ -36,7 +36,7 @@ namespace IbrahKit.Save
             string assemblyName = ty.Assembly.GetName().Name;
 
             string qualifiedName = $"{ty.FullName}, {assemblyName}";
-            
+
             objects.Add((qualifiedName, Json_Utilities.Serialize(savable)));
         }
 
@@ -45,18 +45,18 @@ namespace IbrahKit.Save
             Dictionary<Type, Savable> savables = new();
 
             Save_State state = Save_State.Valid;
-            
+
             foreach (var valueTuple in objects)
             {
-                (Savable s, Save_State st) = Save_Utilities.DeserializeAndEvaluate(valueTuple.json, Type.GetType(valueTuple.type));
+                (Savable s, Save_State st) =
+                    Save_Utilities.DeserializeAndEvaluate(valueTuple.json, Type.GetType(valueTuple.type));
 
-                state = (Save_State) Mathf.Max((int)state, (int) st);
-                
-                savables.Add(s.GetType(),s);
+                state = (Save_State)Mathf.Max((int)state, (int)st);
+
+                savables.Add(s.GetType(), s);
             }
-            
-            return new SaveObject(version,savables,state);
+
+            return new SaveObject(version, savables, state);
         }
     }
 }
-

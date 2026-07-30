@@ -9,7 +9,8 @@ using UnityEngine;
 namespace IbrahKit.Keys
 {
     /// <summary>
-    ///     Base class that holds the key. Is used on objects that want to get the accosiated value. By adding this as a serialized field to the inspector you can choose a key out of corresponding 
+    ///     Base class that holds the key. Is used on objects that want to get the accosiated value. By adding this as a
+    ///     serialized field to the inspector you can choose a key out of corresponding
     /// </summary>
     [Serializable, InlineProperty, HideLabel]
     public partial class Key_Reference : IKey

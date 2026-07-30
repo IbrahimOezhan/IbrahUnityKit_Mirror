@@ -11,7 +11,8 @@ namespace IbrahKit.Editor
 {
     public class FileWatcher : AssetPostprocessor
     {
-        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
+            string[] movedFromAssetPaths, bool didDomainReload)
         {
             List<IFileWatcher> types = FindAllAssetsImplementing<IFileWatcher>();
 

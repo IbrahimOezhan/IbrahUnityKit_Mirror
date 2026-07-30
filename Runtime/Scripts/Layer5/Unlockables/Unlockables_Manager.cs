@@ -21,7 +21,7 @@ namespace IbrahKit.Unlockables
     public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
     {
         [SerializeField] private SaveData saveData = new();
-        
+
 
         protected override void InstanceAwake()
         {

@@ -16,9 +16,18 @@ namespace IbrahKit.Input
     [DefaultExecutionOrder(Execution_Order.input)]
     public class Input_Manager : Manager_Global<Input_Manager>, IInfoCollector
     {
+        public enum InputType
+        {
+            KEYBOARD,
+            MOUSE,
+            GAMEPAD,
+            TOUCHSCREEN,
+        }
+        
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
+        
         private ButtonControl lastPressed;
 
         private void Start()

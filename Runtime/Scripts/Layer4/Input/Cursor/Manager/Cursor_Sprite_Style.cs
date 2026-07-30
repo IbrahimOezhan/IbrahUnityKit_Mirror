@@ -15,17 +15,17 @@ namespace IbrahKit.Input
         [SerializeField] private Sprite hovering;
         [SerializeField] private Sprite pressing;
 
-        public void Set(Image renderer, Cursor_Sprite_Manager.CursorState state)
+        public void Set(Image renderer, Cursor_Custom_Manager.CursorClickState state)
         {
             switch (state)
             {
-                case Cursor_Sprite_Manager.CursorState.None:
+                case Cursor_Custom_Manager.CursorClickState.None:
                     renderer.sprite = none;
                     break;
-                case Cursor_Sprite_Manager.CursorState.Hovering:
+                case Cursor_Custom_Manager.CursorClickState.Hovering:
                     renderer.sprite = hovering;
                     break;
-                case Cursor_Sprite_Manager.CursorState.Down:
+                case Cursor_Custom_Manager.CursorClickState.Down:
                     renderer.sprite = pressing;
                     break;
             }

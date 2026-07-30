@@ -1,16 +1,13 @@
 #region
 
-using UnityEngine;
-using UnityEngine.UI;
-
 #endregion
 
 namespace IbrahKit.Input
 {
-# if UNITY_6000_5_OR_NEWER 
+# if UNITY_6000_5_OR_NEWER
 
 # else // Not required in 6.5 or Newer. Use the native Raycast_Receiver instead 
-        /// <summary>
+    /// <summary>
     ///     A component which allows the custom cursor to change states when hovering over this rect transform even without a
     ///     graphic
     /// </summary>
