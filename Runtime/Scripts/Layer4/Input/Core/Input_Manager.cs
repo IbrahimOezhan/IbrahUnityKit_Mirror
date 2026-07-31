@@ -23,11 +23,11 @@ namespace IbrahKit.Input
             GAMEPAD,
             TOUCHSCREEN,
         }
-        
+
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
-        
+
         private ButtonControl lastPressed;
 
         private void Start()

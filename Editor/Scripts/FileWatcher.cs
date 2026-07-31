@@ -18,7 +18,7 @@ namespace IbrahKit.Editor
 
             foreach (IFileWatcher item in types)
             {
-                item.OnFileUpdaate();
+                item.OnFileUpdate();
             }
         }
 

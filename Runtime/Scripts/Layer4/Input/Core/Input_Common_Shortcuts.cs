@@ -13,7 +13,7 @@ namespace IbrahKit.Input
     public class Input_Common_Shortcuts : Manager_Global<Input_Common_Shortcuts>
     {
         [SerializeField] private Key screenshot;
-        
+
         private Action actionScreenshot;
 
         protected override void InstanceAwake()

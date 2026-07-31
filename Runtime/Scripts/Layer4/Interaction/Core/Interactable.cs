@@ -1,7 +1,6 @@
 #region
 
 using System.Collections.Generic;
-using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -20,7 +19,7 @@ namespace IbrahKit.Interaction
         [SerializeField] private bool overrideKey;
 
         [ShowIf(nameof(overrideKey)), SerializeField]
-        private Local_Key interactionKey;
+        private Interaction_Key interactionKey;
 
         private readonly List<Interaction> interactions = new();
         private bool canInteract = true;

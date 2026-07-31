@@ -19,10 +19,6 @@ namespace IbrahKit.Localization
     [DefaultExecutionOrder(Execution_Order.local)]
     public partial class Local_Manager : Manager_Global<Local_Manager, Local_Manager_Data>
     {
-        public const string DROP = "Localization";
-
-        public const string SYS = "SysLanguage";
-
         private readonly List<Local_Processor> processors = new();
 
         private int currentIndex;

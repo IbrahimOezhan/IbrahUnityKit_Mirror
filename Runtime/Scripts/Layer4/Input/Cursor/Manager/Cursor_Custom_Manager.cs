@@ -38,12 +38,14 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
     public override void Clamped()
     {
         cursorImage.gameObject.SetActive(true);
+
         RenderCursor();
     }
 
     public override void Unclamped()
     {
         cursorImage.gameObject.SetActive(true);
+
         RenderCursor();
     }
 
@@ -62,18 +64,20 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
     {
         if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager cim)) return;
 
-        bool hovering = IsHovering(EventSystem.current, cim);
+        bool isOverReceiver = IsOverReceiver(EventSystem.current, cim);
 
-        if (hovering)
+        if (!isOverReceiver)
         {
-            ButtonControl leftButton = Mouse.current.leftButton;
-
-            if (leftButton.wasPressedThisFrame || (state == CursorClickState.Down && leftButton.isPressed))
-                SetState(CursorClickState.Down);
-
-            else SetState(CursorClickState.Hovering);
+            SetState(CursorClickState.None);
+            return;
         }
-        else SetState(CursorClickState.None);
+
+        ButtonControl leftButton = Mouse.current.leftButton;
+
+        if (leftButton.wasPressedThisFrame || (state == CursorClickState.Down && leftButton.isPressed))
+            SetState(CursorClickState.Down);
+
+        else SetState(CursorClickState.Hovering);
     }
 
     private void SetState(CursorClickState state)
@@ -117,7 +121,7 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
         return new(mappedX, mappedY);
     }
 
-    private bool IsHovering(EventSystem system, Cursor_Input_Manager cim)
+    private bool IsOverReceiver(EventSystem system, Cursor_Input_Manager cim)
     {
         if (!camera || !system) return false;
 

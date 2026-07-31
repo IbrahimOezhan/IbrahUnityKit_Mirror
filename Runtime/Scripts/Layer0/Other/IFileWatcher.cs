@@ -9,6 +9,6 @@ namespace IbrahKit.Core
     public interface IFileWatcher
     {
         [Button]
-        public void OnFileUpdaate();
+        public void OnFileUpdate();
     }
 }

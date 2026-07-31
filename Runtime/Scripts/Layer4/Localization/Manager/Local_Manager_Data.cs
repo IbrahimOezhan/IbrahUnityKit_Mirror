@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Debugging;
-using IbrahKit.Keys;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
-using static IbrahKit.Localization.Local_Manager;
 
 #endregion
 
@@ -20,9 +18,7 @@ namespace IbrahKit.Localization
     /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
-        private const string LANG = "Language";
-
-        [OdinSerialize, Required, OnValueChanged(nameof(OnFileUpdaate))]
+        [OdinSerialize, Required, OnValueChanged(nameof(OnFileUpdate))]
         private TextAsset localizationAssets;
 
         [OdinSerialize, Required] private char seperator;
@@ -32,7 +28,7 @@ namespace IbrahKit.Localization
         [OdinSerialize, ReadOnly] private SortedList<SystemLanguage, Local_Language> languages = new();
 
         [Button]
-        public void OnFileUpdaate()
+        public void OnFileUpdate()
         {
             if (localizationAssets == null) return;
 
@@ -53,13 +49,9 @@ namespace IbrahKit.Localization
                 return;
             }
 
-            PopulateDictionary(lines.Skip(0), seperator);
+            PopulateDictionary(lines.Skip(0));
 
-            Key_Database_Finder.TrySetKeys(DROP, keyValuePairs.Keys.OrderBy(x => x).ToList());
-
-            Key_Database_Finder.TrySetKeys(LANG, languages.Values.Select(x => x.GetNative()).ToList());
-
-            Key_Database_Finder.TrySetKeys(SYS, languages.Values.Select(x => x.GetSys()).ToList());
+            Local_Table.Instance.Values = keyValuePairs.Select(kvp => kvp.Key).ToList();
         }
 
         public void Validate(SelfValidationResult result)
@@ -129,7 +121,7 @@ namespace IbrahKit.Localization
             return true;
         }
 
-        private void PopulateDictionary(IEnumerable<string> lines, char seperator)
+        private void PopulateDictionary(IEnumerable<string> lines)
         {
             foreach (string line in lines)
             {
