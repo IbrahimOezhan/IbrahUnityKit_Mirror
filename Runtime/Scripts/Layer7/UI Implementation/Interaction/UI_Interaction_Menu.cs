@@ -50,7 +50,7 @@ namespace IbrahKit.UI
 
             if (state is Interaction_Manager.InteractionStateNone interacting)
             {
-                string key = interacting.GetInteractable().OverrideKey(manager.GetLocalKey());
+                string key = interacting.GetInteractable().OverrideKey(manager.GetInteractionKey());
                 localization.SetKey(key);
             }
             else

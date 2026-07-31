@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Localization;
 using IbrahKit.StateMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +14,7 @@ namespace IbrahKit.Interaction
     /// </summary>
     public abstract partial class Interaction_Manager : MonoBehaviour
     {
-        [SerializeField] private Local_Key interactionKey;
+        [SerializeField] private Interaction_Key interactionKey;
         private StateMachine<InteractionMachineState> stateMachine;
 
         protected void RunStateMachine()
@@ -27,7 +26,7 @@ namespace IbrahKit.Interaction
 
         public StateMachine<InteractionMachineState> GetStateMachine() => stateMachine;
 
-        public Local_Key GetLocalKey() => interactionKey;
+        public Interaction_Key GetInteractionKey() => interactionKey;
 
         protected abstract InputAction GetInteractInputAction();
 
