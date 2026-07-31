@@ -1,17 +1,23 @@
 #region
 
-using IbrahKit.UI.Menu;
+using IbrahKit.UI.Generic;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.Settings
 {
-    public abstract class UI_Setting : MonoBehaviour, IMenuInit
+    public abstract class UI_Setting : MonoBehaviour, IUIInit
     {
         private Setting setting;
 
-        public abstract void OnMenuInit(UI_Menu menu);
+        public void OnMenuInitBottomUp()
+        {
+        }
+
+        public void OnMenuInitTopDown()
+        {
+        }
 
         public bool CanSpawn(Setting setting)
         {

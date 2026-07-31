@@ -6,10 +6,10 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI.Menu
+namespace IbrahKit.UI.Generic
 {
     [RequireComponent(typeof(Canvas))]
-    public class UI_Menu_Controller_Canvas : MonoBehaviour
+    public class UI_Canvas_Controller : MonoBehaviour
     {
         [SerializeField, Required] private Canvas canvas;
         public Action OnFocusOrResolutionChanged;

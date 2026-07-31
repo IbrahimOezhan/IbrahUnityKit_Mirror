@@ -2,7 +2,6 @@
 
 using System;
 using IbrahKit.Settings;
-using IbrahKit.UI.Menu;
 using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using UnityEngine;
@@ -54,7 +53,7 @@ namespace IbrahKit
             textSetter.SetText(GetSetting().GetValue());
         }
 
-        public override void OnMenuInit(UI_Menu menu)
+        public void OnMenuInitBottomUp()
         {
             throw new NotImplementedException();
         }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace IbrahKit.UI.Menu
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";
 
-        [SerializeField, Required] private UI_Menu_Controller_Alpha alphaController;
+        [SerializeField, Required] private UI_Alpha_Controller alphaController;
 
         [SerializeField] protected bool preventHideOnPause;
 
@@ -70,21 +71,13 @@ namespace IbrahKit.UI.Menu
             else ShowBy(PAUSED);
         }
 
-        protected override void OnInit()
-        {
-        }
-
         public override void OnMenuEnabled()
         {
             if (!UI_Menu_Manager.TryGet(out UI_Menu_Manager result)) return;
             result.OnHide += GU_Hide;
             result.InvokeHide();
         }
-
-        public override void Lifecycle()
-        {
-        }
-
+        
         public override void OnMenuDisabled()
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager menu))

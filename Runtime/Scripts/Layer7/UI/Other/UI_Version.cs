@@ -1,6 +1,6 @@
 #region
 
-using IbrahKit.UI.Menu;
+using IbrahKit.UI.Generic;
 using IbrahKit.UI.Modifier;
 using UnityEngine;
 
@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_Version : MonoBehaviour, IMenuInit
+    public class UI_Version : MonoBehaviour, IUIInit
     {
         [SerializeField] private UI_Modifier localization;
 
-        public void OnMenuInit(UI_Menu menu)
+        public void OnMenuInitBottomUp()
         {
             if (localization != null && localization.TryGetExtension(out UI_Modifier_Extension_Localization result))
             {
@@ -20,6 +20,10 @@ namespace IbrahKit.UI
 
                 return;
             }
+        }
+
+        public void OnMenuInitTopDown()
+        {
         }
     }
 }

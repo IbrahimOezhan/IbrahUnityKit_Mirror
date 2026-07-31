@@ -1,9 +1,10 @@
 #region
 
+using System;
 using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Input;
-using IbrahKit.UI.Menu;
+using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,7 +14,7 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable : UnityCallbacks, IMenuInit, IPointerEnterHandler, IPointerExitHandler,
+    public class UI_Selectable : UnityCallbacks, IUIInit, IPointerEnterHandler, IPointerExitHandler,
         IPointerDownHandler, IPointerUpHandler, IRaycast_Receiver
     {
         [SerializeField] private UI_Selectable_Controller_State stateController;
@@ -25,7 +26,6 @@ namespace IbrahKit.UI.Selectable
         private readonly UI_Selectable_Controller_Input_Cursor cursorInput = new();
 
         private readonly UI_Selectable_Controller_Navigation navigationController = new();
-        private UI_Menu menu;
 
         protected override void Update()
         {
@@ -45,25 +45,6 @@ namespace IbrahKit.UI.Selectable
             transitionController.OnDisable();
 
             stateController.OnDisable();
-        }
-
-        public void OnMenuInit(UI_Menu menu)
-        {
-            this.menu = menu;
-
-            transform.BetterTryGetComponentInParent(out selectableGroup);
-
-            cursorInput.Init(this);
-
-            navigationController.Init(this);
-
-            transitionController.Init(this);
-
-            stateController.Init(this);
-
-            stateController.GetOnStateChangedEvent().AddListener(Visualize);
-
-            Visualize(stateController.GetState());
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -88,6 +69,28 @@ namespace IbrahKit.UI.Selectable
         {
             if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
                 .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerUp(eventData);
+        }
+
+        public void OnMenuInitBottomUp()
+        {
+            transform.BetterTryGetComponentInParent(out selectableGroup);
+
+            cursorInput.Init(this);
+
+            navigationController.Init(this);
+
+            transitionController.Init(this);
+
+            stateController.Init(this);
+
+            stateController.GetOnStateChangedEvent().AddListener(Visualize);
+
+            Visualize(stateController.GetState());
+        }
+
+        public void OnMenuInitTopDown()
+        {
+            throw new NotImplementedException();
         }
 
         protected override void Enable()
@@ -118,8 +121,6 @@ namespace IbrahKit.UI.Selectable
         public UI_Selectable_Controller_State GetStateController() => stateController;
 
         public UI_Selectable_Controller_Navigation GetNavigationController() => navigationController;
-
-        public UI_Menu GetMenu() => menu;
 
         public UI_Selectable_Group GetGroup() => selectableGroup;
 

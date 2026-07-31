@@ -2,7 +2,9 @@
 
 using System;
 using IbrahKit.Debugging;
+using IbrahKit.UI.Generic;
 using IbrahKit.UI.Modifier;
+using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Application = UnityEngine.Application;
@@ -54,8 +56,9 @@ namespace IbrahKit.UI
                 return false;
             }
 
-            modifier.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged +=
+            extension.transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged +=
                 extension.RunExtensions;
+
 
             return true;
         }
@@ -86,7 +89,7 @@ namespace IbrahKit.UI
 
         protected override void CleanupPro()
         {
-            modifier.GetMenu().GetContentController().GetCanvasController().OnFocusOrResolutionChanged -=
+            extension.transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged -=
                 extension.RunExtensions;
         }
 

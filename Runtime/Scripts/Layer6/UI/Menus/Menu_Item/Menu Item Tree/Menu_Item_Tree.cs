@@ -1,25 +1,44 @@
 #region
 
 using System.Collections.Generic;
+using IbrahKit.UI.Generic;
+using IbrahKit.Utilities;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.UI.Menu
 {
-    public class Menu_Item_Tree : MonoBehaviour, IMenuInit
+    public class Menu_Item_Tree : MonoBehaviour, IUIInit, IMenuReference
     {
         [Tooltip("List of predefined menu items."), SerializeReference]
         private List<Menu_Item_Base> listMenuItems = new();
 
-        public void OnMenuInit(UI_Menu menu)
+        private UI_Menu menu;
+
+        public UI_Menu GetMenu()
+        {
+            return menu;
+        }
+
+        public void OnMenuInitBottomUp()
         {
             foreach (Menu_Item_Base menuItem in listMenuItems)
             {
-                if (TrySpawnMenuItem(menuItem, menu, out GameObject _instance))
+                if (TrySpawnMenuItem(menuItem, menu, out GameObject _))
                 {
-                    menu.GetContentController().RegisterUI(null);
+                    UI_Init.InitSubTree(transform);
                 }
+            }
+        }
+
+        public void OnMenuInitTopDown()
+        {
+            IMenuReference menuReference = transform.BetterGetComponentInParent<IMenuReference>();
+
+            if (menuReference != null)
+            {
+                menu = menuReference.GetMenu();
             }
         }
 

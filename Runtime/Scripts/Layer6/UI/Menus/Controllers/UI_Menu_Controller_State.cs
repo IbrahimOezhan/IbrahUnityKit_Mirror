@@ -89,22 +89,6 @@ namespace IbrahKit.UI.Menu
             ? MenuStateCompact.ENABLED
             : MenuStateCompact.DISABLED;
 
-        protected override void OnInit()
-        {
-        }
-
-        public override void OnMenuEnabled()
-        {
-        }
-
-        public override void Lifecycle()
-        {
-        }
-
-        public override void OnMenuDisabled()
-        {
-        }
-
         public void ToggleEditor(UI_Menu menu)
         {
             if (Application.isPlaying)

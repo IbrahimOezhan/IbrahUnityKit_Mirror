@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,8 +36,12 @@ namespace IbrahKit.UI.Selectable
 
         public void Navigate(InputAction.CallbackContext context)
         {
+            UI_Canvas_Controller controllerCanvas =
+                GetSelectable().transform.BetterGetComponentInParent<UI_Canvas_Controller>();
+
+
             Navigate(this, context.ReadValue<Vector2>(),
-                GetSelectable().GetMenu().GetContentController().GetCanvasController().GetCanvas(),
+                controllerCanvas.GetCanvas(),
                 activeSelectables.Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable())
                     .ToList());
         }

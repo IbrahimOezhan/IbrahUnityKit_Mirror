@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,32 +10,31 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
-    public class UI_Menu : MonoBehaviour, IConfigHolder
+    public class UI_Menu : MonoBehaviour, IConfigHolder, IMenuReference
     {
         [SerializeField] private UI_Configs configs;
 
-        [SerializeField] private UI_Menu_Controller_Content content;
-
-        [SerializeField] private UI_Menu_Controller_Visibility visiblity;
+        [SerializeField] private UI_Menu_Controller_Visibility visibility;
 
         [SerializeField] private UI_Menu_Controller_State state;
 
         private readonly UI_Menu_Controller_Audio audioController = new();
+        
         private readonly List<UI_Menu_Controller> controllers = new();
 
         public Action<bool> OnStateChanged;
 
         protected virtual void Awake()
         {
-            controllers.Add(content);
-
-            controllers.Add(visiblity);
+            controllers.Add(visibility);
 
             controllers.Add(state);
 
             controllers.Add(audioController);
 
             BeforeInit();
+            
+            UI_Init.InitSubTree(transform);
 
             controllers.ForEach(x => x.Init(this));
 
@@ -65,8 +65,6 @@ namespace IbrahKit.UI.Menu
         {
         }
 
-        public UI_Configs GetConfigs() => configs;
-
         protected virtual void ObjectLifecycle()
         {
         }
@@ -91,15 +89,17 @@ namespace IbrahKit.UI.Menu
         {
         }
 
+        public UI_Configs GetConfigs() => configs;
+
+        public UI_Menu GetMenu() => this;
+        
         public UI_Menu_Controller_Audio GetAudioController() => audioController;
 
         public List<UI_Menu_Controller> GetMenuControllers() => controllers;
 
-        public IMenuControllerVisibility GetVisbilityController() => visiblity;
+        public IMenuControllerVisibility GetVisbilityController() => visibility;
 
         public IMenuControllerState GetStateController() => state;
-
-        public IMenuControllerContent GetContentController() => content;
 
         [Button("Toggle")]
         public void ToggleEditor()

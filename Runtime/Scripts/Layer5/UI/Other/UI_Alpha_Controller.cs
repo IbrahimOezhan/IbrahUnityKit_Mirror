@@ -4,10 +4,10 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI.Menu
+namespace IbrahKit.UI.Generic
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public class UI_Menu_Controller_Alpha : MonoBehaviour
+    public class UI_Alpha_Controller : MonoBehaviour
     {
         [SerializeField, HideInInspector] private int hiddenCount = 0;
         [SerializeField, HideInInspector] private float enabledAlpha;

@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using IbrahKit.UI.Menu;
+using IbrahKit.UI.Generic;
 using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using UnityEngine;
@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    public class UI_PageView : MonoBehaviour, IMenuInit
+    public class UI_PageView : MonoBehaviour, IUIInit
     {
         [SerializeField] private UI_Selectable left;
 
@@ -30,7 +30,7 @@ namespace IbrahKit.UI
 
         public Action<int> onPageChanged;
 
-        public void OnMenuInit(UI_Menu menu)
+        public void OnMenuInitBottomUp()
         {
             if (left != null)
             {
@@ -48,6 +48,10 @@ namespace IbrahKit.UI
             {
                 onPageChanged += UpdatePageText;
             }
+        }
+
+        public void OnMenuInitTopDown()
+        {
         }
 
         public void Config(List<Transform> content, int amountPerPage)
