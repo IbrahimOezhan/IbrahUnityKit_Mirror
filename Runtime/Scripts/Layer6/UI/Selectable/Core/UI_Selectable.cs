@@ -3,6 +3,7 @@
 using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Input;
+using IbrahKit.UI.Menu;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -10,7 +11,7 @@ using UnityEngine.EventSystems;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class UI_Selectable : UnityCallbacks, IMenuInit, IPointerEnterHandler, IPointerExitHandler,
         IPointerDownHandler, IPointerUpHandler, IRaycast_Receiver

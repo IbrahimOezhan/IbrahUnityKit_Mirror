@@ -8,7 +8,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuControllerVisibility

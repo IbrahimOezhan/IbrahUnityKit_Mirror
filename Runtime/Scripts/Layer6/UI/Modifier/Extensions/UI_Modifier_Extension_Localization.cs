@@ -7,7 +7,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Modifier
 {
     [Serializable]
     public class UI_Modifier_Extension_Localization : UI_Modifier_Extension_Text_Modifier

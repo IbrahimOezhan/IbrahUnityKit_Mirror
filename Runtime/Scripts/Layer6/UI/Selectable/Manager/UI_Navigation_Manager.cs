@@ -3,12 +3,11 @@
 using System.Linq;
 using IbrahKit.Input;
 using IbrahKit.Manager;
-using IbrahKit.UI;
 using UnityEngine.InputSystem;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Selectable
 {
     public class UI_Navigation_Manager : Manager_Global<UI_Navigation_Manager, UI_Navigation_Manager_Data>
     {

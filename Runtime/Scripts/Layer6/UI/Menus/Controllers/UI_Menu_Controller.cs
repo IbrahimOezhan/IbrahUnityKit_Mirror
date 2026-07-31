@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public abstract class UI_Menu_Controller

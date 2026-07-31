@@ -7,7 +7,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     [Serializable]
     public class UI_Selectable_Controller_Transition : UI_Selectable_Controller, ISelfValidator

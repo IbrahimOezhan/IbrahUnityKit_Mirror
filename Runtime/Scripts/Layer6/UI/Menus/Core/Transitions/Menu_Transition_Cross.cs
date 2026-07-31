@@ -6,7 +6,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public class Menu_Transition_Cross : Menu_Transition_Time

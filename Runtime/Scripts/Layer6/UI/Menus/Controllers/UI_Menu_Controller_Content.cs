@@ -8,7 +8,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public class UI_Menu_Controller_Content : UI_Menu_Controller, IMenuControllerContent
@@ -26,14 +26,6 @@ namespace IbrahKit.UI
             if (state == State.BEFOREINIT) return;
 
             uninitialized.Enqueue(element);
-        }
-
-        public UI_Menu_Config GetMenuConfig()
-        {
-            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(
-                UI_Configs.GetConfigs(GetMenu().transform), out UI_Menu_Config result);
-
-            return result;
         }
 
         public UI_Menu_Controller_Canvas GetCanvasController() => canvasController;

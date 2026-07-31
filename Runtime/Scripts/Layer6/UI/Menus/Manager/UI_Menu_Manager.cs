@@ -10,7 +10,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [DefaultExecutionOrder(Execution_Order.ui)]
     public class UI_Menu_Manager : Manager_Global<UI_Menu_Manager, UI_Menu_Manager_Data>

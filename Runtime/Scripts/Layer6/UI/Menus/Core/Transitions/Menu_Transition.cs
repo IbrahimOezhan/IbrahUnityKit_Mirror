@@ -6,7 +6,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public abstract class Menu_Transition

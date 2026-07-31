@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
     {

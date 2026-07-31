@@ -1,11 +1,10 @@
 #region
 
 using System;
-using IbrahKit.UI;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Selectable
 {
     [Serializable]
     public abstract class UI_Selectable_Controller

@@ -1,12 +1,13 @@
 #region
 
 using IbrahKit.Extension;
+using IbrahKit.UI.Menu;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Modifier
 {
     public class UI_Modifier : Extension_Handler<UI_Modifier_Extension>, IMenuInit, ISelfValidator
     {

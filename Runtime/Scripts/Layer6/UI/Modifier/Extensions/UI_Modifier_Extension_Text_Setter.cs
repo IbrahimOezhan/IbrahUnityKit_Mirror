@@ -5,7 +5,7 @@ using IbrahKit.Debugging;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Modifier
 {
     [Serializable]
     public class UI_Modifier_Extension_Text_Setter : UI_Modifier_Extension_Text_Modifier

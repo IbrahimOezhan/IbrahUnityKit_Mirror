@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class S_Transition_Color : UI_Selectable_Transition<Graphic, S_Transition_Color_SO>
     {

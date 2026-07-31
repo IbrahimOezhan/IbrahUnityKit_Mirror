@@ -1,16 +1,13 @@
 #region
 
-using System;
-
 #endregion
 
 namespace IbrahKit.Save
 {
     /***
-     * Base Class for all objects that can be saved
+     * Interface for all objects that can be saved
      */
-    [Serializable]
-    public class Savable
+    public interface Savable
     {
     }
 }

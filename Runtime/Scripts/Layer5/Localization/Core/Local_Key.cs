@@ -11,15 +11,11 @@ namespace IbrahKit.Localization
     ///     Subclass for Localization Keys
     /// </summary>
     [Serializable]
-    public class Local_Key : Key_Reference<Local_Key, Local_Table>
+    public class Local_Key : Key_Reference<Local_Key, LocalKeyTable>
     {
         public static implicit operator Local_Key(string value)
         {
             return new Local_Key { key = value };
-        }
-
-        private class Local_Key_Processor : Key_Processor<Local_Key, Local_Table>
-        {
         }
     }
 }

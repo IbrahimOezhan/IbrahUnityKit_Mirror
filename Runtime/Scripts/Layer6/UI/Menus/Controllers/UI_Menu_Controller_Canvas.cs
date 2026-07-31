@@ -6,7 +6,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Menu
 {
     [RequireComponent(typeof(Canvas))]
     public class UI_Menu_Controller_Canvas : MonoBehaviour

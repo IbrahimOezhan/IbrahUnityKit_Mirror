@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     public class Menu_Transition_Sequence : Menu_Transition_Time
     {

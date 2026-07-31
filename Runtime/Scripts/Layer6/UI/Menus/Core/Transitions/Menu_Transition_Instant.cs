@@ -5,7 +5,7 @@ using System.Collections;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     [Serializable]
     public class Menu_Transition_Instant : Menu_Transition

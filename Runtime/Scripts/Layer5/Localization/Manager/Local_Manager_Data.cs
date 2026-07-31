@@ -51,7 +51,7 @@ namespace IbrahKit.Localization
 
             PopulateDictionary(lines.Skip(0));
 
-            Local_Table.Instance.Values = keyValuePairs.Select(kvp => kvp.Key).ToList();
+            LocalKeyTable.Instance.Values = keyValuePairs.Select(kvp => kvp.Key).ToList();
         }
 
         public void Validate(SelfValidationResult result)

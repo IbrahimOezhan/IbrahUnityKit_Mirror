@@ -18,6 +18,7 @@ namespace IbrahKit
     public class Camera_Overlay_Assign : MonoBehaviour
     {
         [SerializeField] private int priority;
+
         private Camera overlayCam;
 
         private void Awake()
@@ -72,26 +73,14 @@ namespace IbrahKit
                 list.Add(overlayCam);
 
                 list.Sort((a, b) =>
-                {
-                    if (a.TryGetComponent(out Camera_Overlay_Assign overlayA))
-                    {
-                        if (b.TryGetComponent(out Camera_Overlay_Assign overlayB))
-                        {
-                            return overlayA.priority.CompareTo(overlayB.priority);
-                        }
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-                    else
-                    {
-                        return 0;
-                    }
-                });
+                    a.TryGetComponent(out Camera_Overlay_Assign overlayA)
+                        ? b.TryGetComponent(out Camera_Overlay_Assign overlayB)
+                            ? overlayA.priority.CompareTo(overlayB.priority)
+                            : 1
+                        : 0);
             }
 
-            list = list.Distinct().ToList();
+            baseCameraData.cameraStack.RemoveAll(x => !list.Distinct().Contains(x));
         }
     }
 }

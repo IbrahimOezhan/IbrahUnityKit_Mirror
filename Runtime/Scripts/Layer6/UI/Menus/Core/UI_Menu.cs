@@ -7,7 +7,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     public class UI_Menu : MonoBehaviour, IConfigHolder
     {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Menu
 {
     public class UI_Menu_Manager_Data : ScriptableObject
     {

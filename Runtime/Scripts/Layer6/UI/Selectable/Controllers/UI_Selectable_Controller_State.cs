@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     [Serializable]
     public class UI_Selectable_Controller_State : UI_Selectable_Controller

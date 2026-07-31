@@ -1,4 +1,4 @@
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Menu
 {
     public enum MenuState
     {

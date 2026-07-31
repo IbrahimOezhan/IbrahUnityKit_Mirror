@@ -4,7 +4,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class S_Transition_Animator : UI_Selectable_Transition<Animator, S_Transition_Animator_SO>
     {

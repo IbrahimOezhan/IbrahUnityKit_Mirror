@@ -6,7 +6,8 @@ using System.Text;
 using IbrahKit.Debugging;
 using IbrahKit.Localization;
 using IbrahKit.Manager;
-using IbrahKit.UI;
+using IbrahKit.UI.Menu;
+using IbrahKit.UI.Modifier;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

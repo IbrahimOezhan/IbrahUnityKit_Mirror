@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     [Serializable]
     public class S_Transition_Scale : UI_Selectable_Transition<RectTransform, S_Transition_Scale_SO>

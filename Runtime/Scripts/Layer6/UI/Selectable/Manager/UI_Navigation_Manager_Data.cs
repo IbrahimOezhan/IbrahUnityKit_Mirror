@@ -6,7 +6,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Selectable
 {
     public class UI_Navigation_Manager_Data : ScriptableObject
     {

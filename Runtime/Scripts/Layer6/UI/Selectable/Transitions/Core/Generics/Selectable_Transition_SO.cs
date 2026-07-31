@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class Selectable_Transition_SO<T> : Selectable_Transition_SO
     {

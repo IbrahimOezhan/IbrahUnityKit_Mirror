@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Modifier
 {
     [Serializable]
     public abstract class UI_Modifier_Extension : Extension.Extension

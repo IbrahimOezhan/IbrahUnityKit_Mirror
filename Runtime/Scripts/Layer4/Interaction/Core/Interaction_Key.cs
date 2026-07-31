@@ -5,10 +5,18 @@ using IbrahKit.Keys;
 
 #endregion
 
-[Serializable]
-public class Interaction_Key : Key_Reference<Interaction_Key, Interaction_Table>
+namespace IbrahKit.Interaction
 {
-    private class Key_Processor : Key_Processor<Interaction_Key, Interaction_Table>
+    [Serializable]
+    public class Interaction_Key : Key_Reference<Interaction_Key, Interaction_Key_Table>
     {
+        public static implicit operator Interaction_Key(string value)
+        {
+            return new Interaction_Key { key = value };
+        }
+
+        private new class Key_Processor : Key_Reference<Interaction_Key, Interaction_Key_Table>.Key_Processor
+        {
+        }
     }
 }

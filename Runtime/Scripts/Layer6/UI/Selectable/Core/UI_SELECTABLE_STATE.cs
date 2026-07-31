@@ -1,4 +1,4 @@
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public enum UI_SELECTABLE_STATE
     {

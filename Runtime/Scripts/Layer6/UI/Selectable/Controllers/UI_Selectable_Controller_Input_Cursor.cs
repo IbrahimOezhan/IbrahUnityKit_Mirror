@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Selectable
 {
     public class UI_Selectable_Controller_Input_Cursor : UI_Selectable_Controller
     {
