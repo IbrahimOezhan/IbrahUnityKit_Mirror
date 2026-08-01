@@ -1,5 +1,5 @@
 #!/bin/sh
-git clone --depth 1 https://wiki.ibrahimoezhan.com/ /tmp/wiki-clone
+git clone --depth 1 https://wiki.ibrahimoezhan.com/.git /tmp/wiki-clone
 cp /tmp/wiki-clone/Ibrah-Unity-Kit.md README.md
 rm -rf /tmp/wiki-clone
 git add README.md
