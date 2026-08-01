@@ -46,7 +46,7 @@ namespace IbrahKit.Save
                 try
                 {
                     IbrahDebug.LogException(ex);
-                    
+
                     Savable savable = Deserialize(content, t, false);
 
                     return (savable, Save_State.Corrupted);
@@ -54,14 +54,14 @@ namespace IbrahKit.Save
                 catch (Exception exx)
                 {
                     IbrahDebug.LogException(exx);
-                    
+
                     return (null, Save_State.Corrupted);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 IbrahDebug.LogException(ex);
-                
+
                 return (null, Save_State.Corrupted);
             }
         }

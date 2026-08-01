@@ -13,9 +13,9 @@ namespace IbrahKit.UI
 
         public T GetConfig<T>(params Override_Config_SO<T>[] configs) where T : ScriptableObject
         {
-            for (int i = 0; i < configs.Length; i++)
+            foreach (var t in configs)
             {
-                if (configs[i].TryGet(out T value))
+                if (t.TryGet(out T value))
                 {
                     return value;
                 }

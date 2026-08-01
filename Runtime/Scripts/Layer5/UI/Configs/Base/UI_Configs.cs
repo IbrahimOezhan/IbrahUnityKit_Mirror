@@ -20,7 +20,8 @@ namespace IbrahKit.UI
         private IEnumerable<Type> Filter()
         {
             return Type_Utilities.GetSubTypes(typeof(Override_Config_SO_Base))
-                .Except(Type_Utilities.CollectionToTypes(overrides)).Where(x => !x.ContainsGenericParameters);
+                .Except(Type_Utilities.CollectionToTypes(overrides.Where(x => x != null)))
+                .Where(x => !x.ContainsGenericParameters);
         }
 
         public bool TryGet<TOverrideSO, TConfigSO, TConfig>(out TConfig result)
@@ -30,15 +31,15 @@ namespace IbrahKit.UI
         {
             foreach (var item in overrides)
             {
-                if (item is TOverrideSO so)
-                {
-                    TConfigSO configSO = so.Get();
-                    result = configSO.GetConfig();
-                    return result != null;
-                }
+                if (item is not TOverrideSO so) continue;
+                
+                TConfigSO configSO = so.Get();
+                result = configSO.GetConfig();
+                return result != null;
             }
 
-            result = default;
+            result = null;
+            
             return false;
         }
 
@@ -70,10 +71,8 @@ namespace IbrahKit.UI
             where TOverrideSO : Override_Config_SO<TConfigSO>
         {
             result = null;
-            for (int i = 0; i < configs.Length; i++)
-                if (configs[i].TryGet<TOverrideSO, TConfigSO, TConfig>(out result))
-                    return true;
-            return false;
+
+            return configs.Any(x => x.TryGet<TOverrideSO, TConfigSO, TConfig>(out _));
         }
     }
 }

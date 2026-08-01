@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 #endregion
 
@@ -35,6 +36,12 @@ namespace IbrahKit.Utilities
 
         public static IEnumerable<Type> CollectionToTypes(IEnumerable<object> collection)
         {
+            if (collection == null)
+            {
+                Debug.LogError("Collection is null");
+                return Type.EmptyTypes;
+            }
+            
             return collection.Select(x => x.GetType());
         }
 
@@ -45,43 +52,40 @@ namespace IbrahKit.Utilities
                 throw new NullReferenceException("Base type is null");
             }
 
-            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
-                {
-                    try
-                    {
-                        return a.GetTypes();
-                    }
-                    catch
-                    {
-                        return Array.Empty<Type>();
-                    }
-                }
-            ).Where(t =>
+            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => 
             {
-                if (t.IsAbstract) return false;
+                try
+                {
+                    return a.GetTypes();
+                }
+                catch
+                {
+                    return Array.Empty<Type>();
+                } 
+            }).Where(t =>
+            {
+                Type ty = t;
+                
+                if (ty.IsAbstract) return false;
 
                 if (!baseType.IsGenericType)
                 {
-                    return baseType.IsAssignableFrom(t);
+                    return baseType.IsAssignableFrom(ty);
                 }
-                else
+                
+                if (baseType.IsInterface)
+                    return ty.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
+
+                while (ty != null && ty != typeof(object))
                 {
-                    if (baseType.IsInterface)
-                        return t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
+                    Type cur = ty.IsGenericType ? ty.GetGenericTypeDefinition() : ty;
 
-                    Type ty = t;
+                    if (cur == baseType) return true;
 
-                    while (ty != null && ty != typeof(object))
-                    {
-                        Type cur = ty.IsGenericType ? ty.GetGenericTypeDefinition() : ty;
-
-                        if (cur == baseType) return true;
-
-                        ty = ty.BaseType;
-                    }
-
-                    return false;
+                    ty = ty.BaseType;
                 }
+
+                return false;
             }).Except(except ?? Type.EmptyTypes);
 
             return types;

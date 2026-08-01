@@ -21,22 +21,18 @@ namespace IbrahKit.UI.Menu
 
         protected virtual void OnInit()
         {
-            
         }
 
         public virtual void OnMenuEnabled()
         {
-            
         }
 
         public virtual void Lifecycle()
         {
-            
         }
 
         public virtual void OnMenuDisabled()
         {
-            
         }
     }
 }

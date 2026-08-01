@@ -19,7 +19,7 @@ namespace IbrahKit.UI.Menu
         [SerializeField] private UI_Menu_Controller_State state;
 
         private readonly UI_Menu_Controller_Audio audioController = new();
-        
+
         private readonly List<UI_Menu_Controller> controllers = new();
 
         public Action<bool> OnStateChanged;
@@ -33,7 +33,7 @@ namespace IbrahKit.UI.Menu
             controllers.Add(audioController);
 
             BeforeInit();
-            
+
             UI_Init.InitSubTree(transform);
 
             controllers.ForEach(x => x.Init(this));
@@ -65,6 +65,10 @@ namespace IbrahKit.UI.Menu
         {
         }
 
+        public UI_Configs GetConfigs() => configs;
+
+        public UI_Menu GetMenu() => this;
+
         protected virtual void ObjectLifecycle()
         {
         }
@@ -89,10 +93,6 @@ namespace IbrahKit.UI.Menu
         {
         }
 
-        public UI_Configs GetConfigs() => configs;
-
-        public UI_Menu GetMenu() => this;
-        
         public UI_Menu_Controller_Audio GetAudioController() => audioController;
 
         public List<UI_Menu_Controller> GetMenuControllers() => controllers;

@@ -77,7 +77,7 @@ namespace IbrahKit.UI.Menu
             result.OnHide += GU_Hide;
             result.InvokeHide();
         }
-        
+
         public override void OnMenuDisabled()
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager menu))
