@@ -1,8 +1,15 @@
 rm -rf /tmp/wiki-clone
+
 git clone --no-checkout https://wiki.ibrahimoezhan.com/.git /tmp/wiki-clone
+
 cd /tmp/wiki-clone
+
 git show HEAD:ibrah-unity-kit.md > /tmp/extracted.md
+
 cd -
+
 cp /tmp/extracted.md README.md
+
 rm -rf /tmp/wiki-clone /tmp/extracted.md
+
 git add README.md
