@@ -41,21 +41,27 @@ namespace IbrahKit.Save
 
                 return (savable, Save_State.Valid);
             }
-            catch (JsonException)
+            catch (JsonException ex)
             {
                 try
                 {
+                    IbrahDebug.LogException(ex);
+                    
                     Savable savable = Deserialize(content, t, false);
 
-                    return (savable, Save_State.Valid);
+                    return (savable, Save_State.Corrupted);
                 }
-                catch (Exception ex)
+                catch (Exception exx)
                 {
-                    return (null, Save_State.Outdated);
+                    IbrahDebug.LogException(exx);
+                    
+                    return (null, Save_State.Corrupted);
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                IbrahDebug.LogException(ex);
+                
                 return (null, Save_State.Corrupted);
             }
         }

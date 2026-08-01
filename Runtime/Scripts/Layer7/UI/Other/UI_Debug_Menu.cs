@@ -14,7 +14,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit
 {
-    public class Visual_Debug_UI_Menu : UI_Menu, ISelfValidator
+    public class UI_Debug_Menu : UI_Menu, ISelfValidator
     {
         [SerializeField] private UI_Modifier debugContent;
 
