@@ -1,3 +1,5 @@
 #!/bin/sh
-curl -sSL https://wiki.ibrahimoezhan.com/Ibrah-Unity-Kit.md -o README.md
+git clone --depth 1 https://wiki.ibrahimoezhan.com/ /tmp/wiki-clone
+cp /tmp/wiki-clone/Ibrah-Unity-Kit.md README.md
+rm -rf /tmp/wiki-clone
 git add README.md
