@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using IbrahKit.Input;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 #endregion
 
@@ -36,8 +35,7 @@ namespace IbrahKit.UI.Selectable
         {
             if (!deselectOnClickAnywhere) return;
 
-            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result) ||
-                result.CursorOverUI(EventSystem.current)) return;
+            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result) || result.IsOverUIReceiver()) return;
 
             foreach (var selectable in selectables)
             {

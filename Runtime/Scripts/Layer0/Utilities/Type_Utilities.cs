@@ -41,7 +41,7 @@ namespace IbrahKit.Utilities
                 Debug.LogError("Collection is null");
                 return Type.EmptyTypes;
             }
-            
+
             return collection.Select(x => x.GetType());
         }
 
@@ -52,7 +52,7 @@ namespace IbrahKit.Utilities
                 throw new NullReferenceException("Base type is null");
             }
 
-            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => 
+            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a =>
             {
                 try
                 {
@@ -61,18 +61,18 @@ namespace IbrahKit.Utilities
                 catch
                 {
                     return Array.Empty<Type>();
-                } 
+                }
             }).Where(t =>
             {
                 Type ty = t;
-                
+
                 if (ty.IsAbstract) return false;
 
                 if (!baseType.IsGenericType)
                 {
                     return baseType.IsAssignableFrom(ty);
                 }
-                
+
                 if (baseType.IsInterface)
                     return ty.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == baseType);
 

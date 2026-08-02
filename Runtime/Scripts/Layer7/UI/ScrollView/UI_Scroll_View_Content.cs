@@ -5,12 +5,14 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.ScrollView
 {
-    public class ScrollView_Content : MonoBehaviour
+    public class UI_Scroll_View_Content : MonoBehaviour
     {
         [SerializeField, ReadOnly] private RectTransform[] children;
+
         [SerializeField] private RectTransform content;
+
         [SerializeField] private RectTransform viewport; // needed for clamp
 
         private void Awake() => UpdateChildren();
@@ -20,7 +22,9 @@ namespace IbrahKit.UI
         private void UpdateChildren()
         {
             int count = content.childCount;
+
             children = new RectTransform[count];
+
             for (int i = 0; i < count; i++)
                 children[i] = content.GetChild(i) as RectTransform;
         }
@@ -63,9 +67,7 @@ namespace IbrahKit.UI
 
             float ch = content.rect.height;
 
-            if (ch <= 0f) return 1f;
-
-            return Mathf.Clamp01(vh / ch);
+            return ch <= 0f ? 1f : Mathf.Clamp01(vh / ch);
         }
 
         public float Pos01()

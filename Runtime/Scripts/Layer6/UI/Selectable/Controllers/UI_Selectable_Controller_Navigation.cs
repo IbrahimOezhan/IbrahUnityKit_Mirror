@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,9 +12,10 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
+    public partial class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
     {
-        public static List<UI_Selectable_Controller_Navigation> activeSelectables;
+        [AutoStaticsCleanup] public static readonly List<UI_Selectable_Controller_Navigation> activeSelectables = new();
+
         [SerializeField] private bool firstSelectedCandidate;
 
         protected override void Init()

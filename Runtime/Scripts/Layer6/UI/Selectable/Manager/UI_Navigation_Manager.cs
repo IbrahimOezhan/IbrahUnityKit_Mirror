@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Navigation_Manager : Manager_Global<UI_Navigation_Manager, UI_Navigation_Manager_Data>
+    public class UI_Navigation_Manager : Manager_Global<UI_Navigation_Manager>
     {
         private InputTypeNavigation currentType;
 
@@ -30,14 +30,14 @@ namespace IbrahKit.UI.Selectable
 
             input.Enable();
 
-            if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.KEYBOARD))
+            if (IsSupported(Input_Manager.InputType.KEYBOARD))
             {
                 input.Navigation.Move_Keyboard.performed += OnVectorInput;
                 input.Navigation.Confirm_Keyboard.performed += ConfirmPerformed;
                 input.Navigation.Confirm_Keyboard.canceled += ConfirmCanceled;
             }
 
-            if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.GAMEPAD))
+            if (IsSupported(Input_Manager.InputType.GAMEPAD))
             {
                 input.Navigation.Move_Gamepad.performed += OnVectorInput;
                 input.Navigation.Confirm_Gamepad.performed += ConfirmPerformed;
@@ -51,14 +51,14 @@ namespace IbrahKit.UI.Selectable
 
             if (input != null)
             {
-                if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.KEYBOARD))
+                if (IsSupported(Input_Manager.InputType.KEYBOARD))
                 {
                     input.Navigation.Move_Keyboard.performed -= OnVectorInput;
                     input.Navigation.Confirm_Keyboard.performed -= ConfirmPerformed;
                     input.Navigation.Confirm_Keyboard.canceled -= ConfirmCanceled;
                 }
 
-                if (GetManagerData().GetSupportedNavigationMethods().Contains(Input_Manager.InputType.GAMEPAD))
+                if (IsSupported(Input_Manager.InputType.GAMEPAD))
                 {
                     input.Navigation.Move_Gamepad.performed -= OnVectorInput;
                     input.Navigation.Confirm_Gamepad.performed -= ConfirmPerformed;
@@ -132,7 +132,7 @@ namespace IbrahKit.UI.Selectable
 
         public bool IsSupported(Input_Manager.InputType type)
         {
-            return GetManagerData().GetSupportedNavigationMethods().Contains(type);
+            return Input_Manager.GetInstance().GetManagerData().EnabledInputMethods().Contains(type);
         }
 
         private enum InputTypeNavigation

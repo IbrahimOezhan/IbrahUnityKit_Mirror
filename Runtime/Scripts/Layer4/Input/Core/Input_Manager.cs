@@ -14,7 +14,7 @@ using UnityEngine.InputSystem.Controls;
 namespace IbrahKit.Input
 {
     [DefaultExecutionOrder(Execution_Order.input)]
-    public class Input_Manager : Manager_Global<Input_Manager>, IInfoCollector
+    public class Input_Manager : Manager_Global<Input_Manager, Input_Manager_Data>, IInfoCollector
     {
         public enum InputType
         {

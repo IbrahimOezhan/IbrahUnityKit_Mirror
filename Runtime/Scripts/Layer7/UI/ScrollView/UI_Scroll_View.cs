@@ -1,16 +1,17 @@
 #region
 
+using IbrahKit.Input;
 using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.ScrollView
 {
-    public class ScrollView : MonoBehaviour
+    public class UI_Scroll_View : MonoBehaviour
     {
         [SerializeField] private Canvas canvas;
 
-        [SerializeField] private ScrollView_Content content;
+        [SerializeField] private UI_Scroll_View_Content content;
 
         [SerializeField] private RectTransform track;
 
@@ -26,7 +27,7 @@ namespace IbrahKit.UI
             return canvas;
         }
 
-        public ScrollView_Content GetContent()
+        public UI_Scroll_View_Content GetContent()
         {
             return content;
         }
@@ -35,5 +36,7 @@ namespace IbrahKit.UI
         {
             return track;
         }
+
+        public Vector2 GetMousePos() => Cursor_Input_Manager.GetInstance().GetCanvasMousePos(GetCanvas());
     }
 }

@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Input;
@@ -49,25 +48,25 @@ namespace IbrahKit.UI.Selectable
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
+            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
                 .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerDown(eventData);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
+            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
                 .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerEnter(eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
+            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
                 .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerExit(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (UI_Navigation_Manager.GetInstance().GetManagerData().GetSupportedNavigationMethods()
+            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
                 .Contains(Input_Manager.InputType.MOUSE)) cursorInput.OnPointerUp(eventData);
         }
 
@@ -90,7 +89,6 @@ namespace IbrahKit.UI.Selectable
 
         public void OnMenuInitTopDown()
         {
-            throw new NotImplementedException();
         }
 
         protected override void Enable()

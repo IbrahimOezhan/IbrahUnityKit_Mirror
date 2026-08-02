@@ -2,6 +2,7 @@
 
 using System;
 using IbrahKit.Manager;
+using UnityEngine;
 
 #endregion
 
@@ -14,7 +15,7 @@ public abstract class Cursor_State_Manager : Manager_Global<Cursor_State_Manager
         UNCLAMPED,
     }
 
-    private CursorState cursorState;
+    [SerializeField] private CursorState cursorState;
 
     public void Run()
     {

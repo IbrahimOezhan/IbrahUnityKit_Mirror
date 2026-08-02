@@ -32,14 +32,14 @@ namespace IbrahKit.UI
             foreach (var item in overrides)
             {
                 if (item is not TOverrideSO so) continue;
-                
+
                 TConfigSO configSO = so.Get();
                 result = configSO.GetConfig();
                 return result != null;
             }
 
             result = null;
-            
+
             return false;
         }
 

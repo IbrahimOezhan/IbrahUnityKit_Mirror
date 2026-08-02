@@ -2,7 +2,6 @@
 
 using IbrahKit.Input;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
@@ -26,9 +25,7 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
 
     [SerializeField] private Image cursorImage;
 
-    private Camera camera;
-
-    private CursorClickState state;
+    [SerializeField] private CursorClickState state;
 
     public override void Disabled()
     {
@@ -51,8 +48,6 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
 
     private void RenderCursor()
     {
-        if (!camera) camera = Camera.main;
-
         SetCursorState();
 
         SetCursorPos();
@@ -64,7 +59,7 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
     {
         if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager cim)) return;
 
-        bool isOverReceiver = IsOverReceiver(EventSystem.current, cim);
+        bool isOverReceiver = cim.IsOverReceiver();
 
         if (!isOverReceiver)
         {
@@ -89,12 +84,12 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
     {
         if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager cim)) return;
 
-        Vector2 pos = GetCursorPos(cim.GetMousePos());
+        Vector2 pos = GetCursorPos(cim.GetMousePos(), cim.GetCamera());
 
         cursorTransform.localPosition = pos;
     }
 
-    private Vector2 GetCursorPos(Vector2 mousePos)
+    private Vector2 GetCursorPos(Vector2 mousePos, Camera camera)
     {
         if (!camera || !canvas) return Vector2.zero;
 
@@ -119,12 +114,5 @@ public class Cursor_Custom_Manager : Cursor_State_Manager
         float mappedY = (normalizedY - 0.5f) * canvasHeight;
 
         return new(mappedX, mappedY);
-    }
-
-    private bool IsOverReceiver(EventSystem system, Cursor_Input_Manager cim)
-    {
-        if (!camera || !system) return false;
-
-        return system.IsPointerOverGameObject() ? cim.CursorOverUI(system) : cim.CursorOverGameUI(camera);
     }
 }
