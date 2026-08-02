@@ -89,6 +89,11 @@ namespace IbrahKit.Input
             return localPoint;
         }
 
+        public InputAction GetLMB()
+        {
+            return input.Map.LMB;
+        }
+
         public void LeftMouseButton(InputAction.CallbackContext context)
         {
             onLeftMouseButton?.Invoke();

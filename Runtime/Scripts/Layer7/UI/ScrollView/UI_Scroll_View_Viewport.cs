@@ -1,5 +1,6 @@
 #region
 
+using IbrahKit.Input;
 using IbrahKit.UI.Selectable;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,20 +23,27 @@ namespace IbrahKit.UI.ScrollView
         {
             selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
 
-            selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
+           // selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
         }
 
         private void Update()
         {
             if (!holding) return;
 
+            if (Cursor_Input_Manager.GetInstance().GetLMB().WasReleasedThisFrame())
+            {
+                holding = false;
+            }
+
             Vector2 newPos = scrollView.GetMousePos();
 
             Vector2 dif = newPos - lastMousePos;
 
+            Vector2 delta = new Vector2(0f, dif.y);
+            
             lastMousePos = newPos;
 
-            scrollView.GetContent().MoveChildren(new Vector2(0f, dif.y));
+            scrollView.GetContent().MoveChildren(delta);
         }
 
         private void OnClick()
@@ -43,11 +51,6 @@ namespace IbrahKit.UI.ScrollView
             lastMousePos = scrollView.GetMousePos();
 
             holding = true;
-        }
-
-        private void OnClickStop()
-        {
-            holding = false;
         }
     }
 }

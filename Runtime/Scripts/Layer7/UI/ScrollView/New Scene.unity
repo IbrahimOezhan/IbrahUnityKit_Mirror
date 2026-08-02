@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc6c073c69127a4287270927cf29eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Layer4::IbrahKit.Input.Cursor_Input_Manager
+  receivers: []
 --- !u!114 &413573294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1396,11 +1397,11 @@ RectTransform:
   - {fileID: 1918548956}
   m_Father: {fileID: 1575693263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2136478702
 MonoBehaviour:
   m_ObjectHideFlags: 0
