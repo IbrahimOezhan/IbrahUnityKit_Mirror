@@ -4,23 +4,26 @@ using UnityEngine;
 
 #endregion
 
-public class Cursor_Native_Manager : Cursor_State_Manager
+namespace IbrahKit.Input.Cursor
 {
-    public override void Disabled()
+    public class Cursor_Native_Manager : Cursor_State_Manager
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+        public override void Disabled()
+        {
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        }
 
-    public override void Clamped()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-    }
+        public override void Clamped()
+        {
+            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+        }
 
-    public override void Unclamped()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        public override void Unclamped()
+        {
+            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+        }
     }
 }

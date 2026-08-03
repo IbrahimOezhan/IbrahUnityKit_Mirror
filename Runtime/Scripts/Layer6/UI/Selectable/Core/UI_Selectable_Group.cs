@@ -1,9 +1,10 @@
 #region
 
 using System.Collections.Generic;
-using IbrahKit.Input;
+using IbrahKit.Input.Cursor;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 #endregion
 
@@ -19,7 +20,7 @@ namespace IbrahKit.UI.Selectable
         {
             if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
             {
-                result.onLeftMouseButton += OnLMB;
+                result.GetLMB().performed += OnLMB;
             }
         }
 
@@ -27,11 +28,11 @@ namespace IbrahKit.UI.Selectable
         {
             if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
             {
-                result.onLeftMouseButton -= OnLMB;
+                result.GetLMB().performed -= OnLMB;
             }
         }
 
-        public void OnLMB()
+        public void OnLMB(InputAction.CallbackContext ctx)
         {
             if (!deselectOnClickAnywhere) return;
 

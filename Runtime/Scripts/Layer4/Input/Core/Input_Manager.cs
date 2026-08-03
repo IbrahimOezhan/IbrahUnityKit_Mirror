@@ -1,10 +1,12 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using IbrahKit.Core;
 using IbrahKit.InfoCollector;
 using IbrahKit.Manager;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -25,6 +27,8 @@ namespace IbrahKit.Input
         }
 
         [SerializeField, ReadOnly] private InputType currentInputType;
+
+        private readonly HashSet<IInputType> observers = new();
 
         public Action<InputType> OnInputChanged;
 
@@ -68,6 +72,8 @@ namespace IbrahKit.Input
                             break;
                     }
 
+                    observers.ForEach(x => x.OnInput(currentInputType));
+
                     break;
                 }
             }
@@ -83,6 +89,16 @@ namespace IbrahKit.Input
         public int GetDebugOrder()
         {
             return -90;
+        }
+
+        public void Register(IInputType input)
+        {
+            observers.Add(input);
+        }
+
+        public void UnRegister(IInputType input)
+        {
+            observers.Remove(input);
         }
 
         public InputType GetInputType()

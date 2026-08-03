@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 #endregion
 
-namespace IbrahKit.Input
+namespace IbrahKit.Input.Cursor
 {
     [Serializable]
     public class Cursor_Sprite_Style

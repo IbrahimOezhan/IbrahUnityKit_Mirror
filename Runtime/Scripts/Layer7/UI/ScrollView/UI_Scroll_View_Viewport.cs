@@ -1,6 +1,6 @@
 #region
 
-using IbrahKit.Input;
+using IbrahKit.Input.Cursor;
 using IbrahKit.UI.Selectable;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,8 +22,6 @@ namespace IbrahKit.UI.ScrollView
         private void Awake()
         {
             selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
-
-           // selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
         }
 
         private void Update()
@@ -40,7 +38,7 @@ namespace IbrahKit.UI.ScrollView
             Vector2 dif = newPos - lastMousePos;
 
             Vector2 delta = new Vector2(0f, dif.y);
-            
+
             lastMousePos = newPos;
 
             scrollView.GetContent().MoveChildren(delta);

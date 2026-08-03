@@ -1,20 +1,16 @@
 #region
 
-using System.Linq;
 using IbrahKit.Core;
-using IbrahKit.Input;
 using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 #endregion
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable : UnityCallbacks, IUIInit, IPointerEnterHandler, IPointerExitHandler,
-        IPointerDownHandler, IPointerUpHandler, IRaycast_Receiver
+    public partial class UI_Selectable : UnityCallbacks, IUIInit
     {
         [SerializeField] private UI_Selectable_Controller_State stateController;
 
@@ -30,7 +26,7 @@ namespace IbrahKit.UI.Selectable
         {
             base.Update();
 
-            if (selectableGroup != null) selectableGroup.Add(this);
+            if (selectableGroup) selectableGroup.Add(this);
         }
 
         protected override void OnDisable()
@@ -44,30 +40,6 @@ namespace IbrahKit.UI.Selectable
             transitionController.OnDisable();
 
             stateController.OnDisable();
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
-                .Contains(Input_Manager.InputType.MOUSE) && eventData.button == PointerEventData.InputButton.Left) cursorInput.OnPointerDown(eventData);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
-                .Contains(Input_Manager.InputType.MOUSE) && eventData.button == PointerEventData.InputButton.Left) cursorInput.OnPointerEnter(eventData);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
-                .Contains(Input_Manager.InputType.MOUSE) && eventData.button == PointerEventData.InputButton.Left) cursorInput.OnPointerExit(eventData);
-        }
-
-        public void OnPointerUp(PointerEventData eventData)
-        {
-            if (Input_Manager.GetInstance().GetManagerData().EnabledInputMethods()
-                .Contains(Input_Manager.InputType.MOUSE) && eventData.button == PointerEventData.InputButton.Left) cursorInput.OnPointerUp(eventData);
         }
 
         public void OnMenuInitBottomUp()

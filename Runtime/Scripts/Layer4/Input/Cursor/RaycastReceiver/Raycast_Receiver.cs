@@ -2,7 +2,7 @@
 
 #endregion
 
-namespace IbrahKit.Input
+namespace IbrahKit.Input.Cursor
 {
 # if UNITY_6000_5_OR_NEWER
 
@@ -12,7 +12,7 @@ namespace IbrahKit.Input
     ///     graphic
     /// </summary>
     [RequireComponent(typeof(CanvasRenderer))]
-    public class UI_Raycast_Receiver : Graphic, ICursorHandler
+    public class Raycast_Receiver : Graphic
     {
         protected override void OnPopulateMesh(VertexHelper vh)
         {

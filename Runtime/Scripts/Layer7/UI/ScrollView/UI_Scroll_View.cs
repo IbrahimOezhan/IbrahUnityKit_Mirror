@@ -1,6 +1,6 @@
 #region
 
-using IbrahKit.Input;
+using IbrahKit.Input.Cursor;
 using UnityEngine;
 
 #endregion

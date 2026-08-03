@@ -6,48 +6,51 @@ using UnityEngine;
 
 #endregion
 
-public abstract class Cursor_State_Manager : Manager_Global<Cursor_State_Manager>
+namespace IbrahKit.Input.Cursor
 {
-    public enum CursorState
+    public abstract class Cursor_State_Manager : Manager_Global<Cursor_State_Manager>
     {
-        HIDDEN,
-        CLAMPED,
-        UNCLAMPED,
-    }
-
-    [SerializeField] private CursorState cursorState;
-
-    public void Run()
-    {
-        switch (cursorState)
+        public enum CursorState
         {
-            case CursorState.HIDDEN:
-                Disabled();
-                break;
-            case CursorState.CLAMPED:
-                Clamped();
-                break;
-            case CursorState.UNCLAMPED:
-                Unclamped();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            HIDDEN,
+            CLAMPED,
+            UNCLAMPED,
         }
-    }
 
-    public abstract void Disabled();
+        [SerializeField] private CursorState cursorState;
 
-    public abstract void Clamped();
+        public void Run()
+        {
+            switch (cursorState)
+            {
+                case CursorState.HIDDEN:
+                    Disabled();
+                    break;
+                case CursorState.CLAMPED:
+                    Clamped();
+                    break;
+                case CursorState.UNCLAMPED:
+                    Unclamped();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
-    public abstract void Unclamped();
+        public abstract void Disabled();
 
-    public void SetCursorState(CursorState state)
-    {
-        cursorState = state;
-    }
+        public abstract void Clamped();
 
-    public CursorState GetCursorState()
-    {
-        return cursorState;
+        public abstract void Unclamped();
+
+        public void SetCursorState(CursorState state)
+        {
+            cursorState = state;
+        }
+
+        public CursorState GetCursorState()
+        {
+            return cursorState;
+        }
     }
 }

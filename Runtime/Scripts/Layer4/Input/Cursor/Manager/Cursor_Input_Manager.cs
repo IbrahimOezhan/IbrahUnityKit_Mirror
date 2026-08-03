@@ -12,22 +12,54 @@ using UnityEngine.InputSystem;
 
 #endregion
 
-namespace IbrahKit.Input
+namespace IbrahKit.Input.Cursor
 {
-    public class Cursor_Input_Manager : Manager_Global<Cursor_Input_Manager>, IInfoCollector
+    public class Cursor_Input_Manager : Manager_Global<Cursor_Input_Manager>, IInfoCollector, IInputType
     {
-        [SerializeField, ReadOnly] private List<GameObject> receivers;
         private Camera camera;
 
         private CursorInput input;
 
         private Vector2 mousePos;
 
-        public Action onLeftMouseButton;
-
         private EventSystem system;
 
-        private void Update()
+        public string GetInformation() => "Is Over UI: " + IsOverUIReceiver();
+
+        public int GetDebugOrder() => -80;
+
+        public void OnInput(Input_Manager.InputType inputType)
+        {
+            if (inputType != Input_Manager.InputType.MOUSE) return;
+
+            OnInput();
+        }
+
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            input = new();
+
+            input.Enable();
+
+            Input_Manager.GetInstance().Register(this);
+        }
+
+        protected override void InstanceDestroy()
+        {
+            Input_Manager.GetInstance().UnRegister(this);
+
+            base.InstanceDestroy();
+
+            if (input == null) return;
+
+            input.Disable();
+
+            input.Dispose();
+        }
+
+        private void OnInput()
         {
             if (input == null) return;
 
@@ -39,36 +71,7 @@ namespace IbrahKit.Input
 
             Cursor_State_Manager.GetInstance().Run();
 
-            receivers = GetUIReceivers();
-        }
-
-        public string GetInformation() => "Is Over UI: " + IsOverUIReceiver();
-
-        public int GetDebugOrder() => -80;
-
-
-        protected override void InstanceAwake()
-        {
-            base.InstanceAwake();
-
-            input = new();
-
-            input.Enable();
-
-            input.Map.LMB.performed += LeftMouseButton;
-        }
-
-        protected override void InstanceDestroy()
-        {
-            base.InstanceDestroy();
-
-            if (input == null) return;
-
-            input.Map.LMB.performed -= LeftMouseButton;
-
-            input.Disable();
-
-            input.Dispose();
+            HashSet<GameObject> newRec = GetReceivers();
         }
 
         public Vector2 GetMousePos() => mousePos;
@@ -94,12 +97,7 @@ namespace IbrahKit.Input
             return input.Map.LMB;
         }
 
-        public void LeftMouseButton(InputAction.CallbackContext context)
-        {
-            onLeftMouseButton?.Invoke();
-        }
-
-        public List<GameObject> GetReceivers()
+        public HashSet<GameObject> GetReceivers()
         {
             return !system.IsPointerOverGameObject() ? GetGameReceivers() : GetUIReceivers();
         }
@@ -111,7 +109,7 @@ namespace IbrahKit.Input
             return !system.IsPointerOverGameObject() ? IsOverGameReceiver() : IsOverUIReceiver();
         }
 
-        public List<GameObject> GetGameReceivers()
+        public HashSet<GameObject> GetGameReceivers()
         {
             List<GameObject> results = new();
 
@@ -121,15 +119,15 @@ namespace IbrahKit.Input
 
             if (hit2D.transform) results.Add(hit2D.transform.gameObject);
 
-            return results;
+            return new HashSet<GameObject>(results);
         }
 
         public bool IsOverGameReceiver()
         {
-            return GetGameReceivers().Any(x => x.GetComponent<IRaycast_Receiver>() != null);
+            return GetGameReceivers().Any(x => x.GetComponent<ICursorReceiver>() != null);
         }
 
-        public List<GameObject> GetUIReceivers()
+        public HashSet<GameObject> GetUIReceivers()
         {
             PointerEventData pointerData = new(system)
             {
@@ -140,12 +138,12 @@ namespace IbrahKit.Input
 
             system.RaycastAll(pointerData, results);
 
-            return results.Select(x => x.gameObject).ToList();
+            return results.Select(x => x.gameObject).ToHashSet();
         }
 
         public bool IsOverUIReceiver()
         {
-            return GetUIReceivers().Any(x => x.gameObject.GetComponent<IRaycast_Receiver>() != null);
+            return GetUIReceivers().Any(x => x.gameObject.GetComponent<ICursorReceiver>() != null);
         }
 
         public Camera GetCamera() => camera;

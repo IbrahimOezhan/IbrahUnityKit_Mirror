@@ -49,7 +49,7 @@ namespace IbrahKit.UI.Selectable
         }
 
         public static UI_Selectable_Controller_Navigation Navigate(UI_Selectable_Controller_Navigation current,
-            Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> activeSelectables)
+            Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> _activeSelectables)
         {
             if (inputVector.sqrMagnitude < 0.001f)
                 return null;
@@ -62,10 +62,8 @@ namespace IbrahKit.UI.Selectable
 
             RectTransform currentRT = current.GetSelectable().GetRectTransform();
 
-            for (int i = 0; i < activeSelectables.Count; i++)
+            foreach (UI_Selectable_Controller_Navigation candidate in _activeSelectables)
             {
-                UI_Selectable_Controller_Navigation candidate = activeSelectables[i];
-
                 if (candidate == current)
                     continue;
 
