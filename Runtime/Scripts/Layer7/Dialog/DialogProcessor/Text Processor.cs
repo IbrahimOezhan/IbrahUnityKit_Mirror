@@ -6,8 +6,8 @@ using System;
 
 namespace IbrahKit.Dialog
 {
-    [Serializable]
-    public abstract class TextProcessor
+    [Serializable,DialogTag("")]
+    public abstract class DialogProcessor
     {
         public abstract string Process(string text);
     }

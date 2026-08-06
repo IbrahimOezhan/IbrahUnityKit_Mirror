@@ -9,7 +9,7 @@ namespace IbrahKit.Dialog
 {
     public class Dialog_Asset : PlayableAsset
     {
-        [SerializeField] private Dialog_SO dialog;
+       // [SerializeField] private Dialog_SO dialog;
 
         [SerializeField] private int percentageAnim;
 
@@ -19,7 +19,7 @@ namespace IbrahKit.Dialog
 
             Dialog_Behaiviour _dialogBehaviour = _playable.GetBehaviour();
 
-            _dialogBehaviour.dialog = dialog;
+            //_dialogBehaviour.dialog = dialog;
 
             _dialogBehaviour.percentageAnim = percentageAnim;
 

@@ -8,7 +8,7 @@ namespace IbrahKit.Dialog
 {
     public class Dialog_Behaiviour : PlayableBehaviour
     {
-        public Dialog_SO dialog = null;
+        //public Dialog_SO dialog = null;
 
         public int percentageAnim;
 

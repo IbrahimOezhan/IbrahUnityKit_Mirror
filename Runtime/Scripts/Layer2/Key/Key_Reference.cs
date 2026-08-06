@@ -21,7 +21,7 @@ namespace IbrahKit.Keys
     {
         [SerializeField] protected string key;
 
-        public string Value => key;
+        public string Key => key;
 
         public string GetKey()
         {
@@ -33,7 +33,7 @@ namespace IbrahKit.Keys
             return key;
         }
 
-        public static List<string> GetValues()
+        public static List<string> GetDropdownValues()
         {
             try
             {
@@ -62,7 +62,7 @@ namespace IbrahKit.Keys
 
                 attributes.Add(new LabelTextAttribute(parentProperty.NiceName));
 
-                attributes.Add(new ValueDropdownAttribute(nameof(GetValues)));
+                attributes.Add(new ValueDropdownAttribute(nameof(GetDropdownValues)));
             }
         }
     }

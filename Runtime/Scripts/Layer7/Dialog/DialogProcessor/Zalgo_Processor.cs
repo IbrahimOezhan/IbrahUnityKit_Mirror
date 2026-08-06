@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IbrahKit.Dialog
 {
-    public class Zalgo_Processor : TextProcessor
+    public class Zalgo_Processor : DialogProcessor
     {
         [SerializeField] private int intensity;
 

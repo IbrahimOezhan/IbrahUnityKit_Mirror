@@ -17,6 +17,7 @@ namespace IbrahKit.Dialog
 {
     public class Dialog_Manager : Manager_Global<Dialog_Manager>
     {
+        /*
         private const float cooldown = 0.25f;
 
         public static Dialog_Element dialog;
@@ -161,6 +162,6 @@ namespace IbrahKit.Dialog
         public void InvokeContinue()
         {
             onContinue?.Invoke();
-        }
+        }>*/
     }
 }

@@ -81,7 +81,7 @@ namespace IbrahKit.UI.Modifier
 
         protected string GetContent()
         {
-            if (key.Value.IsEmpty())
+            if (key.Key.IsEmpty())
             {
                 return "";
             }
