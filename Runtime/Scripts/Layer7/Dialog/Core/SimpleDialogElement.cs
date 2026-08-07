@@ -1,15 +1,19 @@
+#region
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using IbrahKit.Dialog;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+#endregion
+
 namespace IbrahKit.Dialog
 {
+    [Serializable]
     public class SimpleDialogElement : Dialog_Element
     {
         public enum SkipMode
@@ -18,20 +22,21 @@ namespace IbrahKit.Dialog
             NOTSKIPABLE
         }
 
-        private readonly string begginingPattern = "^\\[(.+)(?:=(.+))?\\]";
-        
-        private readonly string endingPattern = "\\[\\/(.+)\\]";
+        [SerializeField] private float charDelay;
 
-        [SerializeReference] private float charDelay;
+        [SerializeField, ShowIf(nameof(skipMode), SkipMode.NOTSKIPABLE)]
+        private float displayTime;
 
         [SerializeField] private SkipMode skipMode;
 
-        [SerializeField, ShowIf(nameof(skipMode),SkipMode.NOTSKIPABLE)] private float displayTime;
-        
+        private readonly string begginingPattern = "^\\[(.+)(?:=(.+))?\\]";
+
+        private readonly string endingPattern = "\\[\\/(.+)\\]";
+
         public SkipMode GetSkipMode() => skipMode;
 
         public float GetCharDelay() => charDelay;
-        
+
         public float GetDisplayTime() => displayTime;
 
         public List<Token> GetTokens()
@@ -174,12 +179,12 @@ namespace IbrahKit.Dialog
 
         public class Token
         {
-            private string token;
-            private string value;
-            private string type;
-            private int start;
             private int length;
             private DialogProcessor processor;
+            private int start;
+            private string token;
+            private string type;
+            private string value;
 
             public Token(string token, string value, string type, int start, int length)
             {
@@ -193,24 +198,18 @@ namespace IbrahKit.Dialog
 
                 foreach (Type type1 in types)
                 {
-                    Attribute[] attributes = System.Attribute.GetCustomAttributes(type1);
-                    for (var i = 0; i < attributes.Length; i++)
+                    Attribute[] attributes = Attribute.GetCustomAttributes(type1);
+
+                    foreach (Attribute attribute in attributes)
                     {
-                        if (attributes[i] is DialogTagAttribute tag)
+                        if (attribute is not DialogTagAttribute tag) continue;
+
+                        if (tag.GetName() == token)
                         {
-                            if (tag.GetName() == token)
-                            {
-                                processor = Activator.CreateInstance(type1) as DialogProcessor;
-                            }
+                            processor = Activator.CreateInstance(type1) as DialogProcessor;
                         }
                     }
                 }
-
-            }
-
-            public DialogProcessor Get()
-            {
-                return processor;
             }
 
             public string _Token { get; }
@@ -233,6 +232,11 @@ namespace IbrahKit.Dialog
             public int Length
             {
                 get { return length; }
+            }
+
+            public DialogProcessor Get()
+            {
+                return processor;
             }
         }
     }

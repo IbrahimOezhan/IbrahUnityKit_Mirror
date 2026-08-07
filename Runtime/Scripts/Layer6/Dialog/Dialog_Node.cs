@@ -1,18 +1,26 @@
+#region
+
 using System;
-using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+#endregion
+
 namespace IbrahKit.Dialog
 {
-    public abstract class Dialog_Node<TNode, TElement, TChoice> : ScriptableObject where TElement : Dialog_Element where TNode : Dialog_Node<TNode, TElement, TChoice> where TChoice : Dialog_Choice<TNode, TElement, TChoice>
+    public abstract class Dialog_Node<TNode, TElement, TChoice> : ScriptableObject where TElement : Dialog_Element
+        where TNode : Dialog_Node<TNode, TElement, TChoice>
+        where TChoice : Dialog_Choice<TNode, TElement, TChoice>
     {
         [SerializeField] private TElement[] elements;
 
         [SerializeField] private DialogEnd endMode;
 
-        [SerializeField, ShowIf(nameof(endMode),DialogEnd.CHOICE)] private TChoice[] choices;
-        [SerializeField, ShowIf(nameof(endMode),DialogEnd.CHAIN)] private TNode chained;
+        [SerializeField, ShowIf(nameof(endMode), DialogEnd.CHOICE)]
+        private TChoice[] choices;
+
+        [SerializeField, ShowIf(nameof(endMode), DialogEnd.CHAIN)]
+        private TNode chained;
 
         public NextType GetNextType(int index)
         {
@@ -35,7 +43,7 @@ namespace IbrahKit.Dialog
         }
 
         public DialogEnd GetEndMode() => endMode;
-    
+
         public TElement[] GetElements() => elements;
 
         public TChoice[] GetChoices()
@@ -47,7 +55,7 @@ namespace IbrahKit.Dialog
         {
             return chained;
         }
-    
+
         public TElement GetElement(int i)
         {
             return elements[i];

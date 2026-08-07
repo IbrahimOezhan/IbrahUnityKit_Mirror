@@ -6,6 +6,6 @@ using UnityEngine;
 #endregion
 
 [CreateAssetMenu(fileName = "Table", menuName = "IbrahKit/Table")]
-public class LocalKeyTable : Key_Table<Local_Key, LocalKeyTable>
+public class Local_Key_Table : Key_Table<Local_Key, Local_Key_Table>
 {
 }

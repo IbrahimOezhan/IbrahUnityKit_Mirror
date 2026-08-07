@@ -21,8 +21,6 @@ namespace IbrahKit.Localization
     {
         private readonly List<Local_Processor> processors = new();
 
-        private int currentIndex;
-
         private Local_Language currentLanguage;
 
         public Action onLanguageChanged;
@@ -35,8 +33,8 @@ namespace IbrahKit.Localization
 
             saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
 
-            Local_Language language =
-                GetSystemLanguage(!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage());
+            Local_Language language = GetManagerData()
+                .LanguageDict[!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()];
 
             if (language != null) SetLanguage(language);
 
@@ -84,32 +82,27 @@ namespace IbrahKit.Localization
 
         public void SetLanguage(int index)
         {
-            if (index < 0 || index >= GetManagerData().GetLanguages().Count)
+            if (index < 0 || index >= GetManagerData().Languages.Count)
             {
                 IbrahDebug.LogWarning(
-                    $"Index with value {index} out of range for range 0-{GetManagerData().GetLanguages().Count - 1}");
+                    $"Index with value {index} out of range for range 0-{GetManagerData().Languages.Count - 1}");
 
                 return;
             }
 
-            SetLanguage(GetManagerData().GetLanguages().ElementAt(index).Value);
+            SetLanguage(GetManagerData().Languages[index]);
         }
 
         public void SetLanguage(Local_Language lang)
         {
             currentLanguage = lang;
 
-            if (currentLanguage.IsValid(out SystemLanguage sys))
-            {
-                saveData.SetLanguage(sys);
-            }
-
-            currentIndex = GetManagerData().GetLanguages().IndexOfKey(lang.GetSystemLanguage());
+            saveData.SetLanguage(lang.GetSys());
 
             UpdateLanguage();
         }
 
-        public string GetString(string key, string fallback, params string[] parameters)
+        public string GetString(string key, string fallback = null, params object[] parameters)
         {
             string s = GetString(key, parameters);
 
@@ -118,7 +111,7 @@ namespace IbrahKit.Localization
             return s;
         }
 
-        public string GetString(string key, params string[] parameters)
+        public string GetString(string key, params object[] parameters)
         {
             if (GetManagerData().TryGetString(key, currentLanguage, out string result))
             {
@@ -127,34 +120,24 @@ namespace IbrahKit.Localization
 
             IbrahDebug.LogWarning($"Localization for key {key} does not exist in select language {currentLanguage}");
 
-            if (GetManagerData().TryGetString(key, GetManagerData().GetLanguages().First().Value, out result))
+            if (GetManagerData().TryGetString(key, GetManagerData().Languages.First(), out result))
             {
                 return ProcessText(result.SafeFormat(parameters));
             }
 
             IbrahDebug.LogWarning(
-                $"Localization for key {key} does not exist in default language {GetManagerData().GetLanguages().First()}");
+                $"Localization for key {key} does not exist in default language {GetManagerData().Languages.First()}");
 
             return $"Error: {key}";
         }
 
-        private Local_Language GetSystemLanguage(SystemLanguage systemLanguage)
-        {
-            return GetManagerData().GetLanguages().GetValueOrDefault(systemLanguage, currentLanguage);
-        }
-
         private Local_Language GetNext(int dir)
         {
-            int newIndex = (currentIndex + dir).Loop(0, GetManagerData().GetLanguages().Count - 1);
+            int newIndex =
+                (GetManagerData().LanguageIndexDict[currentLanguage] + dir).Loop(0,
+                    GetManagerData().Languages.Count - 1);
 
-            return GetManagerData().GetLanguages().ElementAt(newIndex).Value;
+            return GetManagerData().Languages[newIndex];
         }
-
-        public Local_Language GetCurrent() => currentLanguage;
-
-        public int IndexOf(Local_Language language) =>
-            GetManagerData().GetLanguages().IndexOfKey(language.GetSystemLanguage());
-
-        public int LanguageCount() => GetManagerData().GetLanguages().Count;
     }
 }

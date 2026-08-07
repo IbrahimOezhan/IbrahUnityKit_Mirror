@@ -1,5 +1,6 @@
 #region
 
+using IbrahKit.UI.Modifier;
 using UnityEngine.Playables;
 
 #endregion
@@ -8,23 +9,33 @@ namespace IbrahKit.Dialog
 {
     public class Dialog_Behaiviour : PlayableBehaviour
     {
-        //public Dialog_SO dialog = null;
+        private Dialog_Playable_Elements dialog = null;
+        private UI_Modifier_Extension_Text_Setter setter = null;
 
-        public int percentageAnim;
-
-        public override void OnBehaviourPlay(Playable _playable, FrameData _info)
+        public void Init(Dialog_Playable_Elements dialog, UI_Modifier_Extension_Text_Setter setter)
         {
-            double _totalDur = _playable.GetDuration();
+            this.dialog = dialog;
+            this.setter = setter;
+        }
 
-            double _animTime = _totalDur / 100 * percentageAnim;
+        public override void ProcessFrame(Playable playable, FrameData info, object playerData)
+        {
+            base.ProcessFrame(playable, info, playerData);
 
-            double _showTime = _totalDur / 100 * (100 - percentageAnim);
+            string text =
+                PlayableDialogController.Get(dialog.GetElements(), playable.GetTime(), playable.GetDuration());
 
-            //dialog.GetDialog().SetStaticTime((float)_animTime);
+            setter.SetText(text);
+        }
 
-            //dialog.GetDialog().automaticContinueAfterEnd = (float)_showTime;
+        public override void OnBehaviourPause(Playable playable, FrameData info)
+        {
+            base.OnBehaviourPause(playable, info);
 
-            //Dialog_Manager.GetInstance().StartDialog(dialog.GetDialog());
+            if (playable.IsDone() || playable.GetTime() >= playable.GetDuration())
+            {
+                setter.SetText("");
+            }
         }
     }
 }

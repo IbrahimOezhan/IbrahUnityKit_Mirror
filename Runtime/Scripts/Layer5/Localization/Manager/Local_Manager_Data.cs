@@ -18,52 +18,63 @@ namespace IbrahKit.Localization
     /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
-        [OdinSerialize, Required, OnValueChanged(nameof(OnFileUpdate))]
-        private TextAsset localizationAssets;
+        [SerializeField, SerializeReference] private ILocalDataParser localDataParser;
 
-        [OdinSerialize, Required] private char seperator;
+        [SerializeField, OnValueChanged(nameof(OnFileUpdate))]
+        private List<Local_Language> languages;
 
         [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
+        [OdinSerialize, ReadOnly] private Dictionary<SystemLanguage, Local_Language> languageDict = new();
+        [OdinSerialize, ReadOnly] private Dictionary<Local_Language, int> languageIndexDict = new();
 
-        [OdinSerialize, ReadOnly] private SortedList<SystemLanguage, Local_Language> languages = new();
+        public List<Local_Language> Languages => languages;
+        public Dictionary<Local_Language, int> LanguageIndexDict => languageIndexDict;
+        public Dictionary<SystemLanguage, Local_Language> LanguageDict => languageDict;
 
         [Button]
         public void OnFileUpdate()
         {
-            if (localizationAssets == null) return;
+            SelfValidationResult result = new SelfValidationResult();
+
+            Validate(result);
+
+            if (result[0].ResultType == SelfValidationResult.ResultType.Error)
+            {
+                return;
+            }
 
             keyValuePairs.Clear();
 
-            List<string> lines = localizationAssets.text.Split("\n")
-                .Where(x => !x.Trim().Replace(seperator.ToString(), string.Empty).IsEmpty()).ToList();
+            languageIndexDict.Clear();
 
-            if (lines.Count == 0)
+            for (var i = 0; i < languages.Count; i++)
             {
-                IbrahDebug.LogWarning("No elements after trimming");
+                localDataParser.Parse(languages[i].GetFile().text, keyValuePairs, i);
 
-                return;
+                languageIndexDict[languages[i]] = i;
             }
 
-            if (!TryGetLanguages(out languages, lines.First().Split(seperator)))
-            {
-                return;
-            }
+            languageDict = languages.ToDictionary(x => x.GetSys(), (x) => x);
 
-            PopulateDictionary(lines.Skip(0));
-
-            LocalKeyTable.Instance.Values = keyValuePairs.Select(kvp => kvp.Key).ToList();
+            Local_Key_Table.Instance.Values = keyValuePairs.Select(kvp => kvp.Key).ToList();
         }
 
         public void Validate(SelfValidationResult result)
         {
-            if (seperator.ToString().IsEmpty()) result.AddError("Seperator must be defined");
+            for (var i = 0; i < languages.Count; i++)
+            {
+                if (languages[i].GetFile() == null)
+                {
+                    result.AddError("Language needs file");
+                }
+            }
         }
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
             result = string.Empty;
 
-            int index = languages.IndexOfKey(language.GetSystemLanguage());
+            int index = languageIndexDict[language];
 
             if (!keyValuePairs.TryGetValue(key, out string[] localizedValues))
             {
@@ -88,69 +99,6 @@ namespace IbrahKit.Localization
             return false;
         }
 
-        private bool TryGetLanguages(out SortedList<SystemLanguage, Local_Language> languages, string[] line)
-        {
-            languages = new();
-
-            for (int i = 1; i < line.Length; i++)
-            {
-                if (!Json_Utilities.IsValidJson(line[i]))
-                {
-                    IbrahDebug.LogWarning($"Invalid json in row 0 column {i}");
-
-                    return false;
-                }
-
-                if (!Json_Utilities.TryDeserialize(line[i], out Local_Language result))
-                {
-                    IbrahDebug.LogWarning($"Local Language TryDeserialize Error");
-
-                    return false;
-                }
-
-                if (!result.IsValid(out _))
-                {
-                    IbrahDebug.LogWarning($"System language in column {i} cannot be parsed");
-
-                    return false;
-                }
-
-                languages.Add(result.GetSystemLanguage(), result);
-            }
-
-            return true;
-        }
-
-        private void PopulateDictionary(IEnumerable<string> lines)
-        {
-            foreach (string line in lines)
-            {
-                List<string> row = line.Split(seperator).ToList();
-
-                int requiredCount = languages.Count + 1;
-
-                while (row.Count < requiredCount)
-                {
-                    row.Add(string.Empty);
-                }
-
-                while (row.Count > requiredCount)
-                {
-                    IbrahDebug.LogWarning($"Removed {row[^1]} from the back");
-
-                    row.RemoveAt(row.Count - 1);
-                }
-
-                string key = row[0];
-
-                row.RemoveAt(0);
-
-                keyValuePairs.TryAdd(key, row.ToArray());
-            }
-        }
-
-        public Local_Language GetFirstLanguage() => languages.First().Value;
-
-        public SortedList<SystemLanguage, Local_Language> GetLanguages() => languages;
+        public Local_Language GetFirstLanguage() => languages.First();
     }
 }

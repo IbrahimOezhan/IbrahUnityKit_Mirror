@@ -48,7 +48,8 @@ namespace IbrahKit.UI.Selectable
             Navigate(this, context.ReadValue<Vector2>(),
                 controllerCanvas.GetCanvas(),
                 activeSelectables
-                    .Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate)
+                    .Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable() &&
+                                x.selectableCandidate)
                     .ToList());
         }
 
@@ -77,7 +78,7 @@ namespace IbrahKit.UI.Selectable
                 RectTransform candidateRT = candidate.GetSelectable().GetRectTransform();
 
                 Vector2 from, to;
-                
+
                 if (Mathf.Abs(inputVector.x) > Mathf.Abs(inputVector.y))
                 {
                     if (inputVector.x > 0f)

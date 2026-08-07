@@ -1,9 +1,14 @@
+#region
+
+using System;
 using IbrahKit.Localization;
 using UnityEngine;
 
+#endregion
+
 namespace IbrahKit.Dialog
 {
-
+    [Serializable]
     public class Dialog_Element
     {
         [SerializeField] private Local_Key key;
@@ -13,5 +18,4 @@ namespace IbrahKit.Dialog
             return Local_Manager.GetInstance().GetString(key);
         }
     }
-
 }

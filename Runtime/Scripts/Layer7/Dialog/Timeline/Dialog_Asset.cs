@@ -1,5 +1,7 @@
 #region
 
+using System;
+using IbrahKit.UI.Modifier;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -9,7 +11,9 @@ namespace IbrahKit.Dialog
 {
     public class Dialog_Asset : PlayableAsset
     {
-       // [SerializeField] private Dialog_SO dialog;
+        [SerializeField] private Dialog_Playable_Elements dialog;
+
+        [SerializeField] private UI_Modifier modifier;
 
         [SerializeField] private int percentageAnim;
 
@@ -17,11 +21,14 @@ namespace IbrahKit.Dialog
         {
             ScriptPlayable<Dialog_Behaiviour> _playable = ScriptPlayable<Dialog_Behaiviour>.Create(_graph);
 
-            Dialog_Behaiviour _dialogBehaviour = _playable.GetBehaviour();
+            Dialog_Behaiviour behaviour = _playable.GetBehaviour();
 
-            //_dialogBehaviour.dialog = dialog;
+            if (!modifier.TryGetExtension(out UI_Modifier_Extension_Text_Setter setter))
+            {
+                throw new NullReferenceException("Modifier has no text setter");
+            }
 
-            _dialogBehaviour.percentageAnim = percentageAnim;
+            behaviour.Init(dialog, setter);
 
             return _playable;
         }

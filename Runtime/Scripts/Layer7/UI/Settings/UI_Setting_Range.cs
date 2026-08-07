@@ -1,6 +1,5 @@
 #region
 
-using System;
 using IbrahKit.Settings;
 using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
@@ -40,22 +39,12 @@ namespace IbrahKit
 
             right.GetStateController().GetOnPressSuccess().AddListener(num.Decrement);
 
-            if (!value.TryGetExtension(out textSetter))
-            {
-                return false;
-            }
-
-            return true;
+            return value.TryGetExtension(out textSetter);
         }
 
         public override void UpdateUI()
         {
             textSetter.SetText(GetSetting().GetValue());
-        }
-
-        public void OnMenuInitBottomUp()
-        {
-            throw new NotImplementedException();
         }
     }
 }

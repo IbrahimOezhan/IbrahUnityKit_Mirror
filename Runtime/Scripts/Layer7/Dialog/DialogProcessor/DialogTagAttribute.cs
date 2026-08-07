@@ -1,11 +1,15 @@
-using UnityEngine;
+#region
+
+using System;
+
+#endregion
 
 namespace IbrahKit.Dialog
 {
-    [System.AttributeUsage(System.AttributeTargets.Class |
-                           System.AttributeTargets.Struct,
+    [AttributeUsage(AttributeTargets.Class |
+                    AttributeTargets.Struct,
         AllowMultiple = true)]
-    public class DialogTagAttribute : System.Attribute
+    public class DialogTagAttribute : Attribute
     {
         string Name;
 
@@ -16,6 +20,4 @@ namespace IbrahKit.Dialog
 
         public string GetName() => Name;
     }
-
 }
-

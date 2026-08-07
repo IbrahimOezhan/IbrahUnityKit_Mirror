@@ -1,47 +1,67 @@
+#region
+
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+#endregion
+
 namespace IbrahKit.Dialog
 {
-
+    // This is deliberately not made a Singleton because you might be making a split screen game. 
     public class DynamicDialogController : MonoBehaviour
     {
+        [SerializeField] private UI_Dialog_Menu menu;
+
         private DialogInput dialogInput;
-        [SerializeField] private UI_Dialog_Choice_Menu choiceMenu;
+
+        public Action<bool> dialogStateChanged;
 
         private void Awake()
         {
             dialogInput = new();
-            
+
             dialogInput.Enable();
+        }
+
+        private void OnDisable()
+        {
+            dialogInput.Disable();
+
+            dialogInput.Dispose();
         }
 
         public void StartDialog(SimpleDialogNode node)
         {
-
+            StartCoroutine(StartDialogIE(node));
         }
 
-        public void Next()
+        public IEnumerator StartDialogIE(SimpleDialogNode node)
         {
-
+            dialogStateChanged?.Invoke(true);
+            menu.GetStateController().Enable();
+            yield return Element(node, 0);
+            menu.GetStateController().Disable();
+            dialogStateChanged?.Invoke(false);
         }
 
         [SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
-        private IEnumerator Display(SimpleDialogElement element, SimpleDialogNode node, int i)
+        private IEnumerator Element(SimpleDialogNode node, int i)
         {
             Action onClick = null;
 
-            dialogInput.Map.Continue.performed += OnClick;
-            
-            yield return choiceMenu.DisplayText(element, onClick);
+            if (node.GetElements().Length != 0)
+            {
+                dialogInput.Map.Continue.performed += OnClick;
 
-            dialogInput.Map.Continue.performed -= OnClick;
-            
-            i++;
+                yield return menu.DisplayText(node.GetElement(i), onClick);
+
+                dialogInput.Map.Continue.performed -= OnClick;
+
+                i++;
+            }
 
             if (i == node.GetElements().Length)
             {
@@ -53,7 +73,7 @@ namespace IbrahKit.Dialog
                         yield return Choice(node.GetChoices(), node);
                         break;
                     case DialogEnd.CHAIN:
-                        yield return Display(node.GetChained().GetElement(0), node.GetChained(), 0);
+                        yield return Element(node.GetChained(), 0);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -61,11 +81,11 @@ namespace IbrahKit.Dialog
             }
             else
             {
-                yield return Display(node.GetElement(i), node, i);
+                yield return Element(node, i);
             }
 
             yield break;
-            
+
             void OnClick(InputAction.CallbackContext context)
             {
                 onClick?.Invoke();
@@ -76,11 +96,11 @@ namespace IbrahKit.Dialog
         {
             SimpleDialogChoice selected = null;
 
-            choiceMenu.Init(choices, (c) => { selected = c; });
+            menu.DisplayChoices(choices, (c) => { selected = c; });
 
             yield return new WaitWhile(() => selected == null);
 
-            yield return StartCoroutine(Display(selected.node.GetElement(0), selected.node, 0));
+            yield return StartCoroutine(Element(selected.node, 0));
         }
     }
 }

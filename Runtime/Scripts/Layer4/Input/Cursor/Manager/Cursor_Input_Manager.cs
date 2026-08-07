@@ -1,11 +1,9 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.InfoCollector;
 using IbrahKit.Manager;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;

@@ -14,40 +14,16 @@ namespace IbrahKit.Localization
     [Serializable]
     public class Local_Language
     {
-        [JsonInclude, SerializeField] private string sysLang;
+        [JsonInclude, SerializeField] private SystemLanguage sysLang;
 
-        [JsonInclude, SerializeField] private string nativeLocal;
+        [SerializeField] private TextAsset file;
 
         [SerializeField] private bool skip;
 
-        public bool IsValid(out SystemLanguage result)
-        {
-            return Enum.TryParse(sysLang, out result);
-        }
+        public SystemLanguage GetSys() => sysLang;
 
-        public SystemLanguage GetSystemLanguage()
-        {
-            return Enum.Parse<SystemLanguage>(sysLang);
-        }
+        public TextAsset GetFile() => file;
 
-        public string GetSys()
-        {
-            return sysLang;
-        }
-
-        public string GetNative()
-        {
-            return nativeLocal;
-        }
-
-        public bool GetSkip()
-        {
-            return skip;
-        }
-
-        public override string ToString()
-        {
-            return sysLang;
-        }
+        public bool GetSkip() => skip;
     }
 }
