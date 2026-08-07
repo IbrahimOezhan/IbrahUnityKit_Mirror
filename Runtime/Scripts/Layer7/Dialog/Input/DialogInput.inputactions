@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "name": "DialogInput",
+    "maps": [
+        {
+            "name": "Map",
+            "id": "6ecdc784-85f4-41ed-8fc4-fd05916dbe8f",
+            "actions": [
+                {
+                    "name": "Continue",
+                    "type": "Button",
+                    "id": "4e85b2c8-d4e4-4e44-84f6-f4bbb2435441",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "03ac3848-7e38-4838-ba28-f9778a74eb50",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2c7344b7-5b13-41f0-8e6f-7bfc2a9fc2fc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Continue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

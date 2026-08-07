@@ -16,11 +16,13 @@ namespace IbrahKit.UI.Selectable
 
         [SerializeField] private UI_Selectable_Controller_Transition transitionController;
 
+        [SerializeField] private UI_Selectable_Controller_Navigation navigationController;
+        
         [ReadOnly, SerializeField] private UI_Selectable_Group selectableGroup;
 
         private readonly UI_Selectable_Controller_Input_Cursor cursorInput = new();
 
-        private readonly UI_Selectable_Controller_Navigation navigationController = new();
+
 
         protected override void Update()
         {

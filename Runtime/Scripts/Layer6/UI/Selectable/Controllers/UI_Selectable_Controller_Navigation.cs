@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.UI.Generic;
@@ -12,11 +13,13 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
+    [Serializable]
     public partial class UI_Selectable_Controller_Navigation : UI_Selectable_Controller
     {
         [AutoStaticsCleanup] public static readonly List<UI_Selectable_Controller_Navigation> activeSelectables = new();
 
         [SerializeField] private bool firstSelectedCandidate;
+        [SerializeField] private bool selectableCandidate = true;
 
         protected override void Init()
         {
@@ -44,7 +47,8 @@ namespace IbrahKit.UI.Selectable
 
             Navigate(this, context.ReadValue<Vector2>(),
                 controllerCanvas.GetCanvas(),
-                activeSelectables.Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable())
+                activeSelectables
+                    .Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate)
                     .ToList());
         }
 
@@ -73,11 +77,9 @@ namespace IbrahKit.UI.Selectable
                 RectTransform candidateRT = candidate.GetSelectable().GetRectTransform();
 
                 Vector2 from, to;
-
-                // Direction-aware edge selection
+                
                 if (Mathf.Abs(inputVector.x) > Mathf.Abs(inputVector.y))
                 {
-                    // Horizontal navigation
                     if (inputVector.x > 0f)
                     {
                         from = currentRT.GetRightEdgeCenter(canvas);
@@ -91,7 +93,6 @@ namespace IbrahKit.UI.Selectable
                 }
                 else
                 {
-                    // Vertical navigation
                     if (inputVector.y > 0f)
                     {
                         from = currentRT.GetTopEdgeCenter(canvas);

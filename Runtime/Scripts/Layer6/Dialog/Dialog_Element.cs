@@ -1,12 +1,17 @@
 using IbrahKit.Localization;
 using UnityEngine;
 
-public class Dialog_Element
+namespace IbrahKit.Dialog
 {
-    [SerializeField] private Local_Key key;
-    
-    public string GetString()
+
+    public class Dialog_Element
     {
-        return Local_Manager.GetInstance().GetString(key);
+        [SerializeField] private Local_Key key;
+
+        public string GetString()
+        {
+            return Local_Manager.GetInstance().GetString(key);
+        }
     }
+
 }
