@@ -18,7 +18,7 @@ public class UI_Dialog_Menu : UI_Menu
 
     [SerializeField] private Transform parent;
 
-    [SerializeField] private UI_Modifier_Extension_Text_Setter setter;
+    [SerializeField] private UI_Modifier_Text_Setter setter;
 
     private readonly List<UI_Selectable> elements = new();
 

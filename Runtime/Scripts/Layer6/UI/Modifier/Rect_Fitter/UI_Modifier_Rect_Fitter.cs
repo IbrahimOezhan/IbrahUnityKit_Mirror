@@ -14,7 +14,7 @@ using Application = UnityEngine.Application;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class UI_Modifier_Extension_Fitter : UI_Modifier_Extension
+    public class UI_Modifier_Rect_Fitter : MonoBehaviour
     {
         [SerializeField] private GameObject target;
 
@@ -39,38 +39,25 @@ namespace IbrahKit.UI
 
         private UI_Text_Wrapper text;
 
-        public UI_Modifier_Extension_Fitter(UI_Modifier extension) : base(extension)
+        private void Awake()
         {
-        }
+            text = new(target != null ? target : gameObject);
 
-        protected override bool InitPro()
-        {
-            text = new(target != null ? target : extension.gameObject);
-
-            bool result = (rect != null || extension.TryGetComponent(out rect)) && text != null &&
+            bool result = (rect != null || TryGetComponent(out rect)) && text != null &&
                           text.GetMode() != UI_Text_Wrapper.Mode.NONE;
 
             if (!result)
             {
                 IbrahDebug.LogWarning($"TryInit failed: rect={rect} text={text} mode={text?.GetMode()}");
-                return false;
-            }
-
-            extension.transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged +=
-                extension.RunExtensions;
-
-
-            return true;
-        }
-
-        protected override void RunPro()
-        {
-            if (!Init())
-            {
                 return;
             }
 
-            UI_Fitter_Config config = GetConfig();
+            //transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged +=
+        }
+
+        protected void Execute()
+        {
+            UI_Rect_Fitter_Config config = GetConfig();
 
             Vector2 preferred = text.GetPreferredSize();
 
@@ -87,36 +74,30 @@ namespace IbrahKit.UI
                 SetSize(text.GetPreferredSize().y, maxHeight, heightOffset, config, RectTransform.Axis.Vertical);
         }
 
-        protected override void CleanupPro()
+        private void OnDestroy()
         {
-            extension.transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged -=
-                extension.RunExtensions;
+            //transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged -=extension.RunExtensions;
         }
 
-        protected override int GetOrderPro()
-        {
-            return 100;
-        }
-
-        private void SetSize(float size, float max, float offset, UI_Fitter_Config config, RectTransform.Axis axis)
+        private void SetSize(float size, float max, float offset, UI_Rect_Fitter_Config config, RectTransform.Axis axis)
         {
             float _max = Mathf.Clamp(size, 0, GetMax(maxHeight));
 
             GetRect().SetSizeWithCurrentAnchors(axis, _max + config.GetMargin() + offset);
         }
 
-        private UI_Fitter_Config GetConfig()
+        private UI_Rect_Fitter_Config GetConfig()
         {
-            UI_Configs.TryGet<UI_Fitter_Config_Override, UI_Fitter_Config_SO, UI_Fitter_Config>(
-                UI_Configs.GetConfigs(extension.transform), out UI_Fitter_Config resolvedConfig);
+            UI_Configs.TryGet<UI_Rect_Fitter_Config_Override, UI_Rect_Fitter_Config_SO, UI_Rect_Fitter_Config>(
+                UI_Configs.GetConfigs(transform), out UI_Rect_Fitter_Config resolvedConfig);
 
-            resolvedConfig ??= new UI_Fitter_Config(0);
+            resolvedConfig ??= new UI_Rect_Fitter_Config(0);
 
             return resolvedConfig;
         }
 
         private RectTransform GetRect() =>
-            rect != null || Application.isPlaying ? rect : extension.GetComponent<RectTransform>();
+            rect != null || Application.isPlaying ? rect : GetComponent<RectTransform>();
 
         private float GetMax(float max) => max == 0 ? Mathf.Infinity : max;
     }

@@ -3,6 +3,7 @@
 using System;
 using IbrahKit.Localization;
 using IbrahKit.Utilities;
+using Sirenix.Serialization;
 using UnityEngine;
 
 #endregion
@@ -10,39 +11,32 @@ using UnityEngine;
 namespace IbrahKit.UI.Modifier
 {
     [Serializable]
-    public class UI_Modifier_Extension_Localization : UI_Modifier_Extension_Text_Modifier
+    public class UI_Modifier_Text_Localizer
     {
+        private UI_Modifier_Text_Modifier modifier;
+        
         [SerializeField] protected Local_Key key;
 
         [SerializeField] protected string fallbackText;
 
-        [SerializeField] protected string[] parameters;
+        [OdinSerialize] protected object[] parameters;
 
-        public UI_Modifier_Extension_Localization(UI_Modifier extension) : base(extension)
+        public UI_Modifier_Text_Localizer(UI_Modifier_Text_Modifier modifier)
         {
+            this.modifier = modifier;
+            
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged += Modify;
         }
 
-        protected override bool InitPro()
+        public void OnDestroy()
         {
-            bool result = base.InitPro();
+            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged -= Modify;
 
-            if (!result) return false;
-
-            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged += extension.RunExtensions;
-
-            return result;
         }
 
-        protected override void CleanupPro()
+        protected void Modify()
         {
-            if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged -= extension.RunExtensions;
-        }
-
-        protected override void RunPro()
-        {
-            if (!Init()) return;
-
-            text.SetText(GetContent());
+            modifier.GetTextWrapper().SetText(GetContent());
         }
 
         public void SetFallback(string _fallback)
@@ -50,8 +44,8 @@ namespace IbrahKit.UI.Modifier
             if (fallbackText == _fallback) return;
 
             fallbackText = _fallback;
-
-            extension.RunExtensions();
+            
+            Modify();
         }
 
         public void SetKey(string _key)
@@ -59,31 +53,31 @@ namespace IbrahKit.UI.Modifier
             if (key == _key) return;
 
             key = _key;
-
-            extension.RunExtensions();
+            
+            Modify();
         }
 
-        public void SetParam(params string[] _params)
+        public void SetParam(params object[] _params)
         {
             parameters = _params;
-
-            extension.RunExtensions();
+            
+            Modify();
         }
 
-        public void SetKeyParam(string _key, params string[] _params)
+        public void SetKeyParam(string _key, params object[] _params)
         {
             key = _key;
 
             parameters = _params;
 
-            extension.RunExtensions();
+            Modify();
         }
 
         protected string GetContent()
         {
             if (key.Key.IsEmpty())
             {
-                return "";
+                return string.Empty;
             }
 
             if (Local_Manager.TryGet(out Local_Manager result))
@@ -95,7 +89,7 @@ namespace IbrahKit.UI.Modifier
 #if UNITY_EDITOR
                 Local_Manager_Data config = Local_Manager_Data.Instance;
 
-                if (config == null) return "Local Config couldnt be found";
+                if (config == null) return "Local Config couldn't be found";
 
                 config.TryGetString(key, config.GetFirstLanguage(), out string res);
 

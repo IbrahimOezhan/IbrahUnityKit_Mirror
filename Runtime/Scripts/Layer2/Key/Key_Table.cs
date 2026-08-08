@@ -28,7 +28,9 @@ public class Key_Table<TKey, TTable> : SerializedScriptableObject where TTable :
     {
         get
         {
-            string[] guids = AssetDatabase.FindAssets($"t:{nameof(TTable)}");
+            Type type = typeof(TTable);
+            
+            string[] guids = AssetDatabase.FindAssets($"t:{type.Name}");
 
             switch (guids.Length)
             {
@@ -36,11 +38,9 @@ public class Key_Table<TKey, TTable> : SerializedScriptableObject where TTable :
                     string path = AssetDatabase.GUIDToAssetPath(guids[0]);
                     return AssetDatabase.LoadAssetAtPath<TTable>(path);
                 case 0:
-                    IbrahDebug.LogWarning("No DB found");
-                    throw new Exception("No DB found");
+                    throw new Exception($"No Table of type {typeof(TTable)} found");
                 default:
-                    IbrahDebug.LogWarning("More than 1 DB found");
-                    throw new Exception("More than 1 DB found");
+                    throw new Exception($"More than 1 Table of type {typeof(TTable)} found");
             }
         }
     }

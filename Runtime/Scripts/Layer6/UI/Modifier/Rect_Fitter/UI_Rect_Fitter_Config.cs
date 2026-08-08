@@ -10,13 +10,13 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public class UI_Fitter_Config : UI_Config
+    public class UI_Rect_Fitter_Config : UI_Config
     {
         [SerializeField] private float margin;
 
         [SerializeField] private List<PlatformBasedMargin> marginOverride = new();
 
-        public UI_Fitter_Config(float margin)
+        public UI_Rect_Fitter_Config(float margin)
         {
             this.margin = margin;
         }

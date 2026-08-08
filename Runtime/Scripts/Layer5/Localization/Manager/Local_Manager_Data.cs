@@ -61,11 +61,7 @@ namespace IbrahKit.Localization
         [Button]
         public void OnFileUpdate()
         {
-            SelfValidationResult result = new SelfValidationResult();
-
-            Validate(result);
-
-            if (result[0].ResultType == SelfValidationResult.ResultType.Error)
+            if (languages.Any(x => x.GetFile() == null))
             {
                 return;
             }
@@ -76,7 +72,7 @@ namespace IbrahKit.Localization
 
             for (var i = 0; i < languages.Count; i++)
             {
-                localDataParser.Parse(languages[i].GetFile().text, keyValuePairs, i);
+                localDataParser.Parse(languages[i].GetFile().text, keyValuePairs, i,languages.Count);
 
                 languageIndexDict[languages[i]] = i;
             }

@@ -9,25 +9,36 @@ using System.Text.Json.Nodes;
 [Serializable]
 public class LocalJsonParser : ILocalDataParser
 {
-    public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex)
+    public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount)
     {
         JsonNode node = JsonNode.Parse(data);
 
-        Populate(node, dictionary, languageIndex);
+        Populate(node, dictionary, languageIndex,languageCount);
     }
 
-    private void Populate(JsonNode node, Dictionary<string, string[]> data, int languageIndex)
+    private void Populate(JsonNode node, Dictionary<string, string[]> data, int languageIndex, int languageCount)
     {
         switch (node)
         {
             case JsonValue value:
-                data[value.GetPath()][languageIndex] = value.GetValue<string>();
-                break;
-            case JsonObject array:
-            {
-                foreach (var keyValuePair in array)
+                if (data.TryGetValue(value.GetPath(), out string[] values))
                 {
-                    Populate(keyValuePair.Value, data, languageIndex);
+                    values[languageIndex] =  value.GetValue<string>();
+                }
+                else
+                {
+
+                    string[] arr = new string[languageCount];
+                    arr[languageIndex] =  value.GetValue<string>();
+                    data.TryAdd(value.GetPath(), arr);
+                }
+
+                break;
+            case JsonObject @object:
+            {
+                foreach (var keyValuePair in @object)
+                {
+                    Populate(keyValuePair.Value, data, languageIndex,languageCount);
                 }
 
                 break;

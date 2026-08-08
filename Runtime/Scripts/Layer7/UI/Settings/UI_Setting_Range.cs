@@ -1,6 +1,7 @@
 #region
 
 using IbrahKit.Settings;
+using IbrahKit.UI;
 using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using UnityEngine;
@@ -15,8 +16,7 @@ namespace IbrahKit
 
         [SerializeField] private UI_Selectable right;
 
-        [SerializeField] private UI_Modifier value;
-        private UI_Modifier_Extension_Text_Setter textSetter;
+        [SerializeField] private UI_Modifier_Text_Modifier value;
 
         protected override bool CanSpawnPro(Setting setting)
         {
@@ -39,12 +39,12 @@ namespace IbrahKit
 
             right.GetStateController().GetOnPressSuccess().AddListener(num.Decrement);
 
-            return value.TryGetExtension(out textSetter);
+            return true;
         }
 
         public override void UpdateUI()
         {
-            textSetter.SetText(GetSetting().GetValue());
+            value.GetStaticSetter().SetText(GetSetting().GetValue());
         }
     }
 }

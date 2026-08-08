@@ -49,11 +49,11 @@ namespace IbrahKit.UI.Menu
             {
                 case true:
                     button = Object.Instantiate(menuConfig.GetMenuButton(), parent);
-                    button.Initialize(localizationKey);
+                    button.GetModifier().GetLocalization().SetKey(localizationKey);
                     break;
                 case false:
                     button = Object.Instantiate(menuConfig.GetMenuButtonStatic(), parent);
-                    button.Initialize(staticText);
+                    button.GetModifier().GetStaticSetter().SetText(staticText);
                     break;
             }
 

@@ -1,5 +1,6 @@
 #region
 
+using IbrahKit.UI;
 using IbrahKit.UI.Modifier;
 using UnityEngine.Playables;
 
@@ -10,9 +11,9 @@ namespace IbrahKit.Dialog
     public class Dialog_Behaiviour : PlayableBehaviour
     {
         private Dialog_Playable_Elements dialog = null;
-        private UI_Modifier_Extension_Text_Setter setter = null;
+        private UI_Modifier_Text_Modifier setter = null;
 
-        public void Init(Dialog_Playable_Elements dialog, UI_Modifier_Extension_Text_Setter setter)
+        public void Init(Dialog_Playable_Elements dialog, UI_Modifier_Text_Modifier setter)
         {
             this.dialog = dialog;
             this.setter = setter;
@@ -25,7 +26,7 @@ namespace IbrahKit.Dialog
             string text =
                 PlayableDialogController.Get(dialog.GetElements(), playable.GetTime(), playable.GetDuration());
 
-            setter.SetText(text);
+            setter.GetStaticSetter().SetText(text);
         }
 
         public override void OnBehaviourPause(Playable playable, FrameData info)
@@ -34,7 +35,7 @@ namespace IbrahKit.Dialog
 
             if (playable.IsDone() || playable.GetTime() >= playable.GetDuration())
             {
-                setter.SetText("");
+                setter.GetStaticSetter().SetText("");
             }
         }
     }

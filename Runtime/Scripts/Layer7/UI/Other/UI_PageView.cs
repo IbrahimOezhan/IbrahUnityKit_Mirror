@@ -17,7 +17,7 @@ namespace IbrahKit.UI
 
         [SerializeField] private UI_Selectable right;
 
-        [SerializeField] private UI_Modifier_Extension_Localization pageText;
+        [SerializeField] private UI_Modifier_Text_Localizer pageText;
 
         [SerializeField] private Transform pageContent;
 

@@ -4,6 +4,7 @@ using System;
 using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
 using IbrahKit.Input;
+using IbrahKit.UI;
 using IbrahKit.UI.Menu;
 using IbrahKit.UI.Modifier;
 using Sirenix.OdinInspector;
@@ -16,18 +17,15 @@ namespace IbrahKit
 {
     public class UI_Debug_Menu : UI_Menu, ISelfValidator
     {
-        [SerializeField] private UI_Modifier debugContent;
+        [SerializeField] private UI_Modifier_Text_Modifier debugContent;
 
         [SerializeField, Required] private Key debugKey;
 
         private Action action;
-        private UI_Modifier_Extension_Text_Setter textSetter;
 
         protected override void Awake()
         {
             base.Awake();
-
-            debugContent.TryGetExtension(out textSetter);
 
             action = () =>
             {
@@ -58,25 +56,13 @@ namespace IbrahKit
                 result.AddError("Debug Content is null");
                 return;
             }
-
-            if (!debugContent.TryGetExtension(out textSetter))
-            {
-                result.AddError("UI Interactive doesnt contain Text Setter");
-            }
         }
 
         protected override void MenuLifecycle()
         {
             base.MenuLifecycle();
 
-            textSetter.SetText(Info_Collection_Manager.GetInstance().GetInfoString());
-        }
-
-        public override void OnMenuEnabled()
-        {
-            base.OnMenuEnabled();
-
-            debugContent.TryGetExtension(out textSetter);
+            debugContent.GetStaticSetter().SetText(Info_Collection_Manager.GetInstance().GetInfoString());
         }
     }
 }

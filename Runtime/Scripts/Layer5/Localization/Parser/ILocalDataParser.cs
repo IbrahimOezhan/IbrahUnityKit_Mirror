@@ -6,5 +6,5 @@ using System.Collections.Generic;
 
 public interface ILocalDataParser
 {
-    public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex);
+    public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount);
 }

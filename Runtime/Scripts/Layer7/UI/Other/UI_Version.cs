@@ -10,15 +10,13 @@ namespace IbrahKit.UI
 {
     public class UI_Version : MonoBehaviour, IUIInit
     {
-        [SerializeField] private UI_Modifier localization;
+        [SerializeField] private UI_Modifier_Text_Modifier localization;
 
         public void OnMenuInitBottomUp()
         {
-            if (localization != null && localization.TryGetExtension(out UI_Modifier_Extension_Localization result))
+            if (localization != null)
             {
-                result.SetParam(Application.version);
-
-                return;
+                localization.GetLocalization().SetParam(Application.version);
             }
         }
 
