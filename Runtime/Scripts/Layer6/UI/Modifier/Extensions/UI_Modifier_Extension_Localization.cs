@@ -93,7 +93,7 @@ namespace IbrahKit.UI.Modifier
             else
             {
 #if UNITY_EDITOR
-                Local_Manager_Data config = Local_Editor_Settings.Config();
+                Local_Manager_Data config = Local_Manager_Data.Instance;
 
                 if (config == null) return "Local Config couldnt be found";
 

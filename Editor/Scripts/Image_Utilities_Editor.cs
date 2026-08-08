@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.IO;
+using System.Linq;
 using IbrahKit.Debugging;
 using IbrahKit.Utilities;
 using UnityEditor;
@@ -10,40 +11,31 @@ using UnityEngine;
 
 namespace IbrahKit.Editor
 {
-    public class Image_Utilities_Editor
+    public static class Image_Utilities_Editor
     {
         [MenuItem("Assets/IbrahKit/Grayscale Sprite", true)]
-        static bool ValidateLogSelectedTransformName()
+        private static bool ValidateLogSelectedTransformName()
         {
             Object[] objects = Selection.objects;
 
-            for (int i = 0; i < objects.Length; i++)
-            {
-                if (objects[i].GetType() != typeof(Texture2D))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return objects.All(t => t is Texture2D);
         }
 
         [MenuItem("Assets/IbrahKit/Grayscale Sprite", priority = 0)]
         public static void Grayscale()
         {
             string[] filePaths = Selection.assetGUIDs;
-            Object[] objects = Selection.objects;
-
+            
             if (filePaths.Length == 0)
             {
                 return;
             }
 
-            for (int i = 0; i < filePaths.Length; i++)
+            foreach (var t in filePaths)
             {
-                string path = AssetDatabase.GUIDToAssetPath(filePaths[i]);
+                string path = AssetDatabase.GUIDToAssetPath(t);
 
-                TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(path);
+                TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(path);
 
                 importer.textureType = TextureImporterType.Default;
 

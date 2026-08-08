@@ -26,6 +26,11 @@ namespace IbrahKit.UI.ScrollView
 
         private void Update()
         {
+            MoveContent();
+        }
+
+        private void MoveContent()
+        {
             if (!holding) return;
 
             if (Cursor_Input_Manager.GetInstance().GetLMB().WasReleasedThisFrame())
@@ -41,7 +46,9 @@ namespace IbrahKit.UI.ScrollView
 
             lastMousePos = newPos;
 
-            scrollView.GetContent().MoveChildren(delta);
+            scrollView.GetContent().Move(delta);
+
+            scrollView.GetHandleRef().AdjustHandleToViewport();
         }
 
         private void OnClick()

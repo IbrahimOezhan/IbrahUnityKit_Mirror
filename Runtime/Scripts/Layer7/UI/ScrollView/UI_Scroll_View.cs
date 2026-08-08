@@ -13,29 +13,25 @@ namespace IbrahKit.UI.ScrollView
 
         [SerializeField] private UI_Scroll_View_Content content;
 
-        [SerializeField] private RectTransform track;
+        [SerializeField] private UI_Scroll_View_Handle handleRef;
+
+        [SerializeField] private RectTransform handleTrack;
+
+        [SerializeField] private RectTransform handle;
 
         [SerializeField] private RectTransform canvasRect;
 
-        public RectTransform GetCanvasRect()
-        {
-            return canvasRect;
-        }
+        public RectTransform GetCanvasRect() => canvasRect;
 
-        public Canvas GetCanvas()
-        {
-            return canvas;
-        }
+        public Canvas GetCanvas() => canvas;
 
-        public UI_Scroll_View_Content GetContent()
-        {
-            return content;
-        }
+        public UI_Scroll_View_Content GetContent() => content;
 
-        public RectTransform GetTrack()
-        {
-            return track;
-        }
+        public RectTransform GetHandleTrack() => handleTrack;
+
+        public RectTransform GetHandle() => handle;
+
+        public UI_Scroll_View_Handle GetHandleRef() => handleRef;
 
         public Vector2 GetMousePos() => Cursor_Input_Manager.GetInstance().GetCanvasMousePos(GetCanvas());
     }

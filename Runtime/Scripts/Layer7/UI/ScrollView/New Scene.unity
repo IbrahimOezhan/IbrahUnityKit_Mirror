@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 413573293}
   - component: {fileID: 413573296}
   - component: {fileID: 413573297}
+  - component: {fileID: 413573298}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -484,6 +485,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Layer3::IbrahKit.InfoCollector.Info_Collection_Manager
   catchExceptions: 1
+--- !u!114 &413573298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413573292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c545d1149471e438c9391fb3b4311d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Layer5::IbrahKit.Localization.Local_Manager
+  data: {fileID: 11400000, guid: 7f5e1c48a1d8679a9ac02b764ec34996, type: 2}
 --- !u!1 &415273235
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,50 +16,59 @@ namespace IbrahKit.UI.ScrollView
 
         private bool holding;
 
-        private Vector2 lastMousePos;
-
         private void Awake()
         {
-            selectable.GetStateController().GetOnPressSuccess().AddListener(OnClick);
+            selectable.GetStateController().GetOnPressSuccess().AddListener(MoveOnClick);
 
             selectable.GetStateController().GetOnPressStop().AddListener(OnClickStop);
         }
 
         private void Update()
         {
+            MoveOnHold();
+        }
+
+        private void MoveOnClick()
+        {
+            Move();
+
+            holding = true;
+        }
+
+        private void MoveOnHold()
+        {
             if (!holding) return;
 
-            Vector3[] corners = scrollView.GetTrack().GetCanvasCorners(scrollView.GetCanvas());
+            Move();
+        }
+
+        private void Move()
+        {
+            Vector2 mousePos = scrollView.GetMousePos();
+
+            Vector3[] corners = scrollView.GetHandleTrack().GetCanvasCorners(scrollView.GetCanvas());
 
             float top = corners[1].y;
 
             float bottom = corners[0].y;
 
-            Vector2 mp = scrollView.GetMousePos();
+            float scroll = 1f - Mathf.InverseLerp(bottom, top, mousePos.y);
 
-            // normalize mouse Y within track: 0=top, 1=bottom
-            float n = 1f - Mathf.InverseLerp(bottom, top, mp.y);
-
-            scrollView.GetContent().Move(n);
+            scrollView.GetContent().Move(scroll);
         }
 
-        private void OnClick()
+        public void AdjustHandleToViewport()
         {
-            lastMousePos = scrollView.GetMousePos();
+            float normalizedScrollAmount = scrollView.GetContent().NormalizedScrollAmount();
 
-            Vector3[] corners = scrollView.GetTrack().GetCanvasCorners(scrollView.GetCanvas());
+            float travel = Mathf.Max(0f, scrollView.GetHandleTrack().rect.height - scrollView.GetHandle().sizeDelta.y);
 
-            float top = corners[1].y;
+            Vector2 anchoredPosition = scrollView.GetHandle().anchoredPosition;
 
-            float btm = corners[0].y;
+            // minus because pivot.y = 1
+            anchoredPosition.y = -normalizedScrollAmount * travel;
 
-            float lastMouseY = lastMousePos.y;
-
-            float n = lastMouseY.Normalize(btm, top);
-
-            scrollView.GetContent().Move(n);
-
-            holding = true;
+            scrollView.GetHandle().anchoredPosition = anchoredPosition;
         }
 
         private void OnClickStop()

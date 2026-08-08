@@ -22,6 +22,8 @@ public class Key_Table<TKey, TTable> : SerializedScriptableObject where TTable :
         set => values = value;
     }
 
+#if UNITY_EDITOR
+
     public static TTable Instance
     {
         get
@@ -42,4 +44,6 @@ public class Key_Table<TKey, TTable> : SerializedScriptableObject where TTable :
             }
         }
     }
+
+#endif
 }
