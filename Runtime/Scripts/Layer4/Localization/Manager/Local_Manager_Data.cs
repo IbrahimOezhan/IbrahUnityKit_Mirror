@@ -20,10 +20,10 @@ namespace IbrahKit.Localization
     /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
-        [SerializeField, SerializeReference] private ILocalDataParser localDataParser;
+        [OdinSerialize, OnValueChanged(nameof(OnParserChanged)), InlineProperty] private ILocalDataParser localDataParser;
 
         [SerializeField, OnValueChanged(nameof(OnFileUpdate))]
-        private List<Local_Language> languages;
+        private List<Local_Language> languages = new();
 
         [OdinSerialize, ReadOnly] private Dictionary<string, string[]> keyValuePairs = new();
         [OdinSerialize, ReadOnly] private Dictionary<SystemLanguage, Local_Language> languageDict = new();
@@ -58,9 +58,17 @@ namespace IbrahKit.Localization
 
 #endif
 
+        private void OnParserChanged()
+        {
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+        }
+
         [Button]
         public void OnFileUpdate()
         {
+
+            
             if (languages.Any(x => x.GetFile() == null))
             {
                 return;

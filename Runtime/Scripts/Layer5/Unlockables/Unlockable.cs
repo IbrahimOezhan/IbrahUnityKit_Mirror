@@ -14,7 +14,7 @@ namespace IbrahKit.Unlockables
     public class Unlockable : ScriptableObject, IKey
     {
         [TabGroup("Base Data"), SerializeField]
-        protected Local_Key key;
+        protected string key;
 
         [TabGroup("Base Data"), SerializeField]
         private Unlockable[] unlockOnUnlock;
@@ -41,26 +41,21 @@ namespace IbrahKit.Unlockables
 
         private void UnlockOnUnlock()
         {
-            for (int i = 0; i < unlockOnUnlock.Length; i++)
+            foreach (var unlockable in unlockOnUnlock)
             {
-                if (unlockOnUnlock[i] == null)
+                if (unlockable == null)
                 {
                     IbrahDebug.LogWarning(nameof(unlockOnUnlock) + " contains null values");
                     continue;
                 }
 
-                unlockOnUnlock[i].Unlock();
+                unlockable.Unlock();
             }
         }
 
         public bool IsUnlocked()
         {
-            if (Unlockables_Manager.TryGet(out Unlockables_Manager result))
-            {
-                return result.IsUnlocked(key);
-            }
-
-            return false;
+            return Unlockables_Manager.TryGet(out Unlockables_Manager result) && result.IsUnlocked(key);
         }
     }
 }

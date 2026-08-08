@@ -6,8 +6,9 @@ using System.Collections.Generic;
 
 namespace IbrahKit.Localization
 {
-    public interface ILocalDataParser
+    [System.Serializable]
+    public abstract class ILocalDataParser
     {
-        public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount);
+        public abstract void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount);
     }
 }

@@ -1,18 +1,13 @@
 #region
 
+using System;
+using IbrahKit.Keys;
 using UnityEngine;
 
 #endregion
 
-public class Unlockable_Key : MonoBehaviour
+[Serializable]
+public class Unlockable_Key : Key_Reference<Unlockable_Key, Unlockable_Table>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    private class Processor : Key_Processor{}
 }

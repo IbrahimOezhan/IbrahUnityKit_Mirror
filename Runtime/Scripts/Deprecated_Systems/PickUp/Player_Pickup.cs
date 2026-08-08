@@ -66,8 +66,8 @@ namespace IbrahKit.Interaction
 
                     if (impulse)
                     {
-                        input.Player.Drop.canceled -= Drop;
-                        input.Player.Drop.performed -= StartDrop;
+                        input.Player.Crouch.canceled -= Drop;
+                        input.Player.Crouch.performed -= StartDrop;
                         impulse = false;
                     }
 
@@ -98,8 +98,8 @@ namespace IbrahKit.Interaction
 
                     if (impulse)
                     {
-                        input.Player.Drop.canceled -= Drop;
-                        input.Player.Drop.performed += StartDrop;
+                        input.Player.Crouch.canceled -= Drop;
+                        input.Player.Crouch.performed += StartDrop;
                         impulse = false;
                     }
 
@@ -111,8 +111,8 @@ namespace IbrahKit.Interaction
 
                     if (impulse)
                     {
-                        input.Player.Drop.performed -= StartDrop;
-                        input.Player.Drop.canceled += Drop;
+                        input.Player.Crouch.performed -= StartDrop;
+                        input.Player.Crouch.canceled += Drop;
                         impulse = false;
                     }
 

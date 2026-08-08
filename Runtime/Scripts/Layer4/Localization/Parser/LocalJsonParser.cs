@@ -11,7 +11,7 @@ namespace IbrahKit.Localization
     [Serializable]
     public class LocalJsonParser : ILocalDataParser
     {
-        public void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount)
+        public override void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount)
         {
             JsonNode node = JsonNode.Parse(data);
 

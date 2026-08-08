@@ -22,7 +22,6 @@ namespace IbrahKit.Unlockables
     {
         [SerializeField] private SaveData saveData = new();
 
-
         protected override void InstanceAwake()
         {
             base.InstanceAwake();
@@ -32,7 +31,7 @@ namespace IbrahKit.Unlockables
 
         public void Unlock(IEnumerable<Unlockable> unlockable)
         {
-            unlockable.ForEach(x => Unlock(x));
+            unlockable.ForEach(Unlock);
         }
 
         public void Unlock(Unlockable unlockable)

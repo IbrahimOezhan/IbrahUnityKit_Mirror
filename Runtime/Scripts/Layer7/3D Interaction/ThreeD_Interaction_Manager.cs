@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
-using IbrahKit.ThreeDPlayer;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,12 +13,12 @@ using UnityEngine.SceneManagement;
 namespace IbrahKit.Interaction
 {
     [DefaultExecutionOrder(-1)]
-    public class ThreeD_Player_Interaction_Manager : Interaction_Manager, IInfoCollector
+    public class ThreeD_Interaction_Manager : Interaction_Manager, IInfoCollector
     {
-        private const string INTERACTABLE_TAG = "Interactable";
+        private static List<ThreeD_Interaction_Manager> manager;
 
-        private static List<ThreeD_Player_Interaction_Manager> manager;
-
+        [SerializeField] private string INTERACTABLE_TAG = "Interactable";
+        
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
         private Transform hitObject;
 
@@ -30,7 +29,7 @@ namespace IbrahKit.Interaction
         private LayerMask mask;
 
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
-        private Interactable i;
+        private Interactable interactable;
 
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
         private Interactable collisionInteractable;
@@ -38,18 +37,16 @@ namespace IbrahKit.Interaction
         [FoldoutGroup("Debug"), SerializeField]
         private bool preventInteraction;
 
-        private Transform cameraTr;
+        [SerializeField] private Transform raycastOrigin;
 
         private bool canInteract;
 
         private RaycastHit hit;
 
-        private Player3D_Input input;
-
+        private Interaction_Input input;
+        
         protected void Awake()
         {
-            cameraTr = Camera.main.transform;
-
             input = new();
 
             input.Enable();
@@ -57,7 +54,6 @@ namespace IbrahKit.Interaction
 
         private void Start()
         {
-            SceneManager.sceneLoaded += OnSceneChanged;
             Info_Collection_Manager.GetInstance().RegisterInfoCollector(this);
         }
 
@@ -68,12 +64,7 @@ namespace IbrahKit.Interaction
 
         protected void OnDestroy()
         {
-            if (input != null)
-            {
-                input.Disable();
-            }
-
-            SceneManager.sceneLoaded -= OnSceneChanged;
+            input?.Disable();
 
             if (Info_Collection_Manager.TryGet(out Info_Collection_Manager resultD))
             {
@@ -95,7 +86,7 @@ namespace IbrahKit.Interaction
 
         private void StateMachine()
         {
-            if (!cameraTr)
+            if (!raycastOrigin)
             {
                 IbrahDebug.LogWarning("Camera transform reference not set");
 
@@ -105,61 +96,43 @@ namespace IbrahKit.Interaction
             RunStateMachine();
         }
 
-        protected override bool CanInteract(Interactable i)
-        {
-            return IsValidInteratable(i) && !preventInteraction;
-        }
+        protected override bool CanInteract(Interactable i) => IsValidInteractable(i) && !preventInteraction;
 
-        protected override InputAction GetInteractInputAction()
-        {
-            return input.Player.Interact;
-        }
+        protected override InputAction GetInteractInputAction() => input.Map.Interact;
 
         protected override Interactable FindInteractable()
         {
-            //Prioritise Collision Interactable first
+            //Prioritize Collision Interactable first
             Interactable i = collisionInteractable;
 
             //If detected return immediately
-            if (i)
-            {
-                return i;
-            }
+            if (i) return i;
 
             //Else look for interactable by raycast
-            Vector3 origin = cameraTr.position;
+            Vector3 origin = raycastOrigin.position;
 
-            Vector3 dir = cameraTr.forward;
+            Vector3 dir = raycastOrigin.forward;
 
-            if (Physics.Raycast(origin, dir, out hit, distance, mask)
-                && hit.transform.TryGetComponent<Interactable>(out var interactable)
-                && !hit.transform.CompareTag(INTERACTABLE_TAG))
-            {
-                i = interactable;
-            }
+            if (Physics.Raycast(origin, dir, out hit, distance, mask) && !hit.transform.CompareTag(INTERACTABLE_TAG))
+                hit.transform.TryGetComponent(out i);
 
             hitObject = hit.transform;
 
-            Debug.DrawRay(origin, dir * distance, IsValidInteratable(i) ? Color.green : Color.red);
+            Debug.DrawRay(origin, dir * distance, IsValidInteractable(i) ? Color.green : Color.red);
 
             return i;
         }
 
-        public void SetCollInteratable(Interactable coll)
+        public void SetCollInteractable(Interactable coll)
         {
             collisionInteractable = coll;
         }
 
-        private bool IsValidInteratable(Interactable i)
+        private static bool IsValidInteractable(Interactable i)
         {
-            return i != null && i.CanInteract() && i.enabled && i.gameObject.activeInHierarchy;
+            return i && i.CanInteract() && i.enabled && i.gameObject.activeInHierarchy;
         }
 
-        public Interactable GetCollInteratable() => collisionInteractable;
-
-        private void OnSceneChanged(Scene scene, LoadSceneMode sceneLoad)
-        {
-            cameraTr = Camera.main.transform;
-        }
+        public Interactable GetCollInteractable() => collisionInteractable;
     }
 }

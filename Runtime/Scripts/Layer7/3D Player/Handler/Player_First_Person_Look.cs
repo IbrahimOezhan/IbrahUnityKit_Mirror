@@ -8,7 +8,7 @@ using UnityEngine;
 #endregion
 
 [Serializable]
-public class First_Person_Look
+public class Player_First_Person_Look
 {
     //private float _rotationVelocity;
 
@@ -27,6 +27,7 @@ public class First_Person_Look
     [SerializeField] private Transform cinemachineCameraTarget;
 
     [SerializeField] private bool clampX;
+    
     private float _cinemachineTargetPitch;
 
     private float _cinemachineTargetYaw;
@@ -45,7 +46,7 @@ public class First_Person_Look
 
         float speed = rotationSpeed.GetValue();
 
-        // Pitch (Kamera hoch/runter)
+        // Pitch, Up Down
         _cinemachineTargetPitch += input.y * speed * deltaTime;
         _cinemachineTargetPitch = Math_Utilities.ClampAngle(
             _cinemachineTargetPitch,
@@ -56,7 +57,7 @@ public class First_Person_Look
         cinemachineCameraTarget.localRotation =
             Quaternion.Euler(_cinemachineTargetPitch, 0f, 0f);
 
-        // Yaw (Spieler links/rechts) � LOKAL
+        // Yaw, Left Right
         _cinemachineTargetYaw += input.x * speed * deltaTime;
         if (clampX) _cinemachineTargetYaw = Mathf.Clamp(_cinemachineTargetYaw, leftClamp, rightClamp);
 
@@ -76,25 +77,6 @@ public class First_Person_Look
         if (pitchEuler.x > 180f) pitchEuler.x -= 360f;
         _cinemachineTargetPitch = pitchEuler.x;
     }
-
-
-    //public void Look(Vector2 input, Transform cameraTarget, float deltaTime)
-    //{
-    //    if (input.sqrMagnitude >= lookThreshold)
-    //    {
-    //        _cinemachineTargetPitch += input.y * rotationSpeed.GetValue() * deltaTime;
-
-    //        _rotationVelocity = input.x * rotationSpeed.GetValue() * deltaTime;
-
-    //        _cinemachineTargetPitch = Math_Utilities.ClampAngle(_cinemachineTargetPitch, bottomClamp, topClamp);
-
-    //        cinemachineCameraTarget.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
-
-    //        Quaternion playerRotation = cameraTarget.rotation * Quaternion.Euler(0.0f, _rotationVelocity, 0.0f);
-
-    //        cameraTarget.rotation = ClampPlayerRotation(playerRotation);
-    //    }
-    //}
 
     private Quaternion ClampPlayerRotation(Quaternion rotation)
     {

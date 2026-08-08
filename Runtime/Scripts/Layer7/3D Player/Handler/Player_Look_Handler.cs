@@ -17,7 +17,7 @@ namespace IbrahKit.ThreeDPlayer
         [SerializeField, ReadOnly] private bool isUsingMouse;
 
         [SerializeField, HideLabel, InlineProperty]
-        private First_Person_Look fpLook;
+        private Player_First_Person_Look fpLook;
 
         private Vector2 lookVector;
 
