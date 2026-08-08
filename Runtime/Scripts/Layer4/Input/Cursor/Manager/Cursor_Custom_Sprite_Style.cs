@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace IbrahKit.Input.Cursor
 {
-    [Serializable]
-    public class Cursor_Custom_Sprite_Style
+    [CreateAssetMenu(fileName = "NewCustomSpriteStyle", menuName = "IbrahKit/CustomSpriteStyle")]
+    public class Cursor_Custom_Sprite_Style : ScriptableObject
     {
         [SerializeField] private Sprite none;
         [SerializeField] private Sprite hovering;

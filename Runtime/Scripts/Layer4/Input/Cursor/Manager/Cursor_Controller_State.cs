@@ -10,26 +10,26 @@ namespace IbrahKit.Input.Cursor
     [Serializable]
     public abstract class Cursor_Controller_State
     {
-        public enum CursorState
+        public enum CursorVisualState
         {
             HIDDEN,
             CLAMPED,
             UNCLAMPED,
         }
 
-        [SerializeField] private CursorState cursorState;
+        [SerializeField] private CursorVisualState cursorVisualState;
 
         public void Run()
         {
-            switch (cursorState)
+            switch (cursorVisualState)
             {
-                case CursorState.HIDDEN:
+                case CursorVisualState.HIDDEN:
                     Disabled();
                     break;
-                case CursorState.CLAMPED:
+                case CursorVisualState.CLAMPED:
                     Clamped();
                     break;
-                case CursorState.UNCLAMPED:
+                case CursorVisualState.UNCLAMPED:
                     Unclamped();
                     break;
                 default:
@@ -43,14 +43,14 @@ namespace IbrahKit.Input.Cursor
 
         public abstract void Unclamped();
 
-        public void SetCursorState(CursorState state)
+        public void SetCursorState(CursorVisualState state)
         {
-            cursorState = state;
+            cursorVisualState = state;
         }
 
-        public CursorState GetCursorState()
+        public CursorVisualState GetCursorState()
         {
-            return cursorState;
+            return cursorVisualState;
         }
     }
 }

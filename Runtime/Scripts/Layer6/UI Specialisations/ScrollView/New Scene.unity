@@ -429,12 +429,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Layer4::Cursor_Manager
   cursor_state_controller:
-    rid: -2
+    rid: 8956937479894335574
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8956937479894335574
+      type: {class: Cursor_Controller_State_Custom, ns: IbrahKit.Input.Cursor, asm: Layer4}
+      data:
+        cursorState: 0
+        cursorTransform: {fileID: 0}
+        canvas: {fileID: 0}
+        spriteStyle:
+          none: {fileID: 0}
+          hovering: {fileID: 0}
+          pressing: {fileID: 0}
+        cursorImage: {fileID: 0}
+        state: 0
 --- !u!4 &348606155
 Transform:
   m_ObjectHideFlags: 0

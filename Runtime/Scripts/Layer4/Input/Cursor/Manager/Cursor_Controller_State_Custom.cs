@@ -1,6 +1,7 @@
 #region
 
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -29,7 +30,7 @@ namespace IbrahKit.Input.Cursor
 
         [SerializeField] private Image cursorImage;
 
-        [SerializeField] private CursorClickState state;
+        [SerializeField, ReadOnly] private CursorClickState cursorInputState;
 
         public override void Disabled()
         {
@@ -56,7 +57,7 @@ namespace IbrahKit.Input.Cursor
 
             SetCursorPos();
 
-            cursorImage.sprite = spriteStyle.Get(state);
+            cursorImage.sprite = spriteStyle.Get(cursorInputState);
         }
 
         private void SetCursorState()
@@ -74,7 +75,7 @@ namespace IbrahKit.Input.Cursor
 
             ButtonControl leftButton = Mouse.current.leftButton;
 
-            if (leftButton.wasPressedThisFrame || (state == CursorClickState.Down && leftButton.isPressed))
+            if (leftButton.wasPressedThisFrame || (cursorInputState == CursorClickState.Down && leftButton.isPressed))
                 SetState(CursorClickState.Down);
 
             else SetState(CursorClickState.Hovering);
@@ -82,7 +83,7 @@ namespace IbrahKit.Input.Cursor
 
         private void SetState(CursorClickState s)
         {
-            state = s;
+            cursorInputState = s;
         }
 
         private void SetCursorPos()

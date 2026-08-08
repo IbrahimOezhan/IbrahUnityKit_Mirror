@@ -1,5 +1,6 @@
 #region
 
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.Input.Cursor
 {
+    [Serializable]
     public class Cursor_Controller_Input : IInputType
     {
         private CursorInput input;
@@ -15,26 +17,6 @@ namespace IbrahKit.Input.Cursor
         private Vector2 mousePos;
 
         private EventSystem system;
-
-        public void Init()
-        {
-            input = new();
-
-            input.Enable();
-
-            Input_Manager.GetInstance().Register(this);
-        }
-        
-        public void Destroy()
-        {
-            if (input == null) return;
-
-            input.Disable();
-
-            input.Dispose();
-
-            Input_Manager.GetInstance().UnRegister(this);
-        }
 
         public void OnInput(Input_Manager.InputType inputType)
         {
@@ -47,6 +29,26 @@ namespace IbrahKit.Input.Cursor
             mousePos = input.Map.MousePos.ReadValue<Vector2>();
 
             Cursor_Manager.GetInstance().GetCursorState().Run();
+        }
+
+        public void Init()
+        {
+            input = new();
+
+            input.Enable();
+
+            Input_Manager.GetInstance().Register(this);
+        }
+
+        public void Destroy()
+        {
+            if (input == null) return;
+
+            input.Disable();
+
+            input.Dispose();
+
+            Input_Manager.GetInstance().UnRegister(this);
         }
 
         public Vector2 GetMousePos() => mousePos;

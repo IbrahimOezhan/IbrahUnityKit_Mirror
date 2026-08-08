@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using IbrahKit.Input.Cursor;
@@ -8,6 +9,7 @@ using UnityEngine.EventSystems;
 
 #endregion
 
+[Serializable]
 public class Cursor_Controller_Receiver
 {
     public HashSet<GameObject> GetReceivers(EventSystem system, Camera camera, Vector2 mousePos)
