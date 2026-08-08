@@ -2,7 +2,7 @@
 
 ## Important: 
 
-This toolkit depends on the Odin Inspector which for obvious reasons is **not** shipped with this repo. For more information check the wiki
+This toolkit depends on the Odin Inspector which for obvious reasons is **not** shipped with this repo. For more information check https://wiki.ibrahimoezhan.com/Ibrah-Unity-Kit#dependencies
 
 ## Wiki:
 
