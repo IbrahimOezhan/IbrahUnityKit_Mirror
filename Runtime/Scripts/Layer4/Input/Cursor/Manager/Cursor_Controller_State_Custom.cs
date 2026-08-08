@@ -1,6 +1,8 @@
 #region
 
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
@@ -9,7 +11,8 @@ using UnityEngine.UI;
 
 namespace IbrahKit.Input.Cursor
 {
-    public class Cursor_Custom_Manager : Cursor_State_Manager
+    [Serializable]
+    public class Cursor_Controller_State_Custom : Cursor_Controller_State
     {
         public enum CursorClickState
         {
@@ -22,7 +25,7 @@ namespace IbrahKit.Input.Cursor
 
         [SerializeField] private RectTransform canvas;
 
-        [SerializeField] private Cursor_Sprite_Style spriteStyle;
+        [SerializeField] private Cursor_Custom_Sprite_Style spriteStyle;
 
         [SerializeField] private Image cursorImage;
 
@@ -53,14 +56,15 @@ namespace IbrahKit.Input.Cursor
 
             SetCursorPos();
 
-            spriteStyle.Set(cursorImage, state);
+            cursorImage.sprite = spriteStyle.Get(state);
         }
 
         private void SetCursorState()
         {
-            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager cim)) return;
+            if (!Cursor_Manager.TryGet(out Cursor_Manager cim)) return;
 
-            bool isOverReceiver = cim.IsOverReceiver();
+            bool isOverReceiver = cim.GetCursorReceiver()
+                .IsOverReceiver(EventSystem.current, cim.GetCamera(), cim.GetCursorInput().GetMousePos());
 
             if (!isOverReceiver)
             {
@@ -76,16 +80,16 @@ namespace IbrahKit.Input.Cursor
             else SetState(CursorClickState.Hovering);
         }
 
-        private void SetState(CursorClickState state)
+        private void SetState(CursorClickState s)
         {
-            this.state = state;
+            state = s;
         }
 
         private void SetCursorPos()
         {
-            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager cim)) return;
+            if (!Cursor_Manager.TryGet(out Cursor_Manager cim)) return;
 
-            Vector2 pos = GetCursorPos(cim.GetMousePos(), cim.GetCamera());
+            Vector2 pos = GetCursorPos(cim.GetCursorInput().GetMousePos(), cim.GetCamera());
 
             cursorTransform.localPosition = pos;
         }

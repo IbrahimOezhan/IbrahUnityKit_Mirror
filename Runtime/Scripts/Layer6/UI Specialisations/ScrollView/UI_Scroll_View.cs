@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Input.Cursor;
 using UnityEngine;
 
 #endregion
@@ -33,6 +32,6 @@ namespace IbrahKit.UI.ScrollView
 
         public UI_Scroll_View_Handle GetHandleRef() => handleRef;
 
-        public Vector2 GetMousePos() => Cursor_Input_Manager.GetInstance().GetCanvasMousePos(GetCanvas());
+        public Vector2 GetMousePos() => Cursor_Manager.GetInstance().GetCursorInput().GetCanvasMousePos(GetCanvas());
     }
 }

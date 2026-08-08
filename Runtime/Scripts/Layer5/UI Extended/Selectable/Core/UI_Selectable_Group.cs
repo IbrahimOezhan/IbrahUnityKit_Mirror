@@ -1,9 +1,9 @@
 #region
 
 using System.Collections.Generic;
-using IbrahKit.Input.Cursor;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 #endregion
@@ -18,17 +18,17 @@ namespace IbrahKit.UI.Selectable
 
         private void OnEnable()
         {
-            if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
+            if (Cursor_Manager.TryGet(out Cursor_Manager result))
             {
-                result.GetLMB().performed += OnLMB;
+                result.GetCursorInput().GetLMB().performed += OnLMB;
             }
         }
 
         private void OnDisable()
         {
-            if (Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result))
+            if (Cursor_Manager.TryGet(out Cursor_Manager result))
             {
-                result.GetLMB().performed -= OnLMB;
+                result.GetCursorInput().GetLMB().performed -= OnLMB;
             }
         }
 
@@ -36,7 +36,8 @@ namespace IbrahKit.UI.Selectable
         {
             if (!deselectOnClickAnywhere) return;
 
-            if (!Cursor_Input_Manager.TryGet(out Cursor_Input_Manager result) || result.IsOverUIReceiver()) return;
+            if (!Cursor_Manager.TryGet(out Cursor_Manager result) || result.GetCursorReceiver()
+                    .IsOverUIReceiver(EventSystem.current, result.GetCursorInput().GetMousePos())) return;
 
             foreach (var selectable in selectables)
             {

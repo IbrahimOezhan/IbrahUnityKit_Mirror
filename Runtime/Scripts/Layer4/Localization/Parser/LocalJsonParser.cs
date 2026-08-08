@@ -11,11 +11,12 @@ namespace IbrahKit.Localization
     [Serializable]
     public class LocalJsonParser : ILocalDataParser
     {
-        public override void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex, int languageCount)
+        public override void Parse(string data, Dictionary<string, string[]> dictionary, int languageIndex,
+            int languageCount)
         {
             JsonNode node = JsonNode.Parse(data);
 
-            Populate(node, dictionary, languageIndex,languageCount);
+            Populate(node, dictionary, languageIndex, languageCount);
         }
 
         private void Populate(JsonNode node, Dictionary<string, string[]> data, int languageIndex, int languageCount)
@@ -25,13 +26,12 @@ namespace IbrahKit.Localization
                 case JsonValue value:
                     if (data.TryGetValue(value.GetPath(), out string[] values))
                     {
-                        values[languageIndex] =  value.GetValue<string>();
+                        values[languageIndex] = value.GetValue<string>();
                     }
                     else
                     {
-
                         string[] arr = new string[languageCount];
-                        arr[languageIndex] =  value.GetValue<string>();
+                        arr[languageIndex] = value.GetValue<string>();
                         data.TryAdd(value.GetPath(), arr);
                     }
 
@@ -40,7 +40,7 @@ namespace IbrahKit.Localization
                 {
                     foreach (var keyValuePair in @object)
                     {
-                        Populate(keyValuePair.Value, data, languageIndex,languageCount);
+                        Populate(keyValuePair.Value, data, languageIndex, languageCount);
                     }
 
                     break;

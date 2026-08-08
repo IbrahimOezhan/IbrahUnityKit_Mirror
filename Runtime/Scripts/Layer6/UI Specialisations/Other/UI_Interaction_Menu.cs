@@ -1,10 +1,7 @@
 #region
 
-using System;
 using IbrahKit.Interaction;
 using IbrahKit.UI.Menu;
-using IbrahKit.UI.Modifier;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 #endregion
@@ -14,7 +11,7 @@ namespace IbrahKit.UI
     public class UI_Interaction_Menu : UI_Menu
     {
         [SerializeField] private Interaction_Manager manager;
-        
+
         private UI_Modifier_Text_Modifier localization;
 
         private Interaction_Manager.InteractionMachineState state;
@@ -22,7 +19,7 @@ namespace IbrahKit.UI
         protected override void Awake()
         {
             base.Awake();
-            
+
             manager.GetStateMachine().stateChanged += OnInteractionStateChanged;
         }
 

@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Input.Cursor;
 using IbrahKit.UI.Selectable;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -33,7 +32,7 @@ namespace IbrahKit.UI.ScrollView
         {
             if (!holding) return;
 
-            if (Cursor_Input_Manager.GetInstance().GetLMB().WasReleasedThisFrame())
+            if (Cursor_Manager.GetInstance().GetCursorInput().GetLMB().WasReleasedThisFrame())
             {
                 holding = false;
             }

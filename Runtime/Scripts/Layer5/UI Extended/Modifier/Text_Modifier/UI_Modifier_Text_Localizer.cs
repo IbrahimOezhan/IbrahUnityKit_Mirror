@@ -13,25 +13,23 @@ namespace IbrahKit.UI.Modifier
     [Serializable]
     public class UI_Modifier_Text_Localizer
     {
-        private UI_Modifier_Text_Modifier modifier;
-        
         [SerializeField] protected Local_Key key;
 
         [SerializeField] protected string fallbackText;
+        private UI_Modifier_Text_Modifier modifier;
 
         [OdinSerialize] protected object[] parameters;
 
         public UI_Modifier_Text_Localizer(UI_Modifier_Text_Modifier modifier)
         {
             this.modifier = modifier;
-            
+
             if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged += Modify;
         }
 
         public void OnDestroy()
         {
             if (Local_Manager.TryGet(out Local_Manager lm)) lm.onLanguageChanged -= Modify;
-
         }
 
         protected void Modify()
@@ -44,7 +42,7 @@ namespace IbrahKit.UI.Modifier
             if (fallbackText == _fallback) return;
 
             fallbackText = _fallback;
-            
+
             Modify();
         }
 
@@ -53,14 +51,14 @@ namespace IbrahKit.UI.Modifier
             if (key == _key) return;
 
             key = _key;
-            
+
             Modify();
         }
 
         public void SetParam(params object[] _params)
         {
             parameters = _params;
-            
+
             Modify();
         }
 

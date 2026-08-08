@@ -1,12 +1,14 @@
 #region
 
+using System;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.Input.Cursor
 {
-    public class Cursor_Native_Manager : Cursor_State_Manager
+    [Serializable]
+    public class Cursor_Controller_State_Native : Cursor_Controller_State
     {
         public override void Disabled()
         {

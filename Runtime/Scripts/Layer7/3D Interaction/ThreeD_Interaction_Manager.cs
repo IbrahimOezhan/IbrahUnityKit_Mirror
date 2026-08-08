@@ -6,7 +6,6 @@ using IbrahKit.InfoCollector;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 #endregion
 
@@ -18,7 +17,7 @@ namespace IbrahKit.Interaction
         private static List<ThreeD_Interaction_Manager> manager;
 
         [SerializeField] private string INTERACTABLE_TAG = "Interactable";
-        
+
         [FoldoutGroup("Debug"), ReadOnly, SerializeField]
         private Transform hitObject;
 
@@ -44,7 +43,7 @@ namespace IbrahKit.Interaction
         private RaycastHit hit;
 
         private Interaction_Input input;
-        
+
         protected void Awake()
         {
             input = new();

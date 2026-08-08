@@ -2,7 +2,6 @@
 
 using IbrahKit.Debugging;
 using IbrahKit.Keys;
-using IbrahKit.Localization;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

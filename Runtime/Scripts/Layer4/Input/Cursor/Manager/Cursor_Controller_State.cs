@@ -1,14 +1,14 @@
 #region
 
 using System;
-using IbrahKit.Manager;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.Input.Cursor
 {
-    public abstract class Cursor_State_Manager : Manager_Global<Cursor_State_Manager>
+    [Serializable]
+    public abstract class Cursor_Controller_State
     {
         public enum CursorState
         {

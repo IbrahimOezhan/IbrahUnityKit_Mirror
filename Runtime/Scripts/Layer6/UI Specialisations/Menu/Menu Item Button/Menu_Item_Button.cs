@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using Sirenix.OdinInspector;
 using UnityEngine;

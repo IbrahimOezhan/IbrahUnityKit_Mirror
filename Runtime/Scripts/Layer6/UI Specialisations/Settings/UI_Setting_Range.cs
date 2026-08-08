@@ -2,7 +2,6 @@
 
 using IbrahKit.Settings;
 using IbrahKit.UI;
-using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using UnityEngine;
 

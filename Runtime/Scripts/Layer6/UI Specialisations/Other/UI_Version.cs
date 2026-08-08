@@ -1,7 +1,6 @@
 #region
 
 using IbrahKit.UI.Generic;
-using IbrahKit.UI.Modifier;
 using UnityEngine;
 
 #endregion

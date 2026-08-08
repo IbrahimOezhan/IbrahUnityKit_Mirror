@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Navigation_Manager : Manager_Global<UI_Navigation_Manager>
+    public class UI_Selectable_Manager : Manager_Global<UI_Selectable_Manager>
     {
         private InputTypeNavigation currentType;
 

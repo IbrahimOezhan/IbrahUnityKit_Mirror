@@ -27,7 +27,7 @@ public class Player_First_Person_Look
     [SerializeField] private Transform cinemachineCameraTarget;
 
     [SerializeField] private bool clampX;
-    
+
     private float _cinemachineTargetPitch;
 
     private float _cinemachineTargetYaw;

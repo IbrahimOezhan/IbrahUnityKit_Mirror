@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using IbrahKit.Debugging;
 using IbrahKit.Keys;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -29,7 +28,7 @@ public class Key_Table<TKey, TTable> : SerializedScriptableObject where TTable :
         get
         {
             Type type = typeof(TTable);
-            
+
             string[] guids = AssetDatabase.FindAssets($"t:{type.Name}");
 
             switch (guids.Length)

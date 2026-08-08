@@ -1,7 +1,6 @@
 #region
 
 using System;
-using IbrahKit.Debugging;
 
 #endregion
 
@@ -15,7 +14,6 @@ namespace IbrahKit.UI.Modifier
         public UI_Modifier_Text_Setter(UI_Modifier_Text_Modifier modifier)
         {
             this.modifier = modifier;
-            
         }
 
         public void SetText(object value)

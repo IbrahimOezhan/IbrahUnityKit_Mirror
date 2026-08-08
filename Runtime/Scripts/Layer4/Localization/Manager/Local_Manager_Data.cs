@@ -20,7 +20,8 @@ namespace IbrahKit.Localization
     /// </summary>
     public class Local_Manager_Data : SerializedScriptableObject, IFileWatcher, ISelfValidator
     {
-        [OdinSerialize, OnValueChanged(nameof(OnParserChanged)), InlineProperty] private ILocalDataParser localDataParser;
+        [OdinSerialize, OnValueChanged(nameof(OnParserChanged)), InlineProperty]
+        private ILocalDataParser localDataParser;
 
         [SerializeField, OnValueChanged(nameof(OnFileUpdate))]
         private List<Local_Language> languages = new();
@@ -58,17 +59,9 @@ namespace IbrahKit.Localization
 
 #endif
 
-        private void OnParserChanged()
-        {
-            EditorUtility.SetDirty(this);
-            AssetDatabase.SaveAssets();
-        }
-
         [Button]
         public void OnFileUpdate()
         {
-
-            
             if (languages.Any(x => x.GetFile() == null))
             {
                 return;
@@ -80,7 +73,7 @@ namespace IbrahKit.Localization
 
             for (var i = 0; i < languages.Count; i++)
             {
-                localDataParser.Parse(languages[i].GetFile().text, keyValuePairs, i,languages.Count);
+                localDataParser.Parse(languages[i].GetFile().text, keyValuePairs, i, languages.Count);
 
                 languageIndexDict[languages[i]] = i;
             }
@@ -101,6 +94,12 @@ namespace IbrahKit.Localization
                     result.AddError("Language needs file");
                 }
             }
+        }
+
+        private void OnParserChanged()
+        {
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
         }
 
         public bool TryGetString(string key, Local_Language language, out string result)

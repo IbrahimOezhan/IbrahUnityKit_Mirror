@@ -2,9 +2,6 @@
 
 using System;
 using IbrahKit.Debugging;
-using IbrahKit.UI.Generic;
-using IbrahKit.UI.Modifier;
-using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Application = UnityEngine.Application;
@@ -55,6 +52,11 @@ namespace IbrahKit.UI
             //transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged +=
         }
 
+        private void OnDestroy()
+        {
+            //transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged -=extension.RunExtensions;
+        }
+
         protected void Execute()
         {
             UI_Rect_Fitter_Config config = GetConfig();
@@ -72,11 +74,6 @@ namespace IbrahKit.UI
 
             if (scaleHeight)
                 SetSize(text.GetPreferredSize().y, maxHeight, heightOffset, config, RectTransform.Axis.Vertical);
-        }
-
-        private void OnDestroy()
-        {
-            //transform.BetterGetComponentInParent<UI_Canvas_Controller>().OnFocusOrResolutionChanged -=extension.RunExtensions;
         }
 
         private void SetSize(float size, float max, float offset, UI_Rect_Fitter_Config config, RectTransform.Axis axis)

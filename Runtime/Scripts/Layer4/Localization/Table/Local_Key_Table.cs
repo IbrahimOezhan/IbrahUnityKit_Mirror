@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Localization;
 using UnityEngine;
 
 #endregion

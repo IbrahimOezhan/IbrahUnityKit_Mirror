@@ -6,7 +6,6 @@ using IbrahKit.InfoCollector;
 using IbrahKit.Input;
 using IbrahKit.UI;
 using IbrahKit.UI.Menu;
-using IbrahKit.UI.Modifier;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
