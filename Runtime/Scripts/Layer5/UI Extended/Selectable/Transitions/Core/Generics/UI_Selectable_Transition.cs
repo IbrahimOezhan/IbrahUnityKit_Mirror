@@ -14,12 +14,10 @@ namespace IbrahKit.UI.Selectable
     public abstract class UI_Selectable_Transition<TTarget, SOTarget> : UI_Selectable_Transition
         where TTarget : Component where SOTarget : Selectable_Transition_SO
     {
-        [SerializeField, ReadOnly]
-        private Override_Class<TTarget> fTarget;
-        
-        [SerializeField, ReadOnly]
-        private TTarget getComponentTarget;
-        
+        [SerializeField, ReadOnly] private Override_Class<TTarget> fTarget;
+
+        [SerializeField, ReadOnly] private TTarget getComponentTarget;
+
         [SerializeField] private TTarget target;
 
         [SerializeField] private SOTarget config;
@@ -45,7 +43,7 @@ namespace IbrahKit.UI.Selectable
 
             fTarget = new(getComponentTarget, replace);
 
-            if(target != null) replace.AddOverride(target);
+            if (target != null) replace.AddOverride(target);
         }
 
         protected TTarget GetTarget()
@@ -57,7 +55,7 @@ namespace IbrahKit.UI.Selectable
         {
             return config;
         }
-        
+
         private bool IsSoNull() => config == null;
     }
 }

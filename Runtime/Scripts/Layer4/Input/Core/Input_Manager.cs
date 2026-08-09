@@ -1,12 +1,10 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using IbrahKit.Core;
 using IbrahKit.InfoCollector;
 using IbrahKit.Manager;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;

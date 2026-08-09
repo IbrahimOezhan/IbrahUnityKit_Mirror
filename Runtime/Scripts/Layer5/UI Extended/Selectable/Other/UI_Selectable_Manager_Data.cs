@@ -1,6 +1,10 @@
+#region
+
 using System.Collections.Generic;
 using IbrahKit.Input;
 using UnityEngine;
+
+#endregion
 
 public class UI_Selectable_Manager_Data : ScriptableObject
 {

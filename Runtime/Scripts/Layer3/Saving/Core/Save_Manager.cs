@@ -74,7 +74,8 @@ namespace IbrahKit.Save
 
         public void ToSaveFile(Save_Object saveObject, string fileName)
         {
-            File.WriteAllText(Path.Combine(saveFolderPath, fileName), Json_Utilities.Serialize(saveObject.ToSaveFile()));
+            File.WriteAllText(Path.Combine(saveFolderPath, fileName),
+                Json_Utilities.Serialize(saveObject.ToSaveFile()));
         }
 
         public List<Save_Object> GetSaveObjects(List<Save_File> files)

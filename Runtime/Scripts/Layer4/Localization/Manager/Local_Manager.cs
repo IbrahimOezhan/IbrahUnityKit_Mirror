@@ -7,7 +7,6 @@ using IbrahKit.Core;
 using IbrahKit.Debugging;
 using IbrahKit.Manager;
 using IbrahKit.Save;
-using IbrahKit.Save.Simple;
 using IbrahKit.Utilities;
 using UnityEngine;
 
@@ -104,23 +103,24 @@ namespace IbrahKit.Localization
             UpdateLanguage();
         }
 
-        public static bool TryGetString(string key, out string result, string fallback = null, params object[] parameters)
+        public static bool TryGetString(string key, out string result, string fallback = null,
+            params object[] parameters)
         {
             if (TryGet(out Local_Manager local_Manager))
             {
                 result = local_Manager.GetString(key, fallback, parameters);
                 return true;
             }
-            
-            #if UNITY_EDITOR
+
+#if UNITY_EDITOR
 
             if (Local_Manager_Data.Instance.TryGetString(key, 0, out result))
             {
                 return true;
             }
-            
-            #endif
-            
+
+#endif
+
             result = fallback;
 
             return false;
@@ -150,7 +150,7 @@ namespace IbrahKit.Localization
 
             return $"Error: {key}";
         }
-        
+
         private Local_Language GetNext(int dir)
         {
             int newIndex = (currentLanguage + dir).Loop(0, GetManagerData().Languages.Count - 1);

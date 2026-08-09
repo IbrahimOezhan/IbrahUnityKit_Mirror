@@ -105,7 +105,7 @@ namespace IbrahKit.Dialog
                     action.Invoke(tokensInAffect, text);
                     break;
                 }
-                
+
                 if (i == _tokens[0].Start)
                 {
                     action.Invoke(tokensInAffect, cache);

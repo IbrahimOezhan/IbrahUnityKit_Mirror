@@ -1,17 +1,22 @@
+#region
+
 using System;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-public class SerializedScriptableObjectSingleton<T> : SerializedScriptableObject where T : SerializedScriptableObjectSingleton<T>
+#endregion
+
+public class SerializedScriptableObjectSingleton<T> : SerializedScriptableObject
+    where T : SerializedScriptableObjectSingleton<T>
 {
     public static T Instance
     {
         get
         {
 #if UNITY_EDITOR
-            
+
             Type type = typeof(T);
 
             string[] guids = AssetDatabase.FindAssets($"t:{type.Name}");
@@ -27,10 +32,8 @@ public class SerializedScriptableObjectSingleton<T> : SerializedScriptableObject
                     throw new Exception($"More than 1 SO of type {typeof(T)} found");
             }
 #else
-                    throw new Exception($"This only works in the Editor");
+            throw new Exception($"This only works in the Editor");
 #endif
-            
         }
     }
-
 }

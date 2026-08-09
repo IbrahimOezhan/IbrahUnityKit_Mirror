@@ -51,20 +51,19 @@ namespace IbrahKit.UI.Selectable
 
         public void Select()
         {
-            
             currentlySelected = this;
-            
+
             SetState(UI_SELECTABLE_STATE.SELECTED);
 
             if (!interactable || !playAudioOnStateChange) return;
 
             Transform transform = GetSelectable().transform;
-            
+
             if (!UI_Audio_Config.TryGet(transform, out UI_Audio_Config result))
             {
                 return;
             }
-            
+
             result.OnHover();
         }
 
@@ -89,11 +88,11 @@ namespace IbrahKit.UI.Selectable
                 OnPressedFailed.Invoke();
                 return;
             }
-            
+
             OnPressedSuccess.Invoke();
 
             if (!playAudioOnStateChange) return;
-                
+
             if (UI_Audio_Config.TryGet(GetSelectable().transform, out UI_Audio_Config result))
             {
                 result.OnClick();
@@ -109,7 +108,7 @@ namespace IbrahKit.UI.Selectable
                 currentlySelected = null;
             }
         }
-        
+
         private void SetState(UI_SELECTABLE_STATE newState, bool animate = true)
         {
             if (state == newState) return;

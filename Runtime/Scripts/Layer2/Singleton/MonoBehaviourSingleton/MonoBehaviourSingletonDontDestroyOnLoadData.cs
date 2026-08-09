@@ -10,7 +10,9 @@ using UnityEngine;
 
 namespace IbrahKit.Manager
 {
-    public abstract class MonoBehaviourSingletonDontDestroyOnLoadData<TManager, TData> : MonoBehaviourSingletonDontDestroyOnLoad<TManager> where TData : ScriptableObject
+    public abstract class
+        MonoBehaviourSingletonDontDestroyOnLoadData<TManager, TData> : MonoBehaviourSingletonDontDestroyOnLoad<TManager>
+        where TData : ScriptableObject
         where TManager : MonoBehaviourSingletonDontDestroyOnLoadData<TManager, TData>
     {
         [SerializeField, Required] private TData data;

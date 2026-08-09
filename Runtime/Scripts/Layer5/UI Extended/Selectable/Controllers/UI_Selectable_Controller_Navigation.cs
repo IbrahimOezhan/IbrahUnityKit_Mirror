@@ -24,7 +24,6 @@ namespace IbrahKit.UI.Selectable
 
         protected override void Init()
         {
-
         }
 
         public override void OnEnable()
@@ -41,7 +40,7 @@ namespace IbrahKit.UI.Selectable
 
         public void Navigate(InputAction.CallbackContext context)
         {
-            if(!GetSelectable().transform.BetterTryGetComponentInParent(out UI_Canvas_Controller controllerCanvas))
+            if (!GetSelectable().transform.BetterTryGetComponentInParent(out UI_Canvas_Controller controllerCanvas))
             {
                 IbrahDebug.LogError("Cannot find Canvas Controller");
                 return;
@@ -51,14 +50,14 @@ namespace IbrahKit.UI.Selectable
                 .Where(x => x != this
                             && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate)
                 .ToList();
-            
+
             Vector2 movementVector = context.ReadValue<Vector2>();
-            
+
             Canvas canvas = controllerCanvas.GetCanvas();
-            
+
             UI_Selectable_Controller_Navigation selectable =
-                TryNavigate(this, movementVector, canvas,candidates);
-            
+                TryNavigate(this, movementVector, canvas, candidates);
+
             //TODO: Added this. Was not here before. CHeck if its correct now
             if (selectable != null)
             {
@@ -68,7 +67,8 @@ namespace IbrahKit.UI.Selectable
         }
 
         public static UI_Selectable_Controller_Navigation
-            TryNavigate(UI_Selectable_Controller_Navigation current, Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> _activeSelectables)
+            TryNavigate(UI_Selectable_Controller_Navigation current, Vector2 inputVector, Canvas canvas,
+                IReadOnlyList<UI_Selectable_Controller_Navigation> _activeSelectables)
         {
             try
             {
@@ -134,12 +134,12 @@ namespace IbrahKit.UI.Selectable
                     float score = alignment / (distance + 0.001f);
 
                     if (!(score > bestScore)) continue;
-                    
+
                     bestScore = score;
                     best = candidate;
                 }
 
-            return best;
+                return best;
             }
             catch (Exception e)
             {

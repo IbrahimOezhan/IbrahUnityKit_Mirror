@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Core;
 using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
@@ -21,10 +20,21 @@ namespace IbrahKit.UI.Selectable
         [ReadOnly, SerializeField] private UI_Selectable_Group selectableGroup;
 
         private readonly UI_Selectable_Controller_Input_Cursor cursorInput = new();
-        
+
         private void Update()
         {
             if (selectableGroup) selectableGroup.Add(this);
+        }
+
+        protected void OnEnable()
+        {
+            cursorInput.OnEnable();
+
+            navigationController.OnEnable();
+
+            transitionController.OnEnable();
+
+            stateController.OnEnable();
         }
 
         protected void OnDisable()
@@ -45,11 +55,11 @@ namespace IbrahKit.UI.Selectable
             transform.BetterTryGetComponentInParent(out selectableGroup);
 
             transitionController.Init(this);
-            
+
             cursorInput.Init(this);
 
             stateController.Init(this);
-            
+
             navigationController.Init(this);
 
             stateController.GetOnStateChangedEvent().AddListener(Visualize);
@@ -59,17 +69,6 @@ namespace IbrahKit.UI.Selectable
 
         public void OnMenuInitTopDown()
         {
-        }
-
-        protected void OnEnable()
-        {
-            cursorInput.OnEnable();
-
-            navigationController.OnEnable();
-
-            transitionController.OnEnable();
-
-            stateController.OnEnable();
         }
 
         public void Visualize(UI_SELECTABLE_STATE state, bool animate = true)

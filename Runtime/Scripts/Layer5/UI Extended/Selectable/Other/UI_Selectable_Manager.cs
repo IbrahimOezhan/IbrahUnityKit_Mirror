@@ -4,14 +4,14 @@ using System;
 using System.Linq;
 using IbrahKit.Input;
 using IbrahKit.Manager;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 #endregion
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<UI_Selectable_Manager, UI_Selectable_Manager_Data>
+    public class UI_Selectable_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<UI_Selectable_Manager,
+        UI_Selectable_Manager_Data>
     {
         private InputTypeNavigation currentType;
 
@@ -82,7 +82,7 @@ namespace IbrahKit.UI.Selectable
             {
                 UI_Selectable_Controller_Navigation nav = UI_Selectable_Controller_Navigation.activeSelectables
                     .FirstOrDefault(x => x.IsFirstSelectableCandidate());
-                
+
                 nav?.GetSelectable().GetStateController().Select();
             }
             else
@@ -136,6 +136,7 @@ namespace IbrahKit.UI.Selectable
                             .GetStateController()
                             .Select();
                     }
+
                     break;
                 case InputTypeNavigation.POINT:
                     UI_Selectable_Controller_State.currentlySelected?.PressedStop();

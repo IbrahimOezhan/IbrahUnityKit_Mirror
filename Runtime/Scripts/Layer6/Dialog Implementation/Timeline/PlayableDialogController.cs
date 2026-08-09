@@ -9,7 +9,8 @@ using Sirenix.Utilities;
 
 public static class PlayableDialogController
 {
-    public static string Get(Dictionary<SimpleDialogElement, List<SimpleDialogElement.Token>> dict,SimpleDialogElement[] elements, double time, double duration)
+    public static string Get(Dictionary<SimpleDialogElement, List<SimpleDialogElement.Token>> dict,
+        SimpleDialogElement[] elements, double time, double duration)
     {
         double totalTime = 0;
 
@@ -31,7 +32,7 @@ public static class PlayableDialogController
 
                 totalTime += s.Length * delay;
             });
-            
+
             totalTime += element.GetDisplayTime();
         }
 

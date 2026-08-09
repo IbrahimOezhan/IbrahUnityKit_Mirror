@@ -2,7 +2,6 @@
 
 using System;
 using IbrahKit.Debugging;
-using IbrahKit.Save;
 using Sirenix.Serialization;
 using UnityEngine;
 
@@ -12,9 +11,8 @@ namespace IbrahKit.Save.Simple
 {
     public class SimpleSaveManager : Save_Manager
     {
+        [OdinSerialize, SerializeField] private Save_Object saveObject;
         private Save_Dictionary dict;
-
-        [OdinSerialize,SerializeField] private Save_Object saveObject;
 
         protected override void InstanceAwake()
         {
@@ -25,13 +23,13 @@ namespace IbrahKit.Save.Simple
             if (saveObject == null)
             {
                 IbrahDebug.LogWarning("No save found. Creating new save");
-                saveObject =GetNew();
+                saveObject = GetNew();
             }
             else
             {
                 IbrahDebug.LogWarning("Successfully loaded save");
             }
-            
+
             dict = saveObject.Get<Save_Dictionary>();
         }
 
@@ -39,7 +37,7 @@ namespace IbrahKit.Save.Simple
         {
             base.InstanceDestroy();
 
-            ToSaveFile(saveObject,"save.json");
+            ToSaveFile(saveObject, "save.json");
         }
 
         public override Save_Object GetLoadedSave()

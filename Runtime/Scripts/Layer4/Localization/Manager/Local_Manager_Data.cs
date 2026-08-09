@@ -104,7 +104,7 @@ namespace IbrahKit.Localization
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
-            return TryGetString(key,LanguageIndexDict[language] , out result);
+            return TryGetString(key, LanguageIndexDict[language], out result);
         }
 
         public bool TryGetString(string key, int index, out string result)

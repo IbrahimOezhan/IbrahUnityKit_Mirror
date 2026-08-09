@@ -1,6 +1,9 @@
-using System;
+#region
+
 using IbrahKit.UI.Generic;
 using UnityEngine;
+
+#endregion
 
 public class CustomInit : MonoBehaviour
 {

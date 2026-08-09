@@ -36,9 +36,9 @@ namespace IbrahKit.UI
 
         public UI_Text_Wrapper GetTextWrapper()
         {
-            if(!Application.isPlaying)
+            if (!Application.isPlaying)
                 return new(nonDefaultTarget == null ? gameObject : nonDefaultTarget);
-            
+
             return text;
         }
 

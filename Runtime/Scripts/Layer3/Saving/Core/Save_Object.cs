@@ -14,14 +14,11 @@ using UnityEngine;
 [Serializable]
 public class Save_Object
 {
-    [JsonInclude]
-    [OdinSerialize] private Dictionary<Type, ISavable> objects;
-    
-    [JsonInclude]
-    [SerializeField] private Save_State state;
-    
-    [JsonInclude]
-    [OdinSerialize] private LinkedList<int> version;
+    [JsonInclude] [SerializeField] private Save_State state;
+
+    [JsonInclude] [OdinSerialize] private Dictionary<Type, ISavable> objects;
+
+    [JsonInclude] [OdinSerialize] private LinkedList<int> version;
 
     public Save_Object(LinkedList<int> version, Dictionary<Type, ISavable> objects, Save_State state)
     {
@@ -39,7 +36,7 @@ public class Save_Object
         else
         {
             T newObject = new T();
-            
+
             objects.Add(typeof(T), newObject);
             return newObject;
         }
@@ -52,7 +49,9 @@ public class Save_Object
 
     public Save_File ToSaveFile()
     {
-        return new Save_File(version, objects.ToDictionary(x =>  Save_Utilities.GetQualifiedName(x.Key), y => Json_Utilities.Serialize(y.Value,y.Key)));
+        return new Save_File(version,
+            objects.ToDictionary(x => Save_Utilities.GetQualifiedName(x.Key),
+                y => Json_Utilities.Serialize(y.Value, y.Key)));
     }
 
     public Save_State GetSaveState()

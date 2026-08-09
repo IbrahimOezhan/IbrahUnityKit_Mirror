@@ -2,7 +2,11 @@
 
 #endregion
 
+#region
+
 using UnityEngine;
+
+#endregion
 
 namespace IbrahKit.Override
 {
@@ -28,7 +32,7 @@ namespace IbrahKit.Override
                 Debug.Log("Value to be added was null");
                 return;
             }
-            
+
             overrideValue = value;
             overriden = true;
         }

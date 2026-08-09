@@ -1,8 +1,5 @@
 #region
 
-using System.Linq;
-using UnityEngine.EventSystems;
-
 #endregion
 
 namespace IbrahKit.Input.Cursor
@@ -13,6 +10,5 @@ namespace IbrahKit.Input.Cursor
     /// </summary>
     public interface ICursorReceiver
     {
-        
     }
 }

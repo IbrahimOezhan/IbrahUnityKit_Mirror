@@ -13,11 +13,9 @@ namespace IbrahKit.Save
     [Serializable]
     public class Save_File
     {
-        [JsonInclude]
-        private Dictionary<string, string> objects = new();
-        
-        [JsonInclude]
-        private LinkedList<int> version = null;
+        [JsonInclude] private Dictionary<string, string> objects = new();
+
+        [JsonInclude] private LinkedList<int> version = null;
 
         public Save_File()
         {
@@ -28,7 +26,7 @@ namespace IbrahKit.Save
             version = parser.Parse(Application.version);
         }
 
-        public Save_File(LinkedList<int> version, Dictionary<string, string>objects)
+        public Save_File(LinkedList<int> version, Dictionary<string, string> objects)
         {
             this.version = version;
             this.objects = objects;
@@ -54,7 +52,7 @@ namespace IbrahKit.Save
             foreach (var valueTuple in objects)
             {
                 Type t = Type.GetType(valueTuple.Key);
-                
+
                 (ISavable s, Save_State st) =
                     Save_Utilities.DeserializeAndEvaluate(valueTuple.Value, t);
 

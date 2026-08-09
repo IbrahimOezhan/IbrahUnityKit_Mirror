@@ -1,6 +1,10 @@
+#region
+
 using IbrahKit.UI;
 using IbrahKit.Utilities;
 using UnityEngine;
+
+#endregion
 
 public abstract class Config<TConfig> : Config_Base where TConfig : Config<TConfig>
 {
@@ -28,7 +32,7 @@ public abstract class Config<TConfig> : Config_Base where TConfig : Config<TConf
         {
             return true;
         }
-        
+
         return false;
     }
 }

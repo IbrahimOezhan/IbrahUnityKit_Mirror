@@ -1,8 +1,12 @@
+#region
+
 using System;
 using System.Text.Json.Serialization;
 using IbrahKit.Save;
 using UnityEngine;
 using UnityEngine.UI;
+
+#endregion
 
 namespace IbrahKit
 {
@@ -11,12 +15,12 @@ namespace IbrahKit
         public Text text;
 
         private SaveData save;
-        
+
         private void Start()
         {
-           save = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
+            save = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
 
-           text.text = save.value.ToString();
+            text.text = save.value.ToString();
         }
 
         public void Increase()
@@ -34,8 +38,7 @@ namespace IbrahKit
         [Serializable]
         private class SaveData : ISavable
         {
-            [JsonInclude]
-            public float value;
+            [JsonInclude] public float value;
         }
     }
 }

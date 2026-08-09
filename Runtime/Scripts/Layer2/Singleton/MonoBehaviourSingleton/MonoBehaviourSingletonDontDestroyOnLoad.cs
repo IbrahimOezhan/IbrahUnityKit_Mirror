@@ -1,6 +1,7 @@
 namespace IbrahKit.Manager
 {
-    public abstract class MonoBehaviourSingletonDontDestroyOnLoad<T> : MonoBehaviourSingletonBase<T> where T : MonoBehaviourSingletonDontDestroyOnLoad<T>
+    public abstract class MonoBehaviourSingletonDontDestroyOnLoad<T> : MonoBehaviourSingletonBase<T>
+        where T : MonoBehaviourSingletonDontDestroyOnLoad<T>
     {
         protected sealed override void Awake()
         {

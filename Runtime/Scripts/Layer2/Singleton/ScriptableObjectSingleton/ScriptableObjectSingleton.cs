@@ -1,19 +1,21 @@
+#region
+
 using System;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
+
+#endregion
 
 public class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObjectSingleton<T>
 {
-
-    
     public static T Instance
     {
         get
         {
 #if UNITY_EDITOR
-            
+
             Type type = typeof(T);
 
             string[] guids = AssetDatabase.FindAssets($"t:{type.Name}");
@@ -29,11 +31,8 @@ public class ScriptableObjectSingleton<T> : ScriptableObject where T : Scriptabl
                     throw new Exception($"More than 1 SO of type {typeof(T)} found");
             }
 #else
-                    throw new Exception($"This only works in the Editor");
+            throw new Exception($"This only works in the Editor");
 #endif
-            
         }
     }
-    
-
 }

@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+#region
+
 using Sirenix.Serialization;
-using UnityEngine;
+
+#endregion
 
 public class Config_Manager_Data : SerializedScriptableObjectSingleton<Config_Manager_Data>
 {

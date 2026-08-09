@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 #endregion
@@ -15,8 +14,7 @@ namespace IbrahKit.Save
     [Serializable]
     public class Save_Dictionary : ISavable
     {
-        [JsonInclude]
-        private Dictionary<string, string> values = new();
+        [JsonInclude] private Dictionary<string, string> values = new();
 
         public void Set<T>(string key, T value)
         {

@@ -1,9 +1,12 @@
+#region
+
 using IbrahKit.Dialog;
 using IbrahKit.UI;
-using IbrahKit.UI.Modifier;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+
+#endregion
 
 [TrackClipType(typeof(Dialog_Asset))]
 [TrackBindingType(typeof(UI_Modifier_Text_Modifier))]
