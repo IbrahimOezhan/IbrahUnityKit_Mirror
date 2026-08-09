@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IbrahKit.Debugging;
 using IbrahKit.UI.Generic;
 using IbrahKit.Utilities;
 using Unity.Scripting.LifecycleManagement;
@@ -23,10 +24,7 @@ namespace IbrahKit.UI.Selectable
 
         protected override void Init()
         {
-            if (firstSelectedCandidate && UI_Selectable_Controller_State.currentlySelected == null)
-            {
-                GetSelectable().GetStateController().Select();
-            }
+
         }
 
         public override void OnEnable()
@@ -39,91 +37,115 @@ namespace IbrahKit.UI.Selectable
             activeSelectables.Remove(this);
         }
 
+        public bool IsFirstSelectableCandidate() => firstSelectedCandidate;
+
         public void Navigate(InputAction.CallbackContext context)
         {
-            UI_Canvas_Controller controllerCanvas =
-                GetSelectable().transform.BetterGetComponentInParent<UI_Canvas_Controller>();
+            if(!GetSelectable().transform.BetterTryGetComponentInParent(out UI_Canvas_Controller controllerCanvas))
+            {
+                IbrahDebug.LogError("Cannot find Canvas Controller");
+                return;
+            }
+
+            List<UI_Selectable_Controller_Navigation> candidates = activeSelectables
+                .Where(x => x != this
+                            && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate)
+                .ToList();
             
-            UI_Selectable_Controller_Navigation selectable = Navigate(this, context.ReadValue<Vector2>(),
-                controllerCanvas.GetCanvas(),
-                activeSelectables .Where( x => x != this && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate) .ToList());
+            Vector2 movementVector = context.ReadValue<Vector2>();
+            
+            Canvas canvas = controllerCanvas.GetCanvas();
+            
+            UI_Selectable_Controller_Navigation selectable =
+                TryNavigate(this, movementVector, canvas,candidates);
             
             //TODO: Added this. Was not here before. CHeck if its correct now
-            selectable.GetSelectable().GetStateController().Select();
+            if (selectable != null)
+            {
+                UI_Selectable_Controller_State.currentlySelected.PressedStop();
+                selectable.GetSelectable().GetStateController().Select();
+            }
         }
 
-        public static UI_Selectable_Controller_Navigation Navigate(UI_Selectable_Controller_Navigation current,
-            Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> _activeSelectables)
+        public static UI_Selectable_Controller_Navigation
+            TryNavigate(UI_Selectable_Controller_Navigation current, Vector2 inputVector, Canvas canvas, IReadOnlyList<UI_Selectable_Controller_Navigation> _activeSelectables)
         {
-            if (inputVector.sqrMagnitude < 0.001f)
-                return null;
-
-            inputVector.Normalize();
-
-            float bestScore = float.NegativeInfinity;
-
-            UI_Selectable_Controller_Navigation best = null;
-
-            RectTransform currentRT = current.GetSelectable().GetRectTransform();
-
-            foreach (UI_Selectable_Controller_Navigation candidate in _activeSelectables)
+            try
             {
-                if (candidate == current)
-                    continue;
+                if (inputVector.sqrMagnitude < 0.001f)
+                    return null;
 
-                if (!candidate.GetSelectable().GetStateController().GetInteractable())
-                    continue;
+                inputVector.Normalize();
 
-                RectTransform candidateRT = candidate.GetSelectable().GetRectTransform();
+                float bestScore = float.NegativeInfinity;
 
-                Vector2 from, to;
+                UI_Selectable_Controller_Navigation best = null;
 
-                if (Mathf.Abs(inputVector.x) > Mathf.Abs(inputVector.y))
+                RectTransform currentRT = current.GetSelectable().GetRectTransform();
+
+                foreach (UI_Selectable_Controller_Navigation candidate in _activeSelectables)
                 {
-                    if (inputVector.x > 0f)
+                    if (candidate == current)
+                        continue;
+
+                    if (!candidate.GetSelectable().GetStateController().GetInteractable())
+                        continue;
+
+                    RectTransform candidateRT = candidate.GetSelectable().GetRectTransform();
+
+                    Vector2 from, to;
+
+                    if (Mathf.Abs(inputVector.x) > Mathf.Abs(inputVector.y))
                     {
-                        from = currentRT.GetRightEdgeCenter(canvas);
-                        to = candidateRT.GetLeftEdgeCenter(canvas);
+                        if (inputVector.x > 0f)
+                        {
+                            from = currentRT.GetRightEdgeCenter(canvas);
+                            to = candidateRT.GetLeftEdgeCenter(canvas);
+                        }
+                        else
+                        {
+                            from = currentRT.GetLeftEdgeCenter(canvas);
+                            to = candidateRT.GetRightEdgeCenter(canvas);
+                        }
                     }
                     else
                     {
-                        from = currentRT.GetLeftEdgeCenter(canvas);
-                        to = candidateRT.GetRightEdgeCenter(canvas);
+                        if (inputVector.y > 0f)
+                        {
+                            from = currentRT.GetTopEdgeCenter(canvas);
+                            to = candidateRT.GetBottomEdgeCenter(canvas);
+                        }
+                        else
+                        {
+                            from = currentRT.GetBottomEdgeCenter(canvas);
+                            to = candidateRT.GetTopEdgeCenter(canvas);
+                        }
                     }
-                }
-                else
-                {
-                    if (inputVector.y > 0f)
-                    {
-                        from = currentRT.GetTopEdgeCenter(canvas);
-                        to = candidateRT.GetBottomEdgeCenter(canvas);
-                    }
-                    else
-                    {
-                        from = currentRT.GetBottomEdgeCenter(canvas);
-                        to = candidateRT.GetTopEdgeCenter(canvas);
-                    }
-                }
 
-                Vector2 toCandidate = to - from;
+                    Vector2 toCandidate = to - from;
 
-                float alignment = Vector2.Dot(toCandidate.normalized, inputVector);
+                    float alignment = Vector2.Dot(toCandidate.normalized, inputVector);
 
-                if (alignment <= 0f) continue;
+                    if (alignment <= 0f) continue;
 
-                float distance = toCandidate.magnitude;
+                    float distance = toCandidate.magnitude;
 
-                // Final score: strong direction preference + distance bias
-                float score = alignment / (distance + 0.001f);
+                    // Final score: strong direction preference + distance bias
+                    float score = alignment / (distance + 0.001f);
 
-                if (score > bestScore)
-                {
+                    if (!(score > bestScore)) continue;
+                    
                     bestScore = score;
                     best = candidate;
                 }
-            }
 
             return best;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

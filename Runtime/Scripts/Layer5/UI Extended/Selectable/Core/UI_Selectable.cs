@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Selectable
 {
-    public partial class UI_Selectable : UnityCallbacks, IUIInit
+    public partial class UI_Selectable : MonoBehaviour, IUIInit
     {
         [SerializeField] private UI_Selectable_Controller_State stateController;
 
@@ -21,16 +21,13 @@ namespace IbrahKit.UI.Selectable
         [ReadOnly, SerializeField] private UI_Selectable_Group selectableGroup;
 
         private readonly UI_Selectable_Controller_Input_Cursor cursorInput = new();
-
-
-        protected override void Update()
+        
+        private void Update()
         {
-            base.Update();
-
             if (selectableGroup) selectableGroup.Add(this);
         }
 
-        protected override void OnDisable()
+        protected void OnDisable()
         {
             if (selectableGroup != null) selectableGroup.Remove(this);
 
@@ -64,10 +61,8 @@ namespace IbrahKit.UI.Selectable
         {
         }
 
-        protected override void Enable()
+        protected void OnEnable()
         {
-            base.Enable();
-
             cursorInput.OnEnable();
 
             navigationController.OnEnable();

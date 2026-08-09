@@ -19,7 +19,7 @@ namespace IbrahKit.Settings
         {
             base.InstanceAwake();
 
-            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
+            saveData = Save_Manager.GetInstance().GetLoadedSave().Get(new SaveData());
 
             GetManagerData().GetConfigs().ForEach(config =>
             {

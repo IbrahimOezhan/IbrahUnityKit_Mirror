@@ -17,7 +17,7 @@ namespace IbrahKit.Save
     ///     A script that manages loading data on game start and saving it when you close the game
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.save)]
-    public abstract class Save_Manager<T> : MonoBehaviourSingletonDontDestroyOnLoad<T> where T : MonoBehaviourSingletonDontDestroyOnLoad<T>
+    public abstract class Save_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Save_Manager>
     {
         private ISaveChooser chooser;
 
@@ -95,5 +95,7 @@ namespace IbrahKit.Save
 
             File.WriteAllText(fileName, json);
         }
+
+        public abstract Save_Object GetLoadedSave();
     }
 }

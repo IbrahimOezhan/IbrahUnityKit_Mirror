@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using IbrahKit.Input;
 using IbrahKit.Manager;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 #endregion
@@ -16,10 +17,8 @@ namespace IbrahKit.UI.Selectable
 
         private UI_Input input;
 
-        protected override void InstanceAwake()
+        private void Start()
         {
-            base.InstanceAwake();
-
             if (Input_Manager.TryGet(out Input_Manager result))
             {
                 result.OnInputChanged += OnInputChanged;
@@ -79,8 +78,20 @@ namespace IbrahKit.UI.Selectable
 
         private void OnVectorInput(InputAction.CallbackContext context)
         {
-            UI_Selectable_Controller_State.currentlySelected?.GetSelectable().GetNavigationController()
-                .Navigate(context);
+            if (UI_Selectable_Controller_State.currentlySelected == null)
+            {
+                UI_Selectable_Controller_Navigation nav = UI_Selectable_Controller_Navigation.activeSelectables
+                    .FirstOrDefault(x => x.IsFirstSelectableCandidate());
+                
+                nav?.GetSelectable().GetStateController().Select();
+            }
+            else
+            {
+                UI_Selectable_Controller_State.currentlySelected
+                    .GetSelectable()
+                    .GetNavigationController()
+                    .Navigate(context);
+            }
         }
 
         private void ConfirmPerformed(InputAction.CallbackContext context)
@@ -117,8 +128,14 @@ namespace IbrahKit.UI.Selectable
             switch (newType)
             {
                 case InputTypeNavigation.BUTTONS:
-                    if (UI_Selectable_Controller_Navigation.activeSelectables.Count > 0 && UI_Selectable_Controller_Navigation.activeSelectables[0] != null)
-                        UI_Selectable_Controller_Navigation.activeSelectables[0].GetSelectable().GetStateController().Select();
+                    if (UI_Selectable_Controller_Navigation.activeSelectables.Count > 0 &&
+                        UI_Selectable_Controller_Navigation.activeSelectables[0] != null)
+                    {
+                        UI_Selectable_Controller_Navigation.activeSelectables[0]
+                            .GetSelectable()
+                            .GetStateController()
+                            .Select();
+                    }
                     break;
                 case InputTypeNavigation.POINT:
                     UI_Selectable_Controller_State.currentlySelected?.PressedStop();

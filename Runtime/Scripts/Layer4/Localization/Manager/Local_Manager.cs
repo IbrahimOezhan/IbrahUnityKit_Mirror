@@ -6,6 +6,8 @@ using System.Linq;
 using IbrahKit.Core;
 using IbrahKit.Debugging;
 using IbrahKit.Manager;
+using IbrahKit.Save;
+using IbrahKit.Save.Simple;
 using IbrahKit.Utilities;
 using UnityEngine;
 
@@ -31,7 +33,7 @@ namespace IbrahKit.Localization
         {
             base.InstanceAwake();
 
-            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
+            saveData = Save_Manager.GetInstance().GetLoadedSave().Get(new SaveData());
 
             Local_Language language = GetManagerData()
                 .LanguageDict[!saveData.SetAttempt() ? Application.systemLanguage : saveData.GetLanguage()];

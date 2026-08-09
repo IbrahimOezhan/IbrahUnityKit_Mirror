@@ -5,27 +5,33 @@ using IbrahKit.Save;
 
 #endregion
 
-public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
+namespace IbrahKit.Save.Simple
 {
-    private Save_Dictionary dict;
-
-    private Save_Object saveObject;
-
-    protected override void InstanceAwake()
+    public class SimpleSaveManager : Save_Manager
     {
-        base.InstanceAwake();
+        private Save_Dictionary dict;
 
-        saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
+        private Save_Object saveObject;
 
-        dict = saveObject.Get(new Save_Dictionary());
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
+
+            dict = saveObject.Get(new Save_Dictionary());
+        }
+
+        public override Save_Object GetLoadedSave()
+        {
+            return saveObject;
+        }
+
+        protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
+        {
+            return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
+        }
+
+        public Save_Dictionary GetDict() => dict;
     }
-
-    protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
-    {
-        return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
-    }
-
-    public Save_Object GetSave() => saveObject;
-
-    public Save_Dictionary GetDict() => dict;
 }

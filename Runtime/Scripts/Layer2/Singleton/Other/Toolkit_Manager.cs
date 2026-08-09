@@ -7,6 +7,7 @@ using System.Linq;
 using IbrahKit.Debugging;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 #endregion
@@ -38,7 +39,9 @@ namespace IbrahKit.Manager
             if (excludeInScene) types.RemoveAll(x => FindAnyObjectByType(x) != null);
 
             List<string> types2 = types.Select(x => x.FullName).ToList();
-
+            
+            types2.Sort();
+            
             types2.Insert(0, NONE);
 
             return types2;

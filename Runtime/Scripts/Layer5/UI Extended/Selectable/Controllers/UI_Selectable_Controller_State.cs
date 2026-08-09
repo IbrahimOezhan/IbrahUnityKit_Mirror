@@ -49,22 +49,11 @@ namespace IbrahKit.UI.Selectable
             PressedStop(false);
         }
 
-        public void SetState(UI_SELECTABLE_STATE state, bool animate = true)
-        {
-            if (this.state == state) return;
-
-            if (this.state == UI_SELECTABLE_STATE.PRESSED && state != UI_SELECTABLE_STATE.PRESSED)
-            {
-                OnPressedStop.Invoke();
-            }
-
-            this.state = state;
-
-            OnStateChanged.Invoke(state, animate);
-        }
-
         public void Select()
         {
+            
+            currentlySelected = this;
+            
             SetState(UI_SELECTABLE_STATE.SELECTED);
 
             if (!interactable || !playAudioOnStateChange) return;
@@ -87,8 +76,6 @@ namespace IbrahKit.UI.Selectable
         public void Pressed(bool skipActionsOnPress = false)
         {
             SetState(UI_SELECTABLE_STATE.PRESSED);
-
-            currentlySelected = this;
 
             if (group != null)
             {
@@ -121,6 +108,20 @@ namespace IbrahKit.UI.Selectable
             {
                 currentlySelected = null;
             }
+        }
+        
+        private void SetState(UI_SELECTABLE_STATE newState, bool animate = true)
+        {
+            if (state == newState) return;
+
+            if (state == UI_SELECTABLE_STATE.PRESSED && newState != UI_SELECTABLE_STATE.PRESSED)
+            {
+                OnPressedStop.Invoke();
+            }
+
+            state = newState;
+
+            OnStateChanged.Invoke(state, animate);
         }
 
         public void SetInteractable(bool value)

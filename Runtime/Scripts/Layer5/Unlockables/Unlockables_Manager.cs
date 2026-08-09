@@ -26,7 +26,7 @@ namespace IbrahKit.Unlockables
         {
             base.InstanceAwake();
 
-            saveData = SimpleSaveManager.GetInstance().GetSave().Get(new SaveData());
+            saveData = Save_Manager.GetInstance().GetLoadedSave().Get(new SaveData());
         }
 
         public void Unlock(IEnumerable<Unlockable> unlockable)
