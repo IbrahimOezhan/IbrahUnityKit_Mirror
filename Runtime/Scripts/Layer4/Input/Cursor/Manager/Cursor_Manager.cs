@@ -6,7 +6,7 @@ using UnityEngine;
 
 #endregion
 
-public class Cursor_Manager : Manager_Global<Cursor_Manager>
+public class Cursor_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Cursor_Manager>
 {
     [SerializeReference] private Cursor_Controller_State cursor_state_controller;
     [SerializeField] private Cursor_Controller_Input cursor_input_controller;

@@ -17,7 +17,7 @@ namespace IbrahKit.Localization
     ///     Communicates with various classes to provide the correct localization
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.local)]
-    public partial class Local_Manager : Manager_Global<Local_Manager, Local_Manager_Data>
+    public partial class Local_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<Local_Manager, Local_Manager_Data>
     {
         private readonly List<Local_Processor> processors = new();
 

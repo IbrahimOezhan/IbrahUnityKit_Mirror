@@ -46,7 +46,7 @@ namespace IbrahKit.Manager
 
         private Type[] GetManagerTypes()
         {
-            return Type_Utilities.GetSubTypes(typeof(Manager<>)).ToArray();
+            return Type_Utilities.GetSubTypes(typeof(MonoBehaviourSingletonBase<>)).ToArray();
         }
 
         public void OnValueChanged()

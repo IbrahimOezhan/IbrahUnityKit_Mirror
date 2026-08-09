@@ -18,7 +18,7 @@ namespace IbrahKit.Unlockables
     ///     Can be used for things such as collectables
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.unlock)]
-    public class Unlockables_Manager : Manager_Global<Unlockables_Manager>
+    public class Unlockables_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Unlockables_Manager>
     {
         [SerializeField] private SaveData saveData = new();
 

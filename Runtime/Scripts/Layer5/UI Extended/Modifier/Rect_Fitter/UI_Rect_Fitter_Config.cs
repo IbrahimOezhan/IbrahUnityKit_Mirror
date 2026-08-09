@@ -9,10 +9,10 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    [Serializable]
-    public class UI_Rect_Fitter_Config : UI_Config
+    [CreateAssetMenu(fileName = "NewUIFitterConfig", menuName = "IbrahKit/UI_Fitter_Config")]
+    public class UI_Rect_Fitter_Config : Config<UI_Rect_Fitter_Config>
     {
-        [SerializeField] private float margin;
+        [SerializeField] private float margin = 0;
 
         [SerializeField] private List<PlatformBasedMargin> marginOverride = new();
 

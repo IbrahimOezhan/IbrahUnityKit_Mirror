@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
-    [Serializable]
-    public class UI_Menu_Config : UI_Config
+    [CreateAssetMenu(fileName = "NewUIMenuConfig", menuName = "IbrahKit/UI_Menu_Config")]
+    public class UI_Menu_Config : Config<UI_Menu_Config>
     {
         [SerializeField] private Menu_Item_Button menuButtonPrefab;
 

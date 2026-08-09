@@ -12,7 +12,7 @@ namespace IbrahKit.UI.Menu
 {
     public class UI_Menu : MonoBehaviour, IConfigHolder, IMenuReference
     {
-        [SerializeField] private UI_Configs configs;
+        [SerializeField] private Configs configs;
 
         [SerializeField] private UI_Menu_Controller_Visibility visibility;
 
@@ -65,8 +65,6 @@ namespace IbrahKit.UI.Menu
         {
         }
 
-        public UI_Configs GetConfigs() => configs;
-
         public UI_Menu GetMenu() => this;
 
         protected virtual void ObjectLifecycle()
@@ -105,6 +103,11 @@ namespace IbrahKit.UI.Menu
         public void ToggleEditor()
         {
             state.ToggleEditor(this);
+        }
+
+        public bool TryGetConfig<TConfig>(out TConfig config) where TConfig : Config<TConfig>
+        {
+            return configs.TryGet(out config);
         }
     }
 }

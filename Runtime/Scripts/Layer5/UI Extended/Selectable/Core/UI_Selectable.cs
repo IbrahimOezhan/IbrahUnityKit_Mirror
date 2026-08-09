@@ -47,13 +47,13 @@ namespace IbrahKit.UI.Selectable
         {
             transform.BetterTryGetComponentInParent(out selectableGroup);
 
+            transitionController.Init(this);
+            
             cursorInput.Init(this);
 
-            navigationController.Init(this);
-
-            transitionController.Init(this);
-
             stateController.Init(this);
+            
+            navigationController.Init(this);
 
             stateController.GetOnStateChangedEvent().AddListener(Visualize);
 

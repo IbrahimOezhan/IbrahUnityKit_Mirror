@@ -9,7 +9,7 @@ using IbrahKit.Save;
 
 namespace IbrahKit.Settings
 {
-    public class Settings_Manager : Manager_Global<Settings_Manager, Settings_Manager_Data>
+    public class Settings_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<Settings_Manager, Settings_Manager_Data>
     {
         private readonly Dictionary<string, Setting> settingsInit = new();
 

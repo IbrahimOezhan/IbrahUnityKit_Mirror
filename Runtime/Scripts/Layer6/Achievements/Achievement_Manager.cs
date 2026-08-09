@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IbrahKit.Unlockables.Achievements
 {
-    public class Achievement_Manager : Manager_Global<Achievement_Manager>
+    public class Achievement_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Achievement_Manager>
     {
         private const string PREFIX = "achievement_";
 

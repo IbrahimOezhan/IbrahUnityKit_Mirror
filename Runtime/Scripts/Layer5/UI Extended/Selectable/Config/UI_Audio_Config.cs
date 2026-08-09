@@ -1,13 +1,13 @@
 #region
 
-using System;
+using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.UI
 {
-    [Serializable]
-    public abstract class UI_Audio_Config : UI_Config
+    [CreateAssetMenu(fileName = "NewUIAudioConfig", menuName = "IbrahKit/UI_Audio_Config")]
+    public abstract class UI_Audio_Config : Config<UI_Audio_Config>
     {
         public abstract void OnClick();
 

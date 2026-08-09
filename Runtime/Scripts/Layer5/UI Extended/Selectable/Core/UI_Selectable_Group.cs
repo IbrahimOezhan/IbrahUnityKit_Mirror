@@ -1,7 +1,9 @@
 #region
 
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -39,10 +41,7 @@ namespace IbrahKit.UI.Selectable
             if (!Cursor_Manager.TryGet(out Cursor_Manager result) || result.GetCursorReceiver()
                     .IsOverUIReceiver(EventSystem.current, result.GetCursorInput().GetMousePos())) return;
 
-            foreach (var selectable in selectables)
-            {
-                selectable.GetStateController().PressedStop();
-            }
+            selectables.ForEach(x => x.GetStateController().PressedStop());
         }
 
         public bool Add(UI_Selectable selectable)
@@ -61,13 +60,10 @@ namespace IbrahKit.UI.Selectable
 
         public void OnSelect(UI_Selectable selected)
         {
-            foreach (var selectable in selectables)
-            {
-                if (selectable != selected)
-                {
-                    selectable.GetStateController().PressedStop();
-                }
-            }
+            selectables
+                .Where(selectable => selectable != selected)
+                .ForEach(x => x.GetStateController()
+                    .PressedStop());
         }
     }
 }

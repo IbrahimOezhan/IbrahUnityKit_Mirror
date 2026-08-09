@@ -14,23 +14,16 @@ namespace IbrahKit.UI.Selectable
     public abstract class UI_Selectable_Transition<TTarget, SOTarget> : UI_Selectable_Transition
         where TTarget : Component where SOTarget : Selectable_Transition_SO
     {
-#if ODIN_INSPECTOR
         [SerializeField, ReadOnly]
-#endif
         private Override_Class<TTarget> fTarget;
-
-#if ODIN_INSPECTOR
+        
         [SerializeField, ReadOnly]
-#endif
         private TTarget getComponentTarget;
-
-
+        
         [SerializeField] private TTarget target;
 
         [SerializeField] private SOTarget config;
         private bool initialized;
-
-        private bool IsSoNull() => config == null;
 
         [Button, ShowIf(nameof(IsSoNull))]
         public void Create()
@@ -52,19 +45,19 @@ namespace IbrahKit.UI.Selectable
 
             fTarget = new(getComponentTarget, replace);
 
-            replace.AddOverride(target);
+            if(target != null) replace.AddOverride(target);
         }
 
         protected TTarget GetTarget()
         {
-            TTarget target = fTarget.GetValue();
-
-            return target;
+            return fTarget.GetValue();
         }
 
         protected SOTarget GetSO()
         {
             return config;
         }
+        
+        private bool IsSoNull() => config == null;
     }
 }

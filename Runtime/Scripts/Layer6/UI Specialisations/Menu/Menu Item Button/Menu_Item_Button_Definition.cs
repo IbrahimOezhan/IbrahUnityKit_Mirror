@@ -29,8 +29,7 @@ namespace IbrahKit.UI.Menu
 
         public UI_Menu_Config GetMenuConfig(Transform parent)
         {
-            UI_Configs.TryGet<UI_Menu_Config_Override, UI_Menu_Config_SO, UI_Menu_Config>(
-                UI_Configs.GetConfigs(parent), out UI_Menu_Config result);
+            UI_Menu_Config.TryGet(parent, out UI_Menu_Config result);
 
             return result;
         }

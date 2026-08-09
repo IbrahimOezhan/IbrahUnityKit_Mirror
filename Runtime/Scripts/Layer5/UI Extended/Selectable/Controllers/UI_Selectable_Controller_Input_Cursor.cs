@@ -48,7 +48,7 @@ namespace IbrahKit.UI.Selectable
         {
             if (GetSelectable().DisallowPressOnUp()) return;
 
-            stateController.PressedStop();
+            stateController.Select();
         }
     }
 }

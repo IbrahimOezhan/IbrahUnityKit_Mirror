@@ -43,14 +43,13 @@ namespace IbrahKit.UI.Selectable
         {
             UI_Canvas_Controller controllerCanvas =
                 GetSelectable().transform.BetterGetComponentInParent<UI_Canvas_Controller>();
-
-
-            Navigate(this, context.ReadValue<Vector2>(),
+            
+            UI_Selectable_Controller_Navigation selectable = Navigate(this, context.ReadValue<Vector2>(),
                 controllerCanvas.GetCanvas(),
-                activeSelectables
-                    .Where(x => x != this && x.GetSelectable().GetStateController().GetInteractable() &&
-                                x.selectableCandidate)
-                    .ToList());
+                activeSelectables .Where( x => x != this && x.GetSelectable().GetStateController().GetInteractable() && x.selectableCandidate) .ToList());
+            
+            //TODO: Added this. Was not here before. CHeck if its correct now
+            selectable.GetSelectable().GetStateController().Select();
         }
 
         public static UI_Selectable_Controller_Navigation Navigate(UI_Selectable_Controller_Navigation current,

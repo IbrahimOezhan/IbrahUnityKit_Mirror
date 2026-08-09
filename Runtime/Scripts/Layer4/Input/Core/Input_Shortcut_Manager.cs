@@ -12,7 +12,7 @@ using UnityEngine.InputSystem.Controls;
 
 namespace IbrahKit.Input
 {
-    public class Input_Shortcut_Manager : Manager_Global<Input_Shortcut_Manager>
+    public class Input_Shortcut_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Input_Shortcut_Manager>
     {
         private readonly Dictionary<Key, List<Action>> keyValuePairs = new();
 

@@ -85,10 +85,9 @@ namespace IbrahKit.UI
 
         private UI_Rect_Fitter_Config GetConfig()
         {
-            UI_Configs.TryGet<UI_Rect_Fitter_Config_Override, UI_Rect_Fitter_Config_SO, UI_Rect_Fitter_Config>(
-                UI_Configs.GetConfigs(transform), out UI_Rect_Fitter_Config resolvedConfig);
-
-            resolvedConfig ??= new UI_Rect_Fitter_Config(0);
+            UI_Rect_Fitter_Config.TryGet(transform, out UI_Rect_Fitter_Config resolvedConfig);
+            
+            resolvedConfig ??=  ScriptableObject.CreateInstance<UI_Rect_Fitter_Config>();
 
             return resolvedConfig;
         }

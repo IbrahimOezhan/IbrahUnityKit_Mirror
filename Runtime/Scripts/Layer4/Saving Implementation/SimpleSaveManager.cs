@@ -9,7 +9,7 @@ public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
 {
     private Save_Dictionary dict;
 
-    private SaveObject saveObject;
+    private Save_Object saveObject;
 
     protected override void InstanceAwake()
     {
@@ -25,7 +25,7 @@ public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
         return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
     }
 
-    public SaveObject GetSave() => saveObject;
+    public Save_Object GetSave() => saveObject;
 
     public Save_Dictionary GetDict() => dict;
 }

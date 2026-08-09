@@ -67,14 +67,16 @@ namespace IbrahKit.UI.Selectable
         {
             SetState(UI_SELECTABLE_STATE.SELECTED);
 
-            if (interactable && playAudioOnStateChange)
+            if (!interactable || !playAudioOnStateChange) return;
+
+            Transform transform = GetSelectable().transform;
+            
+            if (!UI_Audio_Config.TryGet(transform, out UI_Audio_Config result))
             {
-                if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
-                        UI_Configs.GetConfigs(GetSelectable().transform), out UI_Audio_Config result))
-                {
-                    result.OnHover();
-                }
+                return;
             }
+            
+            result.OnHover();
         }
 
         /// <summary>
@@ -95,22 +97,19 @@ namespace IbrahKit.UI.Selectable
 
             if (skipActionsOnPress) return;
 
-            if (interactable)
-            {
-                OnPressedSuccess.Invoke();
-
-                if (playAudioOnStateChange)
-                {
-                    if (UI_Configs.TryGet<UI_Audio_Config_Override, UI_Audio_Config_SO, UI_Audio_Config>(
-                            UI_Configs.GetConfigs(GetSelectable().transform), out UI_Audio_Config result))
-                    {
-                        result.OnClick();
-                    }
-                }
-            }
-            else
+            if (!interactable)
             {
                 OnPressedFailed.Invoke();
+                return;
+            }
+            
+            OnPressedSuccess.Invoke();
+
+            if (!playAudioOnStateChange) return;
+                
+            if (UI_Audio_Config.TryGet(GetSelectable().transform, out UI_Audio_Config result))
+            {
+                result.OnClick();
             }
         }
 

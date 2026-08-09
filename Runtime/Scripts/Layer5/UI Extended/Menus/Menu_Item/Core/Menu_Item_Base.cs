@@ -23,10 +23,8 @@ namespace IbrahKit.UI.Menu
         {
             return skipReason switch
             {
-                SKIP_REASON.ONLAYOUT => UI_Configs
-                                            .TryGet<UI_Layout_Config_Override, UI_Layout_Config_SO, UI_Layout_Config>(
-                                                UI_Configs.GetConfigs(parent), out UI_Layout_Config result) &&
-                                        !ShowLayout(result, showOnLayouts),
+                SKIP_REASON.ONLAYOUT =>
+                    UI_Layout_Config .TryGet(parent, out UI_Layout_Config result) && !ShowLayout(result, showOnLayouts),
                 SKIP_REASON.ALWAYS => true,
                 _ => false
             };

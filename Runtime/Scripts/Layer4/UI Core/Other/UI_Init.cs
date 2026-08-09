@@ -14,7 +14,7 @@ namespace IbrahKit.UI.Generic
     {
         public static void InitSubTree(Transform transform)
         {
-            List<IUIInit> subtree = Transform_Utilities.GetComponentsByLevel<IUIInit>(transform, true, false);
+            List<IUIInit> subtree = transform.GetComponentsByLevel<IUIInit>(true, false);
 
             subtree.ForEach(x => x.OnMenuInitTopDown());
 

@@ -8,6 +8,6 @@ namespace IbrahKit.Save
 {
     public interface ISaveChooser
     {
-        public SaveObject Choose(List<SaveObject> saves);
+        public Save_Object Choose(List<Save_Object> saves);
     }
 }

@@ -6,6 +6,7 @@ using System;
 
 namespace IbrahKit.Settings
 {
+    [Serializable]
     public abstract class Setting
     {
         public Action OnValueChanged;

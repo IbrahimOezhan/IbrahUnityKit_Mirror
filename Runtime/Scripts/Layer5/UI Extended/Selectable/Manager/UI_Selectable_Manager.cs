@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Linq;
 using IbrahKit.Input;
 using IbrahKit.Manager;
@@ -9,7 +10,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable_Manager : Manager_Global<UI_Selectable_Manager>
+    public class UI_Selectable_Manager : MonoBehaviourSingletonDontDestroyOnLoad<UI_Selectable_Manager>
     {
         private InputTypeNavigation currentType;
 
@@ -116,24 +117,21 @@ namespace IbrahKit.UI.Selectable
             switch (newType)
             {
                 case InputTypeNavigation.BUTTONS:
-
-                    //if (activeSelectables.Count > 0 && activeSelectables[0] != null) activeSelectables[0].Select();
-
+                    if (UI_Selectable_Controller_Navigation.activeSelectables.Count > 0 && UI_Selectable_Controller_Navigation.activeSelectables[0] != null)
+                        UI_Selectable_Controller_Navigation.activeSelectables[0].GetSelectable().GetStateController().Select();
                     break;
                 case InputTypeNavigation.POINT:
-
                     UI_Selectable_Controller_State.currentlySelected?.PressedStop();
-
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
             currentType = newType;
         }
 
-        public bool IsSupported(Input_Manager.InputType type)
-        {
-            return Input_Manager.GetInstance().GetManagerData().EnabledInputMethods().Contains(type);
-        }
+        public static bool IsSupported(Input_Manager.InputType type)
+            => Input_Manager.GetInstance().GetManagerData().EnabledInputMethods().Contains(type);
 
         private enum InputTypeNavigation
         {

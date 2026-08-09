@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IbrahKit.ThreeDPlayer
 {
-    public class Player_Controller : Manager_Local<Player_Controller>
+    public class Player_Controller : MonoBehaviourSingleton<Player_Controller>
     {
         [SerializeField, Required] private CharacterController cc;
 
