@@ -3,12 +3,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using IbrahKit.Dialog;
 using IbrahKit.UI.Menu;
 using IbrahKit.UI.Modifier;
 using IbrahKit.UI.Selectable;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 
 #endregion
 
@@ -53,7 +55,7 @@ public class UI_Dialog_Menu : UI_Menu
     }
 
     // ReSharper disable once UnusedParameter.Global
-    public IEnumerator DisplayText(SimpleDialogElement element, Action onClick)
+    public IEnumerator DisplayText(SimpleDialogElement element, UnityEvent onClick)
     {
         Cleanup();
 
@@ -67,9 +69,11 @@ public class UI_Dialog_Menu : UI_Menu
         {
             setter.SetText("");
 
+            StringBuilder stringBuilder = new();
+
             bool skip = false;
 
-            onClick += OnClick;
+            onClick.AddListener(OnClick);
 
             float delay = element.GetCharDelay();
 
@@ -83,7 +87,8 @@ public class UI_Dialog_Menu : UI_Menu
 
             foreach (char c in s)
             {
-                setter.AppendText(c);
+                stringBuilder.Append(c);
+                setter.SetText(stringBuilder.ToString());
 
                 if (!skip) yield return new WaitForSeconds(delay);
             }
@@ -93,7 +98,9 @@ public class UI_Dialog_Menu : UI_Menu
             if (element.GetSkipMode() == SimpleDialogElement.SkipMode.SKIPABLE) yield return new WaitUntil(() => skip);
             else yield return new WaitForSeconds(element.GetDisplayTime());
 
-            onClick -= OnClick;
+            onClick.RemoveListener(OnClick);
+
+            Debug.Log(stringBuilder);
 
             yield break;
 

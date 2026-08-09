@@ -33,7 +33,10 @@ namespace IbrahKit.UI.Menu
             base.InstanceAwake();
 
             actionHide = Hide;
+        }
 
+        private void Start()
+        {
             if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.RegisterAction(GetManagerData().GetKey(), actionHide);

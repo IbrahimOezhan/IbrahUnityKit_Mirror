@@ -27,7 +27,7 @@ namespace IbrahKit.Save.Simple
             }
             else
             {
-                IbrahDebug.LogWarning("Successfully loaded save");
+                IbrahDebug.Log("Successfully loaded save");
             }
 
             dict = saveObject.Get<Save_Dictionary>();

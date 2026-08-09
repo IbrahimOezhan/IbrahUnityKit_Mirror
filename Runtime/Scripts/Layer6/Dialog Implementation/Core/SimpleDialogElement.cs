@@ -98,43 +98,25 @@ namespace IbrahKit.Dialog
 
             string cache = "";
 
+            if (_tokens.Count == 0)
+            {
+                action.Invoke(tokensInAffect, text);
+                return text;
+            }
+            
             for (int i = 0; i < text.Length; i++)
             {
-                if (_tokens.Count == 0)
-                {
-                    action.Invoke(tokensInAffect, text);
-                    break;
-                }
-
                 if (i == _tokens[0].Start)
                 {
                     action.Invoke(tokensInAffect, cache);
 
-                    if (_tokens[0].Type == "Open")
-                    {
-                        tokensInAffect.Push(_tokens[0]);
-                    }
-                    else if (_tokens[0].Type == "Close")
-                    {
-                        tokensInAffect.Pop();
-                    }
-
-                    i += _tokens[0].Length;
-                    _tokens.RemoveAt(0);
-                    cache = "";
+                    ProcessToken(ref i,ref cache,tokens,tokensInAffect);
 
                     continue;
                 }
 
-                string append = text[i].ToString();
-
-                for (var i1 = 0; i1 < tokensInAffect.Count; i1++)
-                {
-                    append = tokensInAffect.ElementAt(i1).Get().Process(append);
-                }
-
-                output += append;
-                cache += append;
+                output += ProcessChar(text[i],tokensInAffect);
+                cache += ProcessChar(text[i],tokensInAffect);
             }
 
             return output;
@@ -149,24 +131,19 @@ namespace IbrahKit.Dialog
 
             string cache = "";
 
+            if (_tokens.Count == 0)
+            {
+                yield return action.Invoke(tokensInAffect, text);
+                yield break;
+            }
+            
             for (int i = 0; i < text.Length; i++)
             {
                 if (i == _tokens[0].Start)
                 {
                     yield return action.Invoke(tokensInAffect, cache);
 
-                    if (_tokens[0].Type == "Open")
-                    {
-                        tokensInAffect.Push(_tokens[0]);
-                    }
-                    else if (_tokens[0].Type == "Close")
-                    {
-                        tokensInAffect.Pop();
-                    }
-
-                    i += _tokens[0].Length;
-                    _tokens.RemoveAt(0);
-                    cache = "";
+                    ProcessToken(ref i,ref cache,tokens,tokensInAffect);
 
                     continue;
                 }
@@ -178,9 +155,38 @@ namespace IbrahKit.Dialog
                     append = tokensInAffect.ElementAt(i1).Get().Process(append);
                 }
 
-                output += append;
-                cache += append;
+                output += ProcessChar(text[i],tokensInAffect);
+                cache += ProcessChar(text[i],tokensInAffect);
             }
+        }
+
+        private void ProcessToken(ref int i,ref string cache, List<Token> _tokens,Stack<Token> tokensInAffect)
+        {
+            switch (_tokens[0].Type)
+            {
+                case "Open":
+                    tokensInAffect.Push(_tokens[0]);
+                    break;
+                case "Close":
+                    tokensInAffect.Pop();
+                    break;
+            }
+
+            i += _tokens[0].Length;
+            _tokens.RemoveAt(0);
+            cache = "";
+        }
+
+        private string ProcessChar(char c, Stack<Token> tokens)
+        {
+            string append =c.ToString();
+
+            for (var i1 = 0; i1 < tokens.Count; i1++)
+            {
+                append = tokens.ElementAt(i1).Get().Process(append);
+            }
+
+            return append;
         }
 
         public class Token

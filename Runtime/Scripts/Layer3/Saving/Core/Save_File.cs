@@ -53,6 +53,11 @@ namespace IbrahKit.Save
             {
                 Type t = Type.GetType(valueTuple.Key);
 
+                if (t == null)
+                {
+                    throw new NullReferenceException("Type not found: " + valueTuple.Key);
+                }
+
                 (ISavable s, Save_State st) =
                     Save_Utilities.DeserializeAndEvaluate(valueTuple.Value, t);
 

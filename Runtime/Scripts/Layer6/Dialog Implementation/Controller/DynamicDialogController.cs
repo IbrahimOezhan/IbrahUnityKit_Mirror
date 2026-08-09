@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 #endregion
@@ -28,9 +29,12 @@ namespace IbrahKit.Dialog
 
         private void OnDisable()
         {
-            dialogInput.Disable();
+            if (dialogInput != null)
+            {
+                dialogInput.Disable();
 
-            dialogInput.Dispose();
+                dialogInput.Dispose();
+            }
         }
 
         public void StartDialog(SimpleDialogNode node)
@@ -50,7 +54,7 @@ namespace IbrahKit.Dialog
         [SuppressMessage("ReSharper", "ExpressionIsAlwaysNull")]
         private IEnumerator Element(SimpleDialogNode node, int i)
         {
-            Action onClick = null;
+            UnityEvent onClick = new();
 
             if (node.GetElements().Length != 0)
             {
@@ -89,6 +93,7 @@ namespace IbrahKit.Dialog
             void OnClick(InputAction.CallbackContext context)
             {
                 onClick?.Invoke();
+                Debug.Log("Invoked");
             }
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-[CreateAssetMenu(menuName = "IbrahKit/ScriptableObjects/Dialog Playable Element",
+[CreateAssetMenu(menuName = "IbrahKit/Dialog/Dialog Playable Element",
     fileName = "NewDialogPlayableElements")]
 public class Dialog_Playable_Elements : ScriptableObject
 {

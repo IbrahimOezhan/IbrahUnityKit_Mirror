@@ -39,8 +39,6 @@ namespace IbrahKit.Save
             {
                 ISavable savable = Deserialize(content, t, true);
 
-                IbrahDebug.Log("");
-
                 return (savable, Save_State.Valid);
             }
             catch (JsonException ex)
