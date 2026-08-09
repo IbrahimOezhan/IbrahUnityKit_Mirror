@@ -13,9 +13,9 @@ namespace IbrahKit.Save
      * Pre-build savable that stores key value pairs
      */
     [Serializable]
-    public class Save_Dictionary : Savable
+    public class Save_Dictionary : ISavable
     {
-        [JsonInclude] [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
+        [JsonInclude]
         private Dictionary<string, string> values = new();
 
         public void Set<T>(string key, T value)

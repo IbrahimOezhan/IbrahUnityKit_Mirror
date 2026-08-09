@@ -3,46 +3,56 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using IbrahKit.Save;
 using IbrahKit.Utilities;
+using Sirenix.Serialization;
+using UnityEngine;
 
 #endregion
 
+[Serializable]
 public class Save_Object
 {
-    private Dictionary<Type, Savable> objects;
-    private Save_State state;
-    private LinkedList<int> version;
+    [JsonInclude]
+    [OdinSerialize] private Dictionary<Type, ISavable> objects;
+    
+    [JsonInclude]
+    [SerializeField] private Save_State state;
+    
+    [JsonInclude]
+    [OdinSerialize] private LinkedList<int> version;
 
-    public Save_Object(LinkedList<int> version, Dictionary<Type, Savable> objects, Save_State state)
+    public Save_Object(LinkedList<int> version, Dictionary<Type, ISavable> objects, Save_State state)
     {
         this.state = state;
         this.version = version;
         this.objects = objects;
     }
 
-    public T Get<T>(T @default) where T : Savable
+    public T Get<T>() where T : ISavable, new()
     {
-        if (objects.TryGetValue(typeof(T), out Savable savable))
+        if (objects.TryGetValue(typeof(T), out ISavable savable))
         {
             return (T)savable;
         }
         else
         {
-            objects.Add(typeof(T), @default);
-            return @default;
+            T newObject = new T();
+            
+            objects.Add(typeof(T), newObject);
+            return newObject;
         }
     }
 
-    public void Put<T>(T savable) where T : Savable
+    public void Put<T>(T savable) where T : ISavable
     {
         objects[savable.GetType()] = savable;
     }
 
     public Save_File ToSaveFile()
     {
-        return new Save_File(version, objects.Select(x =>
-            (Save_Utilities.GetQualifiedName(x.Key), Json_Utilities.Serialize(x.Value))).ToList());
+        return new Save_File(version, objects.ToDictionary(x =>  Save_Utilities.GetQualifiedName(x.Key), y => Json_Utilities.Serialize(y.Value,y.Key)));
     }
 
     public Save_State GetSaveState()

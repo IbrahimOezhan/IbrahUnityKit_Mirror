@@ -148,7 +148,14 @@ namespace IbrahKit.UI.Selectable
         }
 
         public static bool IsSupported(Input_Manager.InputType type)
-            => Input_Manager.GetInstance().GetManagerData().EnabledInputMethods().Contains(type);
+        {
+            if (Input_Manager.TryGet(out Input_Manager inputManager))
+            {
+                return inputManager.GetManagerData().EnabledInputMethods().Contains(type);
+            }
+            
+            return false;
+        }
 
         private enum InputTypeNavigation
         {

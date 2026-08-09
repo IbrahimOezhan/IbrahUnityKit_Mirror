@@ -15,7 +15,7 @@ namespace IbrahKit.Localization
         ///     Holds the save data for the localization manager
         /// </summary>
         [Serializable]
-        private class SaveData : Savable
+        private class SaveData : ISavable
         {
             [JsonInclude] private bool attemptedGetSys;
 

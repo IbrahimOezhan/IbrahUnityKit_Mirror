@@ -12,7 +12,7 @@ namespace IbrahKit.Save
 {
     public static class Save_Utilities
     {
-        public static Savable Deserialize(string json, Type type, bool throwIfUnmapped)
+        public static ISavable Deserialize(string json, Type type, bool throwIfUnmapped)
         {
             if (json.IsEmpty())
             {
@@ -28,17 +28,19 @@ namespace IbrahKit.Save
                 return null;
             }
 
-            if (!throwIfUnmapped) return (Savable)Json_Utilities.Deserialize(json, type);
+            if (!throwIfUnmapped) return (ISavable)Json_Utilities.Deserialize(json, type);
 
-            return (Savable)Json_Utilities.Deserialize(json, type, JsonUnmappedMemberHandling.Disallow);
+            return (ISavable)Json_Utilities.Deserialize(json, type, JsonUnmappedMemberHandling.Disallow);
         }
 
-        public static (Savable, Save_State) DeserializeAndEvaluate(string content, Type t)
+        public static (ISavable, Save_State) DeserializeAndEvaluate(string content, Type t)
         {
             try
             {
-                Savable savable = Deserialize(content, t, true);
+                ISavable savable = Deserialize(content, t, true);
 
+                IbrahDebug.Log("");
+                
                 return (savable, Save_State.Valid);
             }
             catch (JsonException ex)
@@ -47,7 +49,7 @@ namespace IbrahKit.Save
                 {
                     IbrahDebug.LogException(ex);
 
-                    Savable savable = Deserialize(content, t, false);
+                    ISavable savable = Deserialize(content, t, false);
 
                     return (savable, Save_State.Corrupted);
                 }

@@ -11,6 +11,6 @@ public class SimpleSaveChooser : ISaveChooser
     public Save_Object Choose(List<Save_Object> saves)
     {
         saves.Sort((a, b) => a.CompareTo(b));
-        return saves.First();
+        return saves.FirstOrDefault();
     }
 }

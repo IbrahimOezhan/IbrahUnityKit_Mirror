@@ -19,11 +19,11 @@ namespace IbrahKit.Save
     [DefaultExecutionOrder(Execution_Order.save)]
     public abstract class Save_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Save_Manager>
     {
-        private ISaveChooser chooser;
+        protected ISaveChooser chooser;
 
-        private ISaveVersionParser parser;
-        private ISavePipeline[] pipelines;
-        private string saveFolderPath;
+        protected ISaveVersionParser parser;
+        protected ISavePipeline[] pipelines;
+        protected string saveFolderPath;
 
         protected abstract (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init();
 
@@ -33,7 +33,7 @@ namespace IbrahKit.Save
 
             (parser, chooser, pipelines) = Init();
 
-            string saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
+            saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
 
             if (!Directory.Exists(saveFolderPath))
             {
@@ -70,6 +70,11 @@ namespace IbrahKit.Save
             }
 
             return saves;
+        }
+
+        public void ToSaveFile(Save_Object saveObject, string fileName)
+        {
+            File.WriteAllText(Path.Combine(saveFolderPath, fileName), Json_Utilities.Serialize(saveObject.ToSaveFile()));
         }
 
         public List<Save_Object> GetSaveObjects(List<Save_File> files)

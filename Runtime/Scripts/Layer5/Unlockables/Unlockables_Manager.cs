@@ -26,7 +26,7 @@ namespace IbrahKit.Unlockables
         {
             base.InstanceAwake();
 
-            saveData = Save_Manager.GetInstance().GetLoadedSave().Get(new SaveData());
+            saveData = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
         }
 
         public void Unlock(IEnumerable<Unlockable> unlockable)
@@ -50,7 +50,7 @@ namespace IbrahKit.Unlockables
         }
 
         [Serializable]
-        private class SaveData : Savable
+        private class SaveData : ISavable
         {
             [JsonInclude] [SerializeField] private List<string> unlockedUnlockables = new();
 

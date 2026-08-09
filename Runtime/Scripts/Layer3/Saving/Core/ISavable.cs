@@ -7,7 +7,7 @@ namespace IbrahKit.Save
     /***
      * Interface for all objects that can be saved
      */
-    public interface Savable
+    public interface ISavable
     {
     }
 }

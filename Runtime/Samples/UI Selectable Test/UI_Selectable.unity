@@ -287,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e6c1f5b032e457f8c35f75e04e5197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Layer4::SimpleSaveManager
+  saveObject:
+    state: 0
 --- !u!1 &142653205
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +784,19 @@ MonoBehaviour:
     playAudioOnStateChange: 1
     OnPressedSuccess:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1917044383}
+          m_TargetAssemblyTypeName: IbrahKit.SaveTest, IbrahKit
+          m_MethodName: Increase
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     OnPressedFailed:
       m_PersistentCalls:
         m_Calls: []
@@ -2096,7 +2110,19 @@ MonoBehaviour:
     playAudioOnStateChange: 1
     OnPressedSuccess:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1917044383}
+          m_TargetAssemblyTypeName: IbrahKit.SaveTest, IbrahKit
+          m_MethodName: Decrease
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     OnPressedFailed:
       m_PersistentCalls:
         m_Calls: []
@@ -2831,7 +2857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2873,6 +2899,7 @@ GameObject:
   - component: {fileID: 1917044377}
   - component: {fileID: 1917044381}
   - component: {fileID: 1917044382}
+  - component: {fileID: 1917044383}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2991,6 +3018,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Layer4::IbrahKit.UI.Generic.UI_Canvas_Controller
   canvas: {fileID: 1917044379}
+--- !u!114 &1917044383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917044376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5e365c4ebd07c30ab162cea9bb52a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: IbrahKit::IbrahKit.SaveTest
+  text: {fileID: 1889035302}
 --- !u!1 &1921210682
 GameObject:
   m_ObjectHideFlags: 0

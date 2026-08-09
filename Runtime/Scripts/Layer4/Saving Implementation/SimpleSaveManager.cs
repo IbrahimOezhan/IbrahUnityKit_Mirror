@@ -1,7 +1,10 @@
 #region
 
 using System;
+using IbrahKit.Debugging;
 using IbrahKit.Save;
+using Sirenix.Serialization;
+using UnityEngine;
 
 #endregion
 
@@ -11,7 +14,7 @@ namespace IbrahKit.Save.Simple
     {
         private Save_Dictionary dict;
 
-        private Save_Object saveObject;
+        [OdinSerialize,SerializeField] private Save_Object saveObject;
 
         protected override void InstanceAwake()
         {
@@ -19,7 +22,24 @@ namespace IbrahKit.Save.Simple
 
             saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
 
-            dict = saveObject.Get(new Save_Dictionary());
+            if (saveObject == null)
+            {
+                IbrahDebug.LogWarning("No save found. Creating new save");
+                saveObject =GetNew();
+            }
+            else
+            {
+                IbrahDebug.LogWarning("Successfully loaded save");
+            }
+            
+            dict = saveObject.Get<Save_Dictionary>();
+        }
+
+        protected override void InstanceDestroy()
+        {
+            base.InstanceDestroy();
+
+            ToSaveFile(saveObject,"save.json");
         }
 
         public override Save_Object GetLoadedSave()

@@ -19,7 +19,7 @@ namespace IbrahKit.Settings
         {
             base.InstanceAwake();
 
-            saveData = Save_Manager.GetInstance().GetLoadedSave().Get(new SaveData());
+            saveData = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
 
             GetManagerData().GetConfigs().ForEach(config =>
             {
@@ -48,7 +48,7 @@ namespace IbrahKit.Settings
             return settingsInit.TryGetValue(key, out setting);
         }
 
-        private class SaveData : Savable
+        private class SaveData : ISavable
         {
             [JsonInclude] private Dictionary<string, string> settingValueMap = new();
 
