@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using System.Text;
 using IbrahKit.Dialog;
 using Sirenix.Utilities;
 
@@ -8,13 +9,13 @@ using Sirenix.Utilities;
 
 public static class PlayableDialogController
 {
-    public static string Get(SimpleDialogElement[] elements, double time, double duration)
+    public static string Get(Dictionary<SimpleDialogElement, List<SimpleDialogElement.Token>> dict,SimpleDialogElement[] elements, double time, double duration)
     {
         double totalTime = 0;
 
         foreach (SimpleDialogElement element in elements)
         {
-            List<SimpleDialogElement.Token> tokens = element.GetTokens();
+            List<SimpleDialogElement.Token> tokens = dict[element];
 
             element.Process(element.GetString(), tokens, (t, s) =>
             {
@@ -30,21 +31,23 @@ public static class PlayableDialogController
 
                 totalTime += s.Length * delay;
             });
+            
+            totalTime += element.GetDisplayTime();
         }
 
         double counter = 0;
 
         double divident = totalTime / duration;
 
-        string text = "";
+        StringBuilder text = new StringBuilder();
 
         foreach (SimpleDialogElement element in elements)
         {
-            text = "";
+            text.Clear();
 
             bool done = false;
 
-            List<SimpleDialogElement.Token> tokens = element.GetTokens();
+            List<SimpleDialogElement.Token> tokens = dict[element];
 
             element.Process(element.GetString(), tokens, (stack, str) =>
             {
@@ -72,7 +75,7 @@ public static class PlayableDialogController
 
                 foreach (char c in s)
                 {
-                    text += c;
+                    text.Append(c);
 
                     cache += (delay / divident);
 
@@ -95,6 +98,6 @@ public static class PlayableDialogController
             }
         }
 
-        return text;
+        return text.ToString();
     }
 }

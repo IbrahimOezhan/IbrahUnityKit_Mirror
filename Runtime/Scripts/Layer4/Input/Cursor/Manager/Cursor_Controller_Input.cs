@@ -37,7 +37,7 @@ namespace IbrahKit.Input.Cursor
 
             input.Enable();
 
-            Input_Manager.GetInstance().Register(this);
+            Input_Manager.GetInstance().OnInputChanged += OnInput;
         }
 
         public void Destroy()
@@ -48,7 +48,7 @@ namespace IbrahKit.Input.Cursor
 
             input.Dispose();
 
-            Input_Manager.GetInstance().UnRegister(this);
+            Input_Manager.GetInstance().OnInputChanged -= OnInput;
         }
 
         public Vector2 GetMousePos() => mousePos;

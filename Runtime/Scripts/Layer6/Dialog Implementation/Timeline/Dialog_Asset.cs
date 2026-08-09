@@ -1,30 +1,27 @@
 #region
 
+using System;
 using IbrahKit.UI;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 #endregion
 
 namespace IbrahKit.Dialog
 {
-    public class Dialog_Asset : PlayableAsset
+    [Serializable]
+    public class Dialog_Asset : PlayableAsset, ITimelineClipAsset
     {
-        [SerializeField] private Dialog_Playable_Elements dialog;
-
-        [SerializeField] private UI_Modifier_Text_Modifier modifier;
-
-        [SerializeField] private int percentageAnim;
+        [SerializeField] private Dialog_Behaviour behaviour;
 
         public override Playable CreatePlayable(PlayableGraph _graph, GameObject _owner)
         {
-            ScriptPlayable<Dialog_Behaiviour> _playable = ScriptPlayable<Dialog_Behaiviour>.Create(_graph);
-
-            Dialog_Behaiviour behaviour = _playable.GetBehaviour();
-
-            behaviour.Init(dialog, modifier);
+            ScriptPlayable<Dialog_Behaviour> _playable = ScriptPlayable<Dialog_Behaviour>.Create(_graph, behaviour);
 
             return _playable;
         }
+
+        public ClipCaps clipCaps => ClipCaps.Blending;
     }
 }

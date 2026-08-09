@@ -1,6 +1,7 @@
 #region
 
 using System;
+using UnityEngine;
 
 #endregion
 
@@ -9,12 +10,7 @@ namespace IbrahKit.UI.Modifier
     [Serializable]
     public class UI_Modifier_Text_Setter
     {
-        private UI_Modifier_Text_Modifier modifier;
-
-        public UI_Modifier_Text_Setter(UI_Modifier_Text_Modifier modifier)
-        {
-            this.modifier = modifier;
-        }
+        [SerializeField] private UI_Modifier_Text_Modifier modifier;
 
         public void SetText(object value)
         {

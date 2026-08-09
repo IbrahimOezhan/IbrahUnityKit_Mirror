@@ -15,7 +15,8 @@ namespace IbrahKit.Dialog
 
         public string GetString()
         {
-            return Local_Manager.GetInstance().GetString(key);
+             Local_Manager.TryGetString(key,out string result, "fallback");
+             return result;
         }
     }
 }

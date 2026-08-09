@@ -23,7 +23,7 @@ namespace IbrahKit.Localization
     {
         private readonly List<Local_Processor> processors = new();
 
-        private Local_Language currentLanguage;
+        private int currentLanguage;
 
         public Action onLanguageChanged;
 
@@ -92,28 +92,41 @@ namespace IbrahKit.Localization
                 return;
             }
 
-            SetLanguage(GetManagerData().Languages[index]);
+            currentLanguage = index;
         }
 
         public void SetLanguage(Local_Language lang)
         {
-            currentLanguage = lang;
+            currentLanguage = GetManagerData().LanguageIndexDict[lang];
 
             saveData.SetLanguage(lang.GetSys());
 
             UpdateLanguage();
         }
 
-        public string GetString(string key, string fallback = null, params object[] parameters)
+        public static bool TryGetString(string key, out string result, string fallback = null, params object[] parameters)
         {
-            string s = GetString(key, parameters);
+            if (TryGet(out Local_Manager local_Manager))
+            {
+                result = local_Manager.GetString(key, fallback, parameters);
+                return true;
+            }
+            
+            #if UNITY_EDITOR
 
-            if (s == $"Error {key}") s = fallback;
+            if (Local_Manager_Data.Instance.TryGetString(key, 0, out result))
+            {
+                return true;
+            }
+            
+            #endif
+            
+            result = fallback;
 
-            return s;
+            return false;
         }
 
-        public string GetString(string key, params object[] parameters)
+        public string GetString(string key, string fallback = null, params object[] parameters)
         {
             if (GetManagerData().TryGetString(key, currentLanguage, out string result))
             {
@@ -122,9 +135,14 @@ namespace IbrahKit.Localization
 
             IbrahDebug.LogWarning($"Localization for key {key} does not exist in select language {currentLanguage}");
 
-            if (GetManagerData().TryGetString(key, GetManagerData().Languages.First(), out result))
+            if (GetManagerData().TryGetString(key, 0, out result))
             {
                 return ProcessText(result.SafeFormat(parameters));
+            }
+
+            if (fallback != null)
+            {
+                return fallback;
             }
 
             IbrahDebug.LogWarning(
@@ -132,12 +150,10 @@ namespace IbrahKit.Localization
 
             return $"Error: {key}";
         }
-
+        
         private Local_Language GetNext(int dir)
         {
-            int newIndex =
-                (GetManagerData().LanguageIndexDict[currentLanguage] + dir).Loop(0,
-                    GetManagerData().Languages.Count - 1);
+            int newIndex = (currentLanguage + dir).Loop(0, GetManagerData().Languages.Count - 1);
 
             return GetManagerData().Languages[newIndex];
         }

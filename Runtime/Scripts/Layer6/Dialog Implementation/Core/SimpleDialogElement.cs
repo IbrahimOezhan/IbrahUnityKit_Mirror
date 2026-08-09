@@ -100,6 +100,12 @@ namespace IbrahKit.Dialog
 
             for (int i = 0; i < text.Length; i++)
             {
+                if (_tokens.Count == 0)
+                {
+                    action.Invoke(tokensInAffect, text);
+                    break;
+                }
+                
                 if (i == _tokens[0].Start)
                 {
                     action.Invoke(tokensInAffect, cache);

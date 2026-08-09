@@ -104,9 +104,12 @@ namespace IbrahKit.Localization
 
         public bool TryGetString(string key, Local_Language language, out string result)
         {
-            result = string.Empty;
+            return TryGetString(key,LanguageIndexDict[language] , out result);
+        }
 
-            int index = languageIndexDict[language];
+        public bool TryGetString(string key, int index, out string result)
+        {
+            result = string.Empty;
 
             if (!keyValuePairs.TryGetValue(key, out string[] localizedValues))
             {
@@ -126,7 +129,7 @@ namespace IbrahKit.Localization
 
             if (!result.IsEmpty()) return true;
 
-            IbrahDebug.Log($"String with key{key} and language index {index} and language {language} empty");
+            IbrahDebug.Log($"String with key{key} and language index {index} and language {index} empty");
 
             return false;
         }

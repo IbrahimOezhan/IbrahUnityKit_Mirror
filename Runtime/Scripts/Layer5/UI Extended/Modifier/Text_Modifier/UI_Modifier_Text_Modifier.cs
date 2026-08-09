@@ -10,7 +10,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [Serializable]
-    public abstract class UI_Modifier_Text_Modifier : MonoBehaviour
+    public class UI_Modifier_Text_Modifier : MonoBehaviour
     {
         [SerializeField, ShowIf(nameof(mode), Text_Mode.LOCALISED)]
         private UI_Modifier_Text_Localizer localization;
@@ -25,9 +25,7 @@ namespace IbrahKit.UI
 
         private void Awake()
         {
-            GameObject defaultTarget = gameObject;
-
-            text = new(nonDefaultTarget == null ? defaultTarget : nonDefaultTarget);
+            text = new(nonDefaultTarget == null ? gameObject : nonDefaultTarget);
 
             //return text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }
@@ -38,6 +36,9 @@ namespace IbrahKit.UI
 
         public UI_Text_Wrapper GetTextWrapper()
         {
+            if(!Application.isPlaying)
+                return new(nonDefaultTarget == null ? gameObject : nonDefaultTarget);
+            
             return text;
         }
 

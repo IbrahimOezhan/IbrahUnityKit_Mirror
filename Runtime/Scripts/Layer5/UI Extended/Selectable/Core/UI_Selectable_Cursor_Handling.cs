@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 
 namespace IbrahKit.UI.Selectable
 {
-    public partial class UI_Selectable : ICursorReceiver
+    public partial class UI_Selectable : ICursorReceiver,IPointerClickHandler, IPointerDownHandler, IPointerUpHandler,
+        IPointerExitHandler, IPointerEnterHandler
     {
         public void OnPointerClick(PointerEventData eventData)
         {

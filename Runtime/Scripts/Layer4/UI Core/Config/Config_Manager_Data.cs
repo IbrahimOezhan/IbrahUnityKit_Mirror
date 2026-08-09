@@ -10,12 +10,3 @@ public class Config_Manager_Data : SerializedScriptableObjectSingleton<Config_Ma
 
     public Configs GetConfigs() => configs;
 }
-
-[Serializable]
-public class HashTypeSet<TType> : HashSet<TType>
-{
-    public bool Add(TType item)
-    {
-        return !this.GroupBy(x => x.GetType()).Any(g => g.Count<TType>() > 1) && base.Add(item);
-    }
-}

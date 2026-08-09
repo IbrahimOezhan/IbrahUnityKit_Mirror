@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 
 namespace IbrahKit.UI.Selectable
 {
-    public class UI_Selectable_Manager : MonoBehaviourSingletonDontDestroyOnLoad<UI_Selectable_Manager>
+    public class UI_Selectable_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<UI_Selectable_Manager, UI_Selectable_Manager_Data>
     {
         private InputTypeNavigation currentType;
 
@@ -147,14 +147,9 @@ namespace IbrahKit.UI.Selectable
             currentType = newType;
         }
 
-        public static bool IsSupported(Input_Manager.InputType type)
+        public bool IsSupported(Input_Manager.InputType type)
         {
-            if (Input_Manager.TryGet(out Input_Manager inputManager))
-            {
-                return inputManager.GetManagerData().EnabledInputMethods().Contains(type);
-            }
-            
-            return false;
+            return GetManagerData().EnabledNavigationInputMethods().Contains(type);
         }
 
         private enum InputTypeNavigation
