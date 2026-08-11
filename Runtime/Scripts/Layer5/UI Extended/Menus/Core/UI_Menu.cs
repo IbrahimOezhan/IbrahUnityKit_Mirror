@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 #endregion
@@ -18,9 +19,9 @@ namespace IbrahKit.UI.Menu
 
         [SerializeField] private UI_Menu_Controller_State state;
 
-        private readonly UI_Menu_Controller_Audio audioController = new();
-
         private readonly List<UI_Menu_Controller> controllers = new();
+        
+        [OdinSerialize,SerializeReference] private List<UI_Menu_Transition> transitions = new();
 
         public Action<bool> OnStateChanged;
 
@@ -29,8 +30,6 @@ namespace IbrahKit.UI.Menu
             controllers.Add(visibility);
 
             controllers.Add(state);
-
-            controllers.Add(audioController);
 
             BeforeInit();
 
@@ -95,8 +94,7 @@ namespace IbrahKit.UI.Menu
         public virtual void OnMenuDisabled()
         {
         }
-
-        public UI_Menu_Controller_Audio GetAudioController() => audioController;
+        
 
         public List<UI_Menu_Controller> GetMenuControllers() => controllers;
 

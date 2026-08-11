@@ -4,18 +4,17 @@ namespace IbrahKit.UI.Menu
     {
         public void Enable();
 
-        public void Enable<T>(params object[] args) where T : Menu_Transition;
+        public void Enable(UI_Menu_Transition transition);
 
         public void Disable();
 
-        public void Disable<T>(params object[] args) where T : Menu_Transition;
+        public void Disable(UI_Menu_Transition transition);
 
         public void Toggle();
 
-        public void Toggle<T>(params object[] args) where T : Menu_Transition;
+        public void Toggle(UI_Menu_Transition transition);
 
-        public void Transition<T>(UI_Menu menuOut, bool allowBack = true, params object[] args)
-            where T : Menu_Transition;
+        public void Transition(UI_Menu menuOut, UI_Menu_Transition transition,bool allowBack = true);
 
         public void SetState(MenuState state);
 

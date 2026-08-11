@@ -20,12 +20,7 @@ namespace IbrahKit.UI.Menu
         public Action<bool> OnHide;
 
         private Action actionHide;
-
-        private UI_Menu currentMenu = null;
-
-        /// <summary>
-        ///     TODO: PREVENT ENABLE DISABLE COUNTING TO NAV STACK. TO ACHIEVE THIS SAVE THE CURRENT MENU IN THE MANAGER
-        /// </summary>
+        
         private bool hidden;
 
         private void Start()
@@ -53,100 +48,89 @@ namespace IbrahKit.UI.Menu
             }
         }
 
-        public void SimpleStateChange<T>(UI_Menu menu, MenuStateCompact targetState, params object[] args)
-            where T : Menu_Transition
+        public void SimpleStateChange(UI_Menu menu, MenuStateCompact targetState,UI_Menu_Transition transition, bool countEnableToStack = true)
         {
-            Debug.Log("Simple");
-
-            if (menu == null)
+            if (!menu)
             {
                 IbrahDebug.LogWarning("Menu passed is null");
 
                 return;
             }
-
-            Menu_Transition transition = GenericToTransition<T>(
-                targetState == MenuStateCompact.ENABLED ? null : menu,
-                targetState == MenuStateCompact.ENABLED ? menu : null,
-                args);
-            Transition(transition);
+            
+            switch (targetState)
+            {
+                case MenuStateCompact.DISABLED:
+                    if (menuNavigationStack.Contains(menu) && menuNavigationStack.Peek() != menu)
+                    {
+                        IbrahDebug.LogError("Can only disable menus not in stack or the current menu in the stack");
+                        return;
+                    }
+                    StartCoroutine(transition.MenuIn(menu));
+                    break;
+                case MenuStateCompact.ENABLED:
+                    if (menuNavigationStack.Contains(menu))
+                    {
+                        IbrahDebug.LogError("Cannot enable menu that is already in stack. Use Transition to first disable the previous one");
+                        return;
+                    }
+                    StartCoroutine(transition.MenuOut(menu));
+                    if(menuNavigationStack.Count == 0 && countEnableToStack) menuNavigationStack.Push(menu);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(targetState), targetState, null);
+            }
         }
 
-        public void Transition<T>(UI_Menu transitionTo, bool allowBack = true, params object[] args)
-            where T : Menu_Transition
+        public void TransitionBack(UI_Menu_Transition transition) 
         {
-            Transition(GenericToTransition<T>(currentMenu, transitionTo, args), allowBack);
+            Transition(menuNavigationStack.Peek(),menuNavigationStack.Pop(),transition);
         }
 
-        public void TransitionBack<T>(params object[] args) where T : Menu_Transition
+        public void Transition(UI_Menu from, UI_Menu to,UI_Menu_Transition transition, bool allowBack = true)
         {
-            Transition(GenericToTransition<T>(null, menuNavigationStack.Pop(), args));
-        }
-
-        private void Transition(Menu_Transition transition, bool allowBack)
-        {
-            if (transition == null)
+            if (!transition)
             {
                 IbrahDebug.LogWarning("Passed transition is null");
-
                 return;
             }
 
-            currentMenu = transition.GetOut();
+            if (!from)
+            {
+                return;
+            }
 
-            // If isnt allowed back OR if destination is null -> Clear stack as to prevent gamepad back button to go back to a menu it shouldnt
-            if (!allowBack || transition.GetOut() == null)
+            if (!to)
+            {
+                return;
+            }
+
+            // If isn't allowed back -> Clear stack as to prevent gamepad back button to go back to a menu it shouldn't
+            if (!allowBack)
             {
                 menuNavigationStack.Clear();
-                Transition(transition);
+                StartCoroutine(transition.Transition(this,from,to));
+                menuNavigationStack.Push(to);
                 return;
             }
 
-            if (transition.GetIn() != null)
+            if (!menuNavigationStack.Contains(to))
             {
-                if (!menuNavigationStack.Contains(transition.GetOut()))
-                {
-                    menuNavigationStack.Push(transition.GetIn());
-                }
-                else
-                {
-                    // If a loop was found for example: A > B > C > D > E > C so the menu skipped D when going to C
-                    // pop all elements until reaching C and then pop C as well so the stack becomes A > B and going back from C directs to B
+                menuNavigationStack.Push(to);
+            }
+            else
+            {
+                // If a loop was found for example: A > B > C > D > E  and now E transitions to C
+                // pop all elements until reaching C so the stack becomes A > B > C and going back from C directs to B
 
-                    while (menuNavigationStack.Peek() != transition.GetOut())
-                    {
-                        menuNavigationStack.Pop();
-                    }
-
+                while (menuNavigationStack.Peek() != to)
+                {
                     menuNavigationStack.Pop();
                 }
             }
 
-            Transition(transition);
+            StartCoroutine(transition.Transition(this,from,to));
         }
-
-        private void Transition(Menu_Transition transition)
-        {
-            StartCoroutine(transition.Transition(this));
-        }
-
-        private Menu_Transition GenericToTransition<T>(UI_Menu menuIn, UI_Menu menuOut, params object[] args)
-            where T : Menu_Transition
-        {
-            object[] array = new object[args.Length + 2];
-
-            array[0] = menuIn;
-
-            array[1] = menuOut;
-
-            for (int i = 2; i < array.Length; i++)
-            {
-                array[i] = args[i - 2];
-            }
-
-            return (Menu_Transition)Activator.CreateInstance(typeof(T), array);
-        }
-
+        
         public void Hide()
         {
             hidden = !hidden;

@@ -13,46 +13,45 @@ namespace IbrahKit.UI.Menu
     {
         [SerializeField, ReadOnly] private MenuState state = MenuState.DISABLED;
 
-        public void Enable() => Enable<Menu_Transition_Instant>();
+        public void Enable() => Enable(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
 
-        public void Disable() => Disable<Menu_Transition_Instant>();
+        public void Disable() => Disable(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
 
-        public void Toggle() => Toggle<Menu_Transition_Instant>();
+        public void Toggle() => Toggle(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
 
-        public void Enable<T>(params object[] args) where T : Menu_Transition
+        public void Enable(UI_Menu_Transition transition)
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
-                result.SimpleStateChange<T>(GetMenu(), MenuStateCompact.ENABLED, args);
+                result.SimpleStateChange(GetMenu(), MenuStateCompact.ENABLED, transition);
             }
         }
 
-        public void Disable<T>(params object[] args) where T : Menu_Transition
+        public void Disable(UI_Menu_Transition transition) 
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
-                result.SimpleStateChange<T>(GetMenu(), MenuStateCompact.DISABLED, args);
+                result.SimpleStateChange(GetMenu(), MenuStateCompact.DISABLED, transition);
             }
         }
 
-        public void Toggle<T>(params object[] args) where T : Menu_Transition
+        public void Toggle(UI_Menu_Transition transition) 
         {
             MenuStateCompact menuState = GetCompactState() == MenuStateCompact.ENABLED
                 ? MenuStateCompact.DISABLED
                 : MenuStateCompact.ENABLED;
 
-            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, true))
+            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
             {
-                result.SimpleStateChange<T>(GetMenu(), menuState, args);
+                result.SimpleStateChange(GetMenu(), menuState, transition);
             }
         }
 
-        public void Transition<T>(UI_Menu menuOut, bool allowBack = true, params object[] args)
-            where T : Menu_Transition
+        public void Transition(UI_Menu menuOut, UI_Menu_Transition transition,bool allowBack = true)
         {
             if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false))
             {
-                result.Transition<T>(GetMenu(), menuOut, allowBack, args);
+                result.Transition(GetMenu(), menuOut, transition,allowBack);
             }
         }
 
@@ -80,12 +79,14 @@ namespace IbrahKit.UI.Menu
                     }
 
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
         public MenuState GetState() => state;
 
-        public MenuStateCompact GetCompactState() => state == MenuState.ENABLED || state == MenuState.ENABLING
+        public MenuStateCompact GetCompactState() => state is MenuState.ENABLED or MenuState.ENABLING
             ? MenuStateCompact.ENABLED
             : MenuStateCompact.DISABLED;
 
@@ -96,7 +97,7 @@ namespace IbrahKit.UI.Menu
 
             bool menuEnabled = GetCompactState() == MenuStateCompact.ENABLED;
 
-            Menu_Transition.Transition(menuEnabled ? menu : null, menuEnabled ? null : menu);
+            UI_Menu_Transition.TransitionStatic(menuEnabled ? menu : null, menuEnabled ? null : menu);
         }
     }
 }

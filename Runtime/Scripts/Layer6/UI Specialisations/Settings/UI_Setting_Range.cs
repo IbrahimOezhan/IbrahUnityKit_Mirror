@@ -27,7 +27,7 @@ namespace IbrahKit
             return true;
         }
 
-        public override void UpdateUI()
+        public override void UpdateUI(Setting setting)
         {
             value.GetStaticSetter().SetText(GetSetting().GetValue());
         }

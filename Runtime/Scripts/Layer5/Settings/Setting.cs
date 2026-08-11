@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using IbrahKit.Keys;
 using IbrahKit.Localization;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ using UnityEngine;
 namespace IbrahKit.Settings
 {
     [Serializable]
-    public class Setting
+    public class Setting : IKey
     {
         private float currentValue;
         private DisplayType displayType;
@@ -21,7 +22,7 @@ namespace IbrahKit.Settings
         private List<Local_Key> keys;
         private bool loop;
 
-        public Action onValueChanged;
+        public Action<Setting> onValueChanged;
         private float step;
 
         public Setting(string key, Vector2 floatRange, Vector2Int intRange, DisplayType displayType,
@@ -103,5 +104,9 @@ namespace IbrahKit.Settings
         }
         
         public float GetCurrent() => currentValue;
+        public string GetKey()
+        {
+            return key;
+        }
     }
 }

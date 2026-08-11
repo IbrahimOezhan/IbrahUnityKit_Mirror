@@ -15,7 +15,5 @@ namespace IbrahKit.Settings
         [SerializeField] private List<Setting_Config> configs = new();
 
         public List<Setting_Config> GetConfigs() => configs;
-
-        public Setting_Config GetConfig(string key) => configs.FirstOrDefault(x => x.GetKey().Equals(key));
     }
 }

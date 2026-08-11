@@ -38,6 +38,20 @@ namespace IbrahKit.Settings
         [SerializeField, ShowIf(nameof(displayType), DisplayType.STRING)]
         private List<Local_Key> keys = new();
 
+        public List<Local_Key> Keys => keys;
+
+        public float Steps => steps;
+
+        public float DefaultValue => defaultValue;
+        
+        public Vector2 RangeFloat => rangeFloat;
+        
+        public Vector2 RangeInt => rangeInt;
+        
+        public DisplayType DisplayType => displayType;
+        
+        public bool Loop => loop;
+
         public string GetKey()
         {
             return key;
@@ -88,9 +102,26 @@ namespace IbrahKit.Settings
             }
         }
 
-        public Setting GetInstance()
+        public bool IsInRange(float value)
         {
-            return new Setting(key, rangeFloat, rangeInt, displayType, keys, loop, steps, defaultValue);
+            switch(displayType)
+            {
+                case DisplayType.NUMBER:
+                    return  value >= rangeFloat.x && value <= rangeFloat.y;
+                case DisplayType.STRING:
+                    return  value >= rangeInt.x && value <= rangeInt.y;
+                case DisplayType.BOOL:
+                    return value is >= 0 and <= 1;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public Setting GetInstance(float value = float.NaN)
+        {
+            if (float.IsNaN(value) || !IsInRange(value)) value = defaultValue;
+
+            return new Setting(key, rangeFloat, rangeInt, displayType, keys, loop, steps, value);
         }
     }
 

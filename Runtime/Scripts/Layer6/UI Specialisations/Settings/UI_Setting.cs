@@ -38,7 +38,7 @@ namespace IbrahKit.Settings
 
         protected abstract bool InitPro(Setting setting);
 
-        public abstract void UpdateUI();
+        public abstract void UpdateUI(Setting setting);
 
         public Setting GetSetting() => setting;
     }

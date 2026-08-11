@@ -9,18 +9,9 @@ using UnityEngine;
 namespace IbrahKit.UI.Menu
 {
     [Serializable]
-    public abstract class Menu_Transition
+    public abstract class UI_Menu_Transition : ScriptableObject
     {
-        [SerializeField] protected UI_Menu menuOut;
-        protected UI_Menu menuIn;
-
-        public Menu_Transition(UI_Menu menuIn, UI_Menu menuOut)
-        {
-            this.menuIn = menuIn;
-            this.menuOut = menuOut;
-        }
-
-        public static void Transition(UI_Menu menuIn, UI_Menu menuOut)
+        public static void TransitionStatic(UI_Menu menuIn, UI_Menu menuOut)
         {
             bool inExists = menuIn != null;
             bool outExists = menuOut != null;
@@ -35,22 +26,10 @@ namespace IbrahKit.UI.Menu
             if (inExists) menuIn.GetVisbilityController().SetInteractable(false);
             if (inExists) menuIn.GetStateController().SetState(MenuState.DISABLED);
         }
+        
+        public abstract IEnumerator Transition(MonoBehaviour mono, UI_Menu inMenu, UI_Menu outMenu);
 
-        public IEnumerator Transition(MonoBehaviour mono)
-        {
-            bool inExists = menuIn != null;
-            bool outExists = menuOut != null;
-
-            Debug.Log("Test");
-
-            Debug.Log("In Exists: " + inExists + ", Out Exists: " + outExists);
-
-            yield return mono.StartCoroutine(Transition(inExists, outExists));
-        }
-
-        protected abstract IEnumerator Transition(bool inExists, bool outExists);
-
-        public UI_Menu GetIn() => menuIn;
-        public UI_Menu GetOut() => menuOut;
+        public abstract IEnumerator MenuOut(UI_Menu outMenu);
+        public abstract IEnumerator MenuIn(UI_Menu inMenu);
     }
 }

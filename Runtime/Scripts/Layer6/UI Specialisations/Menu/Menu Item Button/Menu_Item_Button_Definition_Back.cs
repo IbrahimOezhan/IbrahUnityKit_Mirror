@@ -17,7 +17,7 @@ namespace IbrahKit.UI
             {
                 if (UI_Menu_Manager.TryGet(out UI_Menu_Manager result))
                 {
-                    result.TransitionBack<Menu_Transition_Instant>();
+                    result.TransitionBack(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
                 }
             });
 
