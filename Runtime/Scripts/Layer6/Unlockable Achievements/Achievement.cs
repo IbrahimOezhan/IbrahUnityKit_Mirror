@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IbrahKit.Unlockables.Achievements
 {
-    [CreateAssetMenu(fileName = "NewAchievement", menuName = "IbrahKit/Achievement")]
+    [CreateAssetMenu(fileName = "NewAchievement", menuName = "IbrahKit/Unlockable/Achievement")]
     public partial class Achievement : Unlockable
     {
         [SerializeField] private bool secret;

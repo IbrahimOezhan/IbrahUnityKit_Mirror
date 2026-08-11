@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca58d56be02d4aeb8379bf967f14964c, type: 3}
+  m_Name: NewCustomSpriteStyle
+  m_EditorClassIdentifier: Layer4::IbrahKit.Input.Cursor.Cursor_Custom_Sprite_Style
+  none: {fileID: 1574497776588965693, guid: 707d2b4ea27eac0a08550cf2a9185244, type: 3}
+  hovering: {fileID: -118057155318131194, guid: 165de045ba8497e8093af927d77b536c, type: 3}
+  pressing: {fileID: -3777569201786988421, guid: bff62cd1172be3f24904c1e1a74ddba5, type: 3}

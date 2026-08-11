@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 
 #endregion
 
-namespace IbrahKit
+namespace IbrahKit.UI.Other
 {
     public class UI_Debug_Menu : UI_Menu, ISelfValidator
     {

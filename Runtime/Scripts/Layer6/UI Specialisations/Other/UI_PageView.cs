@@ -9,7 +9,7 @@ using UnityEngine;
 
 #endregion
 
-namespace IbrahKit.UI
+namespace IbrahKit.UI.Other
 {
     public class UI_PageView : MonoBehaviour, IUIInit
     {

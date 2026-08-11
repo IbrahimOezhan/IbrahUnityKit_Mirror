@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Selectable
 {
-    [CreateAssetMenu(fileName = "NewTransitionColor", menuName = "IbrahKit/UI_Transition_Color")]
+    [CreateAssetMenu(fileName = "NewTransitionColor", menuName = "IbrahKit/UI/Menu/Transition/Color")]
     public class S_Transition_Color_SO : Selectable_Transition_SO<Color>
     {
     }

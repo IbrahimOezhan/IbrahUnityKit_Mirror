@@ -1,6 +1,7 @@
 #region
 
 using System;
+using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -21,12 +22,12 @@ namespace IbrahKit.Input.Cursor
             Hovering,
             Down,
         }
-
-        [SerializeField] private Transform cursorTransform;
-
+        
+        [SerializeField] private Cursor_Custom_Sprite_Style spriteStyle;
+        
         [SerializeField] private RectTransform canvas;
 
-        [SerializeField] private Cursor_Custom_Sprite_Style spriteStyle;
+        [SerializeField] private RectTransform cursorTransform;
 
         [SerializeField] private Image cursorImage;
 
@@ -35,17 +36,25 @@ namespace IbrahKit.Input.Cursor
         public override void Disabled()
         {
             cursorImage.gameObject.SetActive(false);
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         }
 
         public override void Clamped()
         {
             cursorImage.gameObject.SetActive(true);
+            
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
 
             RenderCursor();
         }
 
         public override void Unclamped()
         {
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            
             cursorImage.gameObject.SetActive(true);
 
             RenderCursor();
@@ -64,8 +73,9 @@ namespace IbrahKit.Input.Cursor
         {
             if (!Cursor_Manager.TryGet(out Cursor_Manager cim)) return;
 
-            bool isOverReceiver = cim.GetCursorReceiver()
-                .IsOverReceiver(EventSystem.current, cim.GetCamera(), cim.GetCursorInput().GetMousePos());
+            bool isOverReceiver = cim.GetCursorReceiver().IsOverIReceiver
+                (cim.GetCursorReceiver().GameRaycastTargets(
+                    EventSystem.current, cim.GetCamera(), cim.GetCursorInput().GetMousePos()));
 
             if (!isOverReceiver)
             {
@@ -97,7 +107,17 @@ namespace IbrahKit.Input.Cursor
 
         private Vector2 GetCursorPos(Vector2 mousePos, Camera camera)
         {
-            if (!camera || !canvas) return Vector2.zero;
+            if (!camera)
+            {
+                Debug.LogWarning($"{nameof(camera)} is null");
+                return Vector2.zero;
+            }
+
+            if (!canvas)
+            {
+                Debug.LogWarning($"{nameof(canvas)} is null");
+                return Vector2.zero;
+            }
 
             Rect mainCameraRect = camera.rect;
 
@@ -118,7 +138,7 @@ namespace IbrahKit.Input.Cursor
 
             float mappedX = (normalizedX - 0.5f) * canvasWidth;
             float mappedY = (normalizedY - 0.5f) * canvasHeight;
-
+            
             return new(mappedX, mappedY);
         }
     }

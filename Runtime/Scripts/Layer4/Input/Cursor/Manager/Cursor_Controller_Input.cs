@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 namespace IbrahKit.Input.Cursor
 {
     [Serializable]
-    public class Cursor_Controller_Input : IInputType
+    public class Cursor_Controller_Input
     {
         private CursorInput input;
 
@@ -18,17 +18,15 @@ namespace IbrahKit.Input.Cursor
 
         private EventSystem system;
 
-        public void OnInput(Input_Manager.InputType inputType)
+        public void Update()
         {
-            if (inputType != Input_Manager.InputType.MOUSE) return;
+            if (Input_Manager.GetInstance().GetInputType() != Input_Manager.InputType.MOUSE) return;
 
             if (input == null) return;
 
             if (!system) system = EventSystem.current;
 
             mousePos = input.Map.MousePos.ReadValue<Vector2>();
-
-            Cursor_Manager.GetInstance().GetCursorState().Run();
         }
 
         public void Init()
@@ -36,8 +34,6 @@ namespace IbrahKit.Input.Cursor
             input = new();
 
             input.Enable();
-
-            Input_Manager.GetInstance().OnInputChanged += OnInput;
         }
 
         public void Destroy()
@@ -47,8 +43,6 @@ namespace IbrahKit.Input.Cursor
             input.Disable();
 
             input.Dispose();
-
-            Input_Manager.GetInstance().OnInputChanged -= OnInput;
         }
 
         public Vector2 GetMousePos() => mousePos;

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI
 {
-    [CreateAssetMenu(fileName = "NewUIFitterConfig", menuName = "IbrahKit/UI_Fitter_Config")]
+    [CreateAssetMenu(fileName = "NewUIFitterConfig", menuName = "IbrahKit/UI/Modifier/FitterConfig")]
     public class UI_Rect_Fitter_Config : Config<UI_Rect_Fitter_Config>
     {
         [SerializeField] private float margin = 0;

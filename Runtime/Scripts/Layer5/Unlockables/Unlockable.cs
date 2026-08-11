@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace IbrahKit.Unlockables
 {
-    [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable")]
+    [CreateAssetMenu(fileName = "NewUnlockable", menuName = "IbrahKit/Unlockable/Unlockable")]
     public class Unlockable : ScriptableObject, IKey
     {
         [TabGroup("Base Data"), SerializeField]

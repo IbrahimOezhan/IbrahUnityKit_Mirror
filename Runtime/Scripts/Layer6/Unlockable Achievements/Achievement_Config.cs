@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IbrahKit.Unlockables.Achievements
 {
-    [CreateAssetMenu(fileName = "AchievementConfig", menuName = "IbrahKit/AchievemntConfig")]
+    [CreateAssetMenu(fileName = "AchievementConfig", menuName = "IbrahKit/Unlockable/AchievementConfig")]
     public class Achievement_Config : ScriptableObject
     {
         [SerializeField] private Local_Key secretString;
