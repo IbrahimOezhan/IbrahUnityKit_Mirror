@@ -62,9 +62,9 @@ namespace IbrahKit.UI.Menu
             }
         }
 
-        public void SetState(MenuState state)
+        public void SetState(MenuState newState)
         {
-            this.state = state;
+            state = newState;
 
             switch (GetCompactState())
             {
