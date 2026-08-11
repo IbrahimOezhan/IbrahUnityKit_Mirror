@@ -21,7 +21,7 @@ namespace IbrahKit.Keys
     {
         [SerializeField] protected string key;
 
-        public string Value => key;
+        public string Key => key;
 
         public string GetKey()
         {
@@ -33,7 +33,9 @@ namespace IbrahKit.Keys
             return key;
         }
 
-        public static List<string> GetValues()
+#if UNITY_EDITOR
+
+        public static List<string> GetDropdownValues()
         {
             try
             {
@@ -44,6 +46,8 @@ namespace IbrahKit.Keys
                 return new List<string>() { typeof(TKey).Name };
             }
         }
+
+#endif
 
         public static implicit operator string(Key_Reference<TKey, TTable> reference)
         {
@@ -58,11 +62,13 @@ namespace IbrahKit.Keys
             public sealed override void ProcessChildMemberAttributes(InspectorProperty parentProperty,
                 MemberInfo member, List<Attribute> attributes)
             {
+#if UNITY_EDITOR
                 if (member.Name != "key") return;
 
                 attributes.Add(new LabelTextAttribute(parentProperty.NiceName));
 
-                attributes.Add(new ValueDropdownAttribute(nameof(GetValues)));
+                attributes.Add(new ValueDropdownAttribute(nameof(GetDropdownValues)));
+#endif
             }
         }
     }

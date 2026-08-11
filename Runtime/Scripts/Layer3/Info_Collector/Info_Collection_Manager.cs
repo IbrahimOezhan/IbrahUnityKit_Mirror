@@ -16,7 +16,7 @@ namespace IbrahKit.InfoCollector
      * Manager class that collects information from other objects that implement the IInfoCollector interface.
      * This information can then be displayed on the screen for example as a sort of debug screen.
      */
-    public class Info_Collection_Manager : Manager_Global<Info_Collection_Manager>
+    public class Info_Collection_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Info_Collection_Manager>
     {
         private const string ERROR = "Info collector is null";
 

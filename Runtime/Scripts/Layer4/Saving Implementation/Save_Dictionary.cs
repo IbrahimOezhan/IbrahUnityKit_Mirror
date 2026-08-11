@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 #endregion
@@ -13,10 +12,9 @@ namespace IbrahKit.Save
      * Pre-build savable that stores key value pairs
      */
     [Serializable]
-    public class Save_Dictionary : Savable
+    public class Save_Dictionary : ISavable
     {
-        [JsonInclude] [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
-        private Dictionary<string, string> values = new();
+        [JsonInclude] private Dictionary<string, string> values = new();
 
         public void Set<T>(string key, T value)
         {

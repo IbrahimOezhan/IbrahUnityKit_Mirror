@@ -17,13 +17,13 @@ namespace IbrahKit.Save
     ///     A script that manages loading data on game start and saving it when you close the game
     /// </summary>
     [DefaultExecutionOrder(Execution_Order.save)]
-    public abstract class Save_Manager<T> : Manager_Global<T> where T : Manager_Global<T>
+    public abstract class Save_Manager : MonoBehaviourSingletonDontDestroyOnLoad<Save_Manager>
     {
-        private ISaveChooser chooser;
+        protected ISaveChooser chooser;
 
-        private ISaveVersionParser parser;
-        private ISavePipeline[] pipelines;
-        private string saveFolderPath;
+        protected ISaveVersionParser parser;
+        protected ISavePipeline[] pipelines;
+        protected string saveFolderPath;
 
         protected abstract (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init();
 
@@ -33,7 +33,7 @@ namespace IbrahKit.Save
 
             (parser, chooser, pipelines) = Init();
 
-            string saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
+            saveFolderPath = Path.Combine(FileSystem_Utilities.GetGamePath(), "Saves");
 
             if (!Directory.Exists(saveFolderPath))
             {
@@ -48,9 +48,9 @@ namespace IbrahKit.Save
             return files.Select(File.ReadAllText).ToArray();
         }
 
-        public List<SaveFile> GetSaveFiles()
+        public List<Save_File> GetSaveFiles()
         {
-            List<SaveFile> saves = new List<SaveFile>();
+            List<Save_File> saves = new List<Save_File>();
 
             foreach (string f in GetRawSaveFiles())
             {
@@ -60,7 +60,7 @@ namespace IbrahKit.Save
                 {
                     pipelines.ForEach(x => { file = x.OnDeserialize(f); });
 
-                    SaveFile saveFile = Json_Utilities.Deserialize<SaveFile>(file);
+                    Save_File saveFile = Json_Utilities.Deserialize<Save_File>(file);
 
                     saves.Add(saveFile);
                 }
@@ -72,22 +72,28 @@ namespace IbrahKit.Save
             return saves;
         }
 
-        public List<SaveObject> GetSaveObjects(List<SaveFile> files)
+        public void ToSaveFile(Save_Object saveObject, string fileName)
+        {
+            File.WriteAllText(Path.Combine(saveFolderPath, fileName),
+                Json_Utilities.Serialize(saveObject.ToSaveFile()));
+        }
+
+        public List<Save_Object> GetSaveObjects(List<Save_File> files)
         {
             return files.Select(x => x.TryLoad()).ToList();
         }
 
-        public SaveObject GetNew()
+        public Save_Object GetNew()
         {
-            return new SaveFile(parser).TryLoad();
+            return new Save_File(parser).TryLoad();
         }
 
-        public SaveObject GetBest(List<SaveObject> saves)
+        public Save_Object GetBest(List<Save_Object> saves)
         {
             return chooser.Choose(saves);
         }
 
-        public void SaveToFile(SaveFile saveFile, string fileName)
+        public void SaveToFile(Save_File saveFile, string fileName)
         {
             string json = Json_Utilities.Serialize(saveFile);
 
@@ -95,5 +101,7 @@ namespace IbrahKit.Save
 
             File.WriteAllText(fileName, json);
         }
+
+        public abstract Save_Object GetLoadedSave();
     }
 }

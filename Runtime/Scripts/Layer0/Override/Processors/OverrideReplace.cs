@@ -2,6 +2,12 @@
 
 #endregion
 
+#region
+
+using UnityEngine;
+
+#endregion
+
 namespace IbrahKit.Override
 {
     /// <summary>
@@ -18,8 +24,15 @@ namespace IbrahKit.Override
             return overriden ? overrideValue : defaultValue;
         }
 
+        // TODO: Figure out why the fuck the null check doesnt catch null values
         public void AddOverride(T value)
         {
+            if (value == null)
+            {
+                Debug.Log("Value to be added was null");
+                return;
+            }
+
             overrideValue = value;
             overriden = true;
         }

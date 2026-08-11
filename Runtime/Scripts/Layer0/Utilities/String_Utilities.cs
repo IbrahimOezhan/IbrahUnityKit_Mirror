@@ -168,7 +168,7 @@ namespace IbrahKit.Utilities
 
             try
             {
-                return String.Format(value, parameters);
+                return string.Format(value, parameters);
             }
             catch (Exception e)
             {

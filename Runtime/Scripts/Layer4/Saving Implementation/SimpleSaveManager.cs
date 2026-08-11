@@ -1,31 +1,55 @@
 #region
 
 using System;
-using IbrahKit.Save;
+using IbrahKit.Debugging;
+using Sirenix.Serialization;
+using UnityEngine;
 
 #endregion
 
-public class SimpleSaveManager : Save_Manager<SimpleSaveManager>
+namespace IbrahKit.Save.Simple
 {
-    private Save_Dictionary dict;
-
-    private SaveObject saveObject;
-
-    protected override void InstanceAwake()
+    public class SimpleSaveManager : Save_Manager
     {
-        base.InstanceAwake();
+        [OdinSerialize, SerializeField] private Save_Object saveObject;
+        private Save_Dictionary dict;
 
-        saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
 
-        dict = saveObject.Get(new Save_Dictionary());
+            saveObject = GetBest(GetSaveObjects(GetSaveFiles()));
+
+            if (saveObject == null)
+            {
+                IbrahDebug.LogWarning("No save found. Creating new save");
+                saveObject = GetNew();
+            }
+            else
+            {
+                IbrahDebug.Log("Successfully loaded save");
+            }
+
+            dict = saveObject.Get<Save_Dictionary>();
+        }
+
+        protected override void InstanceDestroy()
+        {
+            base.InstanceDestroy();
+
+            ToSaveFile(saveObject, "save.json");
+        }
+
+        public override Save_Object GetLoadedSave()
+        {
+            return saveObject;
+        }
+
+        protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
+        {
+            return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
+        }
+
+        public Save_Dictionary GetDict() => dict;
     }
-
-    protected override (ISaveVersionParser, ISaveChooser, ISavePipeline[]) Init()
-    {
-        return (new SimpleSaveVersionParser(), new SimpleSaveChooser(), Array.Empty<ISavePipeline>());
-    }
-
-    public SaveObject GetSave() => saveObject;
-
-    public Save_Dictionary GetDict() => dict;
 }
