@@ -38,6 +38,11 @@ namespace IbrahKit.Settings
             currentValue = defaultValue;
         }
 
+        public string GetKey()
+        {
+            return key;
+        }
+
         public void Increment()
         {
             currentValue += step;
@@ -102,11 +107,7 @@ namespace IbrahKit.Settings
         {
             return currentValue.ToString();
         }
-        
+
         public float GetCurrent() => currentValue;
-        public string GetKey()
-        {
-            return key;
-        }
     }
 }

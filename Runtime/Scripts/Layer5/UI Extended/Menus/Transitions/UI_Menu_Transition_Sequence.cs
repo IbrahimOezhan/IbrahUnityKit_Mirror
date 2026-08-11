@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
+    [Serializable,
+     CreateAssetMenu(fileName = "NewMenuSequenceTransition", menuName = "IbrahKit/UI/Menu/Transition/Sequence")]
     public class UI_Menu_Transition_Sequence : UI_Menu_Transition_Time
     {
         public override IEnumerator Transition(MonoBehaviour mono, UI_Menu inMenu, UI_Menu outMenu)
@@ -17,14 +20,14 @@ namespace IbrahKit.UI.Menu
 
         public override IEnumerator MenuOut(UI_Menu outMenu)
         {
-            outMenu.GetVisbilityController().SetActive(true);
+            outMenu.SetActive(true);
 
-            outMenu.GetStateController().SetState(MenuState.ENABLING);
+            outMenu.SetState(MenuState.ENABLING);
 
-            outMenu.GetVisbilityController().SetEnabledAlpha(0);
+            outMenu.SetEnabledAlpha(0);
 
-            outMenu.GetVisbilityController().SetInteractable(false);
-            
+            outMenu.SetInteractable(false);
+
             float t = 0;
 
             while (t < 1)
@@ -33,21 +36,21 @@ namespace IbrahKit.UI.Menu
 
                 yield return null;
 
-                outMenu.GetVisbilityController().SetEnabledAlpha(t);
+                outMenu.SetEnabledAlpha(t);
             }
 
-            outMenu.GetStateController().SetState(MenuState.ENABLED);
+            outMenu.SetState(MenuState.ENABLED);
 
-            outMenu.GetVisbilityController().SetInteractable(true);
+            outMenu.SetInteractable(true);
         }
 
         public override IEnumerator MenuIn(UI_Menu inMenu)
         {
-            inMenu.GetStateController().SetState(MenuState.DISABLING);
+            inMenu.SetState(MenuState.DISABLING);
 
-            inMenu.GetVisbilityController().SetInteractable(false);
+            inMenu.SetInteractable(false);
 
-            inMenu.GetVisbilityController().SetEnabledAlpha(1);
+            inMenu.SetEnabledAlpha(1);
 
             float t = 0;
 
@@ -57,12 +60,12 @@ namespace IbrahKit.UI.Menu
 
                 yield return null;
 
-                inMenu.GetVisbilityController().SetEnabledAlpha(1 - t);
+                inMenu.SetEnabledAlpha(1 - t);
             }
-            
-            inMenu.GetStateController().SetState(MenuState.DISABLED);
 
-            inMenu.GetVisbilityController().SetActive(false);
+            inMenu.SetState(MenuState.DISABLED);
+
+            inMenu.SetActive(false);
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
-    [Serializable]
+    [Serializable, CreateAssetMenu(fileName = "NewMenuCrossTransition", menuName = "IbrahKit/UI/Menu/Transition/Cross")]
     public class UI_Menu_Transition_Cross : UI_Menu_Transition_Time
     {
         public override IEnumerator Transition(MonoBehaviour mono, UI_Menu inMenu, UI_Menu outMenu)
@@ -19,47 +19,46 @@ namespace IbrahKit.UI.Menu
 
         public override IEnumerator MenuOut(UI_Menu outMenu)
         {
-            outMenu.GetVisbilityController().SetActive(true);
+            outMenu.SetActive(true);
 
-             outMenu.GetStateController().SetState(MenuState.ENABLING);
+            outMenu.SetState(MenuState.ENABLING);
 
-             outMenu.GetVisbilityController().SetEnabledAlpha(0);
+            outMenu.SetEnabledAlpha(0);
 
-             float t = 0;
-             
-             while (t < 1)
-             {
-                 t += (Time.deltaTime / time);
-
-                 yield return null;
-                 
-                 outMenu.GetVisbilityController().SetEnabledAlpha(t);
-             }
-        }
-
-        public override IEnumerator MenuIn(UI_Menu inMenu)
-        {
             float t = 0;
 
-            inMenu.GetStateController().SetState(MenuState.DISABLING);
-
-            inMenu.GetVisbilityController().SetInteractable(false);
-
-           inMenu.GetVisbilityController().SetEnabledAlpha(1);
-            
             while (t < 1)
             {
                 t += (Time.deltaTime / time);
 
                 yield return null;
 
-                inMenu.GetVisbilityController().SetEnabledAlpha(1 - t);
-                
+                outMenu.SetEnabledAlpha(t);
+            }
+        }
+
+        public override IEnumerator MenuIn(UI_Menu inMenu)
+        {
+            float t = 0;
+
+            inMenu.SetState(MenuState.DISABLING);
+
+            inMenu.SetInteractable(false);
+
+            inMenu.SetEnabledAlpha(1);
+
+            while (t < 1)
+            {
+                t += (Time.deltaTime / time);
+
+                yield return null;
+
+                inMenu.SetEnabledAlpha(1 - t);
             }
 
-            inMenu.GetStateController().SetState(MenuState.DISABLED);
-            
-            inMenu.GetVisbilityController().SetActive(false);
+            inMenu.SetState(MenuState.DISABLED);
+
+            inMenu.SetActive(false);
         }
     }
 }

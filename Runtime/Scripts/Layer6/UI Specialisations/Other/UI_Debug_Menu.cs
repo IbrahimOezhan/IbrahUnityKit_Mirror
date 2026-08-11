@@ -28,7 +28,7 @@ namespace IbrahKit.UI.Other
             action = () =>
             {
                 IbrahDebug.Log("Toggle");
-                GetStateController().Toggle();
+                Toggle();
             };
 
             if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))

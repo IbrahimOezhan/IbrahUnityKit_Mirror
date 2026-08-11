@@ -21,7 +21,8 @@ namespace IbrahKit.UI.Menu
             if (changeType == Menu_Change_Type.REFERENCE)
                 spawnedButton.GetSelectable().GetStateController().GetOnPressSuccess().AddListener(() =>
                 {
-                    menu.GetStateController().Transition(menuReference,ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
+                    menu.Transition(menuReference,
+                        ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
                 });
 
             return true;

@@ -43,13 +43,13 @@ namespace IbrahKit.Settings
         public float Steps => steps;
 
         public float DefaultValue => defaultValue;
-        
+
         public Vector2 RangeFloat => rangeFloat;
-        
+
         public Vector2 RangeInt => rangeInt;
-        
+
         public DisplayType DisplayType => displayType;
-        
+
         public bool Loop => loop;
 
         public string GetKey()
@@ -104,12 +104,12 @@ namespace IbrahKit.Settings
 
         public bool IsInRange(float value)
         {
-            switch(displayType)
+            switch (displayType)
             {
                 case DisplayType.NUMBER:
-                    return  value >= rangeFloat.x && value <= rangeFloat.y;
+                    return value >= rangeFloat.x && value <= rangeFloat.y;
                 case DisplayType.STRING:
-                    return  value >= rangeInt.x && value <= rangeInt.y;
+                    return value >= rangeInt.x && value <= rangeInt.y;
                 case DisplayType.BOOL:
                     return value is >= 0 and <= 1;
                 default:

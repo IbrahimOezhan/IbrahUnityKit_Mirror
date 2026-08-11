@@ -163,7 +163,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1889907814}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &52561748
 MonoBehaviour:
@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::IbrahKit.DialogTrigger
   node: {fileID: 11400000, guid: 18013cf6aeb8b4d31a7e48a4cac3b538, type: 2}
   controller: {fileID: 52561746}
+  main: {fileID: 1361271473}
 --- !u!1 &185974848
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +440,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1434309358}
   m_Father: {fileID: 1361271472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -838,6 +840,7 @@ MonoBehaviour:
     preventHideOnPause: 0
   state:
     state: 2
+  transitions: []
   prefab: {fileID: 8446974255305260101, guid: b8a40493a75e9f05f98864e0aaeb2aa0, type: 3}
   parent: {fileID: 205742611}
   setter:
@@ -1011,7 +1014,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 516504291}
-  - {fileID: 1434309358}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1032,10 +1034,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Layer5::IbrahKit.UI.Menu.UI_Menu
   visibility:
-    alphaController: {fileID: 0}
+    alphaController: {fileID: 516504293}
     preventHideOnPause: 0
   state:
     state: 2
+  transitions:
+  - transition: {fileID: 11400000, guid: a26d78e310a4f457388724ef288ee2eb, type: 2}
+    to: {fileID: 1033475957}
 --- !u!1 &1434309357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,6 +1052,7 @@ GameObject:
   - component: {fileID: 1434309358}
   - component: {fileID: 1434309360}
   - component: {fileID: 1434309359}
+  - component: {fileID: 1434309361}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1061,13 +1067,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434309357}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 185974849}
-  m_Father: {fileID: 1361271472}
+  m_Father: {fileID: 516504291}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1112,6 +1118,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434309357}
   m_CullTransparentMesh: 1
+--- !u!114 &1434309361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434309357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4256ef97d39d645a8ac765ea5b0867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Layer5::IbrahKit.UI.Selectable.UI_Selectable
+  stateController:
+    group: {fileID: 0}
+    state: 0
+    interactable: 1
+    playAudioOnStateChange: 1
+    OnPressedSuccess:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 52561748}
+          m_TargetAssemblyTypeName: IbrahKit.DialogTrigger, Assembly-CSharp-firstpass
+          m_MethodName: StartDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    OnPressedFailed:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPressedStop:
+      m_PersistentCalls:
+        m_Calls: []
+  transitionController:
+    transitions:
+    - rid: 8956937538518384786
+    transitionsInteractable:
+    - rid: 8956937538518384787
+    transitionsNotInteractable:
+    - rid: 8956937538518384788
+  navigationController:
+    firstSelectedCandidate: 0
+    selectableCandidate: 1
+  selectableGroup: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8956937538518384786
+      type: {class: S_Transition_Scale, ns: IbrahKit.UI.Selectable, asm: Layer5}
+      data:
+        fTarget:
+          baseValue: {fileID: 0}
+        getComponentTarget: {fileID: 0}
+        target: {fileID: 0}
+        config: {fileID: 11400000, guid: cdf7536b2ce171b5196046d5efbc452a, type: 2}
+    - rid: 8956937538518384787
+      type: {class: S_Transition_Scale, ns: IbrahKit.UI.Selectable, asm: Layer5}
+      data:
+        fTarget:
+          baseValue: {fileID: 0}
+        getComponentTarget: {fileID: 0}
+        target: {fileID: 0}
+        config: {fileID: 11400000, guid: cdf7536b2ce171b5196046d5efbc452a, type: 2}
+    - rid: 8956937538518384788
+      type: {class: S_Transition_Scale, ns: IbrahKit.UI.Selectable, asm: Layer5}
+      data:
+        fTarget:
+          baseValue: {fileID: 0}
+        getComponentTarget: {fileID: 0}
+        target: {fileID: 0}
+        config: {fileID: 0}
 --- !u!1 &1476112256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,7 +1607,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 52561747}
   - {fileID: 1491072837}
   m_Father: {fileID: 1033475956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1569,3 +1650,4 @@ SceneRoots:
   - {fileID: 1033475956}
   - {fileID: 1361271472}
   - {fileID: 1853103810}
+  - {fileID: 52561747}

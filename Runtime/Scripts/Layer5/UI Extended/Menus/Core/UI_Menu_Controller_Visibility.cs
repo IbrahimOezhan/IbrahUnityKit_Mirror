@@ -11,8 +11,7 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
-    [Serializable]
-    public class UI_Menu_Controller_Visibility : UI_Menu_Controller, IMenuControllerVisibility
+    public partial class UI_Menu
     {
         private const string DEBUG = "debug";
         private const string PAUSED = "paused";
@@ -45,12 +44,11 @@ namespace IbrahKit.UI.Menu
 
         public void ShowBy(string value)
         {
-            if (hiddenBy.Remove(value))
+            if (!hiddenBy.Remove(value)) return;
+
+            if (hiddenBy.Count == 0)
             {
-                if (hiddenBy.Count == 0)
-                {
-                    alphaController.PassHiddenCount(hiddenBy.Count);
-                }
+                alphaController.PassHiddenCount(hiddenBy.Count);
             }
         }
 
@@ -69,21 +67,6 @@ namespace IbrahKit.UI.Menu
         {
             if (state) HideBy(PAUSED);
             else ShowBy(PAUSED);
-        }
-
-        public override void OnMenuEnabled()
-        {
-            if (!UI_Menu_Manager.TryGet(out UI_Menu_Manager result)) return;
-            result.OnHide += GU_Hide;
-            result.InvokeHide();
-        }
-
-        public override void OnMenuDisabled()
-        {
-            if (UI_Menu_Manager.TryGet(out UI_Menu_Manager menu))
-            {
-                menu.OnHide -= GU_Hide;
-            }
         }
     }
 }

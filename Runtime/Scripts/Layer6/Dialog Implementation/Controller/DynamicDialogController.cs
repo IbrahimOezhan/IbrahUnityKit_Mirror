@@ -45,9 +45,9 @@ namespace IbrahKit.Dialog
         public IEnumerator StartDialogIE(SimpleDialogNode node)
         {
             dialogStateChanged?.Invoke(true);
-            menu.GetStateController().Enable();
+            menu.Enable();
             yield return Element(node, 0);
-            menu.GetStateController().Disable();
+            menu.Disable();
             dialogStateChanged?.Invoke(false);
         }
 

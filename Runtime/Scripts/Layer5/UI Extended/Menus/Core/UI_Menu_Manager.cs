@@ -20,7 +20,7 @@ namespace IbrahKit.UI.Menu
         public Action<bool> OnHide;
 
         private Action actionHide;
-        
+
         private bool hidden;
 
         private void Start()
@@ -48,7 +48,8 @@ namespace IbrahKit.UI.Menu
             }
         }
 
-        public void SimpleStateChange(UI_Menu menu, MenuStateCompact targetState,UI_Menu_Transition transition, bool countEnableToStack = true)
+        public void SimpleStateChange(UI_Menu menu, MenuStateCompact targetState, UI_Menu_Transition transition,
+            bool countEnableToStack = true)
         {
             if (!menu)
             {
@@ -56,37 +57,46 @@ namespace IbrahKit.UI.Menu
 
                 return;
             }
-            
+
+            Debug.Log(0);
+
+
             switch (targetState)
             {
                 case MenuStateCompact.DISABLED:
+                    Debug.Log(1);
                     if (menuNavigationStack.Contains(menu) && menuNavigationStack.Peek() != menu)
                     {
                         IbrahDebug.LogError("Can only disable menus not in stack or the current menu in the stack");
                         return;
                     }
+
+                    Debug.Log(2);
+
                     StartCoroutine(transition.MenuIn(menu));
                     break;
                 case MenuStateCompact.ENABLED:
                     if (menuNavigationStack.Contains(menu))
                     {
-                        IbrahDebug.LogError("Cannot enable menu that is already in stack. Use Transition to first disable the previous one");
+                        IbrahDebug.LogError(
+                            "Cannot enable menu that is already in stack. Use Transition to first disable the previous one");
                         return;
                     }
+
                     StartCoroutine(transition.MenuOut(menu));
-                    if(menuNavigationStack.Count == 0 && countEnableToStack) menuNavigationStack.Push(menu);
+                    if (menuNavigationStack.Count == 0 && countEnableToStack) menuNavigationStack.Push(menu);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(targetState), targetState, null);
             }
         }
 
-        public void TransitionBack(UI_Menu_Transition transition) 
+        public void TransitionBack(UI_Menu_Transition transition)
         {
-            Transition(menuNavigationStack.Peek(),menuNavigationStack.Pop(),transition);
+            Transition(menuNavigationStack.Peek(), menuNavigationStack.Pop(), transition);
         }
 
-        public void Transition(UI_Menu from, UI_Menu to,UI_Menu_Transition transition, bool allowBack = true)
+        public void Transition(UI_Menu from, UI_Menu to, UI_Menu_Transition transition, bool allowBack = true)
         {
             if (!transition)
             {
@@ -108,7 +118,7 @@ namespace IbrahKit.UI.Menu
             if (!allowBack)
             {
                 menuNavigationStack.Clear();
-                StartCoroutine(transition.Transition(this,from,to));
+                StartCoroutine(transition.Transition(this, from, to));
                 menuNavigationStack.Push(to);
                 return;
             }
@@ -128,9 +138,9 @@ namespace IbrahKit.UI.Menu
                 }
             }
 
-            StartCoroutine(transition.Transition(this,from,to));
+            StartCoroutine(transition.Transition(this, from, to));
         }
-        
+
         public void Hide()
         {
             hidden = !hidden;

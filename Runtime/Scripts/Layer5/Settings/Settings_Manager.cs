@@ -22,20 +22,20 @@ namespace IbrahKit.Settings
             saveData = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
 
             Dictionary<string, float> dict = new();
-            
+
             GetManagerData().GetConfigs().ForEach(config =>
             {
                 float oldValue = GetValue(config.GetKey(), config.DefaultValue);
-                
+
                 Setting result = config.GetInstance(oldValue);
 
                 settingsInit.Add(config.GetKey(), result);
-                
+
                 dict.Add(result.GetKey(), result.GetCurrent());
-                
+
                 result.onValueChanged += OnSettingUpdates;
             });
-            
+
             saveData.settingValueMap = dict;
         }
 
@@ -43,7 +43,7 @@ namespace IbrahKit.Settings
         {
             saveData.settingValueMap[setting.GetKey()] = setting.GetCurrent();
         }
-        
+
         public float GetValue(string key, float defaultValue)
         {
             return saveData.settingValueMap.GetValueOrDefault(key, defaultValue);
