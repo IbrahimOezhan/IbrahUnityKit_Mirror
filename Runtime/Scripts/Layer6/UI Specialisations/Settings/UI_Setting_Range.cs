@@ -3,6 +3,7 @@
 using IbrahKit.Settings;
 using IbrahKit.UI;
 using IbrahKit.UI.Selectable;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 #endregion
@@ -11,32 +12,17 @@ namespace IbrahKit
 {
     public class UI_Setting_Range : UI_Setting
     {
-        [SerializeField] private UI_Selectable left;
+        [SerializeField, Required] private UI_Selectable left;
 
-        [SerializeField] private UI_Selectable right;
+        [SerializeField, Required] private UI_Selectable right;
 
         [SerializeField] private UI_Modifier_Text_Modifier value;
 
-        protected override bool CanSpawnPro(Setting setting)
+        protected override bool InitPro(Setting setting)
         {
-            if (setting is not ISettingNumber num)
-            {
-                return false;
-            }
+            left.GetStateController().GetOnPressSuccess().AddListener(setting.Increment);
 
-            if (left == null)
-            {
-                return false;
-            }
-
-            if (right == null)
-            {
-                return false;
-            }
-
-            left.GetStateController().GetOnPressSuccess().AddListener(num.Increment);
-
-            right.GetStateController().GetOnPressSuccess().AddListener(num.Decrement);
+            right.GetStateController().GetOnPressSuccess().AddListener(setting.Decrement);
 
             return true;
         }

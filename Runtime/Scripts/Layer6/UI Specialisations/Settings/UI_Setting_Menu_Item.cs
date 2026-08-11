@@ -4,6 +4,7 @@ using System;
 using IbrahKit.Settings;
 using IbrahKit.UI.Menu;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 #endregion
 
@@ -16,14 +17,14 @@ namespace IbrahKit.UI
 
         protected override bool Spawn(RectTransform parent, UI_Menu menu, out GameObject go)
         {
-            if (config.TryCreateUserInterface(Vector3.zero, Quaternion.identity, parent, out UI_Setting res))
-            {
-                go = res.gameObject;
+            UI_Setting setting = Object.Instantiate(config.UiSetting, parent);
 
-                return true;
-            }
+            Settings_Manager.GetInstance().TryGet(config.GetSettingConfig().GetKey(), out Setting s);
 
-            go = null;
+            setting.Init(s);
+
+            go = setting.gameObject;
+
             return false;
         }
     }

@@ -11,6 +11,14 @@ namespace IbrahKit.Settings
     {
         private Setting setting;
 
+        private void OnDestroy()
+        {
+            if (setting != null)
+            {
+                setting.onValueChanged -= UpdateUI;
+            }
+        }
+
         public void OnMenuInitBottomUp()
         {
         }
@@ -19,19 +27,16 @@ namespace IbrahKit.Settings
         {
         }
 
-        public bool CanSpawn(Setting setting)
-        {
-            return CanSpawnPro(setting);
-        }
-
         public void Init(Setting setting)
         {
             this.setting = setting;
 
-            setting.OnValueChanged += UpdateUI;
+            setting.onValueChanged += UpdateUI;
+
+            InitPro(setting);
         }
 
-        protected abstract bool CanSpawnPro(Setting setting);
+        protected abstract bool InitPro(Setting setting);
 
         public abstract void UpdateUI();
 

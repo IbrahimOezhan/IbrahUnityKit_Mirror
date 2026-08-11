@@ -1,7 +1,6 @@
 #region
 
 using System;
-using IbrahKit.Debugging;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,9 +21,9 @@ namespace IbrahKit.Input.Cursor
             Hovering,
             Down,
         }
-        
+
         [SerializeField] private Cursor_Custom_Sprite_Style spriteStyle;
-        
+
         [SerializeField] private RectTransform canvas;
 
         [SerializeField] private RectTransform cursorTransform;
@@ -43,7 +42,7 @@ namespace IbrahKit.Input.Cursor
         public override void Clamped()
         {
             cursorImage.gameObject.SetActive(true);
-            
+
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
 
@@ -54,7 +53,7 @@ namespace IbrahKit.Input.Cursor
         {
             UnityEngine.Cursor.visible = false;
             UnityEngine.Cursor.lockState = CursorLockMode.None;
-            
+
             cursorImage.gameObject.SetActive(true);
 
             RenderCursor();
@@ -74,8 +73,8 @@ namespace IbrahKit.Input.Cursor
             if (!Cursor_Manager.TryGet(out Cursor_Manager cim)) return;
 
             bool isOverReceiver = cim.GetCursorReceiver().IsOverIReceiver
-                (cim.GetCursorReceiver().GameRaycastTargets(
-                    EventSystem.current, cim.GetCamera(), cim.GetCursorInput().GetMousePos()));
+            (cim.GetCursorReceiver().GameRaycastTargets(
+                EventSystem.current, cim.GetCamera(), cim.GetCursorInput().GetMousePos()));
 
             if (!isOverReceiver)
             {
@@ -138,7 +137,7 @@ namespace IbrahKit.Input.Cursor
 
             float mappedX = (normalizedX - 0.5f) * canvasWidth;
             float mappedY = (normalizedY - 0.5f) * canvasHeight;
-            
+
             return new(mappedX, mappedY);
         }
     }

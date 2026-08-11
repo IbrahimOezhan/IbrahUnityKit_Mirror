@@ -4,7 +4,6 @@ using System;
 using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
 using IbrahKit.Input;
-using IbrahKit.UI;
 using IbrahKit.UI.Menu;
 using Sirenix.OdinInspector;
 using UnityEngine;

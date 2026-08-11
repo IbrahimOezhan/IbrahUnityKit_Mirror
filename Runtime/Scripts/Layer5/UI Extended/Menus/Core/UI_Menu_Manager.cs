@@ -28,19 +28,19 @@ namespace IbrahKit.UI.Menu
         /// </summary>
         private bool hidden;
 
-        protected override void InstanceAwake()
-        {
-            base.InstanceAwake();
-
-            actionHide = Hide;
-        }
-
         private void Start()
         {
             if (Input_Shortcut_Manager.TryGet(out Input_Shortcut_Manager res))
             {
                 res.RegisterAction(GetManagerData().GetKey(), actionHide);
             }
+        }
+
+        protected override void InstanceAwake()
+        {
+            base.InstanceAwake();
+
+            actionHide = Hide;
         }
 
         protected override void InstanceDestroy()

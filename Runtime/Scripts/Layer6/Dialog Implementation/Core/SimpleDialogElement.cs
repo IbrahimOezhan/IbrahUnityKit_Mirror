@@ -103,20 +103,20 @@ namespace IbrahKit.Dialog
                 action.Invoke(tokensInAffect, text);
                 return text;
             }
-            
+
             for (int i = 0; i < text.Length; i++)
             {
                 if (i == _tokens[0].Start)
                 {
                     action.Invoke(tokensInAffect, cache);
 
-                    ProcessToken(ref i,ref cache,tokens,tokensInAffect);
+                    ProcessToken(ref i, ref cache, tokens, tokensInAffect);
 
                     continue;
                 }
 
-                output += ProcessChar(text[i],tokensInAffect);
-                cache += ProcessChar(text[i],tokensInAffect);
+                output += ProcessChar(text[i], tokensInAffect);
+                cache += ProcessChar(text[i], tokensInAffect);
             }
 
             return output;
@@ -136,14 +136,14 @@ namespace IbrahKit.Dialog
                 yield return action.Invoke(tokensInAffect, text);
                 yield break;
             }
-            
+
             for (int i = 0; i < text.Length; i++)
             {
                 if (i == _tokens[0].Start)
                 {
                     yield return action.Invoke(tokensInAffect, cache);
 
-                    ProcessToken(ref i,ref cache,tokens,tokensInAffect);
+                    ProcessToken(ref i, ref cache, tokens, tokensInAffect);
 
                     continue;
                 }
@@ -155,12 +155,12 @@ namespace IbrahKit.Dialog
                     append = tokensInAffect.ElementAt(i1).Get().Process(append);
                 }
 
-                output += ProcessChar(text[i],tokensInAffect);
-                cache += ProcessChar(text[i],tokensInAffect);
+                output += ProcessChar(text[i], tokensInAffect);
+                cache += ProcessChar(text[i], tokensInAffect);
             }
         }
 
-        private void ProcessToken(ref int i,ref string cache, List<Token> _tokens,Stack<Token> tokensInAffect)
+        private void ProcessToken(ref int i, ref string cache, List<Token> _tokens, Stack<Token> tokensInAffect)
         {
             switch (_tokens[0].Type)
             {
@@ -179,7 +179,7 @@ namespace IbrahKit.Dialog
 
         private string ProcessChar(char c, Stack<Token> tokens)
         {
-            string append =c.ToString();
+            string append = c.ToString();
 
             for (var i1 = 0; i1 < tokens.Count; i1++)
             {

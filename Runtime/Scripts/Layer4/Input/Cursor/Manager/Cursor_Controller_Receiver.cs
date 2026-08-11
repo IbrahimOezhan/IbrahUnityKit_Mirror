@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IbrahKit.Input.Cursor;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,17 +15,17 @@ namespace IbrahKit.Input.Cursor
     public class Cursor_Controller_Receiver
     {
         [SerializeField, ReadOnly] private List<GameObject> receivers = new();
-        
+
         public void Run(Camera camera, Vector2 mousePos)
         {
             receivers = GameRaycastTargets(EventSystem.current, camera, mousePos).ToList();
         }
-        
+
         public bool IsOverIReceiver(HashSet<GameObject> objects)
         {
             return objects.Any(x => x.GetComponent<ICursorReceiver>() != null);
         }
-        
+
         public HashSet<GameObject> GameRaycastTargets(EventSystem system, Camera camera, Vector2 mousePos)
         {
             return !system.IsPointerOverGameObject()

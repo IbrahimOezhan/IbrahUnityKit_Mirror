@@ -40,7 +40,8 @@ namespace IbrahKit.UI.Selectable
             if (!deselectOnClickAnywhere) return;
 
             if (!Cursor_Manager.TryGet(out Cursor_Manager result) || result.GetCursorReceiver()
-                    .IsOverIReceiver(result.GetCursorReceiver().GetUIRaycastTargets(EventSystem.current, result.GetCursorInput().GetMousePos()))) return;
+                    .IsOverIReceiver(result.GetCursorReceiver()
+                        .GetUIRaycastTargets(EventSystem.current, result.GetCursorInput().GetMousePos()))) return;
 
             selectables.ForEach(x => x.GetStateController().PressedStop());
         }

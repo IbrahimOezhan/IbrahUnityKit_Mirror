@@ -23,24 +23,15 @@ namespace IbrahKit.Settings
 
             GetManagerData().GetConfigs().ForEach(config =>
             {
-                if (config.TryGetInstance(out Setting settingResult))
-                {
-                    if (settingsInit.TryAdd(config.GetKey(), settingResult))
-                    {
-                        settingResult.Init(config.GetDefaultValue());
-                    }
-                }
+                Setting result = config.GetInstance();
+                result.Set(GetValue(config.GetKey(),result.GetCurrent()));
+                settingsInit.TryAdd(config.GetKey(), result);
             });
         }
 
-        public string GetValue(string key, string defaultValue)
+        public float GetValue(string key, float defaultValue)
         {
-            if (saveData.GetKeyValues().TryGetValue(key, out string value))
-            {
-                return value;
-            }
-
-            return defaultValue;
+            return saveData.GetKeyValues().GetValueOrDefault(key, defaultValue);
         }
 
         public bool TryGet(string key, out Setting setting)
@@ -50,9 +41,9 @@ namespace IbrahKit.Settings
 
         private class SaveData : ISavable
         {
-            [JsonInclude] private Dictionary<string, string> settingValueMap = new();
+            [JsonInclude] private Dictionary<string, float> settingValueMap = new();
 
-            public Dictionary<string, string> GetKeyValues() => settingValueMap;
+            public Dictionary<string, float> GetKeyValues() => settingValueMap;
         }
     }
 }

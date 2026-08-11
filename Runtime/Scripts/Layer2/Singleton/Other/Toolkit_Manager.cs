@@ -7,10 +7,10 @@ using System.Linq;
 using IbrahKit.Debugging;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEngine;
 
 #endregion
 
@@ -26,18 +26,6 @@ namespace IbrahKit.Manager
 
         [SerializeField] private bool excludeInScene = true;
 
-        #if UNITY_EDITOR
-        [MenuItem("GameObject/IbrahKit/Toolkit_Manager", false, 10)]
-        public static void MenuItem()
-        {
-               Transform transform = Selection.activeTransform;
-               
-               GameObject go = new("Toolkit_Manager", typeof(Toolkit_Manager));
-               go.transform.parent = transform;
-            
-        }
-        #endif
-        
         private void Awake()
         {
             if (Application.isPlaying)
@@ -45,6 +33,17 @@ namespace IbrahKit.Manager
                 DontDestroyOnLoad(gameObject);
             }
         }
+
+#if UNITY_EDITOR
+        [MenuItem("GameObject/IbrahKit/Toolkit_Manager", false, 10)]
+        public static void MenuItem()
+        {
+            Transform transform = Selection.activeTransform;
+
+            GameObject go = new("Toolkit_Manager", typeof(Toolkit_Manager));
+            go.transform.parent = transform;
+        }
+#endif
 
         public IEnumerable Dropdown()
         {

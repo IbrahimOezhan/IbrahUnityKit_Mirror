@@ -1,6 +1,5 @@
 #region
 
-using IbrahKit.Input.Cursor;
 using IbrahKit.Manager;
 using UnityEngine;
 
@@ -21,9 +20,9 @@ namespace IbrahKit.Input.Cursor
             if (!camera) camera = Camera.main;
 
             cursor_input_controller.Update();
-            
+
             cursor_state_controller.Run();
-            
+
             cursor_receiver_controller.Run(GetCamera(), cursor_input_controller.GetMousePos());
         }
 
