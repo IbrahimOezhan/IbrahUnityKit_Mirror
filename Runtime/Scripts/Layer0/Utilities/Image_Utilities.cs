@@ -208,8 +208,11 @@ namespace IbrahKit.Utilities
 
         public static Texture2D DownscaleNearest(this Texture2D from, Vector2Int newSize)
         {
-            Texture2D to = new Texture2D(newSize.x, newSize.y, from.format, from.mipmapCount > 1);
-            
+            Texture2D to = new Texture2D(newSize.x, newSize.y, from.format, from.mipmapCount > 1)
+            {
+                filterMode = from.filterMode
+            };
+
             float scaleX = from.width / (float) newSize.x;
             float scaleY = from.height / (float) newSize.y;
 
