@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5826ceec-ff8d-4420-8b16-708fdd6104e7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Third_Party/uLayout" beforeDir="false" afterPath="$PROJECT_DIR$/Third_Party/uLayout" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="5826ceec-ff8d-4420-8b16-708fdd6104e7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,7 +85,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Added missing files to git??" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added missing files to git??" />
+    <MESSAGE value="Changed uLayout from Submodule to Subtree" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed uLayout from Submodule to Subtree" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

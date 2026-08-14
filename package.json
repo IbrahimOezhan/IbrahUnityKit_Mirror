@@ -1,7 +1,7 @@
 {
   "name": "com.ibrahimoezhan.ibrahunitykit",
   "displayName": "IbrahUnityKit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "unity": "6000.0",
   "description": "A toolkit for unity containing different systems to help you build games faster.",
   "author": {
