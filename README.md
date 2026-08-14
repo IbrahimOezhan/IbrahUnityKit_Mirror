@@ -29,6 +29,11 @@ Open the default Package Manager and click on the + in the upper left corner. Se
 
 Simply clone the repository and put it into your project or add it as a submodule
 
+```
+git submodule add https://gitlab.com/ibrahim_oezhan/IbrahUnityKit.git
+git submodule update --init
+```
+
 ## AI Usage Disclosure
 
 https://wiki.ibrahimoezhan.com/Ibrah-Unity-Kit/AI_Usage_Disclousure
