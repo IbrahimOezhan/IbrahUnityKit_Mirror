@@ -64,11 +64,14 @@ namespace IbrahKit.Utilities
             }
 
             Texture2D texture = ByteArrayToTexture(bytes, size);
+            
+            return texture.ToSprite();
+        }
 
-            Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height),
+        public static Sprite ToSprite(this Texture2D texture)
+        {
+            return Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height),
                 new Vector2(0.5f, 0.5f));
-
-            return sprite;
         }
 
         public static Sprite Grayscale(this Sprite sprite)
@@ -170,7 +173,7 @@ namespace IbrahKit.Utilities
                 }
             }
 
-            Texture2D newTex = new(tex.width, tex.height, TextureFormat.RGBA32, false);
+            Texture2D newTex = new(tex.width, tex.height, tex.format, false);
 
             newTex.SetPixels(newColors);
 
@@ -203,6 +206,32 @@ namespace IbrahKit.Utilities
             return texture;
         }
 
+        public static Texture2D DownscaleNearest(this Texture2D from, Vector2Int newSize)
+        {
+            Texture2D to = new Texture2D(newSize.x, newSize.y, from.format, from.mipmapCount > 1);
+            
+            float scaleX = from.width / (float) newSize.x;
+            float scaleY = from.height / (float) newSize.y;
+
+            for (int y = 0; y < newSize.y; y++)
+            {
+                float srcY = Mathf.Floor((float)(y + 0.5) * scaleY);
+                srcY = Mathf.Clamp(srcY, 0, from.height - 1);
+
+                for (int x = 0; x < newSize.x; x++)
+                {
+                    float srcX = Mathf.Floor((float)(x + 0.5) * scaleX);
+                    srcX = Mathf.Clamp(srcX, 0, from.width - 1);
+                    
+                    to.SetPixel(x,y,from.GetPixel((int)srcX,(int)srcY));
+                }
+            }
+            
+            to.Apply();
+
+            return to;
+        }
+
         public static Texture2D Lerp(Texture2D from, Texture2D to, float t)
         {
             if (from.width != to.width || from.height != to.height)
@@ -211,7 +240,7 @@ namespace IbrahKit.Utilities
                     $"Textures must be the same size: from: {from.width}x{from.height} to: {to.width}x{to.height}");
             }
 
-            Texture2D tex = new(from.width, from.height, TextureFormat.ARGB32, from.mipmapCount > 1);
+            Texture2D tex = new(from.width, from.height, from.format, from.mipmapCount > 1);
 
             Color[] pixelsFrom = from.GetPixels();
 

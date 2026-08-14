@@ -1,5 +1,6 @@
 #region
 
+using IbrahKit.UI.Core.Config;
 using UnityEngine;
 
 #endregion
@@ -7,7 +8,7 @@ using UnityEngine;
 namespace IbrahKit.UI.Menu
 {
     [CreateAssetMenu(fileName = "NewUIMenuConfig", menuName = "IbrahKit/UI/Menu/MenuConfig")]
-    public class UI_Menu_Config : Config<UI_Menu_Config>
+    public class UI_Menu_Config : UI_Config<UI_Menu_Config>
     {
         [SerializeField] private Menu_Item_Button menuButtonPrefab;
 

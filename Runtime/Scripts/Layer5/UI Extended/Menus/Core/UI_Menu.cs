@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using IbrahKit.UI.Core.Config;
 using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -10,9 +11,9 @@ using UnityEngine;
 
 namespace IbrahKit.UI.Menu
 {
-    public partial class UI_Menu : MonoBehaviour, IConfigHolder, IMenuReference
+    public partial class UI_Menu : MonoBehaviour, IUIConfigHolder, IMenuReference
     {
-        [SerializeField] private Configs configs;
+        [SerializeField] private UI_Configs configs;
 
         protected virtual void Awake()
         {
@@ -33,7 +34,7 @@ namespace IbrahKit.UI.Menu
             }
         }
 
-        public bool TryGetConfig<TConfig>(out TConfig config) where TConfig : Config<TConfig>
+        public bool TryGetConfig<TConfig>(out TConfig config) where TConfig : UI_Config<TConfig>
         {
             return configs.TryGet(out config);
         }

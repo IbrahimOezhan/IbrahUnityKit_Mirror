@@ -32,7 +32,7 @@ namespace IbrahKit.Input
             Input_Shortcut_Manager.GetInstance().UnregisterAction(screenshot, actionScreenshot);
         }
 
-        public void Screenshot()
+        public static void Screenshot()
         {
             Image_Utilities.Screenshot();
         }

@@ -1,9 +1,9 @@
 {
   "name": "com.ibrahimoezhan.ibrahunitykit",
   "displayName": "IbrahUnityKit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "6000.0",
-  "description": "Toolkit containing many different Components",
+  "description": "A toolkit for unity containing different systems to help you build games faster.",
   "author": {
     "name": "Ibrahim Oezhan",
     "url": "https://gitlab.com/ibrahim_oezhan/IbrahUnityKit"

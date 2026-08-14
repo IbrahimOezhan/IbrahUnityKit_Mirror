@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using IbrahKit.Debugging;
+using IbrahKit.UI.Core.Config;
 using UnityEngine;
 
 #endregion
@@ -10,7 +11,7 @@ using UnityEngine;
 namespace IbrahKit.UI
 {
     [CreateAssetMenu(fileName = "NewUIFitterConfig", menuName = "IbrahKit/UI/Modifier/FitterConfig")]
-    public class UI_Rect_Fitter_Config : Config<UI_Rect_Fitter_Config>
+    public class UI_Rect_Fitter_Config : UI_Config<UI_Rect_Fitter_Config>
     {
         [SerializeField] private float margin = 0;
 

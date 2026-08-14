@@ -2,13 +2,14 @@
 
 using System.Collections.Generic;
 using IbrahKit.Settings;
+using IbrahKit.UI.Core.Config;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.UI
 {
-    public class UI_Setting_Config : Config<UI_Setting_Config>
+    public class UI_Setting_Config : UI_Config<UI_Setting_Config>
     {
         [SerializeField] private List<UI_Setting> settings = new();
 
