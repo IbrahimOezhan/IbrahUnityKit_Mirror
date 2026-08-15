@@ -51,7 +51,7 @@ namespace IbrahKit.Utilities
             return texture.EncodeToPNG();
         }
 
-        public static Sprite ByteArrayToSprite(byte[] bytes, Vector2Int size)
+        public static Sprite ByteArrayToSprite(byte[] bytes, Vector2Int size, TextureFormat format = TextureFormat.RGBA32, bool mipChain = false)
         {
             if (bytes == null)
             {
@@ -63,9 +63,30 @@ namespace IbrahKit.Utilities
                 throw new Exception("Bytes array is empty");
             }
 
-            Texture2D texture = ByteArrayToTexture(bytes, size);
+            Texture2D texture = ByteArrayToTexture(bytes, size, format, mipChain);
             
             return texture.ToSprite();
+        }
+        
+        public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size, TextureFormat format, bool mipChain)
+        {
+            if (bytes == null)
+            {
+                throw new NullReferenceException("Bytes array is null");
+            }
+
+            if (bytes.Length == 0)
+            {
+                throw new Exception("Bytes array is empty");
+            }
+
+            Texture2D texture = new(size.x, size.y, format, mipChain);
+
+            texture.LoadRawTextureData(bytes);
+
+            texture.Apply();
+
+            return texture;
         }
 
         public static Sprite ToSprite(this Texture2D texture)
@@ -185,32 +206,12 @@ namespace IbrahKit.Utilities
             return newSprite;
         }
 
-        public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size)
-        {
-            if (bytes == null)
-            {
-                throw new NullReferenceException("Bytes array is null");
-            }
-
-            if (bytes.Length == 0)
-            {
-                throw new Exception("Bytes array is empty");
-            }
-
-            Texture2D texture = new(size.x, size.y, TextureFormat.RGBA32, false);
-
-            texture.LoadRawTextureData(bytes);
-
-            texture.Apply();
-
-            return texture;
-        }
-
         public static Texture2D DownscaleNearest(this Texture2D from, Vector2Int newSize)
         {
             Texture2D to = new Texture2D(newSize.x, newSize.y, from.format, from.mipmapCount > 1)
             {
-                filterMode = from.filterMode
+                filterMode = from.filterMode,
+                
             };
 
             float scaleX = from.width / (float) newSize.x;
