@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace IbrahKit.UI.Menu
 {
     public partial class UI_Menu
@@ -15,7 +13,7 @@ namespace IbrahKit.UI.Menu
         protected virtual void OnDestroy()
         {
         }
-    
+
         protected virtual void ObjectLifecycle()
         {
         }
@@ -48,4 +46,3 @@ namespace IbrahKit.UI.Menu
         }
     }
 }
-

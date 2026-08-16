@@ -12,11 +12,11 @@ namespace IbrahKit.UI.Menu
     public partial class UI_Menu
     {
         [SerializeField, ReadOnly] private MenuState state = MenuState.DISABLED;
-        
+
         [SerializeField] private List<MenuTransition> transitions = new();
-        
+
         public Action<bool> OnStateChanged;
-        
+
         public void Enable() => Enable(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
 
         public void Disable() => Disable(ScriptableObject.CreateInstance<UI_Menu_Transition_Instant>());
@@ -26,14 +26,14 @@ namespace IbrahKit.UI.Menu
         public void Enable(UI_Menu_Transition transition)
         {
             if (!UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false)) return;
-            
+
             result.SimpleStateChange(GetMenu(), MenuStateCompact.ENABLED, transition);
         }
 
         public void Disable(UI_Menu_Transition transition)
         {
             if (!UI_Menu_Manager.TryGet(out UI_Menu_Manager result, false)) return;
-            
+
             result.SimpleStateChange(GetMenu(), MenuStateCompact.DISABLED, transition);
         }
 
@@ -48,7 +48,7 @@ namespace IbrahKit.UI.Menu
                 result.SimpleStateChange(GetMenu(), menuState, transition);
             }
         }
-        
+
         public void Transition(int i)
         {
             Transition(transitions[i].Menu, transitions[i].Transition);

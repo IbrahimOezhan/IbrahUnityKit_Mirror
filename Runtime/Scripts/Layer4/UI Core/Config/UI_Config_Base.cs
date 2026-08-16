@@ -10,4 +10,3 @@ namespace IbrahKit.UI.Core.Config
     {
     }
 }
-

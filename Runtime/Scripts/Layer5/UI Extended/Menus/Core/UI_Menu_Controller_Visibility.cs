@@ -1,6 +1,5 @@
 #region
 
-using System;
 using System.Collections.Generic;
 using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;

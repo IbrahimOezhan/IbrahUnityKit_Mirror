@@ -50,7 +50,7 @@ namespace IbrahKit.Utilities
 
             return texture.EncodeToPNG();
         }
-        
+
         public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size, TextureFormat format, bool mipChain)
         {
             if (bytes == null)
@@ -75,16 +75,16 @@ namespace IbrahKit.Utilities
         public static Sprite ToSprite(this Texture2D texture, float pixelsPerUnit = 100)
         {
             return Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height),
-                new Vector2(0.5f, 0.5f),pixelsPerUnit);
+                new Vector2(0.5f, 0.5f), pixelsPerUnit);
         }
-        
+
         public static Texture2D Grayscale(this Texture2D texture)
         {
             if (texture == null)
             {
                 throw new NullReferenceException("Texture is null");
             }
-            
+
             Color[] pixels = texture.GetPixels();
 
             for (int i = 0; i < pixels.Length; i++)
@@ -185,11 +185,10 @@ namespace IbrahKit.Utilities
             Texture2D to = new Texture2D(newSize.x, newSize.y, from.format, from.mipmapCount > 1)
             {
                 filterMode = from.filterMode,
-                
             };
 
-            float scaleX = from.width / (float) newSize.x;
-            float scaleY = from.height / (float) newSize.y;
+            float scaleX = from.width / (float)newSize.x;
+            float scaleY = from.height / (float)newSize.y;
 
             for (int y = 0; y < newSize.y; y++)
             {
@@ -200,11 +199,11 @@ namespace IbrahKit.Utilities
                 {
                     float srcX = Mathf.Floor((float)(x + 0.5) * scaleX);
                     srcX = Mathf.Clamp(srcX, 0, from.width - 1);
-                    
-                    to.SetPixel(x,y,from.GetPixel((int)srcX,(int)srcY));
+
+                    to.SetPixel(x, y, from.GetPixel((int)srcX, (int)srcY));
                 }
             }
-            
+
             to.Apply();
 
             return to;
