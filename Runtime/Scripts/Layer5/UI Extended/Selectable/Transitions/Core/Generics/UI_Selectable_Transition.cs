@@ -23,12 +23,14 @@ namespace IbrahKit.UI.Selectable
         [SerializeField] private SOTarget config;
         private bool initialized;
 
+        #if  UNITY_EDITOR
         [Button, ShowIf(nameof(IsSoNull))]
         public void Create()
         {
             config = Asset_Utilities.CreateScriptableObject<SOTarget>(
                 $"Assets/ScriptableObjects/{typeof(SOTarget).Name}.asset");
         }
+        #endif
 
         // ReSharper disable Unity.PerformanceAnalysis
         public override void Init(GameObject go)

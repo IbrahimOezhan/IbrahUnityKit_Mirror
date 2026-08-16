@@ -50,23 +50,6 @@ namespace IbrahKit.Utilities
 
             return texture.EncodeToPNG();
         }
-
-        public static Sprite ByteArrayToSprite(byte[] bytes, Vector2Int size, TextureFormat format = TextureFormat.RGBA32, bool mipChain = false)
-        {
-            if (bytes == null)
-            {
-                throw new NullReferenceException("Bytes array is null");
-            }
-
-            if (bytes.Length == 0)
-            {
-                throw new Exception("Bytes array is empty");
-            }
-
-            Texture2D texture = ByteArrayToTexture(bytes, size, format, mipChain);
-            
-            return texture.ToSprite();
-        }
         
         public static Texture2D ByteArrayToTexture(byte[] bytes, Vector2Int size, TextureFormat format, bool mipChain)
         {
@@ -89,22 +72,20 @@ namespace IbrahKit.Utilities
             return texture;
         }
 
-        public static Sprite ToSprite(this Texture2D texture)
+        public static Sprite ToSprite(this Texture2D texture, float pixelsPerUnit = 100)
         {
             return Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height),
-                new Vector2(0.5f, 0.5f));
+                new Vector2(0.5f, 0.5f),pixelsPerUnit);
         }
-
-        public static Sprite Grayscale(this Sprite sprite)
+        
+        public static Texture2D Grayscale(this Texture2D texture)
         {
-            if (sprite == null)
+            if (texture == null)
             {
-                throw new NullReferenceException("Sprite is null");
+                throw new NullReferenceException("Texture is null");
             }
-
-            Texture2D texture2D = sprite.texture;
-
-            Color[] pixels = texture2D.GetPixels();
+            
+            Color[] pixels = texture.GetPixels();
 
             for (int i = 0; i < pixels.Length; i++)
             {
@@ -115,31 +96,27 @@ namespace IbrahKit.Utilities
                 pixels[i] = new(range, range, range, pixels[i].a);
             }
 
-            Texture2D tex = new(texture2D.width, texture2D.height, texture2D.format, false);
+            Texture2D tex = new(texture.width, texture.height, texture.format, texture.mipmapCount > 1);
 
             tex.SetPixels(pixels);
 
             tex.Apply();
 
-            Rect rect = new(0, 0, tex.width, tex.height);
-
-            return Sprite.Create(tex, rect, new Vector2(0.5f, 0.5f));
+            return tex;
         }
 
 
-        public static Sprite Center(this Sprite sprite)
+        public static Texture2D Center(this Texture2D texture)
         {
-            Texture2D tex = sprite.texture;
-
-            Color[] colors = tex.GetPixels();
+            Color[] colors = texture.GetPixels();
 
             Vector4Int minMax = new Vector4Int(int.MaxValue, int.MinValue, int.MaxValue, int.MinValue);
 
-            for (int y = 0; y < tex.height; y++)
+            for (int y = 0; y < texture.height; y++)
             {
-                for (int x = 0; x < tex.width; x++)
+                for (int x = 0; x < texture.width; x++)
                 {
-                    Color c = colors[GetPixelIndex(x, y, tex.width)];
+                    Color c = colors[GetPixelIndex(x, y, texture.width)];
 
                     if (c.a == 0) continue;
 
@@ -165,9 +142,9 @@ namespace IbrahKit.Utilities
                 }
             }
 
-            int xOffset = (tex.width / 2) - ((minMax[1] - minMax[0]) / 2) - minMax[0];
+            int xOffset = (texture.width / 2) - ((minMax[1] - minMax[0]) / 2) - minMax[0];
 
-            int yOffset = (tex.height / 2) - ((minMax[3] - minMax[2]) / 2) - minMax[2];
+            int yOffset = (texture.height / 2) - ((minMax[3] - minMax[2]) / 2) - minMax[2];
 
             Color transparent = new(0, 0, 0, 0);
 
@@ -178,32 +155,29 @@ namespace IbrahKit.Utilities
                 colors[i] = transparent;
             }
 
-            for (int y = 0; y < tex.height; y++)
+            for (int y = 0; y < texture.height; y++)
             {
-                for (int x = 0; x < tex.width; x++)
+                for (int x = 0; x < texture.width; x++)
                 {
                     int newIndexX = x + xOffset;
 
                     int newIndexY = y + yOffset;
 
-                    if (newIndexX > 0 && newIndexX < tex.width && newIndexY > 0 && newIndexY < tex.height)
+                    if (newIndexX > 0 && newIndexX < texture.width && newIndexY > 0 && newIndexY < texture.height)
                     {
-                        newColors[GetPixelIndex(newIndexX, newIndexY, tex.width)] =
-                            colors[GetPixelIndex(x, y, tex.width)];
+                        newColors[GetPixelIndex(newIndexX, newIndexY, texture.width)] =
+                            colors[GetPixelIndex(x, y, texture.width)];
                     }
                 }
             }
 
-            Texture2D newTex = new(tex.width, tex.height, tex.format, false);
+            Texture2D newTex = new(texture.width, texture.height, texture.format, false);
 
             newTex.SetPixels(newColors);
 
             newTex.Apply();
 
-            Sprite newSprite = Sprite.Create(newTex, new(0, 0, newTex.width, newTex.height), new Vector2(0.5f, 0.5f),
-                sprite.pixelsPerUnit);
-
-            return newSprite;
+            return newTex;
         }
 
         public static Texture2D DownscaleNearest(this Texture2D from, Vector2Int newSize)
@@ -236,7 +210,7 @@ namespace IbrahKit.Utilities
             return to;
         }
 
-        public static Texture2D Lerp(Texture2D from, Texture2D to, float t)
+        public static Texture2D Lerp(this Texture2D from, Texture2D to, float t)
         {
             if (from.width != to.width || from.height != to.height)
             {

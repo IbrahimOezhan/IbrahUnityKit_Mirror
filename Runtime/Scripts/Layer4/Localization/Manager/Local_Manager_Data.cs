@@ -8,7 +8,9 @@ using IbrahKit.Debugging;
 using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 #endregion
@@ -98,8 +100,10 @@ namespace IbrahKit.Localization
 
         private void OnParserChanged()
         {
+            #if UNITY_EDITOR
             EditorUtility.SetDirty(this);
             AssetDatabase.SaveAssets();
+            #endif
         }
 
         public bool TryGetString(string key, Local_Language language, out string result)
