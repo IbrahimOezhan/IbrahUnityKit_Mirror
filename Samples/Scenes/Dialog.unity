@@ -357,6 +357,21 @@ MonoBehaviour:
   m_sizing:
     x: 1
     y: 1
+  m_minWidth: 0
+  m_useMinWidth: 0
+  m_minHeight: 0
+  m_useMinHeight: 0
+  m_maxWidth: 0
+  m_useMaxWidth: 0
+  m_maxHeight: 0
+  m_useMaxHeight: 0
+  m_flexWidth: 1
+  m_flexHeight: 1
+  m_margins:
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
   m_padding:
     top: 0
     bottom: 0
@@ -367,6 +382,9 @@ MonoBehaviour:
   m_alignContent: 0
   m_innerSpacing: 0
   m_ignoreChildScale: 0
+  m_wrap: 0
+  m_lineSpacing: 0
+  m_alignItems: 0
 --- !u!1 &391800030
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,16 +853,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5b07099d01a9edb919c941998bf538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Layer6::UI_Dialog_Menu
-  visibility:
-    alphaController: {fileID: 1889907815}
-    preventHideOnPause: 0
-  state:
-    state: 2
+  state: 2
   transitions: []
+  alphaController: {fileID: 1889907815}
+  preventHideOnPause: 0
   prefab: {fileID: 8446974255305260101, guid: b8a40493a75e9f05f98864e0aaeb2aa0, type: 3}
-  parent: {fileID: 205742611}
-  setter:
-    modifier: {fileID: 579938385}
+  choiceContainer: {fileID: 0}
+  textSetter:
+    modifier: {fileID: 0}
 --- !u!114 &1033475958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1033,14 +1049,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5cc196b4f1d484180d4f1070704a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Layer5::IbrahKit.UI.Menu.UI_Menu
-  visibility:
-    alphaController: {fileID: 516504293}
-    preventHideOnPause: 0
-  state:
-    state: 2
+  state: 2
   transitions:
   - transition: {fileID: 11400000, guid: a26d78e310a4f457388724ef288ee2eb, type: 2}
     to: {fileID: 1033475957}
+  alphaController: {fileID: 516504293}
+  preventHideOnPause: 0
 --- !u!1 &1434309357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,8 +1660,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1691081881}
+  - {fileID: 1853103810}
   - {fileID: 988054771}
+  - {fileID: 52561747}
   - {fileID: 1033475956}
   - {fileID: 1361271472}
-  - {fileID: 1853103810}
-  - {fileID: 52561747}
