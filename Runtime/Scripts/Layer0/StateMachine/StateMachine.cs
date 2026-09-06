@@ -31,11 +31,11 @@ namespace IbrahKit.StateMachine
             stack.Push(state);
         }
 
-        public void RunMachine()
+        public TState RunMachine()
         {
             if (stack.Count == 0)
             {
-                return;
+                return null;
             }
 
             TState currentState = stack.Peek();
@@ -65,6 +65,8 @@ namespace IbrahKit.StateMachine
             else if (nextState == currentState)
             {
             }
+
+            return currentState;
         }
 
         public TState GetState() => currentState;

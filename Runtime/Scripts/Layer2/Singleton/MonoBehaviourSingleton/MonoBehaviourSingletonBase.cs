@@ -2,14 +2,16 @@
 
 using System.Text;
 using IbrahKit.Debugging;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 
 #endregion
 
 namespace IbrahKit.Manager
 {
-    public abstract class MonoBehaviourSingletonBase<T> : MonoBehaviour where T : MonoBehaviourSingletonBase<T>
+    public abstract partial class MonoBehaviourSingletonBase<T> : MonoBehaviour where T : MonoBehaviourSingletonBase<T>
     {
+        [AutoStaticsCleanup] 
         private static T Instance;
 
         protected virtual void Awake()
