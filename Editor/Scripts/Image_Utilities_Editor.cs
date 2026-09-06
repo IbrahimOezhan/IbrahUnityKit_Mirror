@@ -51,11 +51,11 @@ namespace IbrahKit.Editor
 
                 IbrahDebug.Log($"Format: {tex.format}, IsReadable: {tex.isReadable}, Name: {tex.name}");
 
-                Sprite s = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100);
+                Sprite sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100);
 
-                Sprite grayscale = Image_Utilities.Grayscale(s);
+                Sprite grayscaleSprite = sprite.texture.Grayscale().ToSprite(sprite.pixelsPerUnit);
 
-                byte[] bytes = Image_Utilities.ToByteArray(grayscale);
+                byte[] bytes = grayscaleSprite.ToByteArray();
 
                 FileInfo fileInfo = new(path);
 

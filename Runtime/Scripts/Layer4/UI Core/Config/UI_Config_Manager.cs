@@ -6,7 +6,8 @@ using IbrahKit.Manager;
 
 namespace IbrahKit.UI.Core.Config
 {
-    public class UI_Config_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<UI_Config_Manager, UI_Config_Manager_Data>
+    public class
+        UI_Config_Manager : MonoBehaviourSingletonDontDestroyOnLoadData<UI_Config_Manager, UI_Config_Manager_Data>
     {
     }
 }

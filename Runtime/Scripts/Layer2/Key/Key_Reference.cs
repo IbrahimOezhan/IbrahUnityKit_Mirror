@@ -4,8 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
 using UnityEngine;
+#if UNITY_EDITOR_64
+using Sirenix.OdinInspector.Editor;
+#endif
 
 #endregion
 
@@ -53,7 +55,7 @@ namespace IbrahKit.Keys
         {
             return reference?.key;
         }
-
+#if UNITY_EDITOR
         /**
          * Handles adding a dropdown to the key member of the key_reference. Must be specialized for each key for it to work
          */
@@ -62,14 +64,19 @@ namespace IbrahKit.Keys
             public sealed override void ProcessChildMemberAttributes(InspectorProperty parentProperty,
                 MemberInfo member, List<Attribute> attributes)
             {
-#if UNITY_EDITOR
                 if (member.Name != "key") return;
 
                 attributes.Add(new LabelTextAttribute(parentProperty.NiceName));
 
                 attributes.Add(new ValueDropdownAttribute(nameof(GetDropdownValues)));
-#endif
             }
         }
+#else
+// Dummy class that allows you to not wrap sub classes into #if UNITY_Editor since the base class still exists
+
+        protected class Key_Processor
+        {
+        }
+#endif
     }
 }

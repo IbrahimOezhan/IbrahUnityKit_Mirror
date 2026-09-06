@@ -27,13 +27,13 @@ namespace IbrahKit.Settings
         {
         }
 
-        public void Init(Setting setting)
+        public void Init(Setting s)
         {
-            this.setting = setting;
+            setting = s;
 
-            setting.onValueChanged += UpdateUI;
+            s.onValueChanged += UpdateUI;
 
-            InitPro(setting);
+            InitPro(s);
         }
 
         protected abstract bool InitPro(Setting setting);

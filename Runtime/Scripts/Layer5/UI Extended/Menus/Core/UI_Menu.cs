@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using IbrahKit.UI.Core.Config;
 using IbrahKit.UI.Generic;
 using Sirenix.OdinInspector;
@@ -34,12 +33,12 @@ namespace IbrahKit.UI.Menu
             }
         }
 
+        public UI_Menu GetMenu() => this;
+
         public bool TryGetConfig<TConfig>(out TConfig config) where TConfig : UI_Config<TConfig>
         {
             return configs.TryGet(out config);
         }
-
-        public UI_Menu GetMenu() => this;
 
         [Button("Toggle")]
         public void ToggleEditor()

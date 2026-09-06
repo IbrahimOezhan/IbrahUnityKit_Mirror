@@ -18,15 +18,15 @@ public class UI_Dialog_Menu : UI_Menu
 {
     [SerializeField] private UI_Selectable prefab;
 
-    [SerializeField] private Transform parent;
+    [SerializeField] private Transform choiceContainer;
 
-    [SerializeField] private UI_Modifier_Text_Setter setter;
+    [SerializeField] private UI_Modifier_Text_Setter textSetter;
 
     private readonly List<UI_Selectable> elements = new();
 
     private void Cleanup()
     {
-        setter.SetText("");
+        textSetter.SetText("");
 
         int length = elements.Count;
 
@@ -44,7 +44,7 @@ public class UI_Dialog_Menu : UI_Menu
 
         foreach (SimpleDialogChoice ch in choices)
         {
-            UI_Selectable selectable = Instantiate(prefab, parent);
+            UI_Selectable selectable = Instantiate(prefab, choiceContainer);
 
             SimpleDialogChoice choice = ch;
 
@@ -67,7 +67,7 @@ public class UI_Dialog_Menu : UI_Menu
 
         IEnumerator OnStringReceive(Stack<SimpleDialogElement.Token> tokens, string s)
         {
-            setter.SetText("");
+            textSetter.SetText("");
 
             StringBuilder stringBuilder = new();
 
@@ -88,7 +88,7 @@ public class UI_Dialog_Menu : UI_Menu
             foreach (char c in s)
             {
                 stringBuilder.Append(c);
-                setter.SetText(stringBuilder.ToString());
+                textSetter.SetText(stringBuilder.ToString());
 
                 if (!skip) yield return new WaitForSeconds(delay);
             }

@@ -24,6 +24,8 @@ namespace IbrahKit.Input
             TOUCHSCREEN,
         }
 
+        private bool subcribed = false;
+
         [SerializeField, ReadOnly] private InputType currentInputType;
 
         public Action<InputType> OnInputChanged;
@@ -32,7 +34,19 @@ namespace IbrahKit.Input
 
         private void Start()
         {
-            Info_Collection_Manager.GetInstance().RegisterInfoCollector(this);
+            if (Info_Collection_Manager.TryGet(out Info_Collection_Manager result, false))
+            {
+                subcribed = true;
+                result.RegisterInfoCollector(this);
+            }
+        }
+
+        protected override void InstanceDestroy()
+        {
+            base.InstanceDestroy();
+            
+            if(Info_Collection_Manager.TryGet(out Info_Collection_Manager result, subcribed))
+                result.UnregisterInfoCollector(this);
         }
 
         private void Update()

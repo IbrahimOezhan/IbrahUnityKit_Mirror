@@ -16,7 +16,7 @@ namespace IbrahKit.UI.Other
     public class UI_Input_Common_Shortcuts : MonoBehaviourSingletonDontDestroyOnLoad<UI_Input_Common_Shortcuts>
     {
         [SerializeField] private Key screenshotNoUI;
-    
+
         private Action actionScreenshotNoUI;
 
         protected override void InstanceAwake()
@@ -47,4 +47,3 @@ namespace IbrahKit.UI.Other
         }
     }
 }
-

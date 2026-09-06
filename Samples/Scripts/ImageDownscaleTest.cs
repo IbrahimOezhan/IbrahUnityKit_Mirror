@@ -1,6 +1,7 @@
 using System;
 using IbrahKit.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageDownscaleTest : MonoBehaviour
 {
@@ -8,15 +9,16 @@ public class ImageDownscaleTest : MonoBehaviour
    
    [SerializeField] private Texture2D _texture;
 
-   [SerializeField] private SpriteRenderer _spriteRenderer;
+   [SerializeField] private Image image;
    
    private void Awake()
    {
       Texture2D tex = _texture.DownscaleNearest(_resolution);
       
       tex.filterMode = FilterMode.Point;
+      
       tex.Apply();
       
-      _spriteRenderer.sprite = tex.ToSprite();
+      image.sprite = tex.ToSprite();
    }
 }
