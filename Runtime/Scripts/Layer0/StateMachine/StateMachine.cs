@@ -35,21 +35,22 @@ namespace IbrahKit.StateMachine
         {
             if (stack.Count == 0)
             {
+                currentState?.StateExit();
                 return null;
             }
 
-            TState currentState = stack.Peek();
+            TState _currentState = stack.Peek();
 
             // Letzter state wurde gepopped
-            if (currentState != this.currentState)
+            if (_currentState != currentState)
             {
-                this.currentState?.StateExit();
-                stateChanged?.Invoke(this.currentState, currentState);
-                this.currentState = currentState;
-                this.currentState?.StateEnter();
+                currentState?.StateExit();
+                stateChanged?.Invoke(currentState, _currentState);
+                currentState = _currentState;
+                currentState?.StateEnter();
             }
 
-            TState nextState = currentState.StateRun();
+            TState nextState = _currentState.StateRun();
 
             // Entferne vom Stack wenn State Null zurückgibt. Der State entfernt sich selber vom stack
             if (nextState == null)
@@ -57,16 +58,16 @@ namespace IbrahKit.StateMachine
                 stack.Pop();
             }
             // Der State wird ersetzt durch einen neuen State
-            else if (nextState != currentState)
+            else if (nextState != _currentState)
             {
                 stack.Pop();
                 stack.Push(nextState);
             }
-            else if (nextState == currentState)
+            else if (nextState == _currentState)
             {
             }
 
-            return currentState;
+            return _currentState;
         }
 
         public TState GetState() => currentState;
