@@ -1,6 +1,7 @@
 #region
 
 using System;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,8 +9,9 @@ using UnityEditor;
 
 #endregion
 
-public class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObjectSingleton<T>
+public partial class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObjectSingleton<T>
 {
+    [AutoStaticsCleanup] 
     public static T Instance
     {
         get
