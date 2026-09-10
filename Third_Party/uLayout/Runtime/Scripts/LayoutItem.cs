@@ -39,7 +39,9 @@ namespace Poke.UI
         [SerializeField] protected Margins          m_margins;
         
         public float minWidth => m_minWidth;
+        public float maxWidth { get; }
         public float minHeight => m_minHeight;
+        public float maxHeight { get; }
         public float flexibleWidth => m_flexWidth; // relative "weight" of this item in the horizontal layout
         public float flexibleHeight => m_flexHeight; // relative "weight" of this item in the vertical layout
         public float preferredWidth => m_maxWidth;
