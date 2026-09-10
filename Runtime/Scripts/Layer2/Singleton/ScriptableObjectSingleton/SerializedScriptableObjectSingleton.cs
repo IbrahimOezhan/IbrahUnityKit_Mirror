@@ -1,9 +1,13 @@
 #region
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
+using UnityEngine;
 #endif
 
 #endregion
@@ -19,9 +23,19 @@ public class SerializedScriptableObjectSingleton<T> : SerializedScriptableObject
 
             Type type = typeof(T);
 
-            string[] guids = AssetDatabase.FindAssets($"t:{type.Name}");
+            List<string> guids = AssetDatabase.FindAssets($"t:{type.Name}").ToList();
 
-            switch (guids.Length)
+            string exclude = EditorPrefs.GetString("SOS_Exclude");
+
+            exclude = Path.Combine(Application.dataPath, exclude);
+
+            guids.RemoveAll(x =>
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                return path.Contains(exclude);
+            });
+            
+            switch (guids.Count)
             {
                 case 1:
                     string path = AssetDatabase.GUIDToAssetPath(guids[0]);
