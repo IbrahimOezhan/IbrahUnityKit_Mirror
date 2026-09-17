@@ -4,34 +4,35 @@ using System;
 using System.Text.Json.Serialization;
 using IbrahKit.Save;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 #endregion
 
 namespace IbrahKit
 {
-    public class SaveTest : MonoBehaviour
+    internal class Sample_Save : MonoBehaviour
     {
-        public Text text;
+        [SerializeField] private Text text;
 
         private SaveData save;
 
         private void Start()
         {
             save = Save_Manager.GetInstance().GetLoadedSave().Get<SaveData>();
-
-            text.text = save.value.ToString();
         }
 
-        public void Increase()
+        private void Update()
         {
-            save.value++;
-            text.text = save.value.ToString();
-        }
-
-        public void Decrease()
-        {
-            save.value--;
+            if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+            {
+                save.value--;
+            }
+            else if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+            {
+                save.value++;
+            }
+            
             text.text = save.value.ToString();
         }
 
