@@ -560,7 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77bf474e25175bc4c9ffa1214a805e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Layer5::IbrahKit.UI.Selectable.UI_Selectable_Manager
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 6a3ef8d4de1093b409d1b842a23158d9, type: 2}
 --- !u!1 &1545310460
 GameObject:
   m_ObjectHideFlags: 0
