@@ -30,6 +30,7 @@ namespace IbrahKit.Manager
         {
             if (Application.isPlaying)
             {
+                transform.parent = null;
                 DontDestroyOnLoad(gameObject);
             }
         }

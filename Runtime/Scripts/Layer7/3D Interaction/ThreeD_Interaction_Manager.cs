@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using IbrahKit.Debugging;
 using IbrahKit.InfoCollector;
+using IbrahKit.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -73,12 +74,12 @@ namespace IbrahKit.Interaction
 
         public string GetInformation()
         {
-            if (hit.transform)
+            if (interactable != null)
             {
-                return "Looking at: " + hit.transform.gameObject.name;
+                return "Can interact with: " + interactable.gameObject.name;
             }
 
-            return "Not looking at anything";
+            return "Cannot interact right now";
         }
 
         public int GetDebugOrder() => -100;
@@ -104,20 +105,22 @@ namespace IbrahKit.Interaction
             //Prioritize Collision Interactable first
             Interactable i = collisionInteractable;
 
-            //If detected return immediately
-            if (i) return i;
+            //If not detected look for interactable by raycast
+            if (!i)
+            {
+                Vector3 origin = raycastOrigin.position;
 
-            //Else look for interactable by raycast
-            Vector3 origin = raycastOrigin.position;
+                Vector3 dir = raycastOrigin.forward;
 
-            Vector3 dir = raycastOrigin.forward;
+                if (Physics.Raycast(origin, dir, out hit, distance, mask) && !hit.transform.CompareTag(INTERACTABLE_TAG))
+                    hit.transform.BetterTryGetComponentInParent(out i,true);
 
-            if (Physics.Raycast(origin, dir, out hit, distance, mask) && !hit.transform.CompareTag(INTERACTABLE_TAG))
-                hit.transform.TryGetComponent(out i);
+                hitObject = hit.transform;
 
-            hitObject = hit.transform;
+                Debug.DrawRay(origin, dir * distance, IsValidInteractable(i) ? Color.green : Color.red);
+            }
 
-            Debug.DrawRay(origin, dir * distance, IsValidInteractable(i) ? Color.green : Color.red);
+            interactable = i;
 
             return i;
         }

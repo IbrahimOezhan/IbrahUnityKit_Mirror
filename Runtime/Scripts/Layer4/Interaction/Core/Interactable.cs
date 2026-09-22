@@ -13,7 +13,7 @@ namespace IbrahKit.Interaction
     /// </summary>
     public class Interactable : MonoBehaviour
     {
-        [SerializeField, SerializeReference, ValidateInput(nameof(ListValidate))]
+        [SerializeReference, ValidateInput(nameof(ListValidate))]
         private List<Interaction_Event> iEvents = new();
 
         [SerializeField] private bool overrideKey;
@@ -22,6 +22,7 @@ namespace IbrahKit.Interaction
         private Interaction_Key interactionKey;
 
         private readonly List<Interaction> interactions = new();
+        
         private bool canInteract = true;
 
         private void OnDisable()
@@ -48,8 +49,11 @@ namespace IbrahKit.Interaction
         public Interaction Interact(Interaction_Manager manager)
         {
             Interaction interaction = new(manager, this, iEvents);
+            
             interactions.Add(interaction);
+            
             manager.StartCoroutine(interaction.SelectInteraction());
+            
             return interaction;
         }
 

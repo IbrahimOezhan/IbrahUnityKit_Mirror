@@ -20,7 +20,7 @@ public class UI_Dialog_Menu : UI_Menu
 
     [SerializeField] private Transform choiceContainer;
 
-    [SerializeField] private UI_Modifier_Text_Setter textSetter;
+    [SerializeField] private UI_Modifier_Text_Static textSetter;
 
     private readonly List<UI_Selectable> elements = new();
 

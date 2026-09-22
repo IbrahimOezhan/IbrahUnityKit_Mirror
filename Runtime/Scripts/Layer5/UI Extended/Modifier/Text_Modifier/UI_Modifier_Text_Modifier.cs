@@ -15,7 +15,7 @@ namespace IbrahKit.UI
         [SerializeField, ShowIf(nameof(mode), Text_Mode.LOCALISED)]
         private UI_Modifier_Text_Localizer localization;
 
-        [SerializeField] private UI_Modifier_Text_Setter staticSetter;
+        private UI_Modifier_Text_Static staticSetter = new();
 
         [SerializeField] private Text_Mode mode;
 
@@ -30,9 +30,19 @@ namespace IbrahKit.UI
             //return text != null && text.GetMode() != UI_Text_Wrapper.Mode.NONE;
         }
 
-        public UI_Modifier_Text_Localizer GetLocalization() => localization;
+        public UI_Modifier_Text_Localizer GetLocalization()
+        {
+            localization.SetTextWrapper(text);
+            
+            return localization;
+        }
 
-        public UI_Modifier_Text_Setter GetStaticSetter() => staticSetter;
+        public UI_Modifier_Text_Static GetStaticSetter()
+        {
+            staticSetter.SetTextWrapper(text);
+            
+            return staticSetter;
+        }
 
         public UI_Text_Wrapper GetTextWrapper()
         {

@@ -71,5 +71,10 @@ namespace IbrahKit.StateMachine
         }
 
         public TState GetState() => currentState;
+
+        public override string ToString()
+        {
+            return "Current State: "+ currentState.GetType().Name;
+        }
     }
 }
