@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IbrahKit.StateMachine
 {
-    public abstract class MonoMachineState<TMState> : MonoBehaviour where TMState : MonoMachineState<TMState>
+    public abstract class MonoBehaviour_State<TMState> : MonoBehaviour, IState<TMState> where TMState : MonoBehaviour_State<TMState>
     {
         public abstract void StateEnter();
 

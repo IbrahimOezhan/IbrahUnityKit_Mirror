@@ -34,7 +34,8 @@ namespace IbrahKit.ThreeDPlayer
         [SerializeField, ReadOnly] private Player_State currentState;
 
         private Player3D_Input input;
-        private MonoStateMachine<Player_State> machine;
+        
+        private StateMachine<Player_State> machine;
 
         private void Start()
         {

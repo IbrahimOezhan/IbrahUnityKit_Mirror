@@ -1,5 +1,6 @@
 #region
 
+#nullable enable
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace IbrahKit.StateMachine
 {
-    public class StateMachine<TState> where TState : MachineState<TState>
+    public class StateMachine<TState> where TState :class?, IState<TState>
     {
         private TState currentState;
 
@@ -21,7 +22,7 @@ namespace IbrahKit.StateMachine
             Push(state);
         }
 
-        public void Push(TState state)
+        public void Push(TState? state)
         {
             if (state == null)
             {

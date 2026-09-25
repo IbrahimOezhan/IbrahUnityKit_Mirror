@@ -8,7 +8,7 @@ namespace IbrahKit.Interaction
 {
     public abstract partial class Interaction_Manager
     {
-        public abstract class InteractionMachineState : MachineState<InteractionMachineState>
+        public abstract class InteractionMachineState : State<InteractionMachineState>
         {
             protected readonly Interaction_Manager manager;
             protected float cooldown;

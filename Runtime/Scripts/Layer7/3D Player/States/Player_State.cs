@@ -8,7 +8,7 @@ using UnityEngine;
 namespace IbrahKit.ThreeDPlayer
 {
     [RequireComponent(typeof(Player_Controller))]
-    public abstract class Player_State : MonoMachineState<Player_State>
+    public abstract class Player_State : MonoBehaviour_State<Player_State>
     {
         protected Player_Controller controller;
 

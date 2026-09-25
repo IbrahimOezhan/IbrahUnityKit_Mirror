@@ -1,6 +1,7 @@
+#nullable enable
 namespace IbrahKit.StateMachine
 {
-    public abstract class MachineState<TMState> where TMState : MachineState<TMState>
+    public abstract class State<TMState> : IState<TMState> where TMState : class?
     {
         public abstract void StateEnter();
 
